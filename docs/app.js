@@ -32,16 +32,6 @@ async function init() {
 }
 
 function cacheElements() {
-  elements.totalCards = document.querySelector("#totalCards");
-  elements.summaryLabelOne = document.querySelector("#summaryLabelOne");
-  elements.summaryLabelTwo = document.querySelector("#summaryLabelTwo");
-  elements.summaryLabelThree = document.querySelector("#summaryLabelThree");
-  elements.summaryLabelFour = document.querySelector("#summaryLabelFour");
-  elements.summaryLabelFive = document.querySelector("#summaryLabelFive");
-  elements.pokemonCount = document.querySelector("#pokemonCount");
-  elements.completionRate = document.querySelector("#completionRate");
-  elements.guideValue = document.querySelector("#guideValue");
-  elements.internationalCount = document.querySelector("#internationalCount");
   elements.resultCount = document.querySelector("#resultCount");
   elements.priceStatus = document.querySelector("#priceStatus");
   elements.cardGrid = document.querySelector("#cardGrid");
@@ -57,6 +47,14 @@ function cacheElements() {
   elements.sortSelect = document.querySelector("#sortSelect");
   elements.clearFiltersButton = document.querySelector("#clearFiltersButton");
   elements.toast = document.querySelector("#toast");
+  elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
+  elements.closeCardDetailButton = document.querySelector("#closeCardDetailButton");
+  elements.detailImageFrame = document.querySelector("#detailImageFrame");
+  elements.detailEyebrow = document.querySelector("#detailEyebrow");
+  elements.detailTitle = document.querySelector("#detailTitle");
+  elements.detailSubtitle = document.querySelector("#detailSubtitle");
+  elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
+  elements.detailNotes = document.querySelector("#detailNotes");
 }
 
 function bindEvents() {
@@ -81,7 +79,14 @@ function bindEvents() {
 
   bind(elements.clearFiltersButton, "click", clearFilters);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  bind(elements.cardGrid, "click", handleCardGridClick);
+  bind(elements.cardGrid, "keydown", handleCardGridKeydown);
+  bind(elements.closeCardDetailButton, "click", closeCardDetail);
+  bind(elements.cardDetailDialog, "click", (event) => {
+    if (event.target === elements.cardDetailDialog) closeCardDetail();
+  });
 }
+
 
 function bind(element, eventName, handler) {
   if (!element) return;
@@ -140,27 +145,7 @@ function normalizeCard(card) {
 
 function render() {
   renderFilters();
-  renderStats();
   renderCards();
-}
-
-function renderStats() {
-  const total = state.cards.length;
-  const pokemonCount = uniqueValues("pokemon").length;
-  const languageCount = uniqueValues("language").length;
-  const internationalCount = state.cards.filter((card) => card.language !== DEFAULT_LANGUAGE).length;
-  const guideValue = state.cards.reduce((sum, card) => sum + getDisplayPrice(card), 0);
-
-  elements.summaryLabelOne.textContent = "Curated";
-  elements.summaryLabelTwo.textContent = "Pokemon";
-  elements.summaryLabelThree.textContent = "Languages";
-  elements.summaryLabelFour.textContent = "Guide value";
-  elements.summaryLabelFive.textContent = "International";
-  elements.totalCards.textContent = String(total);
-  elements.pokemonCount.textContent = String(pokemonCount);
-  elements.completionRate.textContent = String(languageCount);
-  elements.guideValue.textContent = formatCurrency(guideValue);
-  elements.internationalCount.textContent = String(internationalCount);
 }
 
 function renderFilters() {
@@ -269,7 +254,7 @@ function renderCard(card) {
   const sourceText = [card.priceSource, card.priceType].filter(Boolean).join(" / ");
 
   return `
-    <article class="card-tile">
+    <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
         ${card.imageLarge || card.imageSmall
           ? `<img src="${escapeAttribute(card.imageLarge || card.imageSmall)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" />`
@@ -295,6 +280,55 @@ function renderCard(card) {
       </div>
     </article>
   `;
+}
+
+function handleCardGridKeydown(event) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const tile = event.target.closest(".card-tile[data-card-id]");
+  if (!tile) return;
+  event.preventDefault();
+  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  if (card) openCardDetail(card);
+}
+
+function handleCardGridClick(event) {
+  const tile = event.target.closest(".card-tile[data-card-id]");
+  if (!tile) return;
+  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  if (card) openCardDetail(card);
+}
+
+function openCardDetail(card) {
+  const price = getDisplayPrice(card);
+  const priceText = price ? formatCurrency(price) : "No price";
+  const image = card.imageLarge || card.imageSmall;
+  elements.detailEyebrow.textContent = [card.setName, card.number].filter(Boolean).join(" / ") || "Card preview";
+  elements.detailTitle.textContent = card.name;
+  elements.detailSubtitle.textContent = [card.pokemon, card.language, card.rarity].filter(Boolean).join(" / ");
+  elements.detailImageFrame.innerHTML = image
+    ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
+    : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
+  elements.detailMetaGrid.innerHTML = [
+    metaItem("Set", card.setName),
+    metaItem("Number", card.number),
+    metaItem("Rarity", card.rarity),
+    metaItem("Artist", card.artist || "Unknown"),
+    metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
+    metaItem("Price", priceText),
+  ].join("");
+  elements.detailNotes.textContent = card.notes || "";
+  elements.detailNotes.classList.toggle("hidden", !card.notes);
+  elements.cardDetailDialog.showModal();
+}
+
+function closeCardDetail() {
+  elements.cardDetailDialog.close();
+}
+
+function getCardIdentity(card) {
+  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
+    .filter(Boolean)
+    .join("::");
 }
 
 function metaItem(label, value) {

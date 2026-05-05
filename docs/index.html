@@ -20,28 +20,6 @@
         <div class="topbar-actions"></div>
       </header>
 
-      <section class="summary-strip" aria-label="Collection summary">
-        <article class="summary-tile">
-          <span class="summary-label" id="summaryLabelOne">Curated</span>
-          <strong id="totalCards">0</strong>
-        </article>
-        <article class="summary-tile">
-          <span class="summary-label" id="summaryLabelTwo">Pokemon</span>
-          <strong id="pokemonCount">0</strong>
-        </article>
-        <article class="summary-tile">
-          <span class="summary-label" id="summaryLabelThree">Languages</span>
-          <strong id="completionRate">0%</strong>
-        </article>
-        <article class="summary-tile">
-          <span class="summary-label" id="summaryLabelFour">Guide value</span>
-          <strong id="guideValue">$0.00</strong>
-        </article>
-        <article class="summary-tile">
-          <span class="summary-label" id="summaryLabelFive">International</span>
-          <strong id="internationalCount">$0.00</strong>
-        </article>
-      </section>
 
       <main class="workspace">
         <section class="library-panel" aria-label="Card library">
@@ -129,8 +107,25 @@
       </form>
     </dialog>
 
+    <dialog id="cardDetailDialog" class="card-detail-dialog">
+      <div class="card-detail-frame">
+        <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">
+          x
+        </button>
+        <div class="detail-image-frame" id="detailImageFrame"></div>
+        <div class="detail-copy">
+          <p class="eyebrow" id="detailEyebrow">Card preview</p>
+          <h2 id="detailTitle"></h2>
+          <p class="card-subtitle" id="detailSubtitle"></p>
+          <div class="meta-grid" id="detailMetaGrid"></div>
+          <p class="notes" id="detailNotes"></p>
+        </div>
+      </div>
+    </dialog>
+
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
     <script src="app.js"></script>
+
   </body>
 </html>
