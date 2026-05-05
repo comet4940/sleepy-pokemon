@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sleepy Pokemon Card Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-app-mode="public">
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <p class="eyebrow">Curated guide</p>
+            <h1>Sleepy Pokemon Cards</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions"></div>
+      </header>
+
+      <section class="summary-strip" aria-label="Collection summary">
+        <article class="summary-tile">
+          <span class="summary-label" id="summaryLabelOne">Curated</span>
+          <strong id="totalCards">0</strong>
+        </article>
+        <article class="summary-tile">
+          <span class="summary-label" id="summaryLabelTwo">Pokemon</span>
+          <strong id="pokemonCount">0</strong>
+        </article>
+        <article class="summary-tile">
+          <span class="summary-label" id="summaryLabelThree">Languages</span>
+          <strong id="completionRate">0%</strong>
+        </article>
+        <article class="summary-tile">
+          <span class="summary-label" id="summaryLabelFour">Guide value</span>
+          <strong id="guideValue">$0.00</strong>
+        </article>
+        <article class="summary-tile">
+          <span class="summary-label" id="summaryLabelFive">International</span>
+          <strong id="internationalCount">$0.00</strong>
+        </article>
+      </section>
+
+      <main class="workspace">
+        <section class="library-panel" aria-label="Card library">
+          <div class="library-header">
+            <div>
+              <p class="eyebrow">Curated list</p>
+              <h2 id="resultCount">0 cards</h2>
+            </div>
+            <div class="library-actions">
+              <div class="price-status" id="priceStatus" aria-live="polite"></div>
+              <button class="button subtle" id="openFiltersButton" type="button">
+                Refine
+              </button>
+            </div>
+          </div>
+
+          <div class="card-grid" id="cardGrid"></div>
+          <div class="empty-state hidden" id="emptyState">
+            <h3>No cards match</h3>
+            <p>Try clearing a filter or adding a new sleepy find.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="filtersDialog" class="filters-dialog">
+      <form method="dialog" class="filters-panel" aria-label="Refine collection">
+        <div class="filter-heading">
+          <div>
+            <p class="eyebrow">Refine view</p>
+            <h2>Curated cards</h2>
+          </div>
+          <div class="filter-heading-actions">
+            <button id="clearFiltersButton" class="link-button" type="button">
+              Clear
+            </button>
+            <button class="icon-button" id="closeFiltersButton" value="cancel" aria-label="Close filters" type="submit">
+              x
+            </button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Search</span>
+          <input id="searchFilter" type="search" autocomplete="off" />
+        </label>
+
+        <label class="field">
+          <span>Pokemon</span>
+          <select id="pokemonFilter"></select>
+        </label>
+
+        <label class="field">
+          <span>Set</span>
+          <select id="setFilter"></select>
+        </label>
+
+        <label class="field">
+          <span>Rarity</span>
+          <select id="rarityFilter"></select>
+        </label>
+
+        <label class="field">
+          <span>Language</span>
+          <select id="languageFilter"></select>
+        </label>
+
+        <label class="field">
+          <span>Max price</span>
+          <input id="maxPriceFilter" type="number" min="0" step="1" />
+        </label>
+
+        <label class="field">
+          <span>Sort</span>
+          <select id="sortSelect">
+            <option value="priority">Curated order</option>
+            <option value="price-low">Price low-high</option>
+            <option value="price-high">Price high-low</option>
+            <option value="pokemon">Pokemon A-Z</option>
+            <option value="language">Language A-Z</option>
+            <option value="set">Set A-Z</option>
+            <option value="newest">Newest release</option>
+          </select>
+        </label>
+      </form>
+    </dialog>
+
+    <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
