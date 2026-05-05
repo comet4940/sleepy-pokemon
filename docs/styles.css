@@ -934,6 +934,27 @@ textarea:focus-visible {
   font-size: 1.05rem;
 }
 
+.coffee-button {
+  color: #ffe3a0;
+  background: linear-gradient(180deg, rgba(229, 189, 102, 0.18), rgba(229, 189, 102, 0.08));
+  border-color: rgba(229, 189, 102, 0.3);
+}
+
+.coffee-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.coffee-button:hover {
+  border-color: rgba(229, 189, 102, 0.56);
+  background: linear-gradient(180deg, rgba(229, 189, 102, 0.25), rgba(229, 189, 102, 0.12));
+}
+
 .dialog-tabs {
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(0, 150px));
