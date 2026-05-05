@@ -37,6 +37,7 @@ function cacheElements() {
   elements.cardGrid = document.querySelector("#cardGrid");
   elements.emptyState = document.querySelector("#emptyState");
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.downloadChecklistButton = document.querySelector("#downloadChecklistButton");
   elements.filtersDialog = document.querySelector("#filtersDialog");
   elements.searchFilter = document.querySelector("#searchFilter");
   elements.pokemonFilter = document.querySelector("#pokemonFilter");
@@ -78,6 +79,7 @@ function bindEvents() {
   });
 
   bind(elements.clearFiltersButton, "click", clearFilters);
+  bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
@@ -338,6 +340,59 @@ function metaItem(label, value) {
       <strong>${escapeHtml(value || "-")}</strong>
     </div>
   `;
+}
+
+function downloadChecklist() {
+  const columns = [
+    "Collected",
+    "Pokemon",
+    "Card Name",
+    "Set",
+    "Number",
+    "Rarity",
+    "Language",
+    "Artist",
+    "Market Price",
+    "Price Source",
+    "Release Date",
+    "Notes",
+    "Image URL",
+  ];
+  const rows = state.cards.map((card) => [
+    "",
+    card.pokemon,
+    card.name,
+    card.setName,
+    card.number,
+    card.rarity,
+    card.language,
+    card.artist,
+    getDisplayPrice(card) || "",
+    [card.priceSource, card.priceType].filter(Boolean).join(" / "),
+    card.setReleaseDate,
+    card.notes,
+    card.imageLarge || card.imageSmall,
+  ]);
+  const csv = [columns, ...rows]
+    .map((row) => row.map(escapeCsvCell).join(","))
+    .join("\n");
+  const blob = new Blob([`\uFEFF${csv}\n`], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "sleepy-pokemon-checklist.csv";
+  anchor.style.display = "none";
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast("Checklist downloaded.");
+}
+
+function escapeCsvCell(value) {
+  const cell = String(value ?? "");
+  if (!/[",\n\r]/.test(cell)) return cell;
+  return `"${cell.replace(/"/g, '""')}"`;
 }
 
 function clearFilters() {
