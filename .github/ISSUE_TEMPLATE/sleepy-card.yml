@@ -1,0 +1,78 @@
+name: Submit a sleepy card
+description: Suggest a sleepy Pokemon card for the curated guide.
+title: "Sleepy card suggestion: "
+labels:
+  - suggestion
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping grow the sleepy Pokemon guide. Suggestions are reviewed before anything is added to the public card list.
+  - type: input
+    id: pokemon
+    attributes:
+      label: Pokemon
+      description: Which Pokemon is featured on the card?
+      placeholder: Snorlax
+    validations:
+      required: true
+  - type: input
+    id: card-name
+    attributes:
+      label: Card name
+      description: The printed card name, if different from the Pokemon name.
+      placeholder: Snorlax
+  - type: input
+    id: set-name
+    attributes:
+      label: Set
+      description: The set or product this card is from.
+      placeholder: Fusion Strike
+    validations:
+      required: true
+  - type: input
+    id: number
+    attributes:
+      label: Card number
+      description: The collector number, promo number, or local ID.
+      placeholder: 206/264
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Japanese
+        - Korean
+        - Chinese
+        - Traditional Chinese
+        - Simplified Chinese
+        - Thai
+        - Indonesian
+        - German
+        - French
+        - Spanish
+        - Italian
+        - Portuguese
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Reference link
+      description: Link to the card page, listing, image, or database entry.
+      placeholder: https://...
+  - type: textarea
+    id: sleepy-reason
+    attributes:
+      label: Why does it count as sleepy?
+      description: Describe what makes the card fit the sleepy theme.
+      placeholder: The Pokemon is curled up asleep in the illustration.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra notes
+      description: Anything else useful, such as alternate art, price notes, or regional release info.
