@@ -76,48 +76,54 @@
           </div>
         </div>
 
-        <label class="field">
-          <span>Search</span>
-          <input id="searchFilter" type="search" autocomplete="off" />
+        <label class="field search-field">
+          <span>Search the guide</span>
+          <input id="searchFilter" type="search" autocomplete="off" placeholder="Snorlax, Komala, Crown Zenith" />
         </label>
 
-        <label class="field">
-          <span>Pokemon</span>
-          <select id="pokemonFilter"></select>
-        </label>
+        <div class="filter-group">
+          <p class="filter-group-label">Browse by</p>
+          <label class="field compact-field">
+            <span>Pokemon</span>
+            <select id="pokemonFilter"></select>
+          </label>
 
-        <label class="field">
-          <span>Set</span>
-          <select id="setFilter"></select>
-        </label>
+          <label class="field compact-field">
+            <span>Set</span>
+            <select id="setFilter"></select>
+          </label>
 
-        <label class="field">
-          <span>Rarity</span>
-          <select id="rarityFilter"></select>
-        </label>
+          <label class="field compact-field">
+            <span>Rarity</span>
+            <select id="rarityFilter"></select>
+          </label>
 
-        <label class="field">
-          <span>Language</span>
-          <select id="languageFilter"></select>
-        </label>
+          <label class="field compact-field">
+            <span>Language</span>
+            <select id="languageFilter"></select>
+          </label>
+        </div>
 
-        <label class="field">
-          <span>Max price</span>
-          <input id="maxPriceFilter" type="number" min="0" step="1" />
-        </label>
+        <div class="filter-group filter-group-secondary">
+          <p class="filter-group-label">Refine order</p>
+          <label class="field compact-field">
+            <span>Max price</span>
+            <input id="maxPriceFilter" type="number" min="0" step="1" placeholder="Any" />
+          </label>
 
-        <label class="field">
-          <span>Sort</span>
-          <select id="sortSelect">
-            <option value="priority">Curated order</option>
-            <option value="price-low">Price low-high</option>
-            <option value="price-high">Price high-low</option>
-            <option value="pokemon">Pokemon A-Z</option>
-            <option value="language">Language A-Z</option>
-            <option value="set">Set A-Z</option>
-            <option value="newest">Newest release</option>
-          </select>
-        </label>
+          <label class="field compact-field sort-field">
+            <span>Sort</span>
+            <select id="sortSelect">
+              <option value="priority">Curated order</option>
+              <option value="price-low">Price low-high</option>
+              <option value="price-high">Price high-low</option>
+              <option value="pokemon">Pokemon A-Z</option>
+              <option value="language">Language A-Z</option>
+              <option value="set">Set A-Z</option>
+              <option value="newest">Newest release</option>
+            </select>
+          </label>
+        </div>
       </form>
     </dialog>
 
