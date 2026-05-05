@@ -1,5 +1,5 @@
 const DEFAULT_LANGUAGE = "English";
-const PUBLIC_DEFAULT_SORT = "priority";
+const PUBLIC_DEFAULT_SORT = "price-high";
 
 const priorityRank = {
   High: 0,
