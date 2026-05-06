@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sleepy Pokemon Cards">
+  <defs>
+    <radialGradient id="glow" cx="32" cy="30" r="31" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#244333"/>
+      <stop offset="1" stop-color="#07100c"/>
+    </radialGradient>
+    <linearGradient id="ballTop" x1="12" x2="52" y1="15" y2="33" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f1846b"/>
+      <stop offset="1" stop-color="#d95f55"/>
+    </linearGradient>
+    <linearGradient id="ballBottom" x1="14" x2="50" y1="35" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff8e8"/>
+      <stop offset="1" stop-color="#dbe7dd"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#glow)"/>
+  <path d="M18 21a20 20 0 0 1 28 0 20 20 0 0 1 5.8 10.5H12.2A20 20 0 0 1 18 21Z" fill="url(#ballTop)"/>
+  <path d="M12.2 32.5h39.6A20 20 0 0 1 32 52 20 20 0 0 1 12.2 32.5Z" fill="url(#ballBottom)"/>
+  <path d="M12 32h40" stroke="#142018" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="9" fill="#101711" stroke="#f5fbf5" stroke-width="4"/>
+  <circle cx="32" cy="32" r="3.8" fill="#f5fbf5"/>
+  <path d="M20 23c2.5 2.2 6.2 2.2 8.7 0M36 23c2.5 2.2 6.2 2.2 8.7 0" fill="none" stroke="#172018" stroke-width="2.7" stroke-linecap="round"/>
+  <path d="M44.5 10.5c-4 1.8-6.3 5.6-6 10 4-1.8 6.3-5.6 6-10Z" fill="#e5bd66"/>
+  <path d="M48.5 13.5c1.4.8 2.5 2 3.2 3.5-1.4.8-3 .9-4.4.3 1.1-1 1.5-2.4 1.2-3.8Z" fill="#ffe3a0"/>
+  <path d="M18 45c5 5.4 14.3 7.6 22 3.2" fill="none" stroke="#ffffff" stroke-opacity=".38" stroke-width="2" stroke-linecap="round"/>
+</svg>
