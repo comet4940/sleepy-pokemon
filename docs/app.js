@@ -1,5 +1,5 @@
 const DEFAULT_LANGUAGE = "English";
-const PUBLIC_DEFAULT_SORT = "price-high";
+const PUBLIC_DEFAULT_SORT = "random";
 
 const priorityRank = {
   High: 0,
@@ -9,6 +9,7 @@ const priorityRank = {
 
 const state = {
   cards: [],
+  randomOrder: new Map(),
   filters: {
     search: "",
     pokemon: "all",
@@ -28,6 +29,7 @@ async function init() {
   cacheElements();
   bindEvents();
   state.cards = await loadPublishedCards();
+  assignRandomOrder();
   render();
 }
 
@@ -226,7 +228,21 @@ function getFilteredCards() {
     .sort(compareCards);
 }
 
+function assignRandomOrder() {
+  const shuffledIds = state.cards
+    .map(getCardIdentity)
+    .sort(() => Math.random() - 0.5);
+  state.randomOrder = new Map(shuffledIds.map((id, index) => [id, index]));
+}
+
+function getRandomRank(card) {
+  return state.randomOrder.get(getCardIdentity(card)) ?? Number.MAX_SAFE_INTEGER;
+}
+
 function compareCards(a, b) {
+  if (state.filters.sort === "random") {
+    return getRandomRank(a) - getRandomRank(b);
+  }
   if (state.filters.sort === "price-low") {
     return getDisplayPrice(a) - getDisplayPrice(b);
   }
