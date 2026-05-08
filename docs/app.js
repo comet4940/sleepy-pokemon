@@ -269,7 +269,6 @@ function compareCards(a, b) {
 function renderCard(card) {
   const price = getDisplayPrice(card);
   const priceText = price ? formatCurrency(price) : "No price";
-  const sourceText = [card.priceSource, card.priceType].filter(Boolean).join(" / ");
 
   return `
     <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
@@ -292,7 +291,6 @@ function renderCard(card) {
           ${metaItem("Rarity", card.rarity)}
           ${metaItem("Artist", card.artist || "Unknown")}
           ${metaItem("Release", formatDate(card.setReleaseDate) || "Unknown")}
-          ${metaItem("Price", sourceText || "Manual")}
         </div>
         ${card.notes ? `<p class="notes">${escapeHtml(card.notes)}</p>` : ""}
       </div>
@@ -332,7 +330,6 @@ function openCardDetail(card) {
     metaItem("Rarity", card.rarity),
     metaItem("Artist", card.artist || "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
-    metaItem("Price", priceText),
   ].join("");
   elements.detailNotes.textContent = card.notes || "";
   elements.detailNotes.classList.toggle("hidden", !card.notes);
