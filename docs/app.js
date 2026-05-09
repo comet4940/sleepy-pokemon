@@ -273,8 +273,8 @@ function renderCard(card) {
   return `
     <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
-        ${card.imageLarge || card.imageSmall
-          ? `<img src="${escapeAttribute(card.imageLarge || card.imageSmall)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" />`
+        ${card.imageSmall || card.imageLarge
+          ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
           : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
       </div>
       <div class="card-body">
