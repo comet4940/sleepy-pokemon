@@ -1,5 +1,7 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
+const CARD_RENDER_BATCH_SIZE = 24;
+const GOOGLE_ANALYTICS_ID = "G-3HFVE8BEZH";
 
 const priorityRank = {
   High: 0,
@@ -19,6 +21,7 @@ const state = {
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
   },
+  renderToken: 0,
 };
 
 const elements = {};
@@ -31,6 +34,7 @@ async function init() {
   state.cards = await loadPublishedCards();
   assignRandomOrder();
   render();
+  scheduleAnalytics();
 }
 
 function cacheElements() {
@@ -89,6 +93,30 @@ function bindEvents() {
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
+}
+
+
+function scheduleAnalytics() {
+  if (!GOOGLE_ANALYTICS_ID || window.location.protocol === "file:") return;
+
+  const loadAnalytics = () => {
+    if (window.gtag) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag(){window.dataLayer.push(arguments);};
+    window.gtag("js", new Date());
+    window.gtag("config", GOOGLE_ANALYTICS_ID);
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GOOGLE_ANALYTICS_ID)}`;
+    document.head.append(script);
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(loadAnalytics, { timeout: 4000 });
+  } else {
+    window.setTimeout(loadAnalytics, 2500);
+  }
 }
 
 
@@ -194,9 +222,25 @@ function elementToFilterKey(element) {
 
 function renderCards() {
   const cards = getFilteredCards();
+  const renderToken = state.renderToken + 1;
+  state.renderToken = renderToken;
   elements.resultCount.textContent = `${cards.length} ${cards.length === 1 ? "card" : "cards"}`;
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
-  elements.cardGrid.innerHTML = cards.map(renderCard).join("");
+  elements.cardGrid.innerHTML = "";
+
+  if (!cards.length) return;
+
+  const renderBatch = (startIndex) => {
+    if (state.renderToken !== renderToken) return;
+    const nextCards = cards.slice(startIndex, startIndex + CARD_RENDER_BATCH_SIZE);
+    elements.cardGrid.insertAdjacentHTML("beforeend", nextCards.map(renderCard).join(""));
+    const nextIndex = startIndex + CARD_RENDER_BATCH_SIZE;
+    if (nextIndex < cards.length) {
+      window.requestAnimationFrame(() => renderBatch(nextIndex));
+    }
+  };
+
+  renderBatch(0);
 }
 
 function getFilteredCards() {
