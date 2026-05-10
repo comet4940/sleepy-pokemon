@@ -1542,3 +1542,13 @@ textarea:focus-visible {
 .seo-card-index a:hover strong {
   color: #ffe3a0;
 }
+
+.card-page-detail .detail-image-frame {
+  min-height: 0;
+  padding: clamp(28px, 4vw, 54px);
+}
+
+.card-page-detail .detail-image-frame img {
+  width: min(82%, 430px);
+  max-height: min(72vh, 680px);
+}
