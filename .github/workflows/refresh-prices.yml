@@ -36,13 +36,13 @@ jobs:
 
       - name: Commit price updates
         run: |
-          if git diff --quiet -- docs/published-cards.json docs/index.html; then
-            echo "No price changes to commit."
+          if [ -z "$(git status --porcelain -- docs/published-cards.json docs/index.html docs/cards docs/sitemap.xml)" ]; then
+            echo "No price or SEO page changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/published-cards.json docs/index.html
+          git add docs/published-cards.json docs/index.html docs/cards docs/sitemap.xml
           git commit -m "Refresh card prices"
           git push
 
