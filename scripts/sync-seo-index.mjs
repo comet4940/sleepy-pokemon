@@ -1,6 +1,6 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 
-const SITE_URL = "https://sleepypokemon.com";
+const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
 const INDEX_PATH = "docs/index.html";
 const CARDS_DIR = "docs/cards";
