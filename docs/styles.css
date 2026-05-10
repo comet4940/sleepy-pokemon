@@ -1457,3 +1457,55 @@ textarea:focus-visible {
     padding: 0 10px;
   }
 }
+
+.seo-card-index {
+  margin-top: 18px;
+  padding-bottom: 8px;
+}
+
+.seo-card-index-inner {
+  padding: 18px;
+  border: 1px solid rgba(226, 237, 229, 0.12);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.seo-card-index h2 {
+  max-width: 760px;
+  font-size: 1.35rem;
+}
+
+.seo-card-index ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seo-card-index li {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(226, 237, 229, 0.1);
+  border-radius: var(--radius);
+  background: rgba(6, 10, 8, 0.36);
+}
+
+.seo-card-index strong,
+.seo-card-index span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.seo-card-index strong {
+  color: #f7fbf8;
+  font-size: 0.9rem;
+}
+
+.seo-card-index span {
+  margin-top: 4px;
+  color: rgba(238, 244, 239, 0.64);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}

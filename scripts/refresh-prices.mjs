@@ -1,6 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
 
 const GUIDE_PATH = "docs/published-cards.json";
+const SEO_SYNC_SCRIPT = "scripts/sync-seo-index.mjs";
 const API_BASE_URL = "https://api.pokemontcg.io/v2";
 const API_SELECT_FIELDS = [
   "id",
@@ -44,6 +46,13 @@ if (!DRY_RUN) {
   const next = JSON.stringify(guide, null, 2) + "\n";
   if (next !== raw) {
     await writeFile(GUIDE_PATH, next, "utf8");
+  }
+}
+
+if (!DRY_RUN) {
+  const seoSync = spawnSync(process.execPath, [SEO_SYNC_SCRIPT], { stdio: "inherit" });
+  if (seoSync.status !== 0) {
+    throw new Error(`${SEO_SYNC_SCRIPT} failed.`);
   }
 }
 
