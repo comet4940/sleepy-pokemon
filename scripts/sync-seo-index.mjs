@@ -102,6 +102,9 @@ ${urls}
 function renderCardPage(card) {
   const title = `${card.name} Sleepy Pokemon Card - ${[card.setName, card.number].filter(Boolean).join(" ")}`.trim();
   const description = buildDescription(card);
+  const visibleDescription = buildVisibleSummary(card);
+  const pageHeading = `${card.name || card.pokemon || "Pokemon"} Sleepy Pokemon Card`;
+  const imageAlt = buildImageAlt(card);
   const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
   const image = card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
   const price = numericOrNull(card.priceMarket);
@@ -155,7 +158,7 @@ function renderCardPage(card) {
           <span class="brand-mark" aria-hidden="true"></span>
           <div>
             <p class="eyebrow">Sleepy card detail</p>
-            <h1>Sleepy Pokemon Cards</h1>
+            <p class="brand-title">Sleepy Pokemon Cards</p>
           </div>
         </a>
         <div class="topbar-actions">
@@ -166,12 +169,13 @@ function renderCardPage(card) {
       <main class="card-page-main">
         <article class="card-detail-frame card-page-detail">
           <div class="detail-image-frame">
-            ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} Pokemon card`)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+            ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
           </div>
           <div class="detail-copy">
             <p class="eyebrow">${escapeHtml([card.setName, card.number].filter(Boolean).join(" / ") || "Card preview")}</p>
-            <h2>${escapeHtml(card.name || "Unknown card")}</h2>
+            <h1>${escapeHtml(pageHeading)}</h1>
             <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.rarity].filter(Boolean).join(" / "))}</p>
+            <p class="card-page-summary">${escapeHtml(visibleDescription)}</p>
             <div class="price-pill card-page-price">${escapeHtml(priceLabel)}</div>
             <div class="meta-grid">
               ${metaItem("Set", card.setName)}
@@ -202,8 +206,22 @@ function metaItem(label, value) {
 function buildDescription(card) {
   const artist = card.artist ? ` illustrated by ${card.artist}` : "";
   const setPart = card.setName ? ` from ${card.setName}` : "";
-  const rarity = card.rarity ? ` ${card.rarity}` : "";
   return `${card.name || card.pokemon}${setPart} is a sleepy Pokemon card${artist}. View set, number, rarity, release date, and collector details.`.replace(/\s+/g, " ").trim();
+}
+
+function buildVisibleSummary(card) {
+  const cardName = card.name || card.pokemon || "This card";
+  const setAndNumber = [card.setName, card.number].filter(Boolean).join(" ");
+  const origin = setAndNumber ? ` from ${setAndNumber}` : "";
+  const artist = card.artist ? ` illustrated by ${card.artist}` : "";
+  const rarity = card.rarity ? ` This ${card.rarity} card` : " This card";
+  return `${cardName}${origin} is a sleepy Pokemon card${artist}.${rarity} is part of the curated Sleepy Pokemon Cards guide.`.replace(/\s+/g, " ").trim();
+}
+
+function buildImageAlt(card) {
+  const cardName = card.name || card.pokemon || "Pokemon";
+  const setPart = card.setName ? ` from ${card.setName}` : "";
+  return `${cardName} sleepy Pokemon card${setPart}`.replace(/\s+/g, " ").trim();
 }
 
 function slugify(value) {

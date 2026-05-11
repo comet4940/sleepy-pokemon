@@ -172,8 +172,14 @@ h3 {
   color: rgba(238, 244, 239, 0.66);
 }
 
-.topbar h1 {
+.topbar h1,
+.topbar .brand-title {
+  margin: 0;
   color: var(--ink);
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
   text-shadow:
     0 12px 28px rgba(0, 0, 0, 0.46),
     0 0 36px rgba(111, 202, 148, 0.18);
@@ -721,6 +727,7 @@ textarea:focus-visible {
   padding: 18px 42px 18px 0;
 }
 
+.detail-copy h1,
 .detail-copy h2 {
   font-size: 2.2rem;
   line-height: 1;
@@ -1305,7 +1312,8 @@ textarea:focus-visible {
       0 0 0 6px rgba(255, 255, 255, 0.06);
   }
 
-  .topbar h1 {
+  .topbar h1,
+  .topbar .brand-title {
     max-width: 10ch;
     font-size: 3rem;
     line-height: 0.98;
@@ -1437,13 +1445,15 @@ textarea:focus-visible {
     min-height: 360px;
   }
 
+  .detail-copy h1,
   .detail-copy h2 {
     font-size: 1.8rem;
   }
 }
 
 @media (max-width: 380px) {
-  .topbar h1 {
+  .topbar h1,
+  .topbar .brand-title {
     font-size: 2.55rem;
   }
 
@@ -1531,6 +1541,14 @@ textarea:focus-visible {
 .card-page-price {
   width: fit-content;
   min-width: 118px;
+}
+
+.card-page-summary {
+  max-width: 62ch;
+  margin: -4px 0 0;
+  color: rgba(238, 244, 239, 0.74);
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .seo-card-index a {
