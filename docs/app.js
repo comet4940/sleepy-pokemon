@@ -336,7 +336,6 @@ function renderCard(card) {
           ${metaItem("Artist", card.artist || "Unknown")}
           ${metaItem("Release", formatDate(card.setReleaseDate) || "Unknown")}
         </div>
-        ${card.notes ? `<p class="notes">${escapeHtml(card.notes)}</p>` : ""}
       </div>
     </article>
   `;

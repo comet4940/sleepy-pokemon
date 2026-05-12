@@ -2,32 +2,55 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
+const GUIDES_PATH = "docs/guides.json";
 const INDEX_PATH = "docs/index.html";
-const CARDS_DIR = "docs/cards";
+const GUIDES_DIR = "docs/guides";
 const SITEMAP_PATH = "docs/sitemap.xml";
-const START = "<!-- SEO_CARD_INDEX_START -->";
-const END = "<!-- SEO_CARD_INDEX_END -->";
+const CARD_INDEX_START = "<!-- SEO_CARD_INDEX_START -->";
+const GUIDE_INDEX_START = "<!-- SEO_GUIDE_INDEX_START -->";
+const GUIDE_INDEX_END = "<!-- SEO_GUIDE_INDEX_END -->";
 
-const guide = JSON.parse(await readFile(GUIDE_PATH, "utf8"));
-const cards = Array.isArray(guide) ? guide : guide.cards;
+const guideData = JSON.parse(await readFile(GUIDE_PATH, "utf8"));
+const cards = Array.isArray(guideData) ? guideData : guideData.cards;
+const guideDefs = await loadGuideDefs();
 
 if (!Array.isArray(cards)) {
   throw new Error(`${GUIDE_PATH} does not contain a cards array.`);
 }
 
 const cardsWithSlugs = assignSlugs(cards);
-const sortedCards = [...cardsWithSlugs].sort((a, b) => {
-  return String(a.pokemon || "").localeCompare(String(b.pokemon || ""))
-    || String(a.name || "").localeCompare(String(b.name || ""))
-    || String(a.setName || "").localeCompare(String(b.setName || ""));
-});
+const cardBySlug = new Map(cardsWithSlugs.map((card) => [card.slug, card]));
+const guides = guideDefs
+  .map((guide) => resolveGuide(guide, cardBySlug))
+  .filter((guide) => guide.slug && guide.cards.length);
 
-await writeCardPages(cardsWithSlugs);
-await syncIndex(sortedCards);
-await writeSitemap(cardsWithSlugs);
+await writeGuidePages(guides);
+await syncHomepageGuideIndex(guides);
+await writeSitemap(cardsWithSlugs, guides);
 
-console.log(`Synced ${cardsWithSlugs.length} card pages, crawlable index, and sitemap.`);
-await import("./sync-guides.mjs");
+console.log(`Synced ${guides.length} guide pages.`);
+
+async function loadGuideDefs() {
+  try {
+    const payload = JSON.parse(await readFile(GUIDES_PATH, "utf8"));
+    return Array.isArray(payload) ? payload : payload.guides || [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+function resolveGuide(guide, cardsBySlug) {
+  return {
+    ...guide,
+    cards: (guide.cards || [])
+      .map((entry) => {
+        const card = cardsBySlug.get(entry.slug);
+        return card ? { ...entry, card } : null;
+      })
+      .filter(Boolean),
+  };
+}
 
 function assignSlugs(cardList) {
   const used = new Map();
@@ -42,54 +65,54 @@ function assignSlugs(cardList) {
   });
 }
 
-async function writeCardPages(cardList) {
-  await rm(CARDS_DIR, { recursive: true, force: true });
-  await mkdir(CARDS_DIR, { recursive: true });
+async function writeGuidePages(guideList) {
+  await rm(GUIDES_DIR, { recursive: true, force: true });
+  await mkdir(GUIDES_DIR, { recursive: true });
 
-  await Promise.all(cardList.map(async (card) => {
-    const dir = `${CARDS_DIR}/${card.slug}`;
+  await Promise.all(guideList.map(async (guide) => {
+    const dir = `${GUIDES_DIR}/${guide.slug}`;
     await mkdir(dir, { recursive: true });
-    await writeFile(`${dir}/index.html`, renderCardPage(card), "utf8");
+    await writeFile(`${dir}/index.html`, renderGuidePage(guide), "utf8");
   }));
 }
 
-async function syncIndex(cardList) {
-  const items = cardList.map((card) => {
-    const title = [card.name, card.number ? `#${card.number}` : ""].filter(Boolean).join(" ");
-    const details = [card.pokemon, card.setName, card.rarity, card.language].filter(Boolean).join(" • ");
-    return `              <li><a href="cards/${escapeAttribute(card.slug)}/"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(details)}</span></a></li>`;
+async function syncHomepageGuideIndex(guideList) {
+  const guideItems = guideList.map((guide) => {
+    const description = guide.description || "Curated sleepy Pokemon card guide.";
+    return `              <li><a href="guides/${escapeAttribute(guide.slug)}/"><strong>${escapeHtml(guide.title)}</strong><span>${escapeHtml(description)}</span></a></li>`;
   }).join("\n");
 
-  const section = `${START}
-        <section class="seo-card-index" aria-labelledby="seoCardIndexTitle">
+  const section = guideItems ? `${GUIDE_INDEX_START}
+        <section class="seo-card-index seo-guide-index" aria-labelledby="seoGuideIndexTitle">
           <div class="seo-card-index-inner">
-            <p class="eyebrow">Crawlable card index</p>
-            <h2 id="seoCardIndexTitle">All ${cardList.length} sleepy Pokemon cards in this guide</h2>
-            <p class="notes">A text index of the curated sleepy Pokemon card list for collectors and search engines.</p>
+            <p class="eyebrow">Collector guides</p>
+            <h2 id="seoGuideIndexTitle">Sleepy Pokemon card guides</h2>
+            <p class="notes">Curated guide pages for collectors looking for themes, budgets, and standout cards.</p>
             <ol>
-${items}
+${guideItems}
             </ol>
           </div>
         </section>
-        ${END}`;
+        ${GUIDE_INDEX_END}` : "";
 
   let html = await readFile(INDEX_PATH, "utf8");
-  if (html.includes(START) && html.includes(END)) {
-    html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
-  } else {
-    html = html.replace("      </main>", `      </main>\n\n${section}`);
+  if (html.includes(GUIDE_INDEX_START) && html.includes(GUIDE_INDEX_END)) {
+    html = html.replace(new RegExp(`${escapeRegExp(GUIDE_INDEX_START)}[\\s\\S]*?${escapeRegExp(GUIDE_INDEX_END)}`), section);
+  } else if (section && html.includes(CARD_INDEX_START)) {
+    html = html.replace(CARD_INDEX_START, `${section}\n\n${CARD_INDEX_START}`);
   }
   await writeFile(INDEX_PATH, html, "utf8");
 }
 
-async function writeSitemap(cardList) {
+async function writeSitemap(cardList, guideList) {
   const homepageLastmod = getNewestDate([
-    guide.priceRefreshedAt,
-    guide.exportedAt,
+    guideData.priceRefreshedAt,
+    guideData.exportedAt,
     ...cardList.map(getCardLastmod),
   ]);
   const urls = [
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
+    ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -100,29 +123,23 @@ ${urls}
   await writeFile(SITEMAP_PATH, sitemap, "utf8");
 }
 
-function renderCardPage(card) {
-  const title = `${card.name} Sleepy Pokemon Card - ${[card.setName, card.number].filter(Boolean).join(" ")}`.trim();
-  const description = buildDescription(card);
-  const visibleDescription = buildVisibleSummary(card);
-  const pageHeading = `${card.name || card.pokemon || "Pokemon"} Sleepy Pokemon Card`;
-  const imageAlt = buildImageAlt(card);
-  const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
-  const image = card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
-  const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
-  const release = formatDate(card.setReleaseDate) || "Unknown";
+function renderGuidePage(guide) {
+  const title = guide.title || "Sleepy Pokemon Card Guide";
+  const description = guide.metaDescription || guide.description || "A curated Sleepy Pokemon card guide for collectors.";
+  const canonicalUrl = `${SITE_URL}/guides/${guide.slug}/`;
+  const image = guide.cards[0]?.card.imageLarge || guide.cards[0]?.card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ItemPage",
+    "@type": "CollectionPage",
     name: title,
     url: canonicalUrl,
     description,
     image,
-    about: {
+    mainEntity: guide.cards.map(({ card }) => ({
       "@type": "Thing",
-      name: card.name || card.pokemon || "Pokemon card",
-      description,
-    },
+      name: `${card.name} Sleepy Pokemon Card`,
+      url: `${SITE_URL}/cards/${card.slug}/`,
+    })),
   };
 
   return `<!doctype html>
@@ -130,7 +147,7 @@ function renderCardPage(card) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(title)}</title>
+    <title>${escapeHtml(title)} | Sleepy Pokemon Cards</title>
     <meta name="description" content="${escapeAttribute(description)}" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />
@@ -152,13 +169,13 @@ function renderCardPage(card) {
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <link rel="stylesheet" href="../../styles.css" />
   </head>
-  <body data-app-mode="card-page">
-    <div class="app-shell card-page-shell">
+  <body data-app-mode="guide-page">
+    <div class="app-shell guide-page-shell">
       <header class="topbar">
         <a class="brand-lockup card-page-brand" href="../../" aria-label="Back to Sleepy Pokemon Cards guide">
           <span class="brand-mark" aria-hidden="true"></span>
           <div>
-            <p class="eyebrow">Sleepy card detail</p>
+            <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
             <p class="brand-title">Sleepy Pokemon Cards</p>
           </div>
         </a>
@@ -167,28 +184,16 @@ function renderCardPage(card) {
         </div>
       </header>
 
-      <main class="card-page-main">
-        <article class="card-detail-frame card-page-detail">
-          <div class="detail-image-frame">
-            ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
-          </div>
-          <div class="detail-copy">
-            <p class="eyebrow">${escapeHtml([card.setName, card.number].filter(Boolean).join(" / ") || "Card preview")}</p>
-            <h1>${escapeHtml(pageHeading)}</h1>
-            <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.rarity].filter(Boolean).join(" / "))}</p>
-            <p class="card-page-summary">${escapeHtml(visibleDescription)}</p>
-            <div class="price-pill card-page-price">${escapeHtml(priceLabel)}</div>
-            <div class="meta-grid">
-              ${metaItem("Set", card.setName)}
-              ${metaItem("Number", card.number)}
-              ${metaItem("Rarity", card.rarity)}
-              ${metaItem("Artist", card.artist || "Unknown")}
-              ${metaItem("Release", release)}
-              ${metaItem("Language", card.language || "English")}
-            </div>
-            ${card.notes ? `<p class="notes">${escapeHtml(card.notes)}</p>` : ""}
-          </div>
-        </article>
+      <main class="guide-page-main">
+        <section class="guide-hero" aria-labelledby="guideTitle">
+          <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
+          <h1 id="guideTitle">${escapeHtml(title)}</h1>
+          <p>${escapeHtml(guide.description || description)}</p>
+        </section>
+
+        <section class="guide-card-list" aria-label="Cards in this guide">
+${guide.cards.map((entry, index) => renderGuideCard(entry, index)).join("\n")}
+        </section>
       </main>
     </div>
   </body>
@@ -196,18 +201,24 @@ function renderCardPage(card) {
 `;
 }
 
-function metaItem(label, value) {
-  return `
-              <div class="meta-item">
-                <span>${escapeHtml(label)}</span>
-                <strong>${escapeHtml(value || "-")}</strong>
-              </div>`;
-}
-
-function buildDescription(card) {
-  const artist = card.artist ? ` illustrated by ${card.artist}` : "";
-  const setPart = card.setName ? ` from ${card.setName}` : "";
-  return `${card.name || card.pokemon}${setPart} is a sleepy Pokemon card${artist}. View set, number, rarity, release date, and collector details.`.replace(/\s+/g, " ").trim();
+function renderGuideCard(entry, index) {
+  const card = entry.card;
+  const image = card.imageSmall || card.imageLarge;
+  const price = numericOrNull(card.priceMarket);
+  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
+  const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
+  return `          <article class="guide-card">
+            <a class="guide-card-image" href="../../cards/${escapeAttribute(card.slug)}/" aria-label="View ${escapeAttribute(card.name)} card details">
+              ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+            </a>
+            <div class="guide-card-copy">
+              <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
+              <h2><a href="../../cards/${escapeAttribute(card.slug)}/">${escapeHtml(card.name)} Sleepy Pokemon Card</a></h2>
+              <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
+              <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
+              <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>
+            </div>
+          </article>`;
 }
 
 function buildVisibleSummary(card) {
@@ -242,7 +253,7 @@ function getCardLastmod(card) {
     card.updatedAt,
     card.priceUpdatedAt,
     card.createdAt,
-    guide.exportedAt,
+    guideData.exportedAt,
   ]);
 }
 
@@ -253,7 +264,6 @@ function getNewestDate(values) {
     .sort();
   return dates.at(-1) || "2026-05-01";
 }
-
 
 function sitemapUrl(loc, lastmod, changefreq, priority) {
   return `  <url>
@@ -270,14 +280,6 @@ function normalizeDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return "";
   const date = new Date(`${normalized}T00:00:00Z`);
   return Number.isNaN(date.getTime()) ? "" : normalized;
-}
-
-function formatDate(value) {
-  const normalized = normalizeDate(value);
-  if (!normalized) return "";
-  const date = new Date(`${normalized}T00:00:00`);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "numeric" }).format(date);
 }
 
 function formatCurrency(value) {
