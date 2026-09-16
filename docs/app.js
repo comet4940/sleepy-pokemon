@@ -1,7 +1,7 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 const CARD_RENDER_BATCH_SIZE = 24;
-const GOOGLE_ANALYTICS_ID = "G-3HFVE8BEZH";
+const SEARCH_ANALYTICS_DELAY = 700;
 
 const priorityRank = {
   High: 0,
@@ -22,6 +22,7 @@ const state = {
     sort: PUBLIC_DEFAULT_SORT,
   },
   renderToken: 0,
+  searchAnalyticsTimer: 0,
 };
 
 const elements = {};
@@ -34,7 +35,7 @@ async function init() {
   state.cards = await loadPublishedCards();
   assignRandomOrder();
   render();
-  scheduleAnalytics();
+  trackEvent("catalog_loaded", { card_count: state.cards.length });
 }
 
 function cacheElements() {
@@ -68,6 +69,7 @@ function bindEvents() {
   bind(elements.searchFilter, "input", () => {
     state.filters.search = elements.searchFilter.value.trim();
     renderCards();
+    scheduleSearchAnalytics();
   });
 
   [
@@ -81,6 +83,11 @@ function bindEvents() {
     bind(element, "change", () => {
       state.filters[key] = element.value;
       renderCards();
+      trackEvent(key === "sort" ? "sort_changed" : "filter_applied", {
+        filter_name: key,
+        filter_value: getAnalyticsFilterValue(key, element.value),
+        result_count: getFilteredCards().length,
+      });
     });
   });
 
@@ -96,30 +103,6 @@ function bindEvents() {
 }
 
 
-function scheduleAnalytics() {
-  if (!GOOGLE_ANALYTICS_ID || window.location.protocol === "file:") return;
-
-  const loadAnalytics = () => {
-    if (window.gtag) return;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function gtag(){window.dataLayer.push(arguments);};
-    window.gtag("js", new Date());
-    window.gtag("config", GOOGLE_ANALYTICS_ID);
-
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GOOGLE_ANALYTICS_ID)}`;
-    document.head.append(script);
-  };
-
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(loadAnalytics, { timeout: 4000 });
-  } else {
-    window.setTimeout(loadAnalytics, 2500);
-  }
-}
-
-
 function bind(element, eventName, handler) {
   if (!element) return;
   element.addEventListener(eventName, handler);
@@ -127,6 +110,7 @@ function bind(element, eventName, handler) {
 
 function openFiltersDialog() {
   elements.filtersDialog.showModal();
+  trackEvent("filters_opened");
   window.setTimeout(() => elements.searchFilter.focus(), 50);
 }
 
@@ -377,6 +361,7 @@ function openCardDetail(card) {
   elements.detailNotes.textContent = card.notes || "";
   elements.detailNotes.classList.toggle("hidden", !card.notes);
   elements.cardDetailDialog.showModal();
+  trackEvent("card_opened", getCardAnalyticsParams(card));
 }
 
 function closeCardDetail() {
@@ -442,6 +427,7 @@ function downloadChecklist() {
   anchor.click();
   anchor.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  trackEvent("checklist_downloaded", { card_count: state.cards.length });
   showToast("Checklist downloaded.");
 }
 
@@ -462,6 +448,40 @@ function clearFilters() {
     sort: PUBLIC_DEFAULT_SORT,
   };
   render();
+  trackEvent("filters_cleared", { result_count: state.cards.length });
+}
+
+function scheduleSearchAnalytics() {
+  window.clearTimeout(state.searchAnalyticsTimer);
+  state.searchAnalyticsTimer = window.setTimeout(() => {
+    if (!state.filters.search) return;
+    trackEvent("search_used", {
+      search_length: state.filters.search.length,
+      result_count: getFilteredCards().length,
+    });
+  }, SEARCH_ANALYTICS_DELAY);
+}
+
+function getCardAnalyticsParams(card) {
+  return {
+    card_name: card.name,
+    card_pokemon: card.pokemon,
+    card_set: card.setName,
+    card_number: card.number,
+    card_rarity: card.rarity,
+    card_language: card.language,
+    price_market: getDisplayPrice(card) || undefined,
+  };
+}
+
+function getAnalyticsFilterValue(key, value) {
+  if (key === "maxPrice") return numericOrNull(value) ?? "none";
+  return value || "all";
+}
+
+function trackEvent(eventName, params = {}) {
+  if (!window.sleepyAnalytics) return;
+  window.sleepyAnalytics.track(eventName, params);
 }
 
 function uniqueValues(key) {

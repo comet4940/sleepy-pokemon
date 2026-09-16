@@ -35,6 +35,7 @@
         "description": "A curated collector guide to sleepy Pokemon cards."
       }
     </script>
+    <script defer src="analytics.js" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-app-mode="public">
@@ -61,7 +62,7 @@
             </div>
             <div class="library-actions">
               <div class="price-status" id="priceStatus" aria-live="polite"></div>
-              <a class="icon-button coffee-button" href="https://buymeacoffee.com/cometakira" target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee" title="Buy me a coffee">
+              <a class="icon-button coffee-button" href="https://buymeacoffee.com/cometakira" target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee" title="Buy me a coffee" data-analytics-event="coffee_clicked">
                 <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
                   <path d="M5 7h11v7a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V7Z" />
                   <path d="M16 9h2.25a2.75 2.75 0 0 1 0 5.5H16" />
@@ -69,7 +70,7 @@
                   <path d="M4 21h14" />
                 </svg>
               </a>
-              <a class="button subtle" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer">
+              <a class="button subtle" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer" data-analytics-event="sleepy_card_submit_clicked">
                 Submit a sleepy card!
               </a>
               <button class="button subtle" id="downloadChecklistButton" type="button">

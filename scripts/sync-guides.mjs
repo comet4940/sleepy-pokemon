@@ -167,6 +167,7 @@ function renderGuidePage(guide) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
+    <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
     <link rel="stylesheet" href="../../styles.css" />
   </head>
   <body data-app-mode="guide-page">
@@ -192,7 +193,7 @@ function renderGuidePage(guide) {
         </section>
 
         <section class="guide-card-list" aria-label="Cards in this guide">
-${guide.cards.map((entry, index) => renderGuideCard(entry, index)).join("\n")}
+${guide.cards.map((entry, index) => renderGuideCard(entry, index, guide.slug)).join("\n")}
         </section>
       </main>
     </div>
@@ -201,19 +202,19 @@ ${guide.cards.map((entry, index) => renderGuideCard(entry, index)).join("\n")}
 `;
 }
 
-function renderGuideCard(entry, index) {
+function renderGuideCard(entry, index, guideSlug) {
   const card = entry.card;
   const image = card.imageSmall || card.imageLarge;
   const price = numericOrNull(card.priceMarket);
   const priceLabel = price === null ? "No current market price" : formatCurrency(price);
   const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
   return `          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/${escapeAttribute(card.slug)}/" aria-label="View ${escapeAttribute(card.name)} card details">
+            <a class="guide-card-image" href="../../cards/${escapeAttribute(card.slug)}/" aria-label="View ${escapeAttribute(card.name)} card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">
               ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
-              <h2><a href="../../cards/${escapeAttribute(card.slug)}/">${escapeHtml(card.name)} Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/${escapeAttribute(card.slug)}/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">${escapeHtml(card.name)} Sleepy Pokemon Card</a></h2>
               <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
               <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
               <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>
