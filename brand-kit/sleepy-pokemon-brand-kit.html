@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sleepy Pokemon Brand Kit Draft</title>
+    <style>
+      :root {
+        --midnight: #202838;
+        --navy: #263143;
+        --paper: #fff7e8;
+        --cream: #fff2cf;
+        --lamp: #efbd73;
+        --lavender: #c7bbd8;
+        --blue: #8ba7bd;
+        --mint: #8ac5b7;
+        --coral: #e89d8f;
+        --ink-muted: #687385;
+        --line: rgba(38, 49, 67, 0.2);
+        --shadow: 0 24px 70px rgba(32, 40, 56, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #171b24;
+        color: var(--navy);
+        font-family: Avenir, "Trebuchet MS", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        display: grid;
+        gap: 28px;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 20px 56px;
+      }
+
+      .deck-header {
+        color: var(--paper);
+        display: grid;
+        gap: 8px;
+      }
+
+      .deck-header h1,
+      .deck-header p,
+      .slide h2,
+      .slide h3,
+      .slide p {
+        margin: 0;
+      }
+
+      .deck-header h1 {
+        font-size: clamp(34px, 6vw, 68px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .deck-header p {
+        color: rgba(255, 247, 232, 0.72);
+        font-size: 18px;
+        line-height: 1.45;
+        max-width: 760px;
+      }
+
+      .slides {
+        display: grid;
+        gap: 24px;
+      }
+
+      .slide {
+        min-height: 620px;
+        border-radius: 26px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+
+      .slide.dark {
+        background: var(--midnight);
+        color: var(--paper);
+      }
+
+      .slide.full {
+        grid-template-columns: 1fr;
+      }
+
+      .pane {
+        padding: 34px;
+        display: grid;
+        align-content: space-between;
+        gap: 24px;
+      }
+
+      .pane.center {
+        align-content: center;
+        justify-items: center;
+      }
+
+      .eyebrow {
+        color: currentColor;
+        opacity: 0.58;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      p {
+        color: currentColor;
+        opacity: 0.76;
+        font-size: 17px;
+        line-height: 1.52;
+      }
+
+      .big-statement {
+        font-size: clamp(42px, 6vw, 78px);
+        line-height: 0.98;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .logo-lockup {
+        width: min(100%, 520px);
+        border-radius: 26px;
+        display: block;
+      }
+
+      .logo-mark {
+        width: min(72%, 250px);
+        display: block;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .tile {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px;
+        background: rgba(255, 250, 240, 0.7);
+        display: grid;
+        gap: 8px;
+      }
+
+      .dark .tile {
+        background: rgba(255, 247, 232, 0.08);
+        border-color: rgba(255, 247, 232, 0.18);
+      }
+
+      .quote {
+        border-left: 5px solid var(--lamp);
+        background: #fffaf0;
+        color: var(--navy);
+        border-radius: 0 14px 14px 0;
+        padding: 18px;
+        font-size: 20px;
+        line-height: 1.38;
+      }
+
+      .voice-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .voice-card {
+        border: 1px solid var(--line);
+        background: #fffaf0;
+        border-radius: 14px;
+        padding: 16px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .tag {
+        color: var(--mint);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .tag.no {
+        color: var(--coral);
+      }
+
+      .palette {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .swatch {
+        min-height: 178px;
+        border-radius: 18px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        border: 1px solid rgba(38, 49, 67, 0.12);
+      }
+
+      .swatch.dark-text {
+        color: var(--navy);
+      }
+
+      .swatch.light-text {
+        color: var(--paper);
+      }
+
+      .swatch span {
+        opacity: 0.72;
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .type-board {
+        display: grid;
+        gap: 18px;
+      }
+
+      .type-row {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 18px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .display-type {
+        font-size: clamp(42px, 6vw, 72px);
+        font-weight: 800;
+        line-height: 0.98;
+      }
+
+      .body-type {
+        font-size: 26px;
+        line-height: 1.25;
+      }
+
+      .note-type {
+        color: #5e9f94;
+        font-family: "Bradley Hand", "Comic Sans MS", cursive;
+        font-size: 36px;
+        line-height: 1.08;
+      }
+
+      .ui-preview {
+        display: grid;
+        gap: 14px;
+        background: #fffaf0;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .search {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        min-height: 56px;
+        padding: 15px 18px;
+        color: var(--ink-muted);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 9px 13px;
+        background: var(--paper);
+        color: var(--navy);
+        font-size: 14px;
+      }
+
+      .chip.active {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: var(--paper);
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .mini-card {
+        min-height: 110px;
+        border-radius: 12px;
+        border: 1px solid rgba(38, 49, 67, 0.13);
+        background: linear-gradient(160deg, var(--cream), var(--blue));
+      }
+
+      .mini-card:nth-child(2) {
+        background: linear-gradient(160deg, var(--cream), var(--mint));
+      }
+
+      .mini-card:nth-child(3) {
+        background: linear-gradient(160deg, var(--cream), var(--lavender));
+      }
+
+      .mini-card:nth-child(4) {
+        background: linear-gradient(160deg, var(--cream), var(--coral));
+      }
+
+      .note-box {
+        background: #fffaf0;
+        border-left: 5px solid var(--lamp);
+        border-radius: 0 14px 14px 0;
+        padding: 18px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .dont-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .dont-row {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(255, 247, 232, 0.18);
+      }
+
+      .no-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--coral);
+        color: var(--navy);
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+      }
+
+      @media (max-width: 820px) {
+        main {
+          padding: 20px 12px 40px;
+        }
+
+        .slide {
+          grid-template-columns: 1fr;
+          min-height: unset;
+        }
+
+        .pane {
+          padding: 24px;
+        }
+
+        .card-grid,
+        .palette {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="deck-header">
+        <h1>Sleepy Pokemon Brand Kit Draft</h1>
+        <p>A practical visual direction deck for the hybrid brand: Moonlit Binder feeling, Cozy Checklist clarity, and a soft stacked-card logo direction.</p>
+      </header>
+
+      <section class="slides">
+        <article class="slide dark">
+          <div class="pane">
+            <span class="eyebrow">01. Brand Cover</span>
+            <div>
+              <h2>Sleepy Pokemon</h2>
+              <p>A collector-built guide to peaceful, sleepy, and sleep-adjacent Pokemon card art.</p>
+            </div>
+            <p>Chosen direction: soft stacked cards, blue sleep marks, one tiny star, and a warm-but-useful product voice.</p>
+          </div>
+          <div class="pane center">
+            <img class="logo-lockup" src="assets/logo-lockup-draft.png" alt="Sleepy Pokemon logo lockup draft" />
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">02. Brand Essence</span>
+            <div>
+              <h2>All the Sleepy Pokemon. Curated with care.</h2>
+              <p>Sleepy Pokemon is a quiet archive of tiny peaceful scenes, kept by someone who noticed. It should feel complete, but never cold; useful, but never generic.</p>
+            </div>
+            <p>The emotional promise is not just finding cards. It is finding the little restful moments hiding inside a huge collecting world.</p>
+          </div>
+          <div class="pane">
+            <div class="card-grid">
+              <div class="tile"><h3>Completeness</h3><p>Every sleepy and sleep-adjacent card deserves a place.</p></div>
+              <div class="tile"><h3>Human curation</h3><p>Cards belong because the artwork says something restful.</p></div>
+              <div class="tile"><h3>Serendipity</h3><p>Random browsing should feel like opening a binder to a perfect page.</p></div>
+              <div class="tile"><h3>Respect</h3><p>No ads, no paywalls, no sponsored placement, no visual noise over the cards.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">03. Logo Direction</span>
+            <div>
+              <h2>Stacked sleepy cards, with one small star.</h2>
+              <p>The mark should be soft, clear, and card-first. The sleep cue should feel drawn into the card world, not bolted on as a generic icon.</p>
+            </div>
+            <p>This is a direction image, not final vector production art.</p>
+          </div>
+          <div class="pane center">
+            <img class="logo-mark" src="assets/logo-mark-draft.png" alt="Sleepy Pokemon stacked card logo mark draft" />
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">04. Voice System</span>
+            <div>
+              <h2>Warm, specific, collector-to-collector.</h2>
+              <p>The voice should sound like Comet actually looked at the card art and made a tiny judgment call. Gentle humor is welcome. Generic cozy filler is not.</p>
+            </div>
+            <p>Comet's voice is observational first, charming second.</p>
+          </div>
+          <div class="pane">
+            <div class="voice-list">
+              <div class="voice-card"><span class="tag">Say this</span><p>"Technically awake. Spiritually asleep."</p></div>
+              <div class="voice-card"><span class="tag">Say this</span><p>"This one counts because the whole scene feels seconds from sleep."</p></div>
+              <div class="voice-card"><span class="tag no">Not this</span><p>"Cozy vibes for your sleepy Pokemon journey."</p></div>
+              <div class="voice-card"><span class="tag no">Not this</span><p>"Unlock premium collecting with sponsored recommendations."</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide dark">
+          <div class="pane">
+            <span class="eyebrow">05. Color System</span>
+            <div>
+              <h2>Night archive, paper warmth, useful accents.</h2>
+              <p>The palette should not become one-note purple or sleepy-app blue. It needs enough range for product UI, card framing, and rare editorial moments.</p>
+            </div>
+            <p>Use dark colors for atmosphere, cream for readability, and accents only where they help someone browse.</p>
+          </div>
+          <div class="pane">
+            <div class="palette">
+              <div class="swatch light-text" style="background:#202838"><strong>Midnight Ink</strong><span>#202838</span></div>
+              <div class="swatch light-text" style="background:#263143"><strong>Binder Navy</strong><span>#263143</span></div>
+              <div class="swatch dark-text" style="background:#fff7e8"><strong>Moon Paper</strong><span>#FFF7E8</span></div>
+              <div class="swatch dark-text" style="background:#efbd73"><strong>Lamp Glow</strong><span>#EFBD73</span></div>
+              <div class="swatch dark-text" style="background:#8ac5b7"><strong>Checklist Mint</strong><span>#8AC5B7</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">06. Typography</span>
+            <div>
+              <h2>Clean product type with one human accent.</h2>
+              <p>Readable, friendly, and useful. Save the handmade feeling for rare Comet's Notes and small moments.</p>
+            </div>
+            <p>Priority: mobile readability, fast scanning, no precious tiny type.</p>
+          </div>
+          <div class="pane">
+            <div class="type-board">
+              <div class="type-row"><span class="eyebrow">Display / Logo</span><div class="display-type">Sleepy Pokemon</div><p>Avenir-like rounded clarity, confident but not franchise-like.</p></div>
+              <div class="type-row"><span class="eyebrow">Body / UI</span><div class="body-type">Find cards by Pokemon, set, mood, and scene.</div><p>Plain enough for search, filters, metadata, and SEO headings.</p></div>
+              <div class="type-row"><span class="eyebrow">Rare Accent</span><div class="note-type">Comet's notes feel found.</div><p>Use only for special human commentary, never core UI.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">07. UI Ingredients</span>
+            <div>
+              <h2>Useful first, quietly charming second.</h2>
+              <p>Search, filters, chips, and random browsing should feel like collection tools from a lovingly maintained binder.</p>
+            </div>
+            <p>Cards get the visual attention. Controls stay calm and dependable.</p>
+          </div>
+          <div class="pane">
+            <div class="ui-preview">
+              <div class="search"><span>Search by Pokemon, set, mood...</span><strong>⌕</strong></div>
+              <div class="chips">
+                <span class="chip active">All cards</span>
+                <span class="chip">Actually asleep</span>
+                <span class="chip">Sleep-adjacent</span>
+                <span class="chip">Moonlit</span>
+                <span class="chip">Blanket energy</span>
+              </div>
+              <div class="mini-grid"><div class="mini-card"></div><div class="mini-card"></div><div class="mini-card"></div><div class="mini-card"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">08. Card Detail Recipe</span>
+            <div>
+              <h2>The card is the hero. The brand is the frame.</h2>
+              <p>Every detail page should make the artwork inspectable, then explain why it belongs in the collection.</p>
+            </div>
+            <p>Metadata stays structured and crawlable. Commentary stays human and optional.</p>
+          </div>
+          <div class="pane">
+            <div class="ui-preview">
+              <div class="mini-card" style="min-height:240px;"></div>
+              <h3>Pikachu</h3>
+              <p>A small restful scene with enough softness to belong in the archive.</p>
+              <div class="note-box"><strong>Comet's Note</strong><p>Technically awake. Spiritually asleep.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide dark">
+          <div class="pane">
+            <span class="eyebrow">09. Comet's Notes</span>
+            <div>
+              <h2>Rare notes should feel like margin discoveries.</h2>
+              <p>Comet's Notes are not flavor text for every card. They are small human moments that make the archive feel lovingly kept.</p>
+            </div>
+            <p>Use when a card has a debatable inclusion, a special observation, or a delightful art-specific reason to call out.</p>
+          </div>
+          <div class="pane">
+            <div class="quote">"Sleep-adjacent, but emotionally undeniable."</div>
+            <div class="quote">"The whole scene feels like it is trying not to wake anyone up."</div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">10. Homepage Direction</span>
+            <div>
+              <h2>Promise, search, serendipity, index.</h2>
+              <p>The homepage should immediately say what the site is, make search obvious, keep random browsing delightful, and preserve crawlable access to the full card collection.</p>
+            </div>
+            <p>No cinematic landing page that delays the cards. The first screen should already feel like the collection.</p>
+          </div>
+          <div class="pane">
+            <div class="ui-preview">
+              <span class="eyebrow">Sleepy Pokemon</span>
+              <h3>Find every sleepy Pokemon card.</h3>
+              <p>From obvious naps to deeply debatable cozy little scenes.</p>
+              <div class="search"><span>Search by Pokemon, set, mood...</span><strong>⌕</strong></div>
+              <div class="chips"><span class="chip active">Random card</span><span class="chip">Browse all</span></div>
+              <div class="mini-grid"><div class="mini-card"></div><div class="mini-card"></div><div class="mini-card"></div><div class="mini-card"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="pane">
+            <span class="eyebrow">11. My Sleepy List Preview</span>
+            <div>
+              <h2>The future list should feel like your own binder page.</h2>
+              <p>My Sleepy List can be practical without becoming account-heavy. Saving cards should feel personal, calm, and collector-native.</p>
+            </div>
+            <p>No gamified streaks, no scarcity pressure, no marketplace-first framing.</p>
+          </div>
+          <div class="pane">
+            <div class="ui-preview">
+              <div class="tile"><h3>Pikachu</h3><p>Saved for blanket energy</p></div>
+              <div class="tile"><h3>Snorlax</h3><p>Classic nap situation</p></div>
+              <div class="tile"><h3>Umbreon</h3><p>Moonlit rest</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide dark">
+          <div class="pane">
+            <span class="eyebrow">12. Restraint and Don'ts</span>
+            <div>
+              <h2>Protect the cards, the search intent, and the trust.</h2>
+              <p>The brand succeeds when it makes the collection feel loved without making it harder to browse, index, or believe.</p>
+            </div>
+            <p>SEO architecture, card metadata, and plain utility are part of the brand because they keep the promise honest.</p>
+          </div>
+          <div class="pane">
+            <div class="dont-list">
+              <div class="dont-row"><span class="no-mark">×</span><p><strong>No official Pokemon imitation.</strong><br>Avoid franchise-like logo colors, marks, and visual language.</p></div>
+              <div class="dont-row"><span class="no-mark">×</span><p><strong>No generic cozy filler.</strong><br>Every line should connect to cards, art, collecting, or Comet's judgment.</p></div>
+              <div class="dont-row"><span class="no-mark">×</span><p><strong>No monetization-first layout.</strong><br>Support links stay quiet, optional, and never ranking-driven.</p></div>
+              <div class="dont-row"><span class="no-mark">×</span><p><strong>No landing page that hides the collection.</strong><br>The cards and search experience should show up immediately.</p></div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

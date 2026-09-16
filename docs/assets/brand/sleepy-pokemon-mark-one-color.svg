@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
-  <title id="title">Sleepy Pokemon mark</title>
-  <desc id="desc">Two slightly offset trading cards with a small sparkle.</desc>
+  <title id="title">Sleepy Pokemon one-color mark</title>
+  <desc id="desc">One-color version of the Sleepy Pokemon card-stack mark.</desc>
   <g transform="translate(51,11)">
     <path d="M 0 -7 C 0.8 -2.6 2.6 -0.8 7 0 C 2.6 0.8 0.8 2.6 0 7 C -0.8 2.6 -2.6 0.8 -7 0 C -2.6 -0.8 -0.8 -2.6 0 -7 Z" fill="#17263C"/>
   </g>
   <g transform="translate(32,35.5) scale(0.86) translate(-32,-32)">
     <g transform="translate(2.4,-1)" stroke="#17263C" stroke-width="3.49" stroke-linejoin="round">
-      <rect x="10" y="17" width="24" height="34" rx="6" fill="#E29684" transform="rotate(-14 22 34)"/>
-      <rect x="27" y="14" width="24" height="34" rx="6" fill="#9FC8BC" transform="rotate(7 39 31)"/>
+      <rect x="10" y="17" width="24" height="34" rx="6" fill="#17263C" transform="rotate(-14 22 34)"/>
+      <rect x="27" y="14" width="24" height="34" rx="6" fill="#FCF4E4" transform="rotate(7 39 31)"/>
     </g>
   </g>
 </svg>

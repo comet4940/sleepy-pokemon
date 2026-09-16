@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
   <title id="title">Sleepy Pokemon favicon</title>
-  <desc id="desc">A small sleepy card stack with a star.</desc>
-  <rect width="64" height="64" rx="16" fill="#FFF7E8"/>
-  <rect x="13" y="18" width="25" height="34" rx="5" fill="#E89D8F" stroke="#263143" stroke-width="2.4" transform="rotate(-10 25.5 35)"/>
-  <rect x="27" y="12" width="25" height="34" rx="5" fill="#8AC5B7" stroke="#263143" stroke-width="2.4" transform="rotate(8 39.5 29)"/>
-  <text x="20" y="36" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif" font-size="13">💤</text>
-  <text x="33" y="30" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif" font-size="13">💤</text>
-  <path d="M19 45h11M32 39h11" fill="none" stroke="#202838" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M51 7l2.4 5.8L59 15l-5.6 2.2L51 23l-2.4-5.8L43 15l5.6-2.2L51 7Z" fill="#EFBD73" stroke="#263143" stroke-width="1.5" stroke-linejoin="round"/>
+  <desc id="desc">Small-size Sleepy Pokemon card-stack mark.</desc>
+  <g transform="translate(2.4,-1)" stroke="#17263C" stroke-width="4.2" stroke-linejoin="round">
+    <rect x="10" y="17" width="24" height="34" rx="6" fill="#E29684" transform="rotate(-14 22 34)"/>
+    <rect x="27" y="14" width="24" height="34" rx="6" fill="#9FC8BC" transform="rotate(7 39 31)"/>
+  </g>
 </svg>
