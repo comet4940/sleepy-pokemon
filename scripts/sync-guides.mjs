@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -66,8 +66,14 @@ function assignSlugs(cardList) {
 }
 
 async function writeGuidePages(guideList) {
-  await rm(GUIDES_DIR, { recursive: true, force: true });
   await mkdir(GUIDES_DIR, { recursive: true });
+
+  const existingEntries = await readdir(GUIDES_DIR, { withFileTypes: true });
+  await Promise.all(existingEntries
+    .filter((entry) => !entry.name.startsWith("."))
+    .map((entry) => rm(`${GUIDES_DIR}/${entry.name}`, { recursive: true, force: true })));
+
+  await writeFile(`${GUIDES_DIR}/index.html`, renderGuideIndex(guideList), "utf8");
 
   await Promise.all(guideList.map(async (guide) => {
     const dir = `${GUIDES_DIR}/${guide.slug}`;
@@ -112,6 +118,8 @@ async function writeSitemap(cardList, guideList) {
   ]);
   const urls = [
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
+    sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "weekly", "0.9"),
+    sitemapUrl(`${SITE_URL}/about/`, homepageLastmod, "monthly", "0.7"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
@@ -121,6 +129,73 @@ ${urls}
 </urlset>
 `;
   await writeFile(SITEMAP_PATH, sitemap, "utf8");
+}
+
+function renderGuideIndex(guideList) {
+  const title = "Sleepy Pokemon Guides";
+  const description = "A growing collection of Sleepy Pokemon card guides, curated by Comet for collectors who like a little more cozy in their binders.";
+  const guideItems = guideList.map((guide) => `
+          <article class="guide-index-item">
+            <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
+            <h2><a href="${escapeAttribute(guide.slug)}/">${escapeHtml(guide.title)}</a></h2>
+            <p>${escapeHtml(guide.description || "A curated Sleepy Pokemon card guide for collectors.")}</p>
+            <a class="button subtle" href="${escapeAttribute(guide.slug)}/">Read guide</a>
+          </article>`).join("\n");
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${escapeHtml(title)} | Sleepy Pokemon</title>
+    <meta name="description" content="${escapeAttribute(description)}" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="${SITE_URL}/guides/" />
+    <link rel="icon" href="../assets/brand/sleepy-pokemon-favicon-v2.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../home-v2.css" />
+    <link rel="stylesheet" href="../guides-index.css" />
+    <script defer src="../analytics.js" data-page-type="guides-index"></script>
+    <script defer src="../home-theme.js?v=2"></script>
+  </head>
+  <body data-app-mode="guides-index">
+    <div class="app-shell guides-index-shell">
+      <header class="topbar">
+        <a class="brand-lockup" href="../" aria-label="Sleepy Pokemon home">
+          <svg class="sparkle-mark" viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
+            <g transform="translate(51,11)"><path d="M 0 -7 C 0.8 -2.6 2.6 -0.8 7 0 C 2.6 0.8 0.8 2.6 0 7 C -0.8 2.6 -2.6 0.8 -7 0 C -2.6 -0.8 -0.8 -2.6 0 -7 Z" fill="currentColor"/></g>
+            <g transform="translate(32,35.5) scale(0.86) translate(-32,-32)"><g transform="translate(2.4,-1)" stroke="currentColor" stroke-width="3.49" stroke-linejoin="round">
+              <rect x="10" y="17" width="24" height="34" rx="6" fill="#E29684" transform="rotate(-14 22 34)"/>
+              <rect x="27" y="14" width="24" height="34" rx="6" fill="#9FC8BC" transform="rotate(7 39 31)"/>
+            </g></g>
+          </svg>
+          <div>
+            <h1>Sleepy Pokemon</h1>
+            <p class="brand-byline">A collection by Comet</p>
+          </div>
+        </a>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <a href="../#collection">Collection</a>
+          <a href="./" aria-current="page">Guides</a>
+          <a href="../about/">About</a>
+          <button id="themeToggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Switch to dark mode"><span aria-hidden="true">Light</span><span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span><span aria-hidden="true">Dark</span></button>
+        </nav>
+      </header>
+
+      <main class="guides-index-main">
+        <section class="guides-index-intro" aria-labelledby="guidesIndexTitle">
+          <p class="eyebrow">Collector guides</p>
+          <h2 id="guidesIndexTitle">Sleepy Pokemon guides</h2>
+          <p>${escapeHtml(description)}</p>
+        </section>
+        <section class="guide-index-list" aria-label="Available guides">
+${guideItems}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+`;
 }
 
 function renderGuidePage(guide) {
@@ -151,7 +226,7 @@ function renderGuidePage(guide) {
     <meta name="description" content="${escapeAttribute(description)}" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />
-    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="../../assets/brand/sleepy-pokemon-favicon-v2.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../../assets/sleepy-pokemon.png" />
 
     <meta property="og:type" content="article" />
@@ -169,20 +244,31 @@ function renderGuidePage(guide) {
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
     <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../home-v2.css" />
+    <script defer src="../../home-theme.js?v=2"></script>
   </head>
   <body data-app-mode="guide-page">
     <div class="app-shell guide-page-shell">
       <header class="topbar">
-        <a class="brand-lockup card-page-brand" href="../../" aria-label="Back to Sleepy Pokemon Cards guide">
-          <span class="brand-mark" aria-hidden="true"></span>
+        <a class="brand-lockup" href="../../" aria-label="Sleepy Pokemon home">
+          <svg class="sparkle-mark" viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
+            <g transform="translate(51,11)"><path d="M 0 -7 C 0.8 -2.6 2.6 -0.8 7 0 C 2.6 0.8 0.8 2.6 0 7 C -0.8 2.6 -2.6 0.8 -7 0 C -2.6 -0.8 -0.8 -2.6 0 -7 Z" fill="currentColor"/></g>
+            <g transform="translate(32,35.5) scale(0.86) translate(-32,-32)"><g transform="translate(2.4,-1)" stroke="currentColor" stroke-width="3.49" stroke-linejoin="round">
+              <rect x="10" y="17" width="24" height="34" rx="6" fill="#E29684" transform="rotate(-14 22 34)"/>
+              <rect x="27" y="14" width="24" height="34" rx="6" fill="#9FC8BC" transform="rotate(7 39 31)"/>
+            </g></g>
+          </svg>
           <div>
-            <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
-            <p class="brand-title">Sleepy Pokemon Cards</p>
+            <h1>Sleepy Pokemon</h1>
+            <p class="brand-byline">A collection by Comet</p>
           </div>
         </a>
-        <div class="topbar-actions">
-          <a class="button subtle" href="../../">Back to guide</a>
-        </div>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <a href="../../#collection">Collection</a>
+          <a href="../../guides/">Guides</a>
+          <a href="../../about/">About</a>
+          <button id="themeToggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Switch to dark mode"><span aria-hidden="true">Light</span><span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span><span aria-hidden="true">Dark</span></button>
+        </nav>
       </header>
 
       <main class="guide-page-main">

@@ -6,7 +6,6 @@ const SEO_SYNC_SCRIPT = "scripts/sync-seo-index.mjs";
 const API_BASE_URL = "https://api.pokemontcg.io/v2";
 const API_SELECT_FIELDS = [
   "id",
-  "images",
   "tcgplayer",
   "cardmarket",
 ].join(",");
@@ -76,8 +75,7 @@ async function fetchCard(apiId) {
 
 function applyUpdates(card, apiCard, nextPrice) {
   const before = JSON.stringify(pickComparableFields(card));
-  if (apiCard.images?.small) card.imageSmall = apiCard.images.small;
-  if (apiCard.images?.large) card.imageLarge = apiCard.images.large;
+  // Image selection belongs to curation, not the price provider.
 
   if (nextPrice.market !== null) {
     card.priceMarket = nextPrice.market;

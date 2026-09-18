@@ -66,6 +66,13 @@ function cacheElements() {
 }
 
 function bindEvents() {
+  bind(document.querySelector("#resetSearchButton"), "click", clearFilters);
+  bind(document.querySelector("#surpriseButton"), "click", () => {
+    const cards = getFilteredCards();
+    if (!cards.length) return;
+    openCardDetail(cards[Math.floor(Math.random() * cards.length)]);
+    trackEvent("random_card_opened", { result_count: cards.length });
+  });
   bind(elements.searchFilter, "input", () => {
     state.filters.search = elements.searchFilter.value.trim();
     renderCards();
@@ -103,6 +110,7 @@ function bindEvents() {
 }
 
 
+
 function bind(element, eventName, handler) {
   if (!element) return;
   element.addEventListener(eventName, handler);
@@ -111,7 +119,7 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
-  window.setTimeout(() => elements.searchFilter.focus(), 50);
+  window.setTimeout(() => elements.pokemonFilter.focus(), 50);
 }
 
 async function loadPublishedCards() {
@@ -209,6 +217,8 @@ function renderCards() {
   const renderToken = state.renderToken + 1;
   state.renderToken = renderToken;
   elements.resultCount.textContent = `${cards.length} ${cards.length === 1 ? "card" : "cards"}`;
+  const surpriseButton = document.querySelector("#surpriseButton");
+  if (surpriseButton) surpriseButton.disabled = cards.length === 0;
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   elements.cardGrid.innerHTML = "";
 
@@ -309,7 +319,7 @@ function renderCard(card) {
         <div class="card-title-row">
           <div>
             <h3>${escapeHtml(card.name)}</h3>
-            <p class="card-subtitle">${escapeHtml(card.pokemon)} / ${escapeHtml(card.language)}</p>
+            <p class="card-subtitle">${escapeHtml(card.setName || card.language || "Card set")}</p>
           </div>
           <div class="price-pill">${escapeHtml(priceText)}</div>
         </div>
