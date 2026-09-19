@@ -156,7 +156,7 @@ function renderCardPage(card) {
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}"></script>
-    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../styles.css?v=3" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
   <body data-app-mode="card-page">

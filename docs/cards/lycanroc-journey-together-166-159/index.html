@@ -24,7 +24,7 @@
 
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemPage","name":"Lycanroc Sleepy Pokemon Card - Journey Together 166/159","url":"https://www.sleepypokemon.com/cards/lycanroc-journey-together-166-159/","description":"Lycanroc from Journey Together is a sleepy Pokemon card illustrated by GIDORA. View set, number, rarity, release date, and collector details.","image":"https://images.pokemontcg.io/sv9/166_hires.png","about":{"@type":"Thing","name":"Lycanroc","description":"Lycanroc from Journey Together is a sleepy Pokemon card illustrated by GIDORA. View set, number, rarity, release date, and collector details."}}</script>
     <script defer src="../../analytics.js" data-page-type="card" data-card-name="Lycanroc" data-card-pokemon="Lycanroc" data-card-set="Journey Together"></script>
-    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../styles.css?v=3" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
   <body data-app-mode="card-page">
@@ -48,7 +48,19 @@
           <a href="../../#collection">Browse</a>
           <a href="../../guides/">Guides</a>
           <a href="../../about/">About</a>
-          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+          <form class="header-search" action="../../#collection" method="get" role="search" data-header-search>
+            <label class="header-search-field">
+              <span class="sr-only">Search sleepy Pokemon cards</span>
+              <svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input type="search" name="q" autocomplete="off" placeholder="Search cards" data-header-search-input />
+              <button type="submit" aria-label="Search sleepy Pokemon cards">
+                <span aria-hidden="true">→</span>
+              </button>
+            </label>
+          </form>
         </nav>
       </header>
 

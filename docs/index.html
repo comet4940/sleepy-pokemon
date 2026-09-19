@@ -39,8 +39,8 @@
       }
     </script>
     <script defer src="analytics.js" data-page-type="home"></script>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="home-v3.css" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="home-v3.css?v=3" />
     <link rel="stylesheet" href="card-detail-v3.css" />
   </head>
   <body data-app-mode="public">
@@ -65,7 +65,19 @@
           <a href="#collection">Browse</a>
           <a href="guides/">Guides</a>
           <a href="about/">About</a>
-          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+          <form class="header-search" action="#collection" method="get" role="search" data-header-search>
+            <label class="header-search-field">
+              <span class="sr-only">Search sleepy Pokemon cards</span>
+              <svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input type="search" name="q" autocomplete="off" placeholder="Search cards" data-header-search-input />
+              <button type="submit" aria-label="Search sleepy Pokemon cards">
+                <span aria-hidden="true">→</span>
+              </button>
+            </label>
+          </form>
         </nav>
       </header>
       <!-- SITE_HEADER_END -->
@@ -128,8 +140,15 @@
           <div class="card-grid" id="cardGrid"></div>
           <div class="empty-state hidden" id="emptyState">
             <h3>No cards match</h3>
-            <p>Nothing tucked in here yet. Try another mood.</p>
+            <p>Nothing tucked in here yet. Try another search or send us the missing sleeper.</p>
           </div>
+          <aside class="search-suggestion-prompt" id="searchSuggestionPrompt" aria-labelledby="searchSuggestionTitle" hidden>
+            <div>
+              <h3 id="searchSuggestionTitle">Are we missing a snoozer?</h3>
+              <p>Tell Comet which sleepy card should join the stack.</p>
+            </div>
+            <a class="search-suggestion-link" id="searchSuggestionLink" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+          </aside>
         </section>
 
       </main>
@@ -400,7 +419,7 @@
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=4"></script>
 
   </body>
 </html>

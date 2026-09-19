@@ -19,7 +19,19 @@ export function renderSiteHeader(basePath = "") {
           <a href="${basePath}#collection">Browse</a>
           <a href="${basePath}guides/">Guides</a>
           <a href="${basePath}about/">About</a>
-          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+          <form class="header-search" action="${basePath}#collection" method="get" role="search" data-header-search>
+            <label class="header-search-field">
+              <span class="sr-only">Search sleepy Pokemon cards</span>
+              <svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input type="search" name="q" autocomplete="off" placeholder="Search cards" data-header-search-input />
+              <button type="submit" aria-label="Search sleepy Pokemon cards">
+                <span aria-hidden="true">→</span>
+              </button>
+            </label>
+          </form>
         </nav>
       </header>
 `.trim();

@@ -168,7 +168,7 @@ function renderGuidePage(guide) {
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
-    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../styles.css?v=3" />
   </head>
   <body data-app-mode="guide-page">
     <div class="app-shell guide-page-shell">
