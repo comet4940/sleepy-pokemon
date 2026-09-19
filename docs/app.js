@@ -163,6 +163,12 @@ function bindEvents() {
   bind(elements.suggestionDialog, "click", (event) => {
     if (event.target === elements.suggestionDialog) closeSuggestionDialog();
   });
+  bind(elements.suggestionDialog, "close", () => {
+    elements.suggestionForm?.reset();
+    elements.suggestionResults.innerHTML = "";
+    elements.suggestionSelected.hidden = true;
+    elements.suggestionSearchStatus.textContent = "";
+  });
   bind(elements.suggestionCardSearch, "input", handleSuggestionSearch);
   bind(elements.suggestionForm, "submit", handleSuggestionSubmit);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
@@ -247,6 +253,10 @@ function openSuggestionDialog() {
 
 function closeSuggestionDialog() {
   elements.suggestionDialog?.close();
+  elements.suggestionForm?.reset();
+  elements.suggestionResults.innerHTML = "";
+  elements.suggestionSelected.hidden = true;
+  elements.suggestionSearchStatus.textContent = "";
 }
 
 let suggestionSearchTimer = 0;
@@ -265,7 +275,13 @@ function handleSuggestionSearch() {
 
 async function searchSuggestionCards(query) {
   try {
-    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(`name:${query}* OR number:${query}*`)}&pageSize=8`, { mode: "cors" });
+    const numberMatch = query.match(/(?:^|\s)([A-Za-z0-9]+(?:\/[A-Za-z0-9]+)?)$/);
+    const name = query.replace(numberMatch?.[1] || "", "").trim();
+    const queryParts = [];
+    if (name) queryParts.push(`name:${name}*`);
+    if (numberMatch) queryParts.push(`number:${numberMatch[1]}*`);
+    const apiQuery = queryParts.length > 1 ? queryParts.join(" ") : (queryParts[0] || `name:${query}*`);
+    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(apiQuery)}&pageSize=8`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
     const cards = (await response.json()).data || [];
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
@@ -286,7 +302,8 @@ function selectSuggestionCard(card) {
   const details = `${card.name} — ${setName} · ${card.number || "No number"}`;
   elements.suggestionCard.value = details;
   elements.suggestionSelected.hidden = false;
-  elements.suggestionSelected.innerHTML = `<strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(setName)} · ${escapeHtml(card.number || "No number")}</span><button type="button" aria-label="Remove selected card">×</button>`;
+  const image = card.images?.small || card.imageSmall || "";
+  elements.suggestionSelected.innerHTML = `${image ? `<img src="${escapeHtml(image)}" alt="" />` : ""}<div><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(setName)} · ${escapeHtml(card.number || "No number")}</span></div><button type="button" aria-label="Remove selected card">×</button>`;
   elements.suggestionSelected.querySelector("button").addEventListener("click", () => {
     elements.suggestionCard.value = "";
     elements.suggestionSelected.hidden = true;
