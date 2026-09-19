@@ -16,10 +16,10 @@ export function renderSiteHeader(basePath = "") {
           </div>
         </a>
         <nav class="topbar-actions" aria-label="Main navigation">
-          <a href="${basePath}#collection">Browse</a>
+          <a href="${basePath}collection/">Browse</a>
           <a href="${basePath}guides/">Guides</a>
           <a href="${basePath}about/">About</a>
-          <form class="header-search" action="${basePath}#collection" method="get" role="search" data-header-search>
+          <form class="header-search" action="${basePath}collection/" method="get" role="search" data-header-search>
             <label class="header-search-field">
               <span class="sr-only">Search sleepy Pokemon cards</span>
               <svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

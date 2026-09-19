@@ -49,10 +49,13 @@ function cacheElements() {
   elements.collectionTitle = document.querySelector("#collectionTitle");
   elements.collectionMeta = document.querySelector("#collectionMeta");
   elements.clearCollectionButton = document.querySelector("#clearCollectionButton");
+  elements.activeSearchChip = document.querySelector("#activeSearchChip");
+  elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
   elements.searchSuggestionPrompt = document.querySelector("#searchSuggestionPrompt");
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
+  elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
   elements.surpriseButton = document.querySelector("#surpriseButton");
@@ -95,9 +98,9 @@ function bindEvents() {
 
   elements.moodChips.forEach((chip) => {
     bind(chip, "click", () => {
-      state.filters.mood = chip.dataset.mood || "all";
+      state.filters.mood = chip.classList.contains("is-active") ? "all" : (chip.dataset.mood || "all");
       state.showAllCards = true;
-      elements.searchFilter.value = state.filters.search;
+      if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
       elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip));
       renderCards();
       trackEvent("mood_filter_applied", {
@@ -130,18 +133,20 @@ function bindEvents() {
   });
 
   bind(elements.clearFiltersButton, "click", clearFilters);
+  bind(elements.clearFiltersLink, "click", clearFilters);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
-  bind(elements.searchSuggestionLink, "click", () => {
-    trackEvent("sleepy_card_suggestion_clicked", {
-      source: "search_results",
-      search_length: state.filters.search.length,
-      result_count: getFilteredCards().length,
+  elements.suggestionLinks.forEach((link) => {
+    bind(link, "click", () => {
+      trackEvent("sleepy_card_suggestion_clicked", {
+        source: link.dataset.suggestionSource || "unknown",
+        search_length: state.filters.search.length,
+        result_count: getFilteredCards().length,
+      });
     });
   });
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
   bind(elements.surpriseButton, "click", showRandomSleeper);
-  document.querySelectorAll('a[href="#collection"]').forEach((link) => bind(link, "click", expandCollection));
   bind(elements.clearCollectionButton, "click", clearFilters);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
@@ -163,6 +168,7 @@ function applyInitialSearch() {
 }
 
 function handleHeaderSearchSubmit(event) {
+  if (!elements.cardGrid) return;
   event.preventDefault();
   const query = elements.headerSearchInput.value.trim();
   state.filters = {
@@ -206,14 +212,16 @@ function bind(element, eventName, handler) {
 }
 
 function openFiltersDialog() {
+  if (!elements.filtersDialog) return;
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
-  window.setTimeout(() => elements.pokemonFilter.focus(), 50);
+  window.setTimeout(() => elements.pokemonFilter?.focus(), 50);
 }
 
 async function loadPublishedCards() {
   try {
-    const response = await fetch("published-cards.json", { cache: "no-store" });
+    const guidePath = document.body.dataset.guidePath || "published-cards.json";
+    const response = await fetch(guidePath, { cache: "no-store" });
     if (!response.ok) throw new Error(`Guide load failed with ${response.status}`);
     const payload = await response.json();
     const cards = Array.isArray(payload) ? payload : payload.cards;
@@ -275,10 +283,10 @@ function renderFilters() {
 }
 
 function syncFilterInputs() {
-  elements.searchFilter.value = state.filters.search;
+  if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
-  elements.maxPriceFilter.value = state.filters.maxPrice;
-  elements.sortSelect.value = state.filters.sort;
+  if (elements.maxPriceFilter) elements.maxPriceFilter.value = state.filters.maxPrice;
+  if (elements.sortSelect) elements.sortSelect.value = state.filters.sort;
 }
 
 function fillSelect(element, values, currentValue, allLabel) {
@@ -316,7 +324,9 @@ function renderCards() {
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
   if (elements.resultCount) elements.resultCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
   updateCollectionHeading(filteredCards.length);
+  renderActiveFilterControls();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
+  if (!elements.cardGrid) return;
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   if (elements.searchSuggestionPrompt) {
     elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
@@ -380,6 +390,36 @@ function hasActiveFilters() {
   );
 }
 
+function countActiveFilters() {
+  return [
+    Boolean(state.filters.search),
+    state.filters.mood !== "all",
+    state.filters.pokemon !== "all",
+    state.filters.set !== "all",
+    state.filters.rarity !== "all",
+    state.filters.language !== "all",
+    Boolean(state.filters.maxPrice),
+  ].filter(Boolean).length;
+}
+
+function renderActiveFilterControls() {
+  if (elements.activeSearchChip) {
+    const query = state.filters.search.trim();
+    elements.activeSearchChip.hidden = !query;
+    if (query) {
+      elements.activeSearchChip.innerHTML = `${escapeHtml(query)} <button type="button" aria-label="Remove search filter">×</button>`;
+      elements.activeSearchChip.querySelector("button").addEventListener("click", (event) => {
+        event.stopPropagation();
+        state.filters.search = "";
+        if (elements.headerSearchInput) elements.headerSearchInput.value = "";
+        syncSearchUrl("");
+        renderCards();
+      }, { once: true });
+    }
+  }
+  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() <= 1;
+}
+
 function getRecentlyAddedCards() {
   return [...state.cards]
     .sort((a, b) => compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b)))
@@ -395,20 +435,17 @@ function updateCollectionHeading(resultCount) {
   if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
-  } else if (search && mood) {
-    elements.collectionTitle.textContent = `Sleepy Pokemon matching “${search}” · ${mood}`;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
   } else if (search) {
-    elements.collectionTitle.textContent = `Sleepy Pokemon matching “${search}”`;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+    elements.collectionTitle.textContent = `Matching “${search}”`;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   } else if (mood) {
-    elements.collectionTitle.textContent = `Sleepy Pokemon · ${mood}`;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+    elements.collectionTitle.textContent = mood;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   } else {
     elements.collectionTitle.textContent = "Filtered sleepy Pokemon";
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   }
-  elements.clearCollectionButton.hidden = !active;
+  if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
 }
 
 function assignRandomOrder() {
@@ -527,7 +564,7 @@ function curationSleepinessFact(value) {
 }
 
 function closeCardDetail() {
-  elements.cardDetailDialog.close();
+  elements.cardDetailDialog?.close();
 }
 
 function getCardIdentity(card) {
@@ -653,7 +690,7 @@ function syncSearchUrl(query) {
   const url = new URL(window.location.href);
   if (query) url.searchParams.set("q", query);
   else url.searchParams.delete("q");
-  url.hash = "collection";
+  url.hash = "";
   window.history.replaceState(null, "", url);
 }
 
