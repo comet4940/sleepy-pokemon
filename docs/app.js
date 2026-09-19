@@ -208,7 +208,7 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
-  window.setTimeout(() => elements.searchFilter.focus(), 50);
+  window.setTimeout(() => elements.pokemonFilter.focus(), 50);
 }
 
 async function loadPublishedCards() {
@@ -376,8 +376,7 @@ function hasActiveFilters() {
     || state.filters.set !== "all"
     || state.filters.rarity !== "all"
     || state.filters.language !== "all"
-    || state.filters.maxPrice
-    || state.filters.sort !== PUBLIC_DEFAULT_SORT,
+    || state.filters.maxPrice,
   );
 }
 
