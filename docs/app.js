@@ -2,6 +2,7 @@ const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 const CARD_RENDER_BATCH_SIZE = 24;
 const SEARCH_ANALYTICS_DELAY = 700;
+const POKEMON_TCG_API = "https://api.pokemontcg.io/v2/cards";
 
 const priorityRank = {
   High: 0,
@@ -85,6 +86,16 @@ function cacheElements() {
   elements.detailCurationFacts = document.querySelector("#detailCurationFacts");
   elements.detailMoods = document.querySelector("#detailMoods");
   elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
+  elements.suggestionDialog = document.querySelector("#suggestionDialog");
+  elements.suggestionForm = document.querySelector("#suggestionForm");
+  elements.closeSuggestionButton = document.querySelector("#closeSuggestionButton");
+  elements.suggestionCardSearch = document.querySelector("#suggestionCardSearch");
+  elements.suggestionSearchStatus = document.querySelector("#suggestionSearchStatus");
+  elements.suggestionResults = document.querySelector("#suggestionResults");
+  elements.suggestionSelected = document.querySelector("#suggestionSelected");
+  elements.suggestionCard = document.querySelector("#suggestionCard");
+  elements.suggestionReason = document.querySelector("#suggestionReason");
+  elements.suggestionNotes = document.querySelector("#suggestionNotes");
 }
 
 function bindEvents() {
@@ -137,6 +148,10 @@ function bindEvents() {
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
   elements.suggestionLinks.forEach((link) => {
     bind(link, "click", () => {
+      if (link.hasAttribute("data-open-suggestion-form")) {
+        event?.preventDefault?.();
+        openSuggestionDialog();
+      }
       trackEvent("sleepy_card_suggestion_clicked", {
         source: link.dataset.suggestionSource || "unknown",
         search_length: state.filters.search.length,
@@ -144,6 +159,12 @@ function bindEvents() {
       });
     });
   });
+  bind(elements.closeSuggestionButton, "click", closeSuggestionDialog);
+  bind(elements.suggestionDialog, "click", (event) => {
+    if (event.target === elements.suggestionDialog) closeSuggestionDialog();
+  });
+  bind(elements.suggestionCardSearch, "input", handleSuggestionSearch);
+  bind(elements.suggestionForm, "submit", handleSuggestionSubmit);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
   bind(elements.surpriseButton, "click", showRandomSleeper);
@@ -216,6 +237,80 @@ function openFiltersDialog() {
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
   window.setTimeout(() => elements.pokemonFilter?.focus(), 50);
+}
+
+function openSuggestionDialog() {
+  if (!elements.suggestionDialog) return;
+  elements.suggestionDialog.showModal();
+  window.setTimeout(() => elements.suggestionCardSearch?.focus(), 50);
+}
+
+function closeSuggestionDialog() {
+  elements.suggestionDialog?.close();
+}
+
+let suggestionSearchTimer = 0;
+
+function handleSuggestionSearch() {
+  const query = elements.suggestionCardSearch.value.trim();
+  window.clearTimeout(suggestionSearchTimer);
+  if (query.length < 2) {
+    elements.suggestionResults.innerHTML = "";
+    elements.suggestionSearchStatus.textContent = query ? "Keep typing..." : "";
+    return;
+  }
+  elements.suggestionSearchStatus.textContent = "Looking through the card catalog...";
+  suggestionSearchTimer = window.setTimeout(() => searchSuggestionCards(query), 350);
+}
+
+async function searchSuggestionCards(query) {
+  try {
+    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(`name:${query}* OR number:${query}*`)}&pageSize=8`);
+    if (!response.ok) throw new Error("Card lookup failed");
+    const cards = (await response.json()).data || [];
+    elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
+    elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span></button>`).join("");
+    elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
+  } catch (error) {
+    elements.suggestionSearchStatus.textContent = "Card lookup is taking a nap. You can still describe it below.";
+    elements.suggestionResults.innerHTML = "";
+  }
+}
+
+function selectSuggestionCard(card) {
+  const details = `${card.name} — ${card.set?.name || "Unknown set"} · ${card.number || "No number"}`;
+  elements.suggestionCard.value = details;
+  elements.suggestionSelected.hidden = false;
+  elements.suggestionSelected.innerHTML = `<strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span><button type="button" aria-label="Remove selected card">×</button>`;
+  elements.suggestionSelected.querySelector("button").addEventListener("click", () => {
+    elements.suggestionCard.value = "";
+    elements.suggestionSelected.hidden = true;
+  });
+  elements.suggestionResults.innerHTML = "";
+  elements.suggestionSearchStatus.textContent = "Card tucked in.";
+}
+
+async function handleSuggestionSubmit(event) {
+  event.preventDefault();
+  if (!elements.suggestionCard.value) {
+    elements.suggestionSearchStatus.textContent = "Choose a card first, sleepyhead.";
+    elements.suggestionCardSearch.focus();
+    return;
+  }
+  const endpoint = elements.suggestionForm.dataset.emailEndpoint;
+  if (!endpoint || endpoint === "EMAIL_FORM_ENDPOINT_PLACEHOLDER") {
+    showToast("The suggestion form is ready, but its private email endpoint still needs to be connected.");
+    return;
+  }
+  const response = await fetch(endpoint, { method: "POST", body: new FormData(elements.suggestionForm), headers: { Accept: "application/json" } });
+  if (!response.ok) {
+    showToast("That suggestion did not send. Please try again in a moment.");
+    return;
+  }
+  elements.suggestionForm.reset();
+  elements.suggestionSelected.hidden = true;
+  closeSuggestionDialog();
+  showToast("Suggestion sent. Comet will tuck it into the review pile.");
 }
 
 async function loadPublishedCards() {
