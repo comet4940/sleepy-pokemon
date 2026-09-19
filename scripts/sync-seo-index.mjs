@@ -4,6 +4,7 @@ import { renderSiteHeader } from "./site-header.mjs";
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
 const INDEX_PATH = "docs/index.html";
+const COLLECTION_PATH = "docs/collection/index.html";
 const CARDS_DIR = "docs/cards";
 const SITEMAP_PATH = "docs/sitemap.xml";
 const START = "<!-- SEO_CARD_INDEX_START -->";
@@ -24,7 +25,8 @@ const sortedCards = [...cardsWithSlugs].sort((a, b) => {
 });
 
 await writeCardPages(cardsWithSlugs);
-await syncIndex(sortedCards);
+await syncHomepage();
+await syncCollectionIndex(sortedCards);
 await writeSitemap(cardsWithSlugs);
 
 console.log(`Synced ${cardsWithSlugs.length} card pages, crawlable index, and sitemap.`);
@@ -54,11 +56,23 @@ async function writeCardPages(cardList) {
   }));
 }
 
-async function syncIndex(cardList) {
+async function syncHomepage() {
+  let html = await readFile(INDEX_PATH, "utf8");
+  html = html.replace(
+    /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
+    `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
+  );
+  if (html.includes(START) && html.includes(END)) {
+    html = html.replace(new RegExp(`\\s*${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), "");
+  }
+  await writeFile(INDEX_PATH, html, "utf8");
+}
+
+async function syncCollectionIndex(cardList) {
   const items = cardList.map((card) => {
     const title = [card.name, card.number ? `#${card.number}` : ""].filter(Boolean).join(" ");
     const details = [card.pokemon, card.setName, card.rarity, card.language].filter(Boolean).join(" • ");
-    return `              <li><a href="cards/${escapeAttribute(card.slug)}/"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(details)}</span></a></li>`;
+    return `              <li><a href="../cards/${escapeAttribute(card.slug)}/"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(details)}</span></a></li>`;
   }).join("\n");
 
   const section = `${START}
@@ -74,17 +88,17 @@ ${items}
         </section>
         ${END}`;
 
-  let html = await readFile(INDEX_PATH, "utf8");
+  let html = await readFile(COLLECTION_PATH, "utf8");
   html = html.replace(
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
-    `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
+    `      <!-- SITE_HEADER_START -->\n${renderSiteHeader("../")}\n      <!-- SITE_HEADER_END -->`,
   );
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
   } else {
-    html = html.replace("      </main>", `      </main>\n\n${section}`);
+    html = html.replace("    </div>", `${section}\n    </div>`);
   }
-  await writeFile(INDEX_PATH, html, "utf8");
+  await writeFile(COLLECTION_PATH, html, "utf8");
 }
 
 async function writeSitemap(cardList) {
@@ -95,6 +109,7 @@ async function writeSitemap(cardList) {
   ]);
   const urls = [
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
+    sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -169,7 +184,7 @@ function renderCardPage(card) {
             <div class="detail-image-frame">
             ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </div>
-            <a class="detail-full-link" href="../../#collection"><span aria-hidden="true">←</span> Back to the sleepy stack</a>
+            <a class="detail-full-link" href="../../collection/"><span aria-hidden="true">←</span> Back to the sleepy stack</a>
           </div>
           <div class="detail-copy">
             <p class="detail-kicker">Caught napping</p>

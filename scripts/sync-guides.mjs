@@ -112,6 +112,7 @@ async function writeSitemap(cardList, guideList) {
   ]);
   const urls = [
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
+    sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
