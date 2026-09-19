@@ -219,8 +219,8 @@ h3 {
 }
 
 .header-search input::-webkit-search-cancel-button {
-  filter: invert(1);
-  opacity: .86;
+  filter: brightness(0) invert(1);
+  opacity: 1;
 }
 
 .header-search input:-webkit-autofill,
