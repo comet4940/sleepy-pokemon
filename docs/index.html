@@ -41,11 +41,13 @@
     <script defer src="analytics.js" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="home-v3.css" />
+    <link rel="stylesheet" href="card-detail-v3.css" />
   </head>
   <body data-app-mode="public">
     <div class="app-shell">
-      <header class="topbar">
-        <a class="brand-lockup" href="./" aria-label="Sleepy Pokemon home">
+      <!-- SITE_HEADER_START -->
+<header class="topbar">
+        <a class="brand-lockup" href="" aria-label="Sleepy Pokemon home">
           <svg class="sparkle-mark" viewBox="0 0 76 68" aria-hidden="true" focusable="false">
             <rect x="7" y="13" width="34" height="47" rx="9" fill="var(--soft-mint)" stroke="currentColor" stroke-width="4" transform="rotate(-15 24 36)" />
             <rect x="19" y="5" width="38" height="51" rx="9" fill="var(--lavender)" stroke="currentColor" stroke-width="4" transform="rotate(7 38 30)" />
@@ -59,14 +61,15 @@
             <p class="brand-byline">A collection by Comet</p>
           </div>
         </a>
-
         <nav class="topbar-actions" aria-label="Main navigation">
           <a href="#collection">Browse</a>
           <a href="guides/">Guides</a>
           <a href="about/">About</a>
-          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer" data-analytics-event="sleepy_card_submit_clicked"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
         </nav>
       </header>
+      <!-- SITE_HEADER_END -->
+
 
 
       <main class="workspace">
@@ -375,17 +378,22 @@
     </dialog>
 
     <dialog id="cardDetailDialog" class="card-detail-dialog">
-      <div class="card-detail-frame">
+      <div class="card-detail-frame card-detail-v3">
         <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">
-          x
+          ×
         </button>
-        <div class="detail-image-frame" id="detailImageFrame"></div>
+        <div class="detail-art-column">
+          <div class="detail-image-frame" id="detailImageFrame"></div>
+        </div>
         <div class="detail-copy">
-          <p class="eyebrow" id="detailEyebrow">Card preview</p>
+          <p class="detail-kicker" id="detailEyebrow">Caught napping</p>
           <h2 id="detailTitle"></h2>
           <p class="card-subtitle" id="detailSubtitle"></p>
+          <div class="detail-price-row" id="detailPriceRow"></div>
+          <div class="curation-note" id="detailCurationNote"></div>
+          <div class="curation-facts" id="detailCurationFacts"></div>
+          <div class="detail-moods" id="detailMoods"></div>
           <div class="meta-grid" id="detailMetaGrid"></div>
-          <p class="notes" id="detailNotes"></p>
         </div>
       </div>
     </dialog>

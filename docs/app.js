@@ -72,8 +72,11 @@ function cacheElements() {
   elements.detailEyebrow = document.querySelector("#detailEyebrow");
   elements.detailTitle = document.querySelector("#detailTitle");
   elements.detailSubtitle = document.querySelector("#detailSubtitle");
+  elements.detailPriceRow = document.querySelector("#detailPriceRow");
+  elements.detailCurationNote = document.querySelector("#detailCurationNote");
+  elements.detailCurationFacts = document.querySelector("#detailCurationFacts");
+  elements.detailMoods = document.querySelector("#detailMoods");
   elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
-  elements.detailNotes = document.querySelector("#detailNotes");
 }
 
 function bindEvents() {
@@ -201,9 +204,13 @@ function normalizeCard(card) {
     setReleaseDate: card.setReleaseDate || "",
     priority: card.priority || "Medium",
     notes: card.notes || "",
+    sleepinessBasis: card.sleepinessBasis || card.curation?.sleepinessBasis || "",
+    sleepLocation: card.sleepLocation || card.curation?.sleepLocation || "",
+    sleepiness: card.sleepiness || card.curation?.sleepiness || "",
+    whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
-    moods: Array.isArray(card.moods) ? card.moods : deriveMoods(card),
+    moods: Array.isArray(card.moods) ? card.moods : (Array.isArray(card.curation?.moods) ? card.curation.moods : deriveMoods(card)),
   };
 }
 
@@ -428,12 +435,27 @@ function openCardDetail(card) {
   const price = getDisplayPrice(card);
   const priceText = price ? formatCurrency(price) : "No price";
   const image = card.imageLarge || card.imageSmall;
-  elements.detailEyebrow.textContent = [card.setName, card.number].filter(Boolean).join(" / ") || "Card preview";
+  elements.detailEyebrow.textContent = "Caught napping";
   elements.detailTitle.textContent = card.name;
-  elements.detailSubtitle.textContent = [card.pokemon, card.language, card.rarity].filter(Boolean).join(" / ");
+  elements.detailSubtitle.textContent = [card.setName, card.number, card.rarity].filter(Boolean).join(" · ");
   elements.detailImageFrame.innerHTML = image
     ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
     : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
+  elements.detailPriceRow.innerHTML = price
+    ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
+    : `<span class="detail-no-price">No current market price</span>`;
+  const whyItBelongs = card.whyItBelongs || card.notes;
+  elements.detailCurationNote.innerHTML = whyItBelongs
+    ? `<strong>Why it belongs.</strong> ${escapeHtml(whyItBelongs)}`
+    : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
+  elements.detailCurationFacts.innerHTML = [
+    curationFact("Nap classification", card.sleepinessBasis),
+    curationFact("Sleep location", card.sleepLocation),
+    curationSleepinessFact(card.sleepiness),
+  ].filter(Boolean).join("");
+  elements.detailMoods.innerHTML = card.moods?.length
+    ? card.moods.map((mood) => `<span class="mood-tag">${escapeHtml(formatMoodLabel(mood))}</span>`).join("")
+    : "";
   elements.detailMetaGrid.innerHTML = [
     metaItem("Set", card.setName),
     metaItem("Number", card.number),
@@ -441,10 +463,17 @@ function openCardDetail(card) {
     metaItem("Artist", card.artist || "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
-  elements.detailNotes.textContent = card.notes || "";
-  elements.detailNotes.classList.toggle("hidden", !card.notes);
   elements.cardDetailDialog.showModal();
   trackEvent("card_opened", getCardAnalyticsParams(card));
+}
+
+function curationSleepinessFact(value) {
+  if (!value) return "";
+  const match = String(value).match(/^(\d+)/);
+  const level = match ? Math.max(0, Math.min(5, Number(match[1]))) : 0;
+  const label = String(value).replace(/^\d+\s*[—-]?\s*/, "");
+  const zzz = Array.from({ length: 5 }, (_, index) => `<span class="sleepiness-zzz${index < level ? " is-filled" : ""}">Z</span>`).join("");
+  return `<div class="curation-fact curation-fact--sleepiness"><span>Sleepiness</span><strong><span class="sleepiness-meter" aria-label="${escapeAttribute(value)}">${zzz}</span><span class="sleepiness-label">${escapeHtml(label || value)}</span></strong></div>`;
 }
 
 function closeCardDetail() {
@@ -464,6 +493,38 @@ function metaItem(label, value) {
       <strong>${escapeHtml(value || "-")}</strong>
     </div>
   `;
+}
+
+function curationFact(label, value) {
+  if (!value) return "";
+  return `<div class="curation-fact"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`;
+}
+
+function formatMoodLabel(value) {
+  return String(value || "")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatShortDate(value) {
+  const match = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
+  const date = match
+    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
+    : new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function slugify(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90)
+    .replace(/-+$/g, "");
 }
 
 function downloadChecklist() {
@@ -618,7 +679,10 @@ function compareDates(a, b) {
 
 function formatDate(value) {
   if (!value) return "";
-  const date = new Date(value.replaceAll("/", "-"));
+  const match = String(value).match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
+  const date = match
+    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
+    : new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return date.toLocaleDateString(undefined, {
     year: "numeric",

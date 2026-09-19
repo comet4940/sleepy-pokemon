@@ -1,4 +1,5 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { renderSiteHeader } from "./site-header.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -74,6 +75,10 @@ ${items}
         ${END}`;
 
   let html = await readFile(INDEX_PATH, "utf8");
+  html = html.replace(
+    /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
+    `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
+  );
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
   } else {
@@ -152,33 +157,34 @@ function renderCardPage(card) {
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}"></script>
     <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
-      <header class="topbar">
-        <a class="brand-lockup card-page-brand" href="../../" aria-label="Back to Sleepy Pokemon Cards guide">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <div>
-            <p class="eyebrow">Sleepy card detail</p>
-            <p class="brand-title">Sleepy Pokemon Cards</p>
-          </div>
-        </a>
-        <div class="topbar-actions">
-          <a class="button subtle" href="../../">Back to guide</a>
-        </div>
-      </header>
+      ${renderSiteHeader("../../")}
 
       <main class="card-page-main">
-        <article class="card-detail-frame card-page-detail">
-          <div class="detail-image-frame">
+        <article class="card-detail-frame card-detail-v3 card-page-detail">
+          <div class="detail-art-column">
+            <div class="detail-image-frame">
             ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+            </div>
+            <a class="detail-full-link" href="../../#collection"><span aria-hidden="true">←</span> Back to the sleepy stack</a>
           </div>
           <div class="detail-copy">
-            <p class="eyebrow">${escapeHtml([card.setName, card.number].filter(Boolean).join(" / ") || "Card preview")}</p>
-            <h1>${escapeHtml(pageHeading)}</h1>
-            <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.rarity].filter(Boolean).join(" / "))}</p>
-            <p class="card-page-summary">${escapeHtml(visibleDescription)}</p>
-            <div class="price-pill card-page-price">${escapeHtml(priceLabel)}</div>
+            <p class="detail-kicker">Caught napping</p>
+            <h1>${escapeHtml(card.name || card.pokemon || "Pokemon")}</h1>
+            <p class="card-subtitle">${escapeHtml([card.setName, card.number, card.rarity].filter(Boolean).join(" · "))}</p>
+            <div class="detail-price-row">
+              ${price === null
+                ? `<span class="detail-no-price">No current market price</span>`
+                : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
+            </div>
+            <div class="curation-note">
+              <strong>Why it belongs.</strong> ${escapeHtml(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
+            </div>
+${renderCurationFacts(card)}
+${renderMoods(card)}
             <div class="meta-grid">
               ${metaItem("Set", card.setName)}
               ${metaItem("Number", card.number)}
@@ -187,7 +193,6 @@ function renderCardPage(card) {
               ${metaItem("Release", release)}
               ${metaItem("Language", card.language || "English")}
             </div>
-            ${card.notes ? `<p class="notes">${escapeHtml(card.notes)}</p>` : ""}
           </div>
         </article>
       </main>
@@ -198,11 +203,48 @@ function renderCardPage(card) {
 }
 
 function metaItem(label, value) {
-  return `
-              <div class="meta-item">
+  return `              <div class="meta-item">
                 <span>${escapeHtml(label)}</span>
                 <strong>${escapeHtml(value || "-")}</strong>
               </div>`;
+}
+
+function renderCurationFacts(card) {
+  const facts = [
+    ["Nap classification", card.sleepinessBasis],
+    ["Sleep location", card.sleepLocation],
+  ].filter(([, value]) => value);
+  const factMarkup = facts.map(([label, value]) => `<div class="curation-fact"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`);
+  if (card.sleepiness) factMarkup.push(renderSleepinessFact(card.sleepiness));
+  return factMarkup.length ? `<div class="curation-facts">${factMarkup.join("")}</div>` : "";
+}
+
+function renderSleepinessFact(value) {
+  const match = String(value).match(/^(\d+)/);
+  const level = match ? Math.max(0, Math.min(5, Number(match[1]))) : 0;
+  const label = String(value).replace(/^\d+\s*[—-]?\s*/, "");
+  const zzz = Array.from({ length: 5 }, (_, index) => `<span class="sleepiness-zzz${index < level ? " is-filled" : ""}">Z</span>`).join("");
+  return `<div class="curation-fact curation-fact--sleepiness"><span>Sleepiness</span><strong><span class="sleepiness-meter" aria-label="${escapeAttribute(value)}">${zzz}</span><span class="sleepiness-label">${escapeHtml(label || value)}</span></strong></div>`;
+}
+
+function renderMoods(card) {
+  if (!Array.isArray(card.moods) || !card.moods.length) return "";
+  return `<div class="detail-moods">${card.moods.map((mood) => `<span class="mood-tag">${escapeHtml(formatMoodLabel(mood))}</span>`).join("")}</div>`;
+}
+
+function formatMoodLabel(value) {
+  return String(value || "")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatShortDate(value) {
+  const match = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
+  const date = match
+    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
+    : new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 function buildDescription(card) {
