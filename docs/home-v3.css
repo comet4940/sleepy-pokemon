@@ -146,7 +146,8 @@ a { color: inherit; }
 .suggestion-dialog { width: min(620px, calc(100vw - 32px)); padding: 0; border: 1px solid rgba(169,147,255,.42); border-radius: 18px; background: #171724; color: var(--cream); box-shadow: 0 24px 80px rgba(0,0,0,.5); }
 .suggestion-dialog::backdrop { background: rgba(8,8,14,.78); backdrop-filter: blur(5px); }
 .suggestion-panel { position: relative; display: grid; gap: 16px; padding: 32px; }
-.suggestion-close { position: absolute; top: 18px; right: 18px; }
+.suggestion-close { position: absolute; top: 18px; right: 18px; width: 42px; height: 42px; border: 1px solid rgba(255,247,232,.24); border-radius: 50%; background: transparent; color: var(--cream); font-size: 1.35rem; }
+.suggestion-close:hover, .suggestion-close:focus-visible { border-color: var(--pink); background: rgba(243,107,155,.12); color: var(--cream); }
 .suggestion-panel h2 { margin: 0; color: var(--cream); font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 500; }
 .suggestion-intro { max-width: 480px; margin: -6px 0 4px; color: var(--muted-cream); }
 .suggestion-field { display: grid; gap: 7px; color: var(--muted-cream); font-size: .82rem; }
@@ -160,7 +161,7 @@ a { color: inherit; }
 .suggestion-selected { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 11px 13px; border: 1px solid var(--mint); border-radius: 10px; background: rgba(155,226,207,.08); }
 .suggestion-selected span { flex: 1 1 auto; }
 .suggestion-selected button { border: 0; background: transparent; color: var(--cream); font-size: 1.2rem; cursor: pointer; }
-.suggestion-submit { justify-self: start; }
+.suggestion-submit { justify-self: start; border: 0; background: var(--pink); color: #17121b; }
 .suggestion-footnote { margin: -5px 0 0; color: var(--muted-cream); font-size: .76rem; }
 .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
 #latestGrid { grid-template-rows: 1fr; }

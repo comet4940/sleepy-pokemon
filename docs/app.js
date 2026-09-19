@@ -264,24 +264,37 @@ function handleSuggestionSearch() {
 }
 
 async function searchSuggestionCards(query) {
+  const normalizedQuery = query.toLowerCase();
+  const localMatches = state.cards.filter((card) => [card.name, card.pokemon, card.setName, card.number]
+    .some((value) => String(value || "").toLowerCase().includes(normalizedQuery))).slice(0, 8);
+  if (localMatches.length) {
+    renderSuggestionResults(localMatches);
+    elements.suggestionSearchStatus.textContent = "Choose the card you spotted.";
+    return;
+  }
   try {
-    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(`name:${query}* OR number:${query}*`)}&pageSize=8`);
+    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(`name:${query}* OR number:${query}*`)}&pageSize=8`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
     const cards = (await response.json()).data || [];
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
-    elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span></button>`).join("");
-    elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
+    renderSuggestionResults(cards);
   } catch (error) {
     elements.suggestionSearchStatus.textContent = "Card lookup is taking a nap. You can still describe it below.";
     elements.suggestionResults.innerHTML = "";
   }
 }
 
+function renderSuggestionResults(cards) {
+  elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.setName || card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span></button>`).join("");
+  elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
+}
+
 function selectSuggestionCard(card) {
-  const details = `${card.name} — ${card.set?.name || "Unknown set"} · ${card.number || "No number"}`;
+  const setName = card.setName || card.set?.name || "Unknown set";
+  const details = `${card.name} — ${setName} · ${card.number || "No number"}`;
   elements.suggestionCard.value = details;
   elements.suggestionSelected.hidden = false;
-  elements.suggestionSelected.innerHTML = `<strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span><button type="button" aria-label="Remove selected card">×</button>`;
+  elements.suggestionSelected.innerHTML = `<strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(setName)} · ${escapeHtml(card.number || "No number")}</span><button type="button" aria-label="Remove selected card">×</button>`;
   elements.suggestionSelected.querySelector("button").addEventListener("click", () => {
     elements.suggestionCard.value = "";
     elements.suggestionSelected.hidden = true;
