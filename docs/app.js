@@ -264,14 +264,6 @@ function handleSuggestionSearch() {
 }
 
 async function searchSuggestionCards(query) {
-  const normalizedQuery = query.toLowerCase();
-  const localMatches = state.cards.filter((card) => [card.name, card.pokemon, card.setName, card.number]
-    .some((value) => String(value || "").toLowerCase().includes(normalizedQuery))).slice(0, 8);
-  if (localMatches.length) {
-    renderSuggestionResults(localMatches);
-    elements.suggestionSearchStatus.textContent = "Choose the card you spotted.";
-    return;
-  }
   try {
     const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(`name:${query}* OR number:${query}*`)}&pageSize=8`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
@@ -279,7 +271,7 @@ async function searchSuggestionCards(query) {
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
     renderSuggestionResults(cards);
   } catch (error) {
-    elements.suggestionSearchStatus.textContent = "Card lookup is taking a nap. You can still describe it below.";
+    elements.suggestionSearchStatus.textContent = "Lookup is taking a nap. Your typed card details will still be sent.";
     elements.suggestionResults.innerHTML = "";
   }
 }
@@ -305,11 +297,13 @@ function selectSuggestionCard(card) {
 
 async function handleSuggestionSubmit(event) {
   event.preventDefault();
-  if (!elements.suggestionCard.value) {
-    elements.suggestionSearchStatus.textContent = "Choose a card first, sleepyhead.";
+  const manualCard = elements.suggestionCardSearch.value.trim();
+  if (!elements.suggestionCard.value && !manualCard) {
+    elements.suggestionSearchStatus.textContent = "Tell us which card you spotted first.";
     elements.suggestionCardSearch.focus();
     return;
   }
+  if (!elements.suggestionCard.value) elements.suggestionCard.value = manualCard;
   const endpoint = elements.suggestionForm.dataset.emailEndpoint;
   if (!endpoint || endpoint === "EMAIL_FORM_ENDPOINT_PLACEHOLDER") {
     showToast("The suggestion form is ready, but its private email endpoint still needs to be connected.");
