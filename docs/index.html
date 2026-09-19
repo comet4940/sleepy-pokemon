@@ -9,6 +9,9 @@
     <link rel="canonical" href="https://www.sleepypokemon.com/" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/sleepy-pokemon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sleepy Pokemon Cards" />
@@ -37,57 +40,95 @@
     </script>
     <script defer src="analytics.js" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="home-v3.css" />
   </head>
   <body data-app-mode="public">
     <div class="app-shell">
       <header class="topbar">
-        <div class="brand-lockup">
-          <span class="brand-mark" aria-hidden="true"></span>
+        <a class="brand-lockup" href="./" aria-label="Sleepy Pokemon home">
+          <svg class="sparkle-mark" viewBox="0 0 76 68" aria-hidden="true" focusable="false">
+            <rect x="7" y="13" width="34" height="47" rx="9" fill="var(--soft-mint)" stroke="currentColor" stroke-width="4" transform="rotate(-15 24 36)" />
+            <rect x="19" y="5" width="38" height="51" rx="9" fill="var(--lavender)" stroke="currentColor" stroke-width="4" transform="rotate(7 38 30)" />
+            <rect x="26" y="12" width="42" height="52" rx="10" fill="var(--cream)" stroke="currentColor" stroke-width="4" />
+            <path d="M36 32q4 6 8 0M50 32q4 6 8 0" fill="none" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M45 44q4 4 8 0" fill="none" stroke="var(--pink)" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M19 39l3 3 3-3M62 25l3 3 3-3" fill="none" stroke="var(--pink)" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
           <div>
-            <p class="eyebrow">Curated guide</p>
-            <h1>Sleepy Pokemon Cards</h1>
+            <h1>Sleepy Pokemon</h1>
+            <p class="brand-byline">A collection by Comet</p>
           </div>
-        </div>
+        </a>
 
-        <div class="topbar-actions"></div>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <a href="#collection">Browse</a>
+          <a href="guides/">Guides</a>
+          <a href="about/">About</a>
+          <a class="header-cta" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer" data-analytics-event="sleepy_card_submit_clicked"><span aria-hidden="true">✦</span> Suggest a sleepy card</a>
+        </nav>
       </header>
 
 
       <main class="workspace">
-        <section class="library-panel" aria-label="Card library">
-          <div class="library-header">
-            <div>
-              <p class="eyebrow">Curated list</p>
-              <h2 id="resultCount">0 cards</h2>
-            </div>
-            <div class="library-actions">
-              <div class="price-status" id="priceStatus" aria-live="polite"></div>
-              <a class="icon-button coffee-button" href="https://buymeacoffee.com/cometakira" target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee" title="Buy me a coffee" data-analytics-event="coffee_clicked">
-                <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-                  <path d="M5 7h11v7a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V7Z" />
-                  <path d="M16 9h2.25a2.75 2.75 0 0 1 0 5.5H16" />
-                  <path d="M7 4c.35.5.35 1 0 1.5M10.5 4c.35.5.35 1 0 1.5M14 4c.35.5.35 1 0 1.5" />
-                  <path d="M4 21h14" />
-                </svg>
-              </a>
-              <a class="button subtle" href="https://github.com/comet4940/sleepy-pokemon/issues/new?template=sleepy-card.yml" target="_blank" rel="noopener noreferrer" data-analytics-event="sleepy_card_submit_clicked">
-                Submit a sleepy card!
-              </a>
-              <button class="button subtle" id="downloadChecklistButton" type="button">
-                Download checklist
-              </button>
-              <button class="button subtle" id="openFiltersButton" type="button">
-                Refine
-              </button>
+        <section class="sleepy-hero" aria-labelledby="heroTitle">
+          <div class="hero-copy">
+            <h2 id="heroTitle"><span class="hero-title-word">Cards<span class="hero-moon-mark" aria-hidden="true">☾</span></span> caught<br /><em>napping.</em></h2>
+            <svg class="hero-trail" viewBox="0 0 320 24" aria-hidden="true"><path d="M4 13c28-10 46 8 74 0s47-7 75 0 45 8 70 0 50-7 93 0" /></svg>
+            <p class="hero-description">Obvious naps, quiet corners, and a few very debatable dozes. A growing collection, hand curated for the coziness!</p>
+            <div class="hero-actions">
+              <a class="button primary-action" id="browseCollectionButton" href="#collection">Browse the sleepy stack <span aria-hidden="true">→</span></a>
+              <button class="button quiet-action" id="surpriseButton" type="button">Show me a sleeper</button>
             </div>
           </div>
+          <div class="hero-card-stage" aria-label="Featured sleepy card">
+            <span class="paper-label">Featured sleeper</span>
+            <svg class="doodle-crown" viewBox="0 0 64 48" aria-hidden="true"><path d="M5 10l11 8L25 4l7 14 13-8-2 27H10L5 10Z" /></svg>
+            <div class="hero-card-back" aria-hidden="true"></div>
+            <article class="hero-card">
+              <img src="https://tcgplayer-cdn.tcgplayer.com/product/712947_in_1000x1000.jpg" alt="Pikachu card from ME: 30th Celebration" />
+              <div class="hero-card-meta"><strong>Pikachu</strong><span>ME: 30th Celebration · 043/128</span></div>
+            </article>
+          </div>
+        </section>
 
+        <section class="library-panel latest-panel" aria-labelledby="latestTitle">
+          <div class="library-header">
+            <div class="section-heading"><div><p class="eyebrow" id="latestTitle">Freshly tucked in</p></div></div>
+            <a class="view-all-link" href="#collection">View all sleepers →</a>
+          </div>
+          <div class="card-grid" id="latestGrid"></div>
+        </section>
+
+        <section class="search-shelf" aria-labelledby="searchTitle">
+          <div class="shelf-heading"><div><h2 id="searchTitle">Who fell asleep?</h2><p>Search the stack or follow a mood.</p></div></div>
+          <div class="shelf-controls">
+            <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">Search the collection</span><input id="searchFilter" type="search" autocomplete="off" placeholder="Search by Pokemon, set, artist..." /></label>
+            <div class="mood-chips" aria-label="Collection moods">
+              <button class="mood-chip" type="button" data-mood="under-5">under $5</button>
+              <button class="mood-chip" type="button" data-mood="group-naps">group naps</button>
+              <button class="mood-chip" type="button" data-mood="outdoor-sleepers">outdoor sleepers</button>
+              <button class="mood-chip" type="button" data-mood="tiny-snoozers">tiny snoozers</button>
+              <button class="mood-chip more-chip" id="openFiltersButton" type="button">+ more moods</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="library-panel collection-panel" id="collection" aria-labelledby="collectionTitle">
+          <div class="library-header">
+            <div class="section-heading"><div><p class="eyebrow" id="collectionTitle">All sleepy Pokemon</p><p class="collection-meta" id="collectionMeta">148 cards · zero alarm clocks</p><span class="sr-only" id="resultCount">0 cards</span></div></div>
+            <div class="library-actions">
+              <div class="price-status" id="priceStatus" aria-live="polite"></div>
+              <button class="clear-collection-button" id="clearCollectionButton" type="button" hidden>Show all Pokemon</button>
+              <button class="button subtle" id="downloadChecklistButton" type="button">Download checklist</button>
+            </div>
+          </div>
           <div class="card-grid" id="cardGrid"></div>
           <div class="empty-state hidden" id="emptyState">
             <h3>No cards match</h3>
-            <p>Try clearing a filter or adding a new sleepy find.</p>
+            <p>Nothing tucked in here yet. Try another mood.</p>
           </div>
         </section>
+
       </main>
 
 <!-- SEO_GUIDE_INDEX_START -->
@@ -351,7 +392,7 @@
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 
   </body>
 </html>

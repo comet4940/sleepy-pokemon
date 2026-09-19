@@ -14,6 +14,7 @@ const state = {
   randomOrder: new Map(),
   filters: {
     search: "",
+    mood: "all",
     pokemon: "all",
     set: "all",
     rarity: "all",
@@ -23,6 +24,7 @@ const state = {
   },
   renderToken: 0,
   searchAnalyticsTimer: 0,
+  showAllCards: false,
 };
 
 const elements = {};
@@ -42,8 +44,17 @@ function cacheElements() {
   elements.resultCount = document.querySelector("#resultCount");
   elements.priceStatus = document.querySelector("#priceStatus");
   elements.cardGrid = document.querySelector("#cardGrid");
+  elements.latestGrid = document.querySelector("#latestGrid");
+  elements.collectionTitle = document.querySelector("#collectionTitle");
+  elements.collectionMeta = document.querySelector("#collectionMeta");
+  elements.clearCollectionButton = document.querySelector("#clearCollectionButton");
+  elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
+  elements.surpriseButton = document.querySelector("#surpriseButton");
+  elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
+  elements.viewAllLink = document.querySelector(".view-all-link");
   elements.downloadChecklistButton = document.querySelector("#downloadChecklistButton");
   elements.filtersDialog = document.querySelector("#filtersDialog");
   elements.searchFilter = document.querySelector("#searchFilter");
@@ -68,9 +79,27 @@ function cacheElements() {
 function bindEvents() {
   bind(elements.searchFilter, "input", () => {
     state.filters.search = elements.searchFilter.value.trim();
+    state.showAllCards = true;
     renderCards();
     scheduleSearchAnalytics();
   });
+
+  elements.moodChips.forEach((chip) => {
+    bind(chip, "click", () => {
+      state.filters.mood = chip.dataset.mood || "all";
+      state.showAllCards = true;
+      elements.searchFilter.value = state.filters.search;
+      elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip));
+      renderCards();
+      trackEvent("mood_filter_applied", {
+        mood: chip.textContent.trim(),
+        result_count: getFilteredCards().length,
+      });
+    });
+  });
+
+  [elements.pokemonFilter, elements.setFilter, elements.rarityFilter, elements.languageFilter, elements.maxPriceFilter, elements.sortSelect]
+    .forEach((element) => bind(element, "change", () => { state.showAllCards = true; }));
 
   [
     [elements.pokemonFilter, "pokemon"],
@@ -94,12 +123,30 @@ function bindEvents() {
   bind(elements.clearFiltersButton, "click", clearFilters);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  bind(elements.surpriseButton, "click", showRandomSleeper);
+  document.querySelectorAll('a[href="#collection"]').forEach((link) => bind(link, "click", expandCollection));
+  bind(elements.clearCollectionButton, "click", clearFilters);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
+  bind(elements.latestGrid, "click", handleCardGridClick);
+  bind(elements.latestGrid, "keydown", handleCardGridKeydown);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
+}
+
+function showRandomSleeper() {
+  const cards = getFilteredCards();
+  const card = cards[Math.floor(Math.random() * cards.length)] || state.cards[0];
+  if (!card) return;
+  openCardDetail(card);
+  trackEvent("random_sleeper_clicked", getCardAnalyticsParams(card));
+}
+
+function expandCollection(event) {
+  state.showAllCards = true;
+  renderCards();
 }
 
 
@@ -156,6 +203,7 @@ function normalizeCard(card) {
     notes: card.notes || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
+    moods: Array.isArray(card.moods) ? card.moods : deriveMoods(card),
   };
 }
 
@@ -205,10 +253,15 @@ function elementToFilterKey(element) {
 }
 
 function renderCards() {
-  const cards = getFilteredCards();
+  const filteredCards = getFilteredCards();
   const renderToken = state.renderToken + 1;
   state.renderToken = renderToken;
-  elements.resultCount.textContent = `${cards.length} ${cards.length === 1 ? "card" : "cards"}`;
+  const cards = filteredCards;
+  const latestCards = getRecentlyAddedCards();
+  if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
+  if (elements.resultCount) elements.resultCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
+  updateCollectionHeading(filteredCards.length);
+  if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   elements.cardGrid.innerHTML = "";
 
@@ -246,6 +299,7 @@ function getFilteredCards() {
       ].join(" ").toLowerCase();
 
       if (search && !searchable.includes(search)) return false;
+      if (state.filters.mood !== "all" && !card.moods.includes(state.filters.mood)) return false;
       if (state.filters.pokemon !== "all" && card.pokemon !== state.filters.pokemon) return false;
       if (state.filters.set !== "all" && card.setName !== state.filters.set) return false;
       if (state.filters.rarity !== "all" && card.rarity !== state.filters.rarity) return false;
@@ -254,6 +308,50 @@ function getFilteredCards() {
       return true;
     })
     .sort(compareCards);
+}
+
+function hasActiveFilters() {
+  return Boolean(
+    state.filters.search
+    || state.filters.mood !== "all"
+    || state.filters.pokemon !== "all"
+    || state.filters.set !== "all"
+    || state.filters.rarity !== "all"
+    || state.filters.language !== "all"
+    || state.filters.maxPrice
+    || state.filters.sort !== PUBLIC_DEFAULT_SORT,
+  );
+}
+
+function getRecentlyAddedCards() {
+  return [...state.cards]
+    .sort((a, b) => compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b)))
+    .slice(0, 4);
+}
+
+function updateCollectionHeading(resultCount) {
+  if (!elements.collectionTitle || !elements.collectionMeta) return;
+  const active = hasActiveFilters();
+  const search = state.filters.search.trim();
+  const moodChip = elements.moodChips.find((chip) => chip.dataset.mood === state.filters.mood);
+  const mood = moodChip?.textContent.trim();
+  if (!active) {
+    elements.collectionTitle.textContent = "All sleepy Pokemon";
+    elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
+  } else if (search && mood) {
+    elements.collectionTitle.textContent = `Sleepy Pokemon matching “${search}” · ${mood}`;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+  } else if (search) {
+    elements.collectionTitle.textContent = `Sleepy Pokemon matching “${search}”`;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+  } else if (mood) {
+    elements.collectionTitle.textContent = `Sleepy Pokemon · ${mood}`;
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+  } else {
+    elements.collectionTitle.textContent = "Filtered sleepy Pokemon";
+    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"} found`;
+  }
+  elements.clearCollectionButton.hidden = !active;
 }
 
 function assignRandomOrder() {
@@ -295,9 +393,6 @@ function compareCards(a, b) {
 }
 
 function renderCard(card) {
-  const price = getDisplayPrice(card);
-  const priceText = price ? formatCurrency(price) : "No price";
-
   return `
     <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
@@ -306,20 +401,8 @@ function renderCard(card) {
           : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
       </div>
       <div class="card-body">
-        <div class="card-title-row">
-          <div>
-            <h3>${escapeHtml(card.name)}</h3>
-            <p class="card-subtitle">${escapeHtml(card.pokemon)} / ${escapeHtml(card.language)}</p>
-          </div>
-          <div class="price-pill">${escapeHtml(priceText)}</div>
-        </div>
-        <div class="meta-grid">
-          ${metaItem("Set", card.setName)}
-          ${metaItem("Number", card.number)}
-          ${metaItem("Rarity", card.rarity)}
-          ${metaItem("Artist", card.artist || "Unknown")}
-          ${metaItem("Release", formatDate(card.setReleaseDate) || "Unknown")}
-        </div>
+        <div class="card-title-row"><h3>${escapeHtml(card.name)}</h3></div>
+        <p class="card-subtitle">${escapeHtml(card.setName)} · ${escapeHtml(card.number)} · ${escapeHtml(card.rarity)}</p>
       </div>
     </article>
   `;
@@ -440,6 +523,7 @@ function escapeCsvCell(value) {
 function clearFilters() {
   state.filters = {
     search: "",
+    mood: "all",
     pokemon: "all",
     set: "all",
     rarity: "all",
@@ -447,6 +531,8 @@ function clearFilters() {
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
   };
+  state.showAllCards = false;
+  elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   render();
   trackEvent("filters_cleared", { result_count: state.cards.length });
 }
@@ -487,6 +573,21 @@ function trackEvent(eventName, params = {}) {
 function uniqueValues(key) {
   return [...new Set(state.cards.map((card) => card[key]).filter(Boolean))]
     .sort((a, b) => a.localeCompare(b));
+}
+
+function deriveMoods(card) {
+  const text = [card.name, card.pokemon, card.setName, card.notes].join(" ").toLowerCase();
+  const moods = [];
+  const price = getDisplayPrice(card);
+  const tinySnoozers = new Set([
+    "abra", "dedenne", "eevee", "exeggcute", "joltik", "meowth", "pawmi", "pikachu", "skitty", "togepi", "togedemaru",
+  ]);
+
+  if (price > 0 && price <= 5) moods.push("under-5");
+  if (/(group|together|family|friends|pile|team|siblings)/.test(text)) moods.push("group-naps");
+  if (/(grass|forest|garden|field|outdoor|water|beach|sky|meadow|lake)/.test(text)) moods.push("outdoor-sleepers");
+  if (tinySnoozers.has(card.pokemon.toLowerCase())) moods.push("tiny-snoozers");
+  return moods;
 }
 
 function derivePokemonName(name) {
