@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-07-08T12:31:28.995Z",
+  "exportedAt": "2026-09-20T15:55:21.016Z",
   "cards": [
     {
       "apiId": "neo4-68",
@@ -29,8 +29,11 @@
       "sleepinessBasis": "Out cold",
       "sleepLocation": "Grass",
       "sleepiness": "4 — Fully out",
-      "moods": ["Deep Sleepers", "Outdoor Naps"],
-      "whyItBelongs": "",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in the grass. The cheapest nap in the binder and a perfect first card.",
       "createdAt": "2026-07-08T12:26:28.292Z",
       "updatedAt": "2026-09-16T15:24:34.349Z"
     },
@@ -59,7 +62,16 @@
       "priority": "Medium",
       "notes": "Spheal from Surging Sparks 199/191 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T18:02:02.196Z",
-      "updatedAt": "2026-09-17T15:31:41.664Z"
+      "updatedAt": "2026-09-17T15:31:41.664Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Group nap on an icy shoreline. A whole cluster of round, smiling Spheals dozing under the aurora makes this modern Illustration Rare an instant cozy favorite."
     },
     {
       "apiId": "zsv10pt5-103",
@@ -86,7 +98,16 @@
       "priority": "Medium",
       "notes": "Tympole from Black Bolt 103/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by aspara, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T18:01:37.767Z",
-      "updatedAt": "2026-09-17T15:32:15.912Z"
+      "updatedAt": "2026-09-17T15:32:15.912Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap on a giant floating lily pad. Floating serenely above pond ripples, this vibrant Illustration Rare is pure tranquil charm."
     },
     {
       "apiId": "swsh12pt5gg-GG15",
@@ -113,7 +134,15 @@
       "priority": "Medium",
       "notes": "Solrock from Crown Zenith Galarian Gallery GG15/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Nobuhiro Imagawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-07T18:00:40.191Z",
-      "updatedAt": "2026-09-12T14:05:33.411Z"
+      "updatedAt": "2026-09-12T14:05:33.411Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap nestled among bedroom plushies. Solrock blending seamlessly into pillows and toys proves that even cosmic suns need nap time."
     },
     {
       "apiId": "sv9-165",
@@ -140,7 +169,16 @@
       "priority": "Medium",
       "notes": "Swinub from Journey Together 165/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Nakamura Ippan, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T18:00:26.872Z",
-      "updatedAt": "2026-09-18T14:57:44.862Z"
+      "updatedAt": "2026-09-18T14:57:44.862Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap tucked into mossy tree roots. Swinub snuggled deep in an autumn hollow brings irresistible storybook warmth at an approachable price."
     },
     {
       "apiId": "sv9-166",
@@ -167,7 +205,15 @@
       "priority": "Medium",
       "notes": "Lycanroc from Journey Together 166/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by GIDORA, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T17:59:34.756Z",
-      "updatedAt": "2026-09-18T14:57:45.120Z"
+      "updatedAt": "2026-09-18T14:57:45.120Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in the dirt after roughhousing. Seeing a fierce wolf completely collapse with limp paws in the field is pure relatable exhaustion."
     },
     {
       "apiId": "me1-151",
@@ -194,7 +240,16 @@
       "priority": "Medium",
       "notes": "Spearow from Mega Evolution 151/132 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier.",
       "createdAt": "2026-05-07T17:59:16.767Z",
-      "updatedAt": "2026-09-16T15:24:35.276Z"
+      "updatedAt": "2026-09-16T15:24:35.276Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap inside a woven treetop nest. A rare tender moment for normally aggressive Spearow, peacefully curled up in its twigs and leaves."
     },
     {
       "apiId": "svp-173",
@@ -221,7 +276,15 @@
       "priority": "Medium",
       "notes": "Eevee from Scarlet & Violet Promos 173/150 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by Makura Tami, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T03:40:48.216Z",
-      "updatedAt": "2026-09-12T14:05:34.687Z"
+      "updatedAt": "2026-09-12T14:05:34.687Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap curled on a sunny cushion. Eevee rolled into a soft cinnamon loaf next to tea is promo perfection for any cozy binder page."
     },
     {
       "apiId": "ex3-55",
@@ -248,7 +311,15 @@
       "priority": "Medium",
       "notes": "Geodude from Dragon 55/97 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:38:24.651Z",
-      "updatedAt": "2026-09-17T15:32:40.920Z"
+      "updatedAt": "2026-09-17T15:32:40.920Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold on a sunlit slope. Geodude looking less like a rigid rock and more like a peaceful sleeping pup makes this budget vintage common a sleeper hit."
     },
     {
       "apiId": "sm10-135",
@@ -275,7 +346,15 @@
       "priority": "Medium",
       "notes": "Wigglytuff from Unbroken Bonds 135/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by miki kudo, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:38:00.868Z",
-      "updatedAt": "2026-09-15T15:32:40.066Z"
+      "updatedAt": "2026-09-15T15:32:40.066Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap floating in a pastel flower meadow. Drifting gently through blossoms, this pink puff looks like it fell asleep to its own lullaby."
     },
     {
       "apiId": "dp3-55",
@@ -302,7 +381,15 @@
       "priority": "Medium",
       "notes": "Miltank from Secret Wonders 55/132 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mitsuhiro Arita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:37:41.745Z",
-      "updatedAt": "2026-09-13T14:54:57.537Z"
+      "updatedAt": "2026-09-13T14:54:57.537Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in open green pasture. Mitsuhiro Arita captures a content dairy cow dozing off after grazing for an effortless low-cost binder addition."
     },
     {
       "apiId": "xy0-27",
@@ -329,7 +416,15 @@
       "priority": "Medium",
       "notes": "Miltank from Kalos Starter Set 27/39 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. It is useful as a quieter binder slot for collectors who care more about the sleepy theme than rarity labels. The card is illustrated by Akira Komayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:37:41.745Z",
-      "updatedAt": "2026-09-08T15:04:30.569Z"
+      "updatedAt": "2026-09-08T15:04:30.569Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap along a wooden pasture fence. Akira Komayama brings peaceful countryside energy and heavy eyelids to a calm pastoral binder slot."
     },
     {
       "apiId": "sm4-78",
@@ -356,7 +451,15 @@
       "priority": "Medium",
       "notes": "Miltank from Crimson Invasion 78/111 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mina Nakai, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:37:41.745Z",
-      "updatedAt": "2026-09-18T14:57:45.507Z"
+      "updatedAt": "2026-09-18T14:57:45.507Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in sunny grass. Mina Nakai gives Miltank a sweet, curled-up doze that adds pastoral peace without breaking the budget."
     },
     {
       "apiId": "hgss4-36",
@@ -383,7 +486,16 @@
       "priority": "Medium",
       "notes": "Kangaskhan from HS—Triumphant 36/102 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mitsuhiro Arita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:37:18.511Z",
-      "updatedAt": "2026-09-13T14:54:59.937Z"
+      "updatedAt": "2026-09-13T14:54:59.937Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Outdoor Naps",
+        "Sleepover Club"
+      ],
+      "whyItBelongs": "Group nap with baby tucked in mom's pouch. Mitsuhiro Arita’s heartwarming HGSS illustration turns protective mothering into an endearing family snooze."
     },
     {
       "apiId": "hgss3-27",
@@ -410,7 +522,15 @@
       "priority": "Medium",
       "notes": "Gloom from HS—Undaunted 27/90 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mitsuhiro Arita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:36:08.276Z",
-      "updatedAt": "2026-09-18T14:57:45.853Z"
+      "updatedAt": "2026-09-18T14:57:45.853Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in the mossy shade. Classic Gloom drool and heavy-lidded slumber by Mitsuhiro Arita that belongs on every sleepy grassroots page."
     },
     {
       "apiId": "xyp-XY56",
@@ -437,7 +557,15 @@
       "priority": "Medium",
       "notes": "Blissey from XY Black Star Promos XY56/XY211 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by Akira Komayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:35:46.253Z",
-      "updatedAt": "2026-09-17T15:32:42.084Z"
+      "updatedAt": "2026-09-17T15:32:42.084Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap on the clinic floor. Blissey dozing comfortably after a long shift caring for injured Pokémon is pure wholesome downtime."
     },
     {
       "apiId": "sm11-207",
@@ -464,7 +592,16 @@
       "priority": "Medium",
       "notes": "Slumbering Forest from Unified Minds 207/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Ryo Ueda, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:35:33.435Z",
-      "updatedAt": "2026-09-18T14:57:46.056Z"
+      "updatedAt": "2026-09-18T14:57:46.056Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Cave",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners",
+        "Dream Sequence"
+      ],
+      "whyItBelongs": "Cozy nap ambiance in a bioluminescent mushroom grove. The definitive sleep-themed stadium card to visually anchor and explain any snoozing collection."
     },
     {
       "apiId": "swsh11-151",
@@ -491,7 +628,15 @@
       "priority": "Medium",
       "notes": "Greedent from Lost Origin 151/196 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:35:04.985Z",
-      "updatedAt": "2026-09-13T14:55:34.938Z"
+      "updatedAt": "2026-09-13T14:55:34.938Z",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Accidental nap induced by a massive berry feast. Greedent passed out with crumbs on its belly in a total food coma is relatable comedy."
     },
     {
       "apiId": "sm9-22",
@@ -518,7 +663,16 @@
       "priority": "Medium",
       "notes": "Squirtle from Team Up 22/181 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:34:48.992Z",
-      "updatedAt": "2026-09-18T14:57:46.589Z"
+      "updatedAt": "2026-09-18T14:57:46.589Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap drifting on open water. Squirtle floating effortlessly on its shell in calm blue ripples is one of sui's most peaceful pieces."
     },
     {
       "apiId": "sv3pt5-86",
@@ -545,7 +699,15 @@
       "priority": "Medium",
       "notes": "Seel from 151 86/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by aoki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:34:33.533Z",
-      "updatedAt": "2026-09-15T15:32:41.078Z"
+      "updatedAt": "2026-09-15T15:32:41.078Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap on an icy shelf. Resting its chin comfortably on the cold ice floe, this 151 Seel brings peak chill vibes to water-type collections."
     },
     {
       "apiId": "cel25-14",
@@ -572,7 +734,16 @@
       "priority": "Medium",
       "notes": "Cosmoem from Celebrations 14/25 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by kirisAki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:34:19.297Z",
-      "updatedAt": "2026-09-18T14:57:46.784Z"
+      "updatedAt": "2026-09-18T14:57:46.784Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Tiny Tuck-Ins",
+        "Dream Sequence"
+      ],
+      "whyItBelongs": "Out cold in Lillie's arms. The heaviest paperweight in Alola completely unresponsive to gravity or noise as it prepares to evolve."
     },
     {
       "apiId": "sm2-26",
@@ -599,7 +770,15 @@
       "priority": "Medium",
       "notes": "Delibird from Guardians Rising 26/145 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:33:56.668Z",
-      "updatedAt": "2026-09-16T15:24:37.454Z"
+      "updatedAt": "2026-09-16T15:24:37.454Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap on a snowy mountain peak. Delibird taking a well-earned breather on the ice with its present tail curled nearby."
     },
     {
       "apiId": "sm4-88",
@@ -626,7 +805,15 @@
       "priority": "Medium",
       "notes": "Diggersby from Crimson Invasion 88/111 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Anesaki Dynamic, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:33:00.652Z",
-      "updatedAt": "2026-09-18T14:57:46.983Z"
+      "updatedAt": "2026-09-18T14:57:46.983Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold slumped against a boulder. After heavy digging all morning, this burly rabbit is completely knocked out in the shade."
     },
     {
       "apiId": "sm9-36",
@@ -653,7 +840,15 @@
       "priority": "Medium",
       "notes": "Alolan Graveler from Team Up 36/181 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Misa Tsutsui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:32:25.839Z",
-      "updatedAt": "2026-09-18T14:57:47.110Z"
+      "updatedAt": "2026-09-18T14:57:47.110Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Cave",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Out cold in a jagged rock pile. An electrified boulder catching shut-eye in its natural rocky hideaway without discharging a single spark."
     },
     {
       "apiId": "xy10-71",
@@ -680,7 +875,15 @@
       "priority": "Medium",
       "notes": "Whimsicott from Fates Collide 71/124 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:31:43.111Z",
-      "updatedAt": "2026-09-16T15:24:39.792Z"
+      "updatedAt": "2026-09-16T15:24:39.792Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap on a plush floor pillow. Whimsicott sinking into soft bedding is pure cloud-soft comfort that softens any page."
     },
     {
       "apiId": "neo4-22",
@@ -707,7 +910,15 @@
       "priority": "Medium",
       "notes": "Light Dragonair from Neo Destiny 22/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Atsuko Nishida, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:30:29.398Z",
-      "updatedAt": "2026-09-18T14:57:47.332Z"
+      "updatedAt": "2026-09-18T14:57:47.332Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Sky",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Dream Sequence",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap among twilight clouds. A serene, mystical vintage grail that brings majestic grace and nostalgia to any sleep collection."
     },
     {
       "apiId": "swsh1-147",
@@ -734,7 +945,15 @@
       "priority": "Medium",
       "notes": "Cinccino from Sword & Shield 147/202 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:29:07.038Z",
-      "updatedAt": "2026-09-18T14:57:47.534Z"
+      "updatedAt": "2026-09-18T14:57:47.534Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap wrapped in its own tail scarf. Sui delivers unmatched plush softness with Cinccino tucked safely into a warm pillow."
     },
     {
       "apiId": "bw11-11",
@@ -761,7 +980,15 @@
       "priority": "Medium",
       "notes": "Swadloon from Legendary Treasures 11/113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:28:21.816Z",
-      "updatedAt": "2026-09-13T14:56:13.964Z"
+      "updatedAt": "2026-09-13T14:56:13.964Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap bundled tight in a leafy blanket. Swadloon is the patron saint of staying under the covers on a cold rainy morning."
     },
     {
       "apiId": "bw11-RC16",
@@ -788,7 +1015,16 @@
       "priority": "Medium",
       "notes": "Ursaring from Legendary Treasures RC16/RC113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:28:00.721Z",
-      "updatedAt": "2026-09-18T14:57:47.947Z"
+      "updatedAt": "2026-09-18T14:57:47.947Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub."
     },
     {
       "apiId": "ecard2-108",
@@ -815,7 +1051,15 @@
       "priority": "Medium",
       "notes": "Slowpoke from Aquapolis 108/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Aya Kusube, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:26:34.911Z",
-      "updatedAt": "2026-09-15T15:32:42.075Z"
+      "updatedAt": "2026-09-15T15:32:42.075Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap on a sunny sandbar. Slowpoke living up to its name in Aya Kusube's beloved textured e-Series style."
     },
     {
       "apiId": "swsh12-32",
@@ -842,7 +1086,15 @@
       "priority": "Medium",
       "notes": "Incineroar from Silver Tempest 32/195 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Hideki Ishikawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:10:20.254Z",
-      "updatedAt": "2026-09-16T15:24:46.968Z"
+      "updatedAt": "2026-09-16T15:24:46.968Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap curled like a housecat. Seeing an intimidating heel-wrestler tiger doze off peacefully on furniture is comedy gold."
     },
     {
       "apiId": "bw11-RC4",
@@ -869,7 +1121,15 @@
       "priority": "Medium",
       "notes": "Growlithe from Legendary Treasures RC4/RC113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:07:51.321Z",
-      "updatedAt": "2026-09-18T14:57:48.284Z"
+      "updatedAt": "2026-09-18T14:57:48.284Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap in an afternoon sunbeam. Radiant warmth and pure puppy bliss from the iconic Radiant Collection subset."
     },
     {
       "apiId": "xy7-55",
@@ -896,7 +1156,16 @@
       "priority": "Medium",
       "notes": "Cottonee from Ancient Origins 55/98 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Kanako Eo, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:06:52.192Z",
-      "updatedAt": "2026-09-13T14:56:18.689Z"
+      "updatedAt": "2026-09-13T14:56:18.689Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Tiny Tuck-Ins",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap of fluffy cotton puffs. An adorable cluster of sleeping puffballs huddled together looking like a soft cloud."
     },
     {
       "apiId": "xy10-57",
@@ -923,7 +1192,15 @@
       "priority": "Medium",
       "notes": "Vullaby from Fates Collide 57/124 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Midori Harada, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:06:11.549Z",
-      "updatedAt": "2026-09-16T15:24:47.260Z"
+      "updatedAt": "2026-09-16T15:24:47.260Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap tucked into an eggshell diaper. Even scavengers look innocent when they retreat into their shell nest for the night."
     },
     {
       "apiId": "bw11-55",
@@ -950,7 +1227,15 @@
       "priority": "Medium",
       "notes": "Natu from Legendary Treasures 55/113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:05:07.001Z",
-      "updatedAt": "2026-09-18T14:57:48.623Z"
+      "updatedAt": "2026-09-18T14:57:48.623Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap balancing on a branch. A tiny round bird catching shut-eye in Sanosuke Sakuma's delightful storybook style."
     },
     {
       "apiId": "sm10-137",
@@ -977,7 +1262,15 @@
       "priority": "Medium",
       "notes": "Togetic from Unbroken Bonds 137/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:04:59.224Z",
-      "updatedAt": "2026-09-11T14:59:13.345Z"
+      "updatedAt": "2026-09-11T14:59:13.345Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Sky",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Dream Sequence",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap drifting through sunset clouds. Soft pastel tones from sui make this feel like a floating airborne daydream."
     },
     {
       "apiId": "sv10-194",
@@ -1004,7 +1297,15 @@
       "priority": "Medium",
       "notes": "Misty's Lapras from Destined Rivals 194/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Orca, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:03:55.441Z",
-      "updatedAt": "2026-09-17T15:32:44.928Z"
+      "updatedAt": "2026-09-17T15:32:44.928Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap on Lapras's shell. Young Misty fast asleep while her Lapras gently navigates calm turquoise waters makes for an exquisite character moment."
     },
     {
       "apiId": "me1-136",
@@ -1031,7 +1332,15 @@
       "priority": "Medium",
       "notes": "Shuckle from Mega Evolution 136/132 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier.",
       "createdAt": "2026-05-06T21:03:46.121Z",
-      "updatedAt": "2026-09-17T15:32:45.085Z"
+      "updatedAt": "2026-09-17T15:32:45.085Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap under garden tomato vines. Shuckle resting peacefully in the vegetable soil while quietly fermenting berry juice."
     },
     {
       "apiId": "sm12-31",
@@ -1058,7 +1367,15 @@
       "priority": "Medium",
       "notes": "Tepig from Cosmic Eclipse 31/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mina Nakai, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:03:02.696Z",
-      "updatedAt": "2026-09-15T15:32:45.764Z"
+      "updatedAt": "2026-09-15T15:32:45.764Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap warmed by glowing campfire coals. A sweet fire pig dozing safely next to embers after a long day of adventure."
     },
     {
       "apiId": "sv2-226",
@@ -1085,7 +1402,16 @@
       "priority": "Medium",
       "notes": "Maushold from Paldea Evolved 226/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Mizue, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:50.619Z",
-      "updatedAt": "2026-09-14T16:57:32.736Z"
+      "updatedAt": "2026-09-14T16:57:32.736Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap in a hollow log nursery. The entire tandem mouse family snuggled together under giant forest mushrooms is maximum adorability."
     },
     {
       "apiId": "sv4-215",
@@ -1112,7 +1438,15 @@
       "priority": "Medium",
       "notes": "Cyclizar from Paradox Rift 215/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Mina Nakai, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:41.255Z",
-      "updatedAt": "2026-09-17T15:32:50.808Z"
+      "updatedAt": "2026-09-17T15:32:50.808Z",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Accidental nap on a scenic bike trail. Cyclizar taking five leaning against the fence surrounded by packed touring panniers."
     },
     {
       "apiId": "sv3-204",
@@ -1139,7 +1473,15 @@
       "priority": "Medium",
       "notes": "Houndour from Obsidian Flames 204/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by KYUPIYAMA, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:31.983Z",
-      "updatedAt": "2026-09-17T15:32:56.084Z"
+      "updatedAt": "2026-09-17T15:32:56.084Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Group nap in a city alleyway. A pack of tough dark-type pups collapsed into a warm, tangled cuddle puddle on the pavement."
     },
     {
       "apiId": "sv4-184",
@@ -1166,7 +1508,15 @@
       "priority": "Medium",
       "notes": "Dottler from Paradox Rift 184/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Tetsu Kayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:19.897Z",
-      "updatedAt": "2026-09-16T15:24:48.799Z"
+      "updatedAt": "2026-09-16T15:24:48.799Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap on a patterned tatami mat. Tetsu Kayama's pointillist artwork turns Dottler into an exquisite geometric centerpiece."
     },
     {
       "apiId": "swsh9tg-TG12",
@@ -1193,7 +1543,15 @@
       "priority": "Medium",
       "notes": "Oranguru from Brilliant Stars Trainer Gallery TG12/TG30 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Akira Komayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:02:10.608Z",
-      "updatedAt": "2026-09-18T14:57:49.541Z"
+      "updatedAt": "2026-09-18T14:57:49.541Z",
+      "sleepinessBasis": "Questionably sleeping 😂",
+      "sleepLocation": "Bed",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Cozy Corners",
+        "Blink-and-you'll-miss-it"
+      ],
+      "whyItBelongs": "Questionably sleeping in a teenager's messy bedroom. Oranguru meditating with heavy lids while manga and fans scatter in domestic chaos."
     },
     {
       "apiId": "sv1-221",
@@ -1220,7 +1578,15 @@
       "priority": "Medium",
       "notes": "Starly from Scarlet & Violet 221/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by saino misaki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:00.438Z",
-      "updatedAt": "2026-09-18T14:57:49.617Z"
+      "updatedAt": "2026-09-18T14:57:49.617Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap up in the berry tree. Saino Misaki paints a breathtaking, painterly canopy of round dozing birds nestled in foliage."
     },
     {
       "apiId": "swsh7-192",
@@ -1247,7 +1613,15 @@
       "priority": "Medium",
       "notes": "Dragonite V from Evolving Skies 192/203 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Atsushi Furusawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T03:02:55.825Z",
-      "updatedAt": "2026-09-18T14:57:49.722Z"
+      "updatedAt": "2026-09-18T14:57:49.722Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Sky",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold drifting through midair. The undisputed crown jewel of modern sleepy alt-arts and one of the era's definitive grails."
     },
     {
       "apiId": "me3-95",
@@ -1274,7 +1648,15 @@
       "priority": "Medium",
       "notes": "Espurr from Perfect Order 95/88 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier.",
       "createdAt": "2026-05-06T01:57:56.795Z",
-      "updatedAt": "2026-07-08T12:26:48.830Z"
+      "updatedAt": "2026-07-08T12:26:48.830Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap tucked into a cardboard box nook. A notoriously wide-eyed psychic cat finally closing its eyes for a rare, sweet nap."
     },
     {
       "apiId": "ecard1-94",
@@ -1301,7 +1683,15 @@
       "priority": "Medium",
       "notes": "Bulbasaur from Expedition Base Set 94/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sachi Matoba, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T01:57:08.681Z",
-      "updatedAt": "2026-09-15T15:32:49.357Z"
+      "updatedAt": "2026-09-15T15:32:49.357Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap soaking in the sun. Classic e-Series vintage charm showing Bulbasaur recharging flat on its belly in the meadow."
     },
     {
       "apiId": "swshp-SWSH260",
@@ -1328,7 +1718,15 @@
       "priority": "Medium",
       "notes": "Charizard V from SWSH Black Star Promos SWSH260/SWSH307 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by Oswaldo KATO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T01:56:20.969Z",
-      "updatedAt": "2026-09-18T14:57:50.155Z"
+      "updatedAt": "2026-09-18T14:57:50.155Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold at the roots of a giant forest tree. The fiercest dragon peacefully dozing makes this UPC promo an essential sleep showstopper."
     },
     {
       "apiId": "sm12-3",
@@ -1355,7 +1753,15 @@
       "priority": "Medium",
       "notes": "Gloom from Cosmic Eclipse 3/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T01:55:35.764Z",
-      "updatedAt": "2026-09-17T15:32:57.213Z"
+      "updatedAt": "2026-09-17T15:32:57.213Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in an open green pasture. Sui captures Gloom in peak peaceful drool mode under the warm afternoon sun."
     },
     {
       "apiId": "zsv10pt5-101",
@@ -1382,7 +1788,16 @@
       "priority": "Medium",
       "notes": "Panpour from Black Bolt 101/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Hoshino KURO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T01:55:21.673Z",
-      "updatedAt": "2026-09-17T15:32:59.266Z"
+      "updatedAt": "2026-09-17T15:32:59.266Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap nestled in tropical blooms. Hoshino KURO frames the sound asleep water monkey with radiant, lush jungle foliage."
     },
     {
       "apiId": "rsv10pt5-89",
@@ -1409,7 +1824,15 @@
       "priority": "Medium",
       "notes": "Leavanny from White Flare 89/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by mashu, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T01:54:11.901Z",
-      "updatedAt": "2026-09-15T15:32:50.180Z"
+      "updatedAt": "2026-09-15T15:32:50.180Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap wrapped in motherly leaves. Leavanny cradling a sound asleep Sewaddle swaddled in custom foliage is pure tenderness."
     },
     {
       "apiId": "sv2-221",
@@ -1436,7 +1859,15 @@
       "priority": "Medium",
       "notes": "Paldean Wooper from Paldea Evolved 221/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T01:53:25.387Z",
-      "updatedAt": "2026-09-17T15:33:00.022Z"
+      "updatedAt": "2026-09-17T15:33:00.022Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Out cold floating in a mud puddle. Miki Tanaka's felt-model craft turns a muddy swamp doze into pure storybook folk art."
     },
     {
       "apiId": "",
@@ -1463,7 +1894,15 @@
       "priority": "Medium",
       "notes": "Umbreon from Gem Pack Volume 2 06 15/15 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Secret Rare, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Hyogonosuke, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Because current pricing is unclear, it is worth checking recent listings before adding it to a wishlist or binder plan. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier. This entry is tracked as a Chinese card, which may matter for collectors comparing international printings.",
       "createdAt": "2026-05-05T22:40:17.426Z",
-      "updatedAt": "2026-05-05T22:44:16.358Z"
+      "updatedAt": "2026-05-05T22:44:16.358Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap under the golden moon. Hyogonosuke's iconic silhouette of Umbreon curled on ceramic roof tiles is a holy-grail illustration."
     },
     {
       "apiId": "neo4-26",
@@ -1490,7 +1929,15 @@
       "priority": "Medium",
       "notes": "Light Piloswine from Neo Destiny 26/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Yukiko Baba, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:38:02.638Z",
-      "updatedAt": "2026-09-18T14:57:50.562Z"
+      "updatedAt": "2026-09-18T14:57:50.562Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Out cold in a silent snowfall. Yukiko Baba's distinctive folk-art linework turns this ancient swine nap into vintage poetry."
     },
     {
       "apiId": "gym2-40",
@@ -1517,7 +1964,15 @@
       "priority": "Medium",
       "notes": "Erika's Clefairy from Gym Challenge 40/132 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Atsuko Nishida, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:36:37.220Z",
-      "updatedAt": "2026-09-17T15:33:00.291Z"
+      "updatedAt": "2026-09-17T15:33:00.291Z",
+      "sleepinessBasis": "Questionably sleeping 😂",
+      "sleepLocation": "In a dream",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Dream Sequence",
+        "Blink-and-you'll-miss-it"
+      ],
+      "whyItBelongs": "Questionably sleeping in a pastel haze. Clefairy drifting in dreamland with dreamy eyes and floating joy by Atsuko Nishida."
     },
     {
       "apiId": "sv4-196",
@@ -1544,7 +1999,16 @@
       "priority": "Medium",
       "notes": "Joltik from Paradox Rift 196/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Atsushi Furusawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:35:16.635Z",
-      "updatedAt": "2026-09-18T14:57:50.702Z"
+      "updatedAt": "2026-09-18T14:57:50.702Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Blink-and-you'll-miss-it",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap nestled atop Yamper's forehead. Look closely at the fluffy dog to spot the tiniest electric tick finding its ultimate charging spot."
     },
     {
       "apiId": "xy8-18",
@@ -1571,7 +2035,15 @@
       "priority": "Medium",
       "notes": "Cyndaquil from BREAKthrough 18/162 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Tomokazu Komiya, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-05T21:34:48.911Z",
-      "updatedAt": "2026-09-13T14:56:32.087Z"
+      "updatedAt": "2026-09-13T14:56:32.087Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap on the living room rug. Tomokazu Komiya's expressive brushwork captures Cyndaquil in deep, extinguished slumber by the fire."
     },
     {
       "apiId": "sv8pt5-1",
@@ -1598,7 +2070,15 @@
       "priority": "Medium",
       "notes": "Exeggcute from Prismatic Evolutions 1/131 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:33:56.323Z",
-      "updatedAt": "2026-09-18T14:57:50.984Z"
+      "updatedAt": "2026-09-18T14:57:50.984Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap in the fresh meadow. A half-dozen little eggs sharing a collective snooze in a bright, grassy lawn."
     },
     {
       "apiId": "sm12-211",
@@ -1625,7 +2105,15 @@
       "priority": "High",
       "notes": "Vileplume-GX from Cosmic Eclipse 211/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Kagemaru Himeno, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T21:32:09.882Z",
-      "updatedAt": "2026-09-18T14:57:51.117Z"
+      "updatedAt": "2026-09-18T14:57:51.117Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap draped over giant flower petals. Erika using her beloved Vileplume as an oversized fragrant pillow is full-art romance at its finest."
     },
     {
       "apiId": "sv3-19",
@@ -1652,7 +2140,15 @@
       "priority": "Medium",
       "notes": "Smoliv from Obsidian Flames 19/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Masako Tomii, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:26:23.937Z",
-      "updatedAt": "2026-09-16T15:24:52.393Z"
+      "updatedAt": "2026-09-16T15:24:52.393Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap under olive leaves. A perpetually anxious little olive looking unusually at peace while nodding off in the shade."
     },
     {
       "apiId": "swsh12-39",
@@ -1679,7 +2175,15 @@
       "priority": "Medium",
       "notes": "Feebas from Silver Tempest 39/195 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by 0313, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T21:26:02.914Z",
-      "updatedAt": "2026-09-18T14:57:51.269Z"
+      "updatedAt": "2026-09-18T14:57:51.269Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold on the lakebed. Looking completely limp on the sand, this Feebas proves that beauty sleep has to start somewhere."
     },
     {
       "apiId": "pgo-51",
@@ -1706,7 +2210,15 @@
       "priority": "Medium",
       "notes": "Chansey from Pokémon GO 51/78 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by ryoma uratsuka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T21:25:41.922Z",
-      "updatedAt": "2026-09-15T15:32:52.369Z"
+      "updatedAt": "2026-09-15T15:32:52.369Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in the afternoon park. Chansey taking a gentle seated break while keeping its lucky egg safe and sound."
     },
     {
       "apiId": "pgo-13",
@@ -1733,7 +2245,15 @@
       "priority": "Medium",
       "notes": "Numel from Pokémon GO 13/78 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Shibuzoh., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T21:25:35.984Z",
-      "updatedAt": "2026-09-15T15:32:52.692Z"
+      "updatedAt": "2026-09-15T15:32:52.692Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap on a sunny volcanic knoll. A slow, docile Numel snoozing comfortably in the warmth of the afternoon sun."
     },
     {
       "apiId": "ex8-73",
@@ -1760,7 +2280,15 @@
       "priority": "Medium",
       "notes": "Slakoth from Deoxys 73/107 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Takao Unno, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:24:40.054Z",
-      "updatedAt": "2026-09-18T14:57:51.538Z"
+      "updatedAt": "2026-09-18T14:57:51.538Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold on the forest floor. Takao Unno captures Slakoth doing what it was born to do: absolutely nothing at all."
     },
     {
       "apiId": "sm11-168",
@@ -1787,7 +2315,15 @@
       "priority": "Medium",
       "notes": "Slakoth from Unified Minds 168/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by tetsuya koizumi, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T21:24:40.053Z",
-      "updatedAt": "2026-09-16T15:24:53.142Z"
+      "updatedAt": "2026-09-16T15:24:53.142Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap in the woodland brush. The epitome of slacker energy, comfortably parked in the mossy shade between yawns."
     },
     {
       "apiId": "sv2-160",
@@ -1814,7 +2350,15 @@
       "priority": "Medium",
       "notes": "Slakoth from Paldea Evolved 160/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Shigenori Negishi, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:24:40.053Z",
-      "updatedAt": "2026-09-15T15:32:53.638Z"
+      "updatedAt": "2026-09-15T15:32:53.638Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap between daily yawns. Twenty hours of sleep a day captured in serene green woodland tones by Shigenori Negishi."
     },
     {
       "apiId": "sv8-212",
@@ -1841,7 +2385,16 @@
       "priority": "High",
       "notes": "Slakoth from Surging Sparks 212/191 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:24:40.053Z",
-      "updatedAt": "2026-09-08T15:04:56.046Z"
+      "updatedAt": "2026-09-08T15:04:56.046Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap suspended from a mossy limb. This breathtaking Illustration Rare elevates sloth life into storybook fine art."
     },
     {
       "apiId": "xy10-66",
@@ -1868,7 +2421,15 @@
       "priority": "Medium",
       "notes": "Wigglytuff from Fates Collide 66/124 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mizue, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-05T21:24:12.887Z",
-      "updatedAt": "2026-09-18T14:57:51.911Z"
+      "updatedAt": "2026-09-18T14:57:51.911Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "In a dream",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Dream Sequence",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in a sparkling wonderland. Mizue paints a cloud-soft balloon Pokémon drifting into slumber amidst glowing pastel lights."
     },
     {
       "apiId": "ex6-60",
@@ -1895,7 +2456,16 @@
       "priority": "Medium",
       "notes": "Cubone from FireRed & LeafGreen 60/112 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Aya Kusube, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:23:14.056Z",
-      "updatedAt": "2026-09-16T15:24:53.488Z"
+      "updatedAt": "2026-09-16T15:24:53.488Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap clutching its bone tight. Aya Kusube gives the tragic lonely Pokémon a peaceful, heartwarming respite in the grass."
     },
     {
       "apiId": "ex6-53",
@@ -1922,7 +2492,15 @@
       "priority": "Medium",
       "notes": "Bellsprout from FireRed & LeafGreen 53/112 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Tomokazu Komiya, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:22:44.802Z",
-      "updatedAt": "2026-09-18T14:57:52.123Z"
+      "updatedAt": "2026-09-18T14:57:52.123Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold draped over a garden ledge. Tomokazu Komiya's delightfully offbeat perspective makes this limp sprout unforgettable."
     },
     {
       "apiId": "ecard2-74",
@@ -1949,7 +2527,15 @@
       "priority": "Medium",
       "notes": "Drowzee from Aquapolis 74/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:22:14.204Z",
-      "updatedAt": "2026-09-18T14:57:52.253Z"
+      "updatedAt": "2026-09-18T14:57:52.253Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in a flower patch. The dream eater itself taking a deep nap in classic vintage e-Series style by Hisao Nakamura."
     },
     {
       "apiId": "ecard1-102",
@@ -1976,7 +2562,15 @@
       "priority": "Medium",
       "notes": "Corsola from Expedition Base Set 102/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:21:43.116Z",
-      "updatedAt": "2026-09-18T14:57:52.558Z"
+      "updatedAt": "2026-09-18T14:57:52.558Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap drifting on tropical waves. Miki Tanaka's felt-stitched Corsola bobbing blissfully on the sea surface."
     },
     {
       "apiId": "neo4-91",
@@ -2003,7 +2597,16 @@
       "priority": "Medium",
       "notes": "Vulpix from Neo Destiny 91/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Masako Yamashita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:21:24.402Z",
-      "updatedAt": "2026-09-18T14:57:52.666Z"
+      "updatedAt": "2026-09-18T14:57:52.666Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap nestled in a hollow tree trunk. Curled into a neat ball with its six tails, this Neo Destiny common is vintage comfort defined."
     },
     {
       "apiId": "neo4-76",
@@ -2030,7 +2633,15 @@
       "priority": "Medium",
       "notes": "Phanpy from Neo Destiny 76/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:20:24.075Z",
-      "updatedAt": "2026-09-17T15:33:08.906Z"
+      "updatedAt": "2026-09-17T15:33:08.906Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in the fresh green lawn. Miki Tanaka renders this baby elephant as a soft clay model dozing in total contentment."
     },
     {
       "apiId": "ex13-75",
@@ -2057,7 +2668,15 @@
       "priority": "Medium",
       "notes": "Phanpy from Holon Phantoms 75/110 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:20:24.075Z",
-      "updatedAt": "2026-09-17T15:33:09.162Z"
+      "updatedAt": "2026-09-17T15:33:09.162Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap by the forest pond. A tranquil little elephant doze illustrated by Hisao Nakamura that rounds out any Johto binder page."
     },
     {
       "apiId": "gym2-94",
@@ -2084,7 +2703,15 @@
       "priority": "Medium",
       "notes": "Sabrina's Abra from Gym Challenge 94/132 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Ken Sugimori, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:18:17.251Z",
-      "updatedAt": "2026-09-18T14:57:52.915Z"
+      "updatedAt": "2026-09-18T14:57:52.915Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Dream Sequence"
+      ],
+      "whyItBelongs": "Out cold in a psychic trance. Ken Sugimori's definitive classic art of Abra telepathically snoozing for eighteen hours a day."
     },
     {
       "apiId": "sv3pt5-63",
@@ -2111,7 +2738,15 @@
       "priority": "Medium",
       "notes": "Abra from 151 63/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Mitsuhiro Arita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:18:17.251Z",
-      "updatedAt": "2026-09-18T14:57:53.017Z"
+      "updatedAt": "2026-09-18T14:57:53.017Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in the sunny grass. Mitsuhiro Arita gives the original teleporter a gorgeous, peaceful nap in 151 at pocket-change pricing."
     },
     {
       "apiId": "swsh12pt5gg-GG42",
@@ -2138,7 +2773,15 @@
       "priority": "High",
       "notes": "Zeraora VMAX from Crown Zenith Galarian Gallery GG42/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Holo VMAX, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by aoki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T21:17:44.284Z",
-      "updatedAt": "2026-09-08T15:04:58.337Z"
+      "updatedAt": "2026-09-08T15:04:58.337Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Blink-and-you'll-miss-it",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap nestled between giant thunder ears. Look closely atop Zeraora’s forehead to spot a tiny Pachirisu fast asleep amidst raging electricity."
     },
     {
       "apiId": "sm8-75",
@@ -2165,7 +2808,15 @@
       "priority": "Medium",
       "notes": "Mareep from Lost Thunder 75/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Midori Harada, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T21:16:14.862Z",
-      "updatedAt": "2026-09-15T15:32:57.681Z"
+      "updatedAt": "2026-09-15T15:32:57.681Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap nestled in its own fluffy wool. Midori Harada paints the dreamiest sheep in Pokémon, sleeping with its iconic Fluffy Pillow ability."
     },
     {
       "apiId": "g1-RC10",
@@ -2192,7 +2843,15 @@
       "priority": "Medium",
       "notes": "Dedenne from Generations RC10/RC83 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by kanahei, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-05T21:15:04.881Z",
-      "updatedAt": "2026-09-16T15:24:54.280Z"
+      "updatedAt": "2026-09-16T15:24:54.280Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap tucked in a ribboned gift box. Kanahei’s signature round pastel art makes this sleeping mouse almost painfully cute."
     },
     {
       "apiId": "swsh4-77",
@@ -2219,7 +2878,15 @@
       "priority": "Medium",
       "notes": "Dedenne from Vivid Voltage 77/185 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Yuka Morii, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T21:13:09.105Z",
-      "updatedAt": "2026-09-16T15:24:54.606Z"
+      "updatedAt": "2026-09-16T15:24:54.606Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap perched on a wooden fence. Yuka Morii’s real-world clay photography captures a tiny mouse nodding off in the open air."
     },
     {
       "apiId": "swsh8-206",
@@ -2246,7 +2913,15 @@
       "priority": "Low",
       "notes": "Snorlax from Fusion Strike 206/264 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Oswaldo KATO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:03:39.881Z",
-      "updatedAt": "2026-09-17T15:33:12.086Z"
+      "updatedAt": "2026-09-17T15:33:12.086Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold flat on its back on a grassy hill. Oswaldo KATO paints the ultimate nap king blocking yet another scenic path."
     },
     {
       "apiId": "swsh4-131",
@@ -2273,7 +2948,15 @@
       "priority": "Low",
       "notes": "Snorlax from Vivid Voltage 131/185 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare holo card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Atsuko Nishida, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:03:39.881Z",
-      "updatedAt": "2026-09-15T15:32:58.446Z"
+      "updatedAt": "2026-09-15T15:32:58.446Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold slumped against a forest tree. Atsuko Nishida's warm, storybook illustration of Snorlax in heavy slumber after a feast."
     },
     {
       "apiId": "pgo-55",
@@ -2300,7 +2983,15 @@
       "priority": "Low",
       "notes": "Snorlax from Pokémon GO 55/78 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare holo card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by N-DESIGN Inc., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:03:39.881Z",
-      "updatedAt": "2026-09-18T14:57:53.917Z"
+      "updatedAt": "2026-09-18T14:57:53.917Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold blocking a real-world entrance. The classic Pokémon GO encounter where Snorlax makes public concrete steps its personal bed."
     },
     {
       "apiId": "swsh11-143",
@@ -2327,7 +3018,15 @@
       "priority": "Low",
       "notes": "Snorlax from Lost Origin 143/196 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare holo card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by 0313, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:03:39.881Z",
-      "updatedAt": "2026-09-17T15:33:12.582Z"
+      "updatedAt": "2026-09-17T15:33:12.582Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in a field of yellow flowers. Pure pastoral bliss for the original heavy sleeper resting its heavy chin on its arm."
     },
     {
       "apiId": "swsh12pt5-109",
@@ -2354,7 +3053,16 @@
       "priority": "Low",
       "notes": "Snorlax from Crown Zenith 109/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Asako Ito, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:03:39.880Z",
-      "updatedAt": "2026-09-17T15:33:12.740Z"
+      "updatedAt": "2026-09-17T15:33:12.740Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap knitted in wool. Asako Ito’s handcrafted amigurumi Snorlax brings unbeatable tactile warmth to any binder page."
     },
     {
       "apiId": "sm10-7",
@@ -2381,7 +3089,15 @@
       "priority": "Low",
       "notes": "Gloom from Unbroken Bonds 7/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Anesaki Dynamic, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T01:03:00.942Z",
-      "updatedAt": "2026-09-17T15:33:12.918Z"
+      "updatedAt": "2026-09-17T15:33:12.918Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold drooling on a garden path. Anesaki Dynamic gives Gloom an unapologetically messy outdoor nap complete with drool puddles."
     },
     {
       "apiId": "sv3-227",
@@ -2408,7 +3124,15 @@
       "priority": "High",
       "notes": "Poppy from Obsidian Flames 227/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Ryota Murayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:45.008Z",
-      "updatedAt": "2026-09-17T15:33:13.356Z"
+      "updatedAt": "2026-09-17T15:33:13.356Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Another Pokemon",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap leaning against her giant Copperajah. The tiniest Elite Four member completely tuckered out after battle."
     },
     {
       "apiId": "sv1-250",
@@ -2435,7 +3159,15 @@
       "priority": "High",
       "notes": "Jacq from Scarlet & Violet 250/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Oswaldo KATO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:29.947Z",
-      "updatedAt": "2026-09-18T14:57:54.285Z"
+      "updatedAt": "2026-09-18T14:57:54.285Z",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Sleepover Club"
+      ],
+      "whyItBelongs": "Accidental nap over biology research. Jacq passed out across textbooks with his Gulpin snoozing right alongside his head."
     },
     {
       "apiId": "sv5-209",
@@ -2462,7 +3194,15 @@
       "priority": "High",
       "notes": "Bianca's Devotion from Temporal Forces 209/162 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Cona Nitanda, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:17.565Z",
-      "updatedAt": "2026-09-18T14:57:54.400Z"
+      "updatedAt": "2026-09-18T14:57:54.400Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap wrapped in sunset light. Bianca dozing peacefully with her psychic companions makes for a breathtaking SAR showpiece."
     },
     {
       "apiId": "swsh9-162",
@@ -2489,7 +3229,15 @@
       "priority": "High",
       "notes": "Honchkrow V from Brilliant Stars 162/172 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by zig, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T01:01:24.811Z",
-      "updatedAt": "2026-09-18T14:57:54.526Z"
+      "updatedAt": "2026-09-18T14:57:54.526Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Sleepover Club"
+      ],
+      "whyItBelongs": "Group nap for the bird mafia. Even the boss of the Murkrow flock needs a power nap in the ancient branches."
     },
     {
       "apiId": "sv6pt5-77",
@@ -2516,7 +3264,15 @@
       "priority": "High",
       "notes": "Fraxure from Shrouded Fable 77/64 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:00:28.720Z",
-      "updatedAt": "2026-09-18T14:57:55.511Z"
+      "updatedAt": "2026-09-18T14:57:55.511Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Cave",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap inside a jagged mountain cave. A rare gentle moment for the dragon type, curled up safe from the stormy world."
     },
     {
       "apiId": "rsv10pt5-92",
@@ -2543,7 +3299,16 @@
       "priority": "High",
       "notes": "Sawsbuck from White Flare 92/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Yano Keiji, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:00:01.383Z",
-      "updatedAt": "2026-09-18T14:57:56.054Z"
+      "updatedAt": "2026-09-18T14:57:56.054Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Sleepover Club",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap among autumn leaves. Sawsbuck and Deerling dozing together in a golden sunbeam is seasonal perfection."
     },
     {
       "apiId": "me2-104",
@@ -2570,7 +3335,16 @@
       "priority": "High",
       "notes": "Togedemaru from Phantasmal Flames 104/94 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Orca, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier.",
       "createdAt": "2026-05-05T00:59:40.791Z",
-      "updatedAt": "2026-09-13T14:56:43.626Z"
+      "updatedAt": "2026-09-13T14:56:43.626Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Group nap of electric rodents. Orca paints two round little balls completely fast asleep in a sun-dappled meadow glade."
     },
     {
       "apiId": "sv1-210",
@@ -2597,7 +3371,15 @@
       "priority": "High",
       "notes": "Drowzee from Scarlet & Violet 210/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Tomokazu Komiya, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:59:13.821Z",
-      "updatedAt": "2026-09-16T15:24:58.417Z"
+      "updatedAt": "2026-09-16T15:24:58.417Z",
+      "sleepinessBasis": "Questionably sleeping 😂",
+      "sleepLocation": "In a dream",
+      "sleepiness": "2 — Drowsy",
+      "moods": [
+        "Dream Sequence",
+        "Blink-and-you'll-miss-it"
+      ],
+      "whyItBelongs": "Questionably sleeping in a fever dream. Tomokazu Komiya’s psychedelic carnival is pure hallucinatory sleepwalk energy."
     },
     {
       "apiId": "sv8-196",
@@ -2624,7 +3406,15 @@
       "priority": "High",
       "notes": "Larvesta from Surging Sparks 196/191 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:58:28.907Z",
-      "updatedAt": "2026-09-17T15:33:18.354Z"
+      "updatedAt": "2026-09-17T15:33:18.354Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap nestled in a hollow tree trunk. A glowing fire moth curled up like a warm little ember in the midnight dark."
     },
     {
       "apiId": "swsh8-270",
@@ -2651,7 +3441,15 @@
       "priority": "High",
       "notes": "Espeon VMAX from Fusion Strike 270/264 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Rainbow, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:58:01.876Z",
-      "updatedAt": "2026-09-18T14:57:56.359Z"
+      "updatedAt": "2026-09-18T14:57:56.359Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap draped over a house roof. Kouki Saitou turns a towering Gigantamax titan into the ultimate oversized sleeping feline."
     },
     {
       "apiId": "swsh5-155",
@@ -2678,7 +3476,15 @@
       "priority": "High",
       "notes": "Tyranitar V from Battle Styles 155/163 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by HYOGONOSUKE, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:57:22.016Z",
-      "updatedAt": "2026-09-18T14:57:56.486Z"
+      "updatedAt": "2026-09-18T14:57:56.486Z",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Accidental nap fueled by gluttony. Hyogonosuke's iconic sleeping Tyranitar passed out surrounded by empty berry rinds is legendary."
     },
     {
       "apiId": "sv6pt5-75",
@@ -2705,7 +3511,15 @@
       "priority": "High",
       "notes": "Zorua from Shrouded Fable 75/64 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:56:01.146Z",
-      "updatedAt": "2026-09-18T14:57:56.776Z"
+      "updatedAt": "2026-09-18T14:57:56.776Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap tucked behind garden stones. A mischievous trickster dropping its illusions for a sweet, vulnerable slumber."
     },
     {
       "apiId": "sv5-167",
@@ -2732,7 +3546,15 @@
       "priority": "High",
       "notes": "Litten from Temporal Forces 167/162 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Makura Tami, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:55:45.675Z",
-      "updatedAt": "2026-09-18T14:57:56.879Z"
+      "updatedAt": "2026-09-18T14:57:56.879Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap on the cat condo penthouse. Litten claiming the highest perch for uninterrupted slumber is pure cat logic."
     },
     {
       "apiId": "sv9-168",
@@ -2759,7 +3581,15 @@
       "priority": "High",
       "notes": "Furret from Journey Together 168/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by REND, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:54:50.453Z",
-      "updatedAt": "2026-09-15T15:33:00.977Z"
+      "updatedAt": "2026-09-15T15:33:00.977Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap coiled in a blanket basket. REND paints the long boy coiled up like a giant fluffy pastry in a cozy wooden box."
     },
     {
       "apiId": "sm10-147",
@@ -2786,7 +3616,15 @@
       "priority": "Low",
       "notes": "Meowth from Unbroken Bonds 147/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Shibuzoh., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T00:54:17.618Z",
-      "updatedAt": "2026-09-18T14:57:57.077Z"
+      "updatedAt": "2026-09-18T14:57:57.077Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap on a plush bed. Shibuzoh’s round storybook style shows Meowth taking full advantage of 'Caturday' by the bedside lamp."
     },
     {
       "apiId": "sv10-203",
@@ -2813,7 +3651,15 @@
       "priority": "High",
       "notes": "Team Rocket's Meowth from Destined Rivals 203/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Shimaris Yukichi, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:53:53.770Z",
-      "updatedAt": "2026-09-17T15:33:21.897Z"
+      "updatedAt": "2026-09-17T15:33:21.897Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Sleepover Club"
+      ],
+      "whyItBelongs": "Group nap in the boss's leather armchair. Even criminal masterminds and talking Meowths take fireside power naps between schemes."
     },
     {
       "apiId": "swsh12tg-TG09",
@@ -2840,7 +3686,15 @@
       "priority": "High",
       "notes": "Druddigon from Silver Tempest Trainer Gallery TG09/TG30 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Teeziro, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:53:44.741Z",
-      "updatedAt": "2026-09-18T14:57:57.239Z"
+      "updatedAt": "2026-09-18T14:57:57.239Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap with its trainer. A spiky dragon softening up into a living beanbag chair for an indoor afternoon rest."
     },
     {
       "apiId": "swsh12pt5gg-GG01",
@@ -2867,7 +3721,15 @@
       "priority": "High",
       "notes": "Hisuian Voltorb from Crown Zenith Galarian Gallery GG01/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by HYOGONOSUKE, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:53:25.805Z",
-      "updatedAt": "2026-09-16T15:24:59.249Z"
+      "updatedAt": "2026-09-16T15:24:59.249Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap nestled into ancient forest roots. Hyogonosuke turns the wooden Pokéball Pokémon into a blissful woodland seed."
     },
     {
       "apiId": "svp-14",
@@ -2894,7 +3756,15 @@
       "priority": "High",
       "notes": "Koraidon from Scarlet & Violet Black Star Promos 14/215 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by Mina Nakai, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:53:00.410Z",
-      "updatedAt": "2026-09-18T14:57:57.467Z"
+      "updatedAt": "2026-09-18T14:57:57.467Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap on the back porch deck. An ancient apex predator curled up like a golden retriever in the midday sun."
     },
     {
       "apiId": "sv3-209",
@@ -2921,7 +3791,15 @@
       "priority": "High",
       "notes": "Lechonk from Obsidian Flames 209/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Narumi Sato, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:54.368Z",
-      "updatedAt": "2026-09-18T14:57:57.605Z"
+      "updatedAt": "2026-09-18T14:57:57.605Z",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Accidental nap on the sunlit kitchen tile. Narumi Sato paints the little pig fast asleep after sniffing out every treat in the house."
     },
     {
       "apiId": "sv4pt5-226",
@@ -2948,7 +3826,15 @@
       "priority": "High",
       "notes": "Pawmi from Paldean Fates 226/91 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by REND, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:32.523Z",
-      "updatedAt": "2026-09-17T15:33:22.596Z"
+      "updatedAt": "2026-09-17T15:33:22.596Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap curled into an orange puff. REND captures Pawmi deep in slumber on the sunlit floorboards among warm wooden toys."
     },
     {
       "apiId": "sv1-209",
@@ -2975,7 +3861,15 @@
       "priority": "High",
       "notes": "Pawmot from Scarlet & Violet 209/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:25.695Z",
-      "updatedAt": "2026-09-16T15:24:59.887Z"
+      "updatedAt": "2026-09-16T15:24:59.887Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap in the sunflower field. Big brother Pawmot watching over Pawmi and Pawmo dozing under Kouki Saitou’s bright sky."
     },
     {
       "apiId": "sv8-204",
@@ -3002,7 +3896,15 @@
       "priority": "High",
       "notes": "Mesprit from Surging Sparks 204/191 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:17.270Z",
-      "updatedAt": "2026-09-17T15:33:22.859Z"
+      "updatedAt": "2026-09-17T15:33:22.859Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Sky",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Dream Sequence",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap drifting through twilight lake skies. A legendary guardian of emotion enjoying serene, dreamlike rest above Lake Verity."
     },
     {
       "apiId": "swsh12tg-TG07",
@@ -3029,7 +3931,15 @@
       "priority": "High",
       "notes": "Rockruff from Silver Tempest Trainer Gallery TG07/TG30 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Hideki Ishikawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:51:50.624Z",
-      "updatedAt": "2026-09-18T14:57:57.907Z"
+      "updatedAt": "2026-09-18T14:57:57.907Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap snuggled into bed. Hideki Ishikawa illustrates the sweetest puppy slumber right on Professor Kukui's duvet."
     },
     {
       "apiId": "sv1-222",
@@ -3056,7 +3966,15 @@
       "priority": "High",
       "notes": "Skwovet from Scarlet & Violet 222/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Teeziro, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:51:30.504Z",
-      "updatedAt": "2026-09-16T15:25:00.546Z"
+      "updatedAt": "2026-09-16T15:25:00.546Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap sprawled on the living room rug. Teeziro crafts a warm architectural interior where a little squirrel sleeps like royalty."
     },
     {
       "apiId": "swsh11tg-TG05",
@@ -3083,7 +4001,15 @@
       "priority": "High",
       "notes": "Pikachu from Lost Origin Trainer Gallery TG05/TG30 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Atsushi Furusawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:50:51.196Z",
-      "updatedAt": "2026-09-18T14:57:58.204Z"
+      "updatedAt": "2026-09-18T14:57:58.204Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Sleepover Club"
+      ],
+      "whyItBelongs": "Group nap with champion Red. Pikachu curled asleep on Red's chest is the ultimate nostalgic trainer bond."
     },
     {
       "apiId": "sv2-227",
@@ -3110,7 +4036,15 @@
       "priority": "High",
       "notes": "Flamigo from Paldea Evolved 227/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Shibuzoh., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:49:49.840Z",
-      "updatedAt": "2026-09-17T15:33:31.403Z"
+      "updatedAt": "2026-09-17T15:33:31.403Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Water",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap in a tangle of pink feathers. Shibuzoh delivers hilarious coordinated flamingo resting in a tropical wetland."
     },
     {
       "apiId": "rsv10pt5-105",
@@ -3137,7 +4071,15 @@
       "priority": "High",
       "notes": "Oshawott from White Flare 105/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by OKACHEKE, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:49:20.067Z",
-      "updatedAt": "2026-09-18T14:57:58.455Z"
+      "updatedAt": "2026-09-18T14:57:58.455Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap floating down the river. OKACHEKE’s sparkling water reflections cradle Oshawott in pure storybook tranquility."
     },
     {
       "apiId": "sv2-211",
@@ -3164,7 +4106,15 @@
       "priority": "High",
       "notes": "Raichu from Paldea Evolved 211/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Toshinao Aoki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:48:04.678Z",
-      "updatedAt": "2026-09-16T15:25:00.904Z"
+      "updatedAt": "2026-09-16T15:25:00.904Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap curled on bedroom floorboards. Toshinao Aoki's clean storybook lines make this sleepy Raichu one of the most beloved modern SAR cards."
     },
     {
       "apiId": "sv5-52",
@@ -3191,7 +4141,15 @@
       "priority": "Low",
       "notes": "Raichu from Temporal Forces 52/162 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by cochi8i, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:48:04.678Z",
-      "updatedAt": "2026-09-18T14:57:58.689Z"
+      "updatedAt": "2026-09-18T14:57:58.689Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap curled in the grass. A simple, charming modern common of Raichu enjoying quiet downtime in the afternoon sun."
     },
     {
       "apiId": "zsv10pt5-117",
@@ -3218,7 +4176,15 @@
       "priority": "High",
       "notes": "Musharna from Black Bolt 117/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Mizue, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:47:17.816Z",
-      "updatedAt": "2026-09-18T14:57:59.204Z"
+      "updatedAt": "2026-09-18T14:57:59.204Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "In a dream",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Dream Sequence",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap emitting dream mist. Mizue paints the quintessential dream Pokémon wrapped in pastel smoke against a starry backdrop."
     },
     {
       "apiId": "svp-51",
@@ -3245,7 +4211,15 @@
       "priority": "High",
       "notes": "Snorlax from Scarlet & Violet Black Star Promos 51/215 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by GOSSAN, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-04T23:44:35.366Z",
-      "updatedAt": "2026-09-18T14:57:59.325Z"
+      "updatedAt": "2026-09-18T14:57:59.325Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold blocking the park bridge walkway. GOSSAN’s 151 ETB promo brings the classic road-blocking Snorlax into stunning modern art."
     },
     {
       "apiId": "sv3pt5-166",
@@ -3272,7 +4246,15 @@
       "priority": "High",
       "notes": "Bulbasaur from 151 166/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Yoriyuki Ikegami, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-04T23:43:44.428Z",
-      "updatedAt": "2026-09-18T14:57:59.486Z"
+      "updatedAt": "2026-09-18T14:57:59.486Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap bathed in morning light. Yoriyuki Ikegami’s painterly masterpiece captures Bulbasaur basking in serene leafy bliss."
     },
     {
       "apiId": "sv7-143",
@@ -3299,7 +4281,15 @@
       "priority": "High",
       "notes": "Bulbasaur from Stellar Crown 143/142 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The artist is not listed in the current guide data, so the set and card number are the best identifiers for tracking this card. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-04T23:43:44.428Z",
-      "updatedAt": "2026-09-15T15:33:04.764Z"
+      "updatedAt": "2026-09-15T15:33:04.764Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap in an indoor greenhouse. Bulbasaur curled up amidst potted houseplants brings lush conservatory vibes indoors."
     },
     {
       "apiId": "sv2-196",
@@ -3326,7 +4316,15 @@
       "priority": "High",
       "notes": "Sprigatito from Paldea Evolved 196/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-04T23:43:03.718Z",
-      "updatedAt": "2026-09-18T14:57:59.714Z"
+      "updatedAt": "2026-09-18T14:57:59.714Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap on a flower trellis. Kouki Saitou’s lush purple wisteria canopy cradles the little grass cat in heavenly tranquility."
     },
     {
       "apiId": "swsh12pt5gg-GG10",
@@ -3353,7 +4351,15 @@
       "priority": "High",
       "notes": "Mew from Crown Zenith Galarian Gallery GG10/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Ryota Murayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-04T23:06:06.111Z",
-      "updatedAt": "2026-09-18T14:58:00.152Z"
+      "updatedAt": "2026-09-18T14:58:00.152Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in the treetop canopy. Ryota Murayama paints the mythical ancestor curled into an innocent ball above a bustling forest."
     },
     {
       "apiId": "swsh12pt5gg-GG23",
@@ -3380,7 +4386,15 @@
       "priority": "High",
       "notes": "Dunsparce from Crown Zenith Galarian Gallery GG23/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Kurata So, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-04T23:06:06.111Z",
-      "updatedAt": "2026-09-18T14:58:00.397Z"
+      "updatedAt": "2026-09-18T14:58:00.397Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Cave",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap deep in its burrow. Kurata So captures Dunsparce snoozing safely in its subterranean earthen haven."
     },
     {
       "apiId": "sm2-114",
@@ -3407,7 +4421,15 @@
       "priority": "Medium",
       "notes": "Komala from Guardians Rising 114/145 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-04T23:06:06.111Z",
-      "updatedAt": "2026-09-17T15:33:47.228Z"
+      "updatedAt": "2026-09-17T15:33:47.228Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold hugging its wooden log. Born asleep and living in permanent slumber, Komala is the purest sleep icon in the franchise."
     },
     {
       "apiId": "sm11-185",
@@ -3434,7 +4456,15 @@
       "priority": "Low",
       "notes": "Komala from Unified Minds 185/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-04T23:06:06.111Z",
-      "updatedAt": "2026-09-18T14:58:00.671Z"
+      "updatedAt": "2026-09-18T14:58:00.671Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold in felt and clay. Miki Tanaka’s tactile style gives the perpetually comatose koala a delightfully sleepy meadow portrait."
     },
     {
       "apiId": "basep-49",
@@ -3461,7 +4491,14 @@
       "priority": "High",
       "notes": "Snorlax from Wizards Black Star Promos 49 is included in this guide because the artwork gives us the deeply sleepy Snorlax-and-Eevee moment, complete with the giant Zzz energy that belongs in a sleepy Pokemon binder. Suggested by GitHub issue #15.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T15:25:05.401Z"
+      "updatedAt": "2026-09-16T15:25:05.401Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon."
     },
     {
       "apiId": "xyp-XY148",
@@ -3488,7 +4525,15 @@
       "priority": "Medium",
       "notes": "Shaymin-EX from XY Black Star Promos XY148 is included in this guide for the tiny tucked-in Shaymin in the scene, which makes the card count as sleep-adjacent even though the printed card name is not sleepy on its own. Suggested by GitHub issue #14.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-18T14:58:00.854Z"
+      "updatedAt": "2026-09-18T14:58:00.854Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in a Gracidea flowerbed. Kanako Eo wraps the mythical hedgehog in brilliant storybook blossoms."
     },
     {
       "apiId": "miscpp_jp-035",
@@ -3515,7 +4560,15 @@
       "priority": "Medium",
       "notes": "Togepi from Japanese P Promos 035/P is included in this guide because Togepi is asleep on the forest floor, a clear sleepy-scene entry from an older promo release. Suggested by GitHub issue #13.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap in a clay cradle. An ultra-rare Japanese promotional e-reader card depicting baby Togepi in sound, innocent sleep."
     },
     {
       "apiId": "vs1_jp-018",
@@ -3542,7 +4595,15 @@
       "priority": "Medium",
       "notes": "Whitney's Furret from Pokemon VS 018/141 is included in this guide because the artwork shows Furret asleep on the ground, a gentle older Japanese-card sleepy scene. Suggested by GitHub issue #12.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap coiled into a perfect cinnamon swirl. Whitney's beloved partner curled into total clay contentment in this Japanese VS exclusive."
     },
     {
       "apiId": "me04-053",
@@ -3569,7 +4630,15 @@
       "priority": "Medium",
       "notes": "Stunky from Chaos Rising 053/086 is included in this guide because Stunky is curled up asleep in a garden, making it a clean fit for the sleepy Pokemon collection. Suggested by GitHub issue #11.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap under twilight skies. Even the stinky skunk enjoys sweet dreams when resting quietly on an open grassy hill."
     },
     {
       "apiId": "me3-90",
@@ -3596,7 +4665,15 @@
       "priority": "High",
       "notes": "Rowlet from Perfect Order 090/088 is included in this guide because Rowlet is asleep on a tree branch, with the kind of obvious cozy artwork that belongs in a sleepy binder. Suggested by GitHub issue #10.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap perched on a branch. A perfectly spherical Rowlet dozing peacefully in the sunny canopy by ryoma uratsuka."
     },
     {
       "apiId": "me2pt5-165",
@@ -3623,7 +4700,15 @@
       "priority": "High",
       "notes": "Skitty from Ascended Heroes 165/217 is included in this guide because Skitty is curled up in a small bed, which is exactly the kind of tiny sleepy-card delight this collection is here for. Suggested by GitHub issue #9.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Tiny Tuck-Ins"
+      ],
+      "whyItBelongs": "Cozy nap curled inside a porcelain bathroom sink. If it fits, it sits: peak domestic cat behavior captured on a Pokémon card."
     },
     {
       "apiId": "ecard2-49",
@@ -3650,7 +4735,15 @@
       "priority": "Medium",
       "notes": "Gloom from Aquapolis 49/147 is included in this guide because Gloom is asleep on a tree branch, adding a classic e-Card era sleepy scene to the list. Suggested by GitHub issue #8.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-18T14:58:03.968Z"
+      "updatedAt": "2026-09-18T14:58:03.968Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold drooling on a mossy branch. Kyoko Umemoto’s rich e-Series color palette makes Gloom’s jungle nap pop with vintage personality."
     },
     {
       "apiId": "me1-4",
@@ -3677,7 +4770,15 @@
       "priority": "Low",
       "notes": "Exeggcute from Mega Evolution 4/132 is included in this guide because part of the group is asleep along the roof, making it a small but valid sleepy detail for completionist collectors. Suggested by GitHub issue #7.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T15:25:06.797Z"
+      "updatedAt": "2026-09-16T15:25:06.797Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Sleepover Club",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Group nap hidden under garden leaves. Aspara captures the cracked little egg crew resting together in the rich garden dirt."
     },
     {
       "apiId": "me2pt5-175",
@@ -3704,7 +4805,15 @@
       "priority": "Medium",
       "notes": "Larry's Komala from Ascended Heroes 175/217 is included in this guide because Komala is eternally asleep and curled around its log in a restaurant scene. Suggested by GitHub issue #6.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Out cold beside an equally exhausted Larry. The ultimate corporate burnout pairing: a comatose koala and Pokémon’s weary salaryman."
     },
     {
       "apiId": "smp-SM41",
@@ -3731,7 +4840,15 @@
       "priority": "Medium",
       "notes": "Komala from Sun & Moon Black Star Promos SM41 is included in this guide because Komala is pressed sleepily against a tree, a sweet promo-card fit for the theme. Suggested by GitHub issue #5.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-18T14:58:04.255Z"
+      "updatedAt": "2026-09-18T14:58:04.255Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold on a tropical beach. Nagimiso’s breezy Alolan art showcases Komala doing what it does best: sleeping without a care."
     },
     {
       "apiId": "swsh11-149",
@@ -3758,7 +4875,15 @@
       "priority": "Low",
       "notes": "Komala from Lost Origin 149/196 is included in this guide because Komala is asleep in the shade, a quiet little sleepy-scene card for the binder. Suggested by GitHub issue #4.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T15:25:08.496Z"
+      "updatedAt": "2026-09-16T15:25:08.496Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Tree",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold clinging to a mossy tree trunk. Hyogonosuke’s crisp graphic shapes frame the perpetually sleeping koala in vibrant green beauty."
     },
     {
       "apiId": "sv9-129",
@@ -3785,7 +4910,15 @@
       "priority": "Low",
       "notes": "Komala from Journey Together 129/159 is included in this guide because Komala is, very reliably, happily asleep. Suggested by GitHub issue #3.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z"
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold beside the river path. Natsumi Yoshida’s charming linework gives Komala another delightfully cozy, unbothered nap."
     },
     {
       "apiId": "me30-001",
@@ -3812,7 +4945,15 @@
       "priority": "Medium",
       "notes": "Exeggcute from ME: 30th Celebration 001/128 is included because some of these eggos are always sleepy, and the card even leans into that with Hypnosis. Suggested by GitHub issue #45.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap in sweet pastel fields. Nelnal’s energetic pop-art style turns the six snoozing eggs into vibrant visual candy."
     },
     {
       "apiId": "me30-027",
@@ -3839,7 +4980,16 @@
       "priority": "High",
       "notes": "Pikachu from ME: 30th Celebration 027/128 is included because this little guy is fully asleep and looks like he is dreaming. A very cozy addition to the Pikachu rare group. Suggested by GitHub issue #40.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap handcrafted in yarn. Asako Ito’s crocheted Pikachu passed out on a felt hill is pure comforting nostalgia."
     },
     {
       "apiId": "me30-043",
@@ -3866,7 +5016,15 @@
       "priority": "Medium",
       "notes": "Pikachu from ME: 30th Celebration 043/128 is included because this dreamy beach scene feels like the perfect hammock-side companion to Oshawott from White Flare. Suggested by GitHub issue #41.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap after soaking in tropical vibes. OOYAMA’s delightfully goofy, round Pikachu conked out on the beach towel is instant joy."
     },
     {
       "apiId": "me30-091",
@@ -3893,7 +5051,15 @@
       "priority": "High",
       "notes": "Umbreon from ME: 30th Celebration 091/128 is included because he is lying in bed looking like he could fall asleep any second. That absolutely counts as sleepy around here. Suggested by GitHub issue #43.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Cave",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Cozy Corners",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Cozy nap glowing under the moonlight. Iori Suzuki crafts a peaceful, atmospheric moonlit rest for the dark evolution."
     },
     {
       "apiId": "me30-113",
@@ -3920,7 +5086,15 @@
       "priority": "High",
       "notes": "Meowth from ME: 30th Celebration 113/128 is included because this cat knows how to cat-nap. A charming little sleepy scene for the collection. Suggested by GitHub issue #44.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Cozy Corners",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Cozy nap curled on a sunny brick wall. MINAMINAMI Take paints classic cat behavior as Meowth basks atop a warm fence ledge."
     },
     {
       "apiId": "me30-119",
@@ -3947,7 +5121,15 @@
       "priority": "High",
       "notes": "Snorlax from ME: 30th Celebration 119/128 is included because classic Snorlax remains classic Snorlax. Good Sleep, a giant body, and absolutely no reason to get up. Suggested by GitHub issue #42.",
       "createdAt": "2026-09-16T06:28:43.000Z",
-      "updatedAt": "2026-09-16T06:28:43.000Z"
+      "updatedAt": "2026-09-16T06:28:43.000Z",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "5 — Medically unavailable",
+      "moods": [
+        "Deep Sleepers",
+        "Outdoor Naps"
+      ],
+      "whyItBelongs": "Out cold among magical forest mushrooms. Aya Kusube’s richly textured fairytale style gives Snorlax a dreamy storybook snooze."
     },
     {
       "apiId": "me55-131",
@@ -3977,7 +5159,15 @@
       "priority": "High",
       "notes": "Lapras from ME: 30th Celebration 131/128 is included because a cozy nap next to Lapras is a very persuasive argument. We do not discriminate here, and this is exactly the sort of gentle scene that earns its binder spot. Suggested by GitHub issue #48.",
       "createdAt": "2026-09-18T18:36:00.000Z",
-      "updatedAt": "2026-09-18T18:36:00.000Z"
+      "updatedAt": "2026-09-18T18:36:00.000Z",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "3 — Convincing nap",
+      "moods": [
+        "Outdoor Naps",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends."
     },
     {
       "apiId": "me55-144",
@@ -4007,7 +5197,52 @@
       "priority": "High",
       "notes": "Meowth from ME: 30th Celebration 144/128 is included because this cat knows how to cat-nap, and frankly, the collection is willing to respect the craft. A charming little sleepy scene for the binder. Suggested by GitHub issue #47.",
       "createdAt": "2026-09-18T18:36:00.000Z",
-      "updatedAt": "2026-09-18T18:36:00.000Z"
+      "updatedAt": "2026-09-18T18:36:00.000Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Literally wherever",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Cozy Corners",
+        "Blink-and-you'll-miss-it"
+      ],
+      "whyItBelongs": "Group nap draped over apartment railings. OKUBO's intricate architectural illustration shows Meowth and friends dangling in liquid cat sleep across urban balconies."
+    },
+    {
+      "apiId": "sv09-120",
+      "tcgdexId": "sv09-120",
+      "name": "Dunsparce",
+      "pokemon": "Dunsparce",
+      "setName": "Journey Together",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv09",
+      "number": "120/159",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Asako Ito",
+      "imageSmall": "https://assets.tcgdex.net/en/sv/sv09/120/low.webp",
+      "imageLarge": "https://assets.tcgdex.net/en/sv/sv09/120/high.webp",
+      "priceMarket": 2.02,
+      "priceLow": 1.5,
+      "priceMid": 2.29,
+      "priceHigh": 19.94,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/09/19",
+      "setReleaseDate": "2025/03/28",
+      "priority": "Medium",
+      "notes": "Suggested in GitHub issue #49. The submitter spotted Dunsparce laying down asleep.",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Grass",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Outdoor Naps",
+        "Deep Sleepers"
+      ],
+      "whyItBelongs": "Out cold on the ground. Dunsparce is completely stretched out and asleep, making this a quietly convincing addition to the sleepy stack.",
+      "suggestionIssue": "https://github.com/comet4940/sleepy-pokemon/issues/49",
+      "createdAt": "2026-09-20T15:55:21.016Z",
+      "updatedAt": "2026-09-20T15:55:21.016Z"
     }
   ],
   "priceRefreshedAt": "2026-09-18T14:58:11.701Z"
