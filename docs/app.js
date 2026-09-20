@@ -284,6 +284,8 @@ function closeSuggestionDialog() {
 
 function resetSuggestionForm() {
   suggestionLookupRequestId += 1;
+  suggestionSelectionRequestId += 1;
+  suggestionSelectionPromise = null;
   window.clearTimeout(suggestionSearchTimer);
   elements.suggestionForm?.reset();
   elements.suggestionForm?.classList.remove("is-success");
@@ -296,6 +298,8 @@ function resetSuggestionForm() {
 
 let suggestionSearchTimer = 0;
 let suggestionLookupRequestId = 0;
+let suggestionSelectionRequestId = 0;
+let suggestionSelectionPromise = null;
 
 function handleSuggestionSearch() {
   const query = elements.suggestionCardSearch.value.trim();
@@ -356,8 +360,17 @@ function renderSuggestionResults(cards) {
   elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
 }
 
-async function selectSuggestionCard(card) {
-  const selectionRequestId = suggestionLookupRequestId;
+function selectSuggestionCard(card) {
+  const selectionRequestId = ++suggestionSelectionRequestId;
+  const selectionPromise = resolveSuggestionCardSelection(card, selectionRequestId);
+  suggestionSelectionPromise = selectionPromise;
+  selectionPromise.finally(() => {
+    if (suggestionSelectionPromise === selectionPromise) suggestionSelectionPromise = null;
+  });
+  return selectionPromise;
+}
+
+async function resolveSuggestionCardSelection(card, selectionRequestId) {
   let selectedCard = card;
   if (card.id && !card.set) {
     try {
@@ -367,7 +380,7 @@ async function selectSuggestionCard(card) {
       console.warn("Could not load full card details", error);
     }
   }
-  if (selectionRequestId !== suggestionLookupRequestId) return;
+  if (selectionRequestId !== suggestionSelectionRequestId) return;
   const setName = selectedCard.setName || selectedCard.set?.name || "Set unavailable";
   const number = selectedCard.localId || selectedCard.number || "No number";
   const details = `${selectedCard.name} — ${setName} · ${number}`;
@@ -393,6 +406,7 @@ async function selectSuggestionCard(card) {
 
 async function handleSuggestionSubmit(event) {
   event.preventDefault();
+  if (suggestionSelectionPromise) await suggestionSelectionPromise;
   const manualCard = elements.suggestionCardSearch.value.trim();
   if (!elements.suggestionCard.value && !manualCard) {
     elements.suggestionSearchStatus.textContent = "Tell us which card you spotted first.";
