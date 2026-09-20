@@ -13,12 +13,14 @@ const END = "<!-- SEO_CARD_INDEX_END -->";
 
 const guide = JSON.parse(await readFile(GUIDE_PATH, "utf8"));
 const cards = Array.isArray(guide) ? guide : guide.cards;
+const guideDefinitions = await loadGuideDefinitions();
 
 if (!Array.isArray(cards)) {
   throw new Error(`${GUIDE_PATH} does not contain a cards array.`);
 }
 
 const cardsWithSlugs = assignSlugs(cards);
+const guideMemberships = buildGuideMemberships(guideDefinitions);
 const sortedCards = [...cardsWithSlugs].sort((a, b) => {
   return String(a.pokemon || "").localeCompare(String(b.pokemon || ""))
     || String(a.name || "").localeCompare(String(b.name || ""))
@@ -53,7 +55,7 @@ async function writeCardPages(cardList) {
   await Promise.all(cardList.map(async (card) => {
     const dir = `${CARDS_DIR}/${card.slug}`;
     await mkdir(dir, { recursive: true });
-    await writeFile(`${dir}/index.html`, renderCardPage(card), "utf8");
+    await writeFile(`${dir}/index.html`, renderCardPage(card, guideMemberships), "utf8");
   }));
 }
 
@@ -123,7 +125,7 @@ ${urls}
   await writeFile(SITEMAP_PATH, sitemap, "utf8");
 }
 
-function renderCardPage(card) {
+function renderCardPage(card, memberships) {
   const title = `${card.name} Sleepy Pokemon Card - ${[card.setName, card.number].filter(Boolean).join(" ")}`.trim();
   const description = buildDescription(card);
   const visibleDescription = buildVisibleSummary(card);
@@ -201,7 +203,7 @@ function renderCardPage(card) {
             <div class="curation-note">
               <strong>Why it belongs.</strong> ${escapeHtml(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
             </div>
-${renderCurationFacts(card)}
+${renderGuideMemberships(card, memberships)}${renderCurationFacts(card)}
 ${renderMoods(card)}
             <div class="meta-grid">
               ${metaItem("Set", card.setName)}
@@ -219,6 +221,35 @@ ${renderSiteFooter()}
   </body>
 </html>
 `;
+}
+
+function buildGuideMemberships(guideList) {
+  const memberships = new Map();
+  guideList.forEach((guide) => {
+    (guide.cards || []).forEach((entry) => {
+      const existing = memberships.get(entry.slug) || [];
+      existing.push({ slug: guide.slug, title: guide.title });
+      memberships.set(entry.slug, existing);
+    });
+  });
+  return memberships;
+}
+
+function renderGuideMemberships(card, memberships) {
+  const guides = memberships.get(card.slug) || [];
+  if (!guides.length) return "";
+  const links = guides.map((guide) => `<a href="../../guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="card_page" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`).join(" and ");
+  return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${links}.</p></div>\n`;
+}
+
+async function loadGuideDefinitions() {
+  try {
+    const payload = JSON.parse(await readFile("docs/guides.json", "utf8"));
+    return Array.isArray(payload) ? payload : payload.guides || [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
 }
 
 function metaItem(label, value) {

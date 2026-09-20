@@ -470,7 +470,7 @@
   }
 
   .card-page-shell .topbar-actions > a:not(.header-cta) {
-    display: none;
+    display: inline-flex;
   }
 
   .card-page-shell .header-cta {
