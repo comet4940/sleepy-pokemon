@@ -629,14 +629,15 @@
       "notes": "Greedent from Lost Origin 151/196 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-06T21:35:04.985Z",
       "updatedAt": "2026-09-13T14:55:34.938Z",
-      "sleepinessBasis": "Accidental nap",
+      "sleepinessBasis": "Out cold",
       "sleepLocation": "Grass",
       "sleepiness": "4 — Fully out",
       "moods": [
         "Deep Sleepers",
-        "Outdoor Naps"
+        "Outdoor Naps",
+        "Food Coma"
       ],
-      "whyItBelongs": "Accidental nap induced by a massive berry feast. Greedent passed out with crumbs on its belly in a total food coma is relatable comedy."
+      "whyItBelongs": "Food coma induced by a massive berry feast. Greedent passed out with crumbs on its belly in a total post-buffet stupor is peak relatable comedy."
     },
     {
       "apiId": "sm9-22",
@@ -2919,9 +2920,10 @@
       "sleepiness": "5 — Medically unavailable",
       "moods": [
         "Deep Sleepers",
-        "Outdoor Naps"
+        "Outdoor Naps",
+        "Food Coma"
       ],
-      "whyItBelongs": "Out cold flat on its back on a grassy hill. Oswaldo KATO paints the ultimate nap king blocking yet another scenic path."
+      "whyItBelongs": "Food coma flat on its back under an apple tree. Oswaldo KATO captures Snorlax completely dead to the world, surrounded by half-eaten apples with bite marks."
     },
     {
       "apiId": "swsh4-131",
@@ -2951,7 +2953,7 @@
       "updatedAt": "2026-09-15T15:32:58.446Z",
       "sleepinessBasis": "Out cold",
       "sleepLocation": "Tree",
-      "sleepiness": "4 — Fully out",
+      "sleepiness": "2 — Drowsy",
       "moods": [
         "Deep Sleepers",
         "Outdoor Naps"
@@ -3056,13 +3058,12 @@
       "updatedAt": "2026-09-17T15:33:12.740Z",
       "sleepinessBasis": "Cozy nap",
       "sleepLocation": "Grass",
-      "sleepiness": "4 — Fully out",
+      "sleepiness": "2 — Drowsy",
       "moods": [
-        "Deep Sleepers",
-        "Cozy Corners",
-        "Tiny Tuck-Ins"
+        "Outdoor Naps",
+        "Cozy Corners"
       ],
-      "whyItBelongs": "Cozy nap knitted in wool. Asako Ito’s handcrafted amigurumi Snorlax brings unbeatable tactile warmth to any binder page."
+      "whyItBelongs": "Cozy nap on a flowery hill. Handcrafted in amigurumi yarn by Asako Ito, Snorlax lets out a big sleepy yawn amidst tiny pastel felt flowers."
     },
     {
       "apiId": "sm10-7",
@@ -3477,14 +3478,15 @@
       "notes": "Tyranitar V from Battle Styles 155/163 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by HYOGONOSUKE, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:57:22.016Z",
       "updatedAt": "2026-09-18T14:57:56.486Z",
-      "sleepinessBasis": "Accidental nap",
-      "sleepLocation": "Grass",
+      "sleepinessBasis": "Out cold",
+      "sleepLocation": "Literally wherever",
       "sleepiness": "5 — Medically unavailable",
       "moods": [
         "Deep Sleepers",
-        "Outdoor Naps"
+        "Outdoor Naps",
+        "Food Coma"
       ],
-      "whyItBelongs": "Accidental nap fueled by gluttony. Hyogonosuke's iconic sleeping Tyranitar passed out surrounded by empty berry rinds is legendary."
+      "whyItBelongs": "Food coma literally wherever. Passed out in a legendary post-buffet stupor next to towering stacks of empty dishes while a sweating Pignite watches from behind a tree. The undisputed king of chaos naps and a modern alternate-art grail."
     },
     {
       "apiId": "sv6pt5-75",
@@ -3792,14 +3794,15 @@
       "notes": "Lechonk from Obsidian Flames 209/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Narumi Sato, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:54.368Z",
       "updatedAt": "2026-09-18T14:57:57.605Z",
-      "sleepinessBasis": "Accidental nap",
+      "sleepinessBasis": "Out cold",
       "sleepLocation": "Bed",
       "sleepiness": "4 — Fully out",
       "moods": [
         "Cozy Corners",
-        "Deep Sleepers"
+        "Deep Sleepers",
+        "Food Coma"
       ],
-      "whyItBelongs": "Accidental nap on the sunlit kitchen tile. Narumi Sato paints the little pig fast asleep after sniffing out every treat in the house."
+      "whyItBelongs": "Food coma on the sunlit kitchen tile. Narumi Sato paints the little gourmet pig fast asleep next to its food bowl after sniffing out and devouring every treat in the house."
     },
     {
       "apiId": "sv4pt5-226",
@@ -5127,9 +5130,10 @@
       "sleepiness": "5 — Medically unavailable",
       "moods": [
         "Deep Sleepers",
-        "Outdoor Naps"
+        "Outdoor Naps",
+        "Food Coma"
       ],
-      "whyItBelongs": "Out cold among magical forest mushrooms. Aya Kusube’s richly textured fairytale style gives Snorlax a dreamy storybook snooze."
+      "whyItBelongs": "Food coma among wild forest berries and mushrooms. Aya Kusube’s richly textured fairytale style shows Snorlax completely knocked out digesting a woodland feast."
     },
     {
       "apiId": "me55-131",
