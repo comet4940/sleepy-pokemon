@@ -40,7 +40,7 @@
     </script>
     <script defer src="analytics.js" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css?v=3" />
-    <link rel="stylesheet" href="home-v3.css?v=6" />
+    <link rel="stylesheet" href="home-v3.css?v=7" />
     <link rel="stylesheet" href="card-detail-v3.css" />
   </head>
   <body data-app-mode="home">
@@ -140,7 +140,9 @@
     </div>
 
     <dialog id="suggestionDialog" class="suggestion-dialog">
-      <form class="suggestion-panel" id="suggestionForm" data-email-endpoint="EMAIL_FORM_ENDPOINT_PLACEHOLDER">
+      <form class="suggestion-panel" id="suggestionForm" data-email-endpoint="https://formspree.io/f/mgavoazj">
+        <input type="hidden" name="_subject" value="New Sleepy Pokemon card suggestion" />
+        <input class="form-honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
         <button class="icon-button suggestion-close" id="closeSuggestionButton" type="button" aria-label="Close suggestion form">×</button>
         <p class="eyebrow">Community nap watch</p>
         <h2>Suggest a sleepy card</h2>
@@ -153,7 +155,7 @@
         <label class="suggestion-field"><span>Anything else?</span><textarea id="suggestionNotes" name="notes" rows="2" placeholder="Optional notes, reference links, or collector context"></textarea></label>
         <button class="button primary-button suggestion-submit" type="submit"><span aria-hidden="true">✦</span> Send suggestion</button>
         <p class="suggestion-footnote">Your suggestion will be reviewed before anything is added to the collection.</p>
-        <div class="suggestion-success" id="suggestionSuccess" hidden><p class="eyebrow">Tucked into the review pile</p><h2>We got it. ✦</h2><p>Thanks for spotting a sleepy one. Comet will review your suggestion and follow up if it makes the collection.</p><button class="button primary-button" id="suggestionDoneButton" type="button">Done</button></div>
+        <div class="suggestion-success" id="suggestionSuccess" hidden><p class="eyebrow">Tucked into the review pile</p><h2>We got it. <span aria-hidden="true">✦</span></h2><p>Thanks for spotting a sleepy one. Comet will review your suggestion and follow up if it makes the collection.</p><button class="suggestion-done" id="suggestionDoneButton" type="button">Done</button></div>
       </form>
     </dialog>
 
