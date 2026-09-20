@@ -156,6 +156,194 @@ h3 {
   gap: 8px;
 }
 
+.header-search {
+  flex: 0 1 220px;
+  width: 220px;
+  margin: 0;
+}
+
+.header-search-field {
+  display: grid;
+  grid-template-columns: 18px minmax(90px, 1fr) 30px;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 6px 0 13px;
+  border: 1px solid rgba(255, 247, 232, .24);
+  border-radius: 22px;
+  background: rgba(255, 247, 232, .055);
+  color: inherit;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.header-search-field:focus-within {
+  border-color: var(--pink, #f36b9b);
+  background: rgba(255, 247, 232, .08);
+  box-shadow: 0 0 0 3px rgba(243, 107, 155, .13);
+}
+
+.header-search-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  color: var(--muted-cream, rgba(255, 247, 232, .65));
+}
+
+.header-search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cream, #fff7e8);
+  caret-color: var(--pink, #f36b9b);
+  -webkit-text-fill-color: var(--cream, #fff7e8);
+  font-size: .84rem;
+}
+
+.header-search input:focus,
+.header-search input:focus-visible {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.header-search input::selection {
+  background: var(--pink, #f36b9b);
+  color: #17121b;
+  -webkit-text-fill-color: #17121b;
+}
+
+.header-search input::-webkit-search-cancel-button {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+.header-search input:-webkit-autofill,
+.header-search input:-webkit-autofill:hover,
+.header-search input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #1a1924 inset;
+  -webkit-text-fill-color: var(--cream, #fff7e8);
+  caret-color: var(--pink, #f36b9b);
+  transition: background-color 9999s ease-out 0s;
+}
+
+.header-search input::placeholder {
+  color: var(--muted-cream, rgba(255, 247, 232, .58));
+  opacity: 1;
+}
+
+.header-search button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--yellow, #f4d35e);
+  font-size: 1rem;
+}
+
+.header-search button:hover,
+.header-search button:focus-visible {
+  background: rgba(244, 211, 94, .14);
+  outline: 0;
+}
+
+.site-footer {
+  padding: 26px clamp(24px, 4vw, 64px);
+  border-top: 1px solid rgba(255, 247, 232, 0.16);
+  background: #0e0e17;
+  color: var(--muted-cream, #b9b6c7);
+}
+
+.site-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(100%, 1680px);
+  margin: 0 auto;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.site-footer strong,
+.footer-studio-link {
+  color: var(--cream, #fff7e8);
+  font-weight: 700;
+}
+
+.footer-studio-link {
+  text-decoration-color: rgba(255, 247, 232, 0.38);
+  text-underline-offset: 3px;
+}
+
+.footer-studio-link:hover,
+.footer-studio-link:focus-visible {
+  color: var(--mint, #a7e8d4);
+  text-decoration-color: currentColor;
+}
+
+.site-footer-signoff {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-heart {
+  color: var(--pink, #f36b9b);
+}
+
+.footer-coffee {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--yellow, #f4d35e);
+  border-radius: 8px;
+  background: var(--yellow, #f4d35e);
+  color: #17121b;
+  text-decoration: none;
+}
+
+.footer-coffee svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-coffee:hover,
+.footer-coffee:focus-visible {
+  border-color: var(--cream, #fff7e8);
+  background: var(--cream, #fff7e8);
+  color: #17121b;
+  outline: 0;
+}
+
+@media (max-width: 640px) {
+  .site-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
 .curator-toolbar {
   display: flex;
   align-items: center;
@@ -1163,6 +1351,11 @@ textarea:focus-visible {
     justify-content: flex-start;
   }
 
+  .header-search {
+    flex: 1 1 240px;
+    width: min(100%, 320px);
+  }
+
   .curator-toolbar {
     justify-content: flex-start;
   }
@@ -1215,6 +1408,12 @@ textarea:focus-visible {
   .curator-toolbar,
   .button,
   .import-control {
+    width: 100%;
+  }
+
+  .header-search {
+    order: 10;
+    flex: 1 0 100%;
     width: 100%;
   }
 

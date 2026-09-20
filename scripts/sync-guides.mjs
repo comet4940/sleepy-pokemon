@@ -1,4 +1,6 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { renderSiteHeader } from "./site-header.mjs";
+import { renderSiteFooter } from "./site-footer.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -69,6 +71,8 @@ async function writeGuidePages(guideList) {
   await rm(GUIDES_DIR, { recursive: true, force: true });
   await mkdir(GUIDES_DIR, { recursive: true });
 
+  await writeFile(`${GUIDES_DIR}/index.html`, renderGuidesIndex(guideList), "utf8");
+
   await Promise.all(guideList.map(async (guide) => {
     const dir = `${GUIDES_DIR}/${guide.slug}`;
     await mkdir(dir, { recursive: true });
@@ -79,7 +83,7 @@ async function writeGuidePages(guideList) {
 async function syncHomepageGuideIndex(guideList) {
   const guideItems = guideList.map((guide) => {
     const description = guide.description || "Curated sleepy Pokemon card guide.";
-    return `              <li><a href="guides/${escapeAttribute(guide.slug)}/"><strong>${escapeHtml(guide.title)}</strong><span>${escapeHtml(description)}</span></a></li>`;
+    return `              <li><a href="guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="homepage_guide_index" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}"><strong>${escapeHtml(guide.title)}</strong><span>${escapeHtml(description)}</span></a></li>`;
   }).join("\n");
 
   const section = guideItems ? `${GUIDE_INDEX_START}
@@ -112,6 +116,8 @@ async function writeSitemap(cardList, guideList) {
   ]);
   const urls = [
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
+    sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
+    sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "monthly", "0.9"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
@@ -121,6 +127,71 @@ ${urls}
 </urlset>
 `;
   await writeFile(SITEMAP_PATH, sitemap, "utf8");
+}
+
+function renderGuidesIndex(guideList) {
+  const description = "Collector notes, themed card lists, and favorite sleepy Pokemon finds from the stack.";
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sleepy Pokemon Card Guides</title>
+    <meta name="description" content="${escapeAttribute(description)}" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="${SITE_URL}/guides/" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../assets/sleepy-pokemon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sleepy Pokemon Cards" />
+    <meta property="og:title" content="Sleepy Pokemon Card Guides" />
+    <meta property="og:description" content="${escapeAttribute(description)}" />
+    <meta property="og:url" content="${SITE_URL}/guides/" />
+    <meta property="og:image" content="${escapeAttribute(guideList[0]?.cards[0]?.card.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`)}" />
+    <script defer src="../analytics.js?v=2" data-page-type="guides-index"></script>
+    <link rel="stylesheet" href="../styles.css?v=3" />
+    <link rel="stylesheet" href="../home-v3.css?v=3" />
+    <link rel="stylesheet" href="../guides.css?v=1" />
+  </head>
+  <body data-app-mode="guides-index">
+    <div class="app-shell guides-shell">
+      ${renderSiteHeader("../")}
+      <main class="guides-index-main">
+        <header class="guides-index-intro">
+          <p class="eyebrow">Field notes from the sleepy stack</p>
+          <h1>Collector guides</h1>
+          <p>${escapeHtml(description)}</p>
+        </header>
+        <section class="guide-directory" aria-label="Sleepy Pokemon card guides">
+${guideList.map((guide, index) => renderGuideDirectoryItem(guide, index)).join("\n")}
+        </section>
+      </main>
+${renderSiteFooter()}
+    </div>
+  </body>
+</html>
+`;
+}
+
+function renderGuideDirectoryItem(guide, index) {
+  const previewCards = guide.cards.slice(0, 3);
+  return `          <article class="guide-directory-item">
+            <a class="guide-directory-art" href="${escapeAttribute(guide.slug)}/" aria-label="Read ${escapeAttribute(guide.title)}" data-analytics-event="guide_opened" data-analytics-source="guides_index_art" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">
+${previewCards.map(({ card }, cardIndex) => {
+  const image = card.imageSmall || card.imageLarge;
+  return image ? `              <img src="${escapeAttribute(image)}" alt="" loading="${index === 0 && cardIndex === 0 ? "eager" : "lazy"}" />` : "";
+}).join("\n")}
+            </a>
+            <div class="guide-directory-copy">
+              <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")} · ${guide.cards.length} cards</p>
+              <h2><a href="${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="guides_index_title" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a></h2>
+              <p>${escapeHtml(guide.description || "Curated sleepy Pokemon card guide.")}</p>
+              <a class="guide-read-link" href="${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="guides_index_cta" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">Read the guide <span aria-hidden="true">→</span></a>
+            </div>
+          </article>`;
 }
 
 function renderGuidePage(guide) {
@@ -153,6 +224,9 @@ function renderGuidePage(guide) {
     <link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../../assets/sleepy-pokemon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Sleepy Pokemon Cards" />
@@ -167,59 +241,92 @@ function renderGuidePage(guide) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
-    <link rel="stylesheet" href="../../styles.css" />
+    <script defer src="../../analytics.js?v=2" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
+    <link rel="stylesheet" href="../../styles.css?v=3" />
+    <link rel="stylesheet" href="../../home-v3.css?v=3" />
+    <link rel="stylesheet" href="../../guides.css?v=1" />
+    <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
-  <body data-app-mode="guide-page">
+  <body data-app-mode="guide-page" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
-      <header class="topbar">
-        <a class="brand-lockup card-page-brand" href="../../" aria-label="Back to Sleepy Pokemon Cards guide">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <div>
-            <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
-            <p class="brand-title">Sleepy Pokemon Cards</p>
-          </div>
-        </a>
-        <div class="topbar-actions">
-          <a class="button subtle" href="../../">Back to guide</a>
-        </div>
-      </header>
+      ${renderSiteHeader("../../")}
 
       <main class="guide-page-main">
         <section class="guide-hero" aria-labelledby="guideTitle">
-          <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")}</p>
-          <h1 id="guideTitle">${escapeHtml(title)}</h1>
-          <p>${escapeHtml(guide.description || description)}</p>
+          <div class="guide-hero-copy">
+            <a class="guide-back-link" href="../" data-analytics-event="navigation_clicked" data-analytics-source="guide_page" data-analytics-destination="guides"><span aria-hidden="true">←</span> All guides</a>
+            <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")} · ${guide.cards.length} cards</p>
+            <h1 id="guideTitle">${escapeHtml(title)}</h1>
+            <p>${escapeHtml(guide.description || description)}</p>
+          </div>
+          <div class="guide-hero-stack" aria-hidden="true">
+${guide.cards.slice(0, 3).map(({ card }, index) => {
+  const previewImage = card.imageSmall || card.imageLarge;
+  return previewImage ? `            <img src="${escapeAttribute(previewImage)}" alt="" class="guide-stack-card guide-stack-card-${index + 1}" />` : "";
+}).join("\n")}
+          </div>
         </section>
 
         <section class="guide-card-list" aria-label="Cards in this guide">
-${guide.cards.map((entry, index) => renderGuideCard(entry, index, guide.slug)).join("\n")}
+${guide.cards.map((entry, index) => renderGuideCard(entry, index, guide.slug, title)).join("\n")}
         </section>
       </main>
+${renderSiteFooter()}
     </div>
+    ${renderCardDetailDialog()}
+    <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="../../app.js?v=12"></script>
   </body>
 </html>
 `;
 }
 
-function renderGuideCard(entry, index, guideSlug) {
+function renderCardDetailDialog() {
+  return `<dialog id="cardDetailDialog" class="card-detail-dialog">
+      <div class="card-detail-frame card-detail-v3">
+        <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">×</button>
+        <div class="detail-art-column"><div class="detail-image-frame" id="detailImageFrame"></div></div>
+        <div class="detail-copy">
+          <p class="detail-kicker" id="detailEyebrow">Caught napping</p>
+          <h2 id="detailTitle"></h2>
+          <p class="card-subtitle" id="detailSubtitle"></p>
+          <div class="detail-price-row" id="detailPriceRow"></div>
+          <div class="curation-note" id="detailCurationNote"></div>
+          <div class="detail-guide-links" id="detailGuideLinks"></div>
+          <div class="curation-facts" id="detailCurationFacts"></div>
+          <div class="detail-moods" id="detailMoods"></div>
+          <div class="meta-grid" id="detailMetaGrid"></div>
+        </div>
+      </div>
+    </dialog>`;
+}
+
+function renderGuideCard(entry, index, guideSlug, guideTitle) {
   const card = entry.card;
   const image = card.imageSmall || card.imageLarge;
   const price = numericOrNull(card.priceMarket);
   const priceLabel = price === null ? "No current market price" : formatCurrency(price);
   const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
-  return `          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/${escapeAttribute(card.slug)}/" aria-label="View ${escapeAttribute(card.name)} card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">
+  const cardUrl = `../../cards/${card.slug}/?fromGuide=${encodeURIComponent(guideSlug || "")}&guideTitle=${encodeURIComponent(guideTitle || "")}`;
+  const cardId = getCardIdentity(card);
+  return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
+            <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_selected" data-analytics-source="guide_card_art" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}" data-analytics-card-number="${escapeAttribute(card.number || "")}" data-analytics-card-rarity="${escapeAttribute(card.rarity || "")}" data-analytics-card-language="${escapeAttribute(card.language || "")}" data-analytics-price-market="${escapeAttribute(card.priceMarket ?? "")}">
               ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
-              <h2><a href="../../cards/${escapeAttribute(card.slug)}/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">${escapeHtml(card.name)} Sleepy Pokemon Card</a></h2>
+              <h2><a href="${escapeAttribute(cardUrl)}" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_selected" data-analytics-source="guide_card_title" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}" data-analytics-card-number="${escapeAttribute(card.number || "")}" data-analytics-card-rarity="${escapeAttribute(card.rarity || "")}" data-analytics-card-language="${escapeAttribute(card.language || "")}" data-analytics-price-market="${escapeAttribute(card.priceMarket ?? "")}">${escapeHtml(card.name)}</a></h2>
               <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
               <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
               <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>
             </div>
           </article>`;
+}
+
+function getCardIdentity(card) {
+  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
+    .filter(Boolean)
+    .join("::");
 }
 
 function buildVisibleSummary(card) {
