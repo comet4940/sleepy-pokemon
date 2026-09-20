@@ -340,6 +340,7 @@
         <label class="suggestion-field"><span>Anything else?</span><textarea id="suggestionNotes" name="notes" rows="2" placeholder="Optional notes, reference links, or collector context"></textarea></label>
         <button class="button primary-button suggestion-submit" type="submit"><span aria-hidden="true">✦</span> Send suggestion</button>
         <p class="suggestion-footnote">Your suggestion will be reviewed before anything is added to the collection.</p>
+        <div class="suggestion-success" id="suggestionSuccess" hidden><p class="eyebrow">Tucked into the review pile</p><h2>We got it. ✦</h2><p>Thanks for spotting a sleepy one. Comet will review your suggestion and follow up if it makes the collection.</p><button class="button primary-button" id="suggestionDoneButton" type="button">Done</button></div>
       </form>
     </dialog>
 
@@ -361,6 +362,6 @@
     </dialog>
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=7"></script>
+    <script src="../app.js?v=8"></script>
   </body>
 </html>

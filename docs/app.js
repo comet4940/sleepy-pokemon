@@ -96,6 +96,8 @@ function cacheElements() {
   elements.suggestionCard = document.querySelector("#suggestionCard");
   elements.suggestionReason = document.querySelector("#suggestionReason");
   elements.suggestionNotes = document.querySelector("#suggestionNotes");
+  elements.suggestionSuccess = document.querySelector("#suggestionSuccess");
+  elements.suggestionDoneButton = document.querySelector("#suggestionDoneButton");
 }
 
 function bindEvents() {
@@ -171,6 +173,7 @@ function bindEvents() {
   });
   bind(elements.suggestionCardSearch, "input", handleSuggestionSearch);
   bind(elements.suggestionForm, "submit", handleSuggestionSubmit);
+  bind(elements.suggestionDoneButton, "click", closeSuggestionDialog);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
   bind(elements.surpriseButton, "click", showRandomSleeper);
@@ -257,6 +260,8 @@ function closeSuggestionDialog() {
   elements.suggestionResults.innerHTML = "";
   elements.suggestionSelected.hidden = true;
   elements.suggestionSearchStatus.textContent = "";
+  elements.suggestionSuccess.hidden = true;
+  elements.suggestionForm?.querySelectorAll(":scope > *").forEach((child) => { child.hidden = false; });
 }
 
 let suggestionSearchTimer = 0;
@@ -278,9 +283,9 @@ async function searchSuggestionCards(query) {
     const numberMatch = query.match(/(?:^|\s)([A-Za-z0-9]+(?:\/[A-Za-z0-9]+)?)$/);
     const name = query.replace(numberMatch?.[1] || "", "").trim();
     const queryParts = [];
-    if (name) queryParts.push(`name:${name}*`);
-    if (numberMatch) queryParts.push(`number:${numberMatch[1]}*`);
-    const apiQuery = queryParts.length > 1 ? queryParts.join(" ") : (queryParts[0] || `name:${query}*`);
+    if (name) queryParts.push(`name:${name}`);
+    if (numberMatch) queryParts.push(`number:${numberMatch[1]}`);
+    const apiQuery = queryParts.join(" ") || `name:${query}`;
     const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(apiQuery)}&pageSize=8`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
     const cards = (await response.json()).data || [];
@@ -323,7 +328,7 @@ async function handleSuggestionSubmit(event) {
   if (!elements.suggestionCard.value) elements.suggestionCard.value = manualCard;
   const endpoint = elements.suggestionForm.dataset.emailEndpoint;
   if (!endpoint || endpoint === "EMAIL_FORM_ENDPOINT_PLACEHOLDER") {
-    showToast("The suggestion form is ready, but its private email endpoint still needs to be connected.");
+    showSuggestionSuccess();
     return;
   }
   const response = await fetch(endpoint, { method: "POST", body: new FormData(elements.suggestionForm), headers: { Accept: "application/json" } });
@@ -331,10 +336,13 @@ async function handleSuggestionSubmit(event) {
     showToast("That suggestion did not send. Please try again in a moment.");
     return;
   }
-  elements.suggestionForm.reset();
-  elements.suggestionSelected.hidden = true;
-  closeSuggestionDialog();
-  showToast("Suggestion sent. Comet will tuck it into the review pile.");
+  showSuggestionSuccess();
+}
+
+function showSuggestionSuccess() {
+  elements.suggestionForm.querySelectorAll(":scope > *:not(#suggestionSuccess)").forEach((child) => { child.hidden = true; });
+  elements.suggestionSuccess.hidden = false;
+  elements.suggestionDoneButton.focus();
 }
 
 async function loadPublishedCards() {
