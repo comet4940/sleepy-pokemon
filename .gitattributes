@@ -1,0 +1,3 @@
+# Keep GitHub review focused on source and templates; these files are regenerated.
+docs/cards/** linguist-generated=true
+docs/sitemap.xml linguist-generated=true
