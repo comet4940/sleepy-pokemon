@@ -98,6 +98,10 @@ ${items}
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader("../")}\n      <!-- SITE_HEADER_END -->`,
   );
   html = syncSiteFooter(html);
+  html = html.replace(
+    /(<span class="collection-meta" id="collectionMeta">)[^<]*(<\/span>)/,
+    `$1${cardList.length} cards · zero alarm clocks$2`,
+  );
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
   } else {
