@@ -26,6 +26,7 @@ const state = {
   renderToken: 0,
   showAllCards: false,
   suggestionLookupUsed: false,
+  catalogLoadFailed: false,
 };
 
 const elements = {};
@@ -471,6 +472,7 @@ async function loadPublishedCards() {
     return cards.map(normalizeCard);
   } catch (error) {
     console.error(error);
+    state.catalogLoadFailed = true;
     showToast("Could not load the card guide.");
     return [];
   }
@@ -706,6 +708,7 @@ function updateCollectionHeading(resultCount) {
   const mood = moodChip?.textContent.trim();
   if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
+    if (state.catalogLoadFailed) return;
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
   } else if (search) {
     elements.collectionTitle.textContent = `Matching “${search}”`;
