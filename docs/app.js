@@ -706,9 +706,12 @@ function updateCollectionHeading(resultCount) {
   const search = state.filters.search.trim();
   const moodChip = elements.moodChips.find((chip) => chip.dataset.mood === state.filters.mood);
   const mood = moodChip?.textContent.trim();
+  if (state.catalogLoadFailed) {
+    elements.collectionTitle.textContent = "All sleepy Pokemon";
+    return;
+  }
   if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
-    if (state.catalogLoadFailed) return;
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
   } else if (search) {
     elements.collectionTitle.textContent = `Matching “${search}”`;
