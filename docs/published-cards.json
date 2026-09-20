@@ -2231,7 +2231,7 @@
       "number": "13/78",
       "rarity": "Common",
       "language": "English",
-      "artist": "Shibuzoh.",
+      "artist": "Shibuzoh",
       "imageSmall": "https://images.pokemontcg.io/pgo/13.png",
       "imageLarge": "https://images.pokemontcg.io/pgo/13_hires.png",
       "priceMarket": 0.21,
@@ -5207,6 +5207,35 @@
         "Blink-and-you'll-miss-it"
       ],
       "whyItBelongs": "Group nap draped over apartment railings. OKUBO's intricate architectural illustration shows Meowth and friends dangling in liquid cat sleep across urban balconies."
+    },
+    {
+      "apiId": "sm11-88",
+      "tcgdexId": "sm11-88",
+      "name": "Munna",
+      "pokemon": "Munna",
+      "setName": "Unified Minds",
+      "setSeries": "Sun & Moon",
+      "setId": "sm11",
+      "number": "88/236",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Shibuzoh.",
+      "imageSmall": "https://assets.tcgdex.net/en/sm/sm11/88/low.webp",
+      "imageLarge": "https://assets.tcgdex.net/en/sm/sm11/88/high.webp",
+      "setReleaseDate": "2019/08/02",
+      "priority": "Medium",
+      "notes": "Added from curator-provided metadata. Munna is tucked into a pastel canopy bed with Pikachu and Eevee asleep nearby.",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Bed",
+      "sleepiness": "4 — Fully out",
+      "moods": [
+        "Sleepover Club",
+        "Tiny Tuck-Ins",
+        "Cozy Corners"
+      ],
+      "whyItBelongs": "Group nap tucked into a pastel canopy bed. Pikachu and Eevee fast asleep under a floral quilt while Munna watches over their dreams make this budget common an absolute masterpiece of cozy cameos.",
+      "createdAt": "2026-09-20T00:00:00.000Z",
+      "updatedAt": "2026-09-20T00:00:00.000Z"
     },
     {
       "apiId": "sv09-120",
