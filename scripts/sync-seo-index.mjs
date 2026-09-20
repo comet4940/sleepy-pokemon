@@ -1,5 +1,6 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
+import { renderSiteFooter, syncSiteFooter } from "./site-footer.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -62,6 +63,7 @@ async function syncHomepage() {
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
   );
+  html = syncSiteFooter(html);
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`\\s*${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), "");
   }
@@ -93,6 +95,7 @@ ${items}
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader("../")}\n      <!-- SITE_HEADER_END -->`,
   );
+  html = syncSiteFooter(html);
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
   } else {
@@ -211,6 +214,7 @@ ${renderMoods(card)}
           </div>
         </article>
       </main>
+${renderSiteFooter()}
     </div>
   </body>
 </html>
