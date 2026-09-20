@@ -82,6 +82,10 @@ function bindDeclarativeEvents() {
       card_name: target.dataset.analyticsCardName,
       card_pokemon: target.dataset.analyticsCardPokemon,
       card_set: target.dataset.analyticsCardSet,
+      card_number: target.dataset.analyticsCardNumber,
+      card_rarity: target.dataset.analyticsCardRarity,
+      card_language: target.dataset.analyticsCardLanguage,
+      price_market: target.dataset.analyticsPriceMarket,
       guide_slug: target.dataset.analyticsGuideSlug,
       guide_title: target.dataset.analyticsGuideTitle,
     });
