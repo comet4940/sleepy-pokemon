@@ -1,5 +1,6 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
+import { renderSiteFooter } from "./site-footer.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -168,6 +169,7 @@ function renderGuidesIndex(guideList) {
 ${guideList.map((guide, index) => renderGuideDirectoryItem(guide, index)).join("\n")}
         </section>
       </main>
+${renderSiteFooter()}
     </div>
   </body>
 </html>
@@ -269,6 +271,7 @@ ${guide.cards.slice(0, 3).map(({ card }, index) => {
 ${guide.cards.map((entry, index) => renderGuideCard(entry, index, guide.slug, title)).join("\n")}
         </section>
       </main>
+${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
