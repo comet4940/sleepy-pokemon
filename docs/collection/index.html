@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="../home-v3.css?v=8" />
     <link rel="stylesheet" href="../card-detail-v3.css" />
   </head>
-  <body data-app-mode="collection" data-guide-path="../published-cards.json">
+  <body data-app-mode="collection" data-guide-path="../published-cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell collection-page-shell">
       <!-- SITE_HEADER_START -->
 <header class="topbar">
@@ -356,6 +356,7 @@
           <p class="card-subtitle" id="detailSubtitle"></p>
           <div class="detail-price-row" id="detailPriceRow"></div>
           <div class="curation-note" id="detailCurationNote"></div>
+          <div class="detail-guide-links" id="detailGuideLinks"></div>
           <div class="curation-facts" id="detailCurationFacts"></div>
           <div class="detail-moods" id="detailMoods"></div>
           <div class="meta-grid" id="detailMetaGrid"></div>
@@ -364,6 +365,6 @@
     </dialog>
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=9"></script>
+    <script src="../app.js?v=11"></script>
   </body>
 </html>

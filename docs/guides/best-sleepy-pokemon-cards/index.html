@@ -9,6 +9,9 @@
     <link rel="canonical" href="https://www.sleepypokemon.com/guides/best-sleepy-pokemon-cards/" />
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../../assets/sleepy-pokemon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Sleepy Pokemon Cards" />
@@ -25,169 +28,202 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Best Sleepy Pokemon Cards","url":"https://www.sleepypokemon.com/guides/best-sleepy-pokemon-cards/","description":"A curated guide to the best sleepy Pokemon cards, including standout Snorlax, Dragonite V, Spheal, Rockruff, Mew, and other cozy collector picks.","image":"https://images.pokemontcg.io/swsh7/192_hires.png","mainEntity":[{"@type":"Thing","name":"Dragonite V Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/dragonite-v-evolving-skies-192-203/"},{"@type":"Thing","name":"Espeon VMAX Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/espeon-vmax-fusion-strike-270-264/"},{"@type":"Thing","name":"Tyranitar V Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/tyranitar-v-battle-styles-155-163/"},{"@type":"Thing","name":"Spheal Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/spheal-surging-sparks-199-191/"},{"@type":"Thing","name":"Rockruff Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/rockruff-silver-tempest-trainer-gallery-tg07-tg30/"},{"@type":"Thing","name":"Mew Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/mew-crown-zenith-galarian-gallery-gg10-gg70/"},{"@type":"Thing","name":"Dunsparce Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/dunsparce-crown-zenith-galarian-gallery-gg23-gg70/"},{"@type":"Thing","name":"Slakoth Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/slakoth-surging-sparks-212-191/"},{"@type":"Thing","name":"Bulbasaur Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/bulbasaur-151-166-165/"},{"@type":"Thing","name":"Litten Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/litten-temporal-forces-167-162/"},{"@type":"Thing","name":"Snorlax Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/snorlax-scarlet-and-violet-black-star-promos-51-215/"},{"@type":"Thing","name":"Raichu Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/raichu-paldea-evolved-211-193/"}]}</script>
     <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="best-sleepy-pokemon-cards" data-guide-title="Best Sleepy Pokemon Cards"></script>
     <link rel="stylesheet" href="../../styles.css?v=3" />
+    <link rel="stylesheet" href="../../home-v3.css?v=3" />
+    <link rel="stylesheet" href="../../guides.css?v=1" />
+    <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
-  <body data-app-mode="guide-page">
+  <body data-app-mode="guide-page" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
       <header class="topbar">
-        <a class="brand-lockup card-page-brand" href="../../" aria-label="Back to Sleepy Pokemon Cards guide">
-          <span class="brand-mark" aria-hidden="true"></span>
+        <a class="brand-lockup" href="../../" aria-label="Sleepy Pokemon home">
+          <svg class="sparkle-mark" viewBox="0 0 76 68" aria-hidden="true" focusable="false">
+            <rect x="7" y="13" width="34" height="47" rx="9" fill="var(--soft-mint)" stroke="currentColor" stroke-width="4" transform="rotate(-15 24 36)" />
+            <rect x="19" y="5" width="38" height="51" rx="9" fill="var(--lavender)" stroke="currentColor" stroke-width="4" transform="rotate(7 38 30)" />
+            <rect x="26" y="12" width="42" height="52" rx="10" fill="var(--cream)" stroke="currentColor" stroke-width="4" />
+            <path d="M36 32q4 6 8 0M50 32q4 6 8 0" fill="none" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M45 44q4 4 8 0" fill="none" stroke="var(--pink)" stroke-width="3.5" stroke-linecap="round" />
+            <path d="M19 39l3 3 3-3M62 25l3 3 3-3" fill="none" stroke="var(--pink)" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
           <div>
-            <p class="eyebrow">Collector guide</p>
-            <p class="brand-title">Sleepy Pokemon Cards</p>
+            <h1>Sleepy Pokemon</h1>
+            <p class="brand-byline">A collection by Comet</p>
           </div>
         </a>
-        <div class="topbar-actions">
-          <a class="button subtle" href="../../">Back to guide</a>
-        </div>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <a href="../../collection/">Browse</a>
+          <a href="../../guides/">Guides</a>
+          <a href="../../about/">About</a>
+          <form class="header-search" action="../../collection/" method="get" role="search" data-header-search>
+            <label class="header-search-field">
+              <span class="sr-only">Search sleepy Pokemon cards</span>
+              <svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input type="search" name="q" autocomplete="off" placeholder="Search cards" data-header-search-input />
+              <button type="submit" aria-label="Search sleepy Pokemon cards">
+                <span aria-hidden="true">→</span>
+              </button>
+            </label>
+          </form>
+        </nav>
       </header>
 
       <main class="guide-page-main">
         <section class="guide-hero" aria-labelledby="guideTitle">
-          <p class="eyebrow">Collector guide</p>
-          <h1 id="guideTitle">Best Sleepy Pokemon Cards</h1>
-          <p>A curated shortlist of standout sleepy Pokemon cards, from iconic grails to cozy binder-friendly picks. These are the cards I would start with if I wanted a sleepy Pokemon page that feels beautiful, varied, and fun to collect.</p>
+          <div class="guide-hero-copy">
+            <a class="guide-back-link" href="../"><span aria-hidden="true">←</span> All guides</a>
+            <p class="eyebrow">Collector guide · 12 cards</p>
+            <h1 id="guideTitle">Best Sleepy Pokemon Cards</h1>
+            <p>A curated shortlist of standout sleepy Pokemon cards, from iconic grails to cozy binder-friendly picks. These are the cards I would start with if I wanted a sleepy Pokemon page that feels beautiful, varied, and fun to collect.</p>
+          </div>
+          <div class="guide-hero-stack" aria-hidden="true">
+            <img src="https://images.pokemontcg.io/swsh7/192.png" alt="" class="guide-stack-card guide-stack-card-1" />
+            <img src="https://images.pokemontcg.io/swsh8/270.png" alt="" class="guide-stack-card guide-stack-card-2" />
+            <img src="https://images.pokemontcg.io/swsh5/155.png" alt="" class="guide-stack-card guide-stack-card-3" />
+          </div>
         </section>
 
         <section class="guide-card-list" aria-label="Cards in this guide">
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/dragonite-v-evolving-skies-192-203/" aria-label="View Dragonite V card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dragonite V" data-analytics-card-pokemon="Dragonite" data-analytics-card-set="Evolving Skies">
+          <article class="guide-card" id="card-dragonite-v-evolving-skies-192-203">
+            <a class="guide-card-image" href="../../cards/dragonite-v-evolving-skies-192-203/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Dragonite V card details" data-card-id="swsh7-192::English::Evolving Skies::192/203::Dragonite V" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dragonite V" data-analytics-card-pokemon="Dragonite" data-analytics-card-set="Evolving Skies">
               <img src="https://images.pokemontcg.io/swsh7/192.png" alt="Dragonite V sleepy Pokemon card from Evolving Skies" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#1 / Evolving Skies / 192/203 / Rare Ultra</p>
-              <h2><a href="../../cards/dragonite-v-evolving-skies-192-203/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dragonite V" data-analytics-card-pokemon="Dragonite" data-analytics-card-set="Evolving Skies">Dragonite V Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/dragonite-v-evolving-skies-192-203/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh7-192::English::Evolving Skies::192/203::Dragonite V" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dragonite V" data-analytics-card-pokemon="Dragonite" data-analytics-card-set="Evolving Skies">Dragonite V</a></h2>
               <p class="card-subtitle">Dragonite / English / Atsushi Furusawa</p>
               <div class="price-pill guide-card-price">$523.47</div>
               <p>The grail pick: expensive, iconic, and instantly recognizable as one of the strongest sleepy Pokemon chase cards.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/espeon-vmax-fusion-strike-270-264/" aria-label="View Espeon VMAX card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Espeon VMAX" data-analytics-card-pokemon="Espeon" data-analytics-card-set="Fusion Strike">
+          <article class="guide-card" id="card-espeon-vmax-fusion-strike-270-264">
+            <a class="guide-card-image" href="../../cards/espeon-vmax-fusion-strike-270-264/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Espeon VMAX card details" data-card-id="swsh8-270::English::Fusion Strike::270/264::Espeon VMAX" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Espeon VMAX" data-analytics-card-pokemon="Espeon" data-analytics-card-set="Fusion Strike">
               <img src="https://images.pokemontcg.io/swsh8/270.png" alt="Espeon VMAX sleepy Pokemon card from Fusion Strike" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#2 / Fusion Strike / 270/264 / Rare Rainbow</p>
-              <h2><a href="../../cards/espeon-vmax-fusion-strike-270-264/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Espeon VMAX" data-analytics-card-pokemon="Espeon" data-analytics-card-set="Fusion Strike">Espeon VMAX Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/espeon-vmax-fusion-strike-270-264/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh8-270::English::Fusion Strike::270/264::Espeon VMAX" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Espeon VMAX" data-analytics-card-pokemon="Espeon" data-analytics-card-set="Fusion Strike">Espeon VMAX</a></h2>
               <p class="card-subtitle">Espeon / English / Kouki Saitou</p>
               <div class="price-pill guide-card-price">$344.18</div>
               <p>A dreamy high-end card with major collector appeal, perfect for the top row of a serious sleepy binder page.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/tyranitar-v-battle-styles-155-163/" aria-label="View Tyranitar V card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Tyranitar V" data-analytics-card-pokemon="Tyranitar" data-analytics-card-set="Battle Styles">
+          <article class="guide-card" id="card-tyranitar-v-battle-styles-155-163">
+            <a class="guide-card-image" href="../../cards/tyranitar-v-battle-styles-155-163/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Tyranitar V card details" data-card-id="swsh5-155::English::Battle Styles::155/163::Tyranitar V" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Tyranitar V" data-analytics-card-pokemon="Tyranitar" data-analytics-card-set="Battle Styles">
               <img src="https://images.pokemontcg.io/swsh5/155.png" alt="Tyranitar V sleepy Pokemon card from Battle Styles" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#3 / Battle Styles / 155/163 / Rare Ultra</p>
-              <h2><a href="../../cards/tyranitar-v-battle-styles-155-163/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Tyranitar V" data-analytics-card-pokemon="Tyranitar" data-analytics-card-set="Battle Styles">Tyranitar V Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/tyranitar-v-battle-styles-155-163/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh5-155::English::Battle Styles::155/163::Tyranitar V" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Tyranitar V" data-analytics-card-pokemon="Tyranitar" data-analytics-card-set="Battle Styles">Tyranitar V</a></h2>
               <p class="card-subtitle">Tyranitar / English / HYOGONOSUKE</p>
               <div class="price-pill guide-card-price">$247.10</div>
               <p>One of the clearest nap-themed alternate arts, and a natural centerpiece for collectors who like big personality cards.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/spheal-surging-sparks-199-191/" aria-label="View Spheal card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Spheal" data-analytics-card-pokemon="Spheal" data-analytics-card-set="Surging Sparks">
+          <article class="guide-card" id="card-spheal-surging-sparks-199-191">
+            <a class="guide-card-image" href="../../cards/spheal-surging-sparks-199-191/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Spheal card details" data-card-id="sv8-199::English::Surging Sparks::199/191::Spheal" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Spheal" data-analytics-card-pokemon="Spheal" data-analytics-card-set="Surging Sparks">
               <img src="https://images.pokemontcg.io/sv8/199.png" alt="Spheal sleepy Pokemon card from Surging Sparks" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#4 / Surging Sparks / 199/191 / Illustration Rare</p>
-              <h2><a href="../../cards/spheal-surging-sparks-199-191/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Spheal" data-analytics-card-pokemon="Spheal" data-analytics-card-set="Surging Sparks">Spheal Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/spheal-surging-sparks-199-191/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="sv8-199::English::Surging Sparks::199/191::Spheal" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Spheal" data-analytics-card-pokemon="Spheal" data-analytics-card-set="Surging Sparks">Spheal</a></h2>
               <p class="card-subtitle">Spheal / English / Unknown artist</p>
               <div class="price-pill guide-card-price">$9.94</div>
               <p>A modern Illustration Rare that feels playful, affordable, and visually soft enough to represent the whole theme.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/rockruff-silver-tempest-trainer-gallery-tg07-tg30/" aria-label="View Rockruff card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Rockruff" data-analytics-card-pokemon="Rockruff" data-analytics-card-set="Silver Tempest Trainer Gallery">
+          <article class="guide-card" id="card-rockruff-silver-tempest-trainer-gallery-tg07-tg30">
+            <a class="guide-card-image" href="../../cards/rockruff-silver-tempest-trainer-gallery-tg07-tg30/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Rockruff card details" data-card-id="swsh12tg-TG07::English::Silver Tempest Trainer Gallery::TG07/TG30::Rockruff" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Rockruff" data-analytics-card-pokemon="Rockruff" data-analytics-card-set="Silver Tempest Trainer Gallery">
               <img src="https://images.pokemontcg.io/swsh12tg/TG07.png" alt="Rockruff sleepy Pokemon card from Silver Tempest Trainer Gallery" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#5 / Silver Tempest Trainer Gallery / TG07/TG30 / Trainer Gallery Rare Holo</p>
-              <h2><a href="../../cards/rockruff-silver-tempest-trainer-gallery-tg07-tg30/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Rockruff" data-analytics-card-pokemon="Rockruff" data-analytics-card-set="Silver Tempest Trainer Gallery">Rockruff Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/rockruff-silver-tempest-trainer-gallery-tg07-tg30/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh12tg-TG07::English::Silver Tempest Trainer Gallery::TG07/TG30::Rockruff" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Rockruff" data-analytics-card-pokemon="Rockruff" data-analytics-card-set="Silver Tempest Trainer Gallery">Rockruff</a></h2>
               <p class="card-subtitle">Rockruff / English / Hideki Ishikawa</p>
               <div class="price-pill guide-card-price">$6.31</div>
               <p>A charming Trainer Gallery card that balances character, coziness, and approachable pricing.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/mew-crown-zenith-galarian-gallery-gg10-gg70/" aria-label="View Mew card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Mew" data-analytics-card-pokemon="Mew" data-analytics-card-set="Crown Zenith Galarian Gallery">
+          <article class="guide-card" id="card-mew-crown-zenith-galarian-gallery-gg10-gg70">
+            <a class="guide-card-image" href="../../cards/mew-crown-zenith-galarian-gallery-gg10-gg70/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Mew card details" data-card-id="swsh12pt5gg-GG10::English::Crown Zenith Galarian Gallery::GG10/GG70::Mew" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Mew" data-analytics-card-pokemon="Mew" data-analytics-card-set="Crown Zenith Galarian Gallery">
               <img src="https://images.pokemontcg.io/swsh12pt5gg/GG10.png" alt="Mew sleepy Pokemon card from Crown Zenith Galarian Gallery" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#6 / Crown Zenith Galarian Gallery / GG10/GG70 / Trainer Gallery Rare Holo</p>
-              <h2><a href="../../cards/mew-crown-zenith-galarian-gallery-gg10-gg70/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Mew" data-analytics-card-pokemon="Mew" data-analytics-card-set="Crown Zenith Galarian Gallery">Mew Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/mew-crown-zenith-galarian-gallery-gg10-gg70/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh12pt5gg-GG10::English::Crown Zenith Galarian Gallery::GG10/GG70::Mew" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Mew" data-analytics-card-pokemon="Mew" data-analytics-card-set="Crown Zenith Galarian Gallery">Mew</a></h2>
               <p class="card-subtitle">Mew / English / Ryota Murayama</p>
               <div class="price-pill guide-card-price">$68.59</div>
               <p>A beloved Pokemon with a gentle collector-card feel, making it a strong bridge between cute and premium.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/dunsparce-crown-zenith-galarian-gallery-gg23-gg70/" aria-label="View Dunsparce card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dunsparce" data-analytics-card-pokemon="Dunsparce" data-analytics-card-set="Crown Zenith Galarian Gallery">
+          <article class="guide-card" id="card-dunsparce-crown-zenith-galarian-gallery-gg23-gg70">
+            <a class="guide-card-image" href="../../cards/dunsparce-crown-zenith-galarian-gallery-gg23-gg70/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Dunsparce card details" data-card-id="swsh12pt5gg-GG23::English::Crown Zenith Galarian Gallery::GG23/GG70::Dunsparce" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dunsparce" data-analytics-card-pokemon="Dunsparce" data-analytics-card-set="Crown Zenith Galarian Gallery">
               <img src="https://images.pokemontcg.io/swsh12pt5gg/GG23.png" alt="Dunsparce sleepy Pokemon card from Crown Zenith Galarian Gallery" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#7 / Crown Zenith Galarian Gallery / GG23/GG70 / Trainer Gallery Rare Holo</p>
-              <h2><a href="../../cards/dunsparce-crown-zenith-galarian-gallery-gg23-gg70/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dunsparce" data-analytics-card-pokemon="Dunsparce" data-analytics-card-set="Crown Zenith Galarian Gallery">Dunsparce Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/dunsparce-crown-zenith-galarian-gallery-gg23-gg70/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="swsh12pt5gg-GG23::English::Crown Zenith Galarian Gallery::GG23/GG70::Dunsparce" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Dunsparce" data-analytics-card-pokemon="Dunsparce" data-analytics-card-set="Crown Zenith Galarian Gallery">Dunsparce</a></h2>
               <p class="card-subtitle">Dunsparce / English / Kurata So</p>
               <div class="price-pill guide-card-price">$4.40</div>
               <p>A budget-friendly pick that still has full-art personality, great for making the guide feel attainable.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/slakoth-surging-sparks-212-191/" aria-label="View Slakoth card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Slakoth" data-analytics-card-pokemon="Slakoth" data-analytics-card-set="Surging Sparks">
+          <article class="guide-card" id="card-slakoth-surging-sparks-212-191">
+            <a class="guide-card-image" href="../../cards/slakoth-surging-sparks-212-191/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Slakoth card details" data-card-id="sv8-212::English::Surging Sparks::212/191::Slakoth" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Slakoth" data-analytics-card-pokemon="Slakoth" data-analytics-card-set="Surging Sparks">
               <img src="https://images.pokemontcg.io/sv8/212.png" alt="Slakoth sleepy Pokemon card from Surging Sparks" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#8 / Surging Sparks / 212/191 / Illustration Rare</p>
-              <h2><a href="../../cards/slakoth-surging-sparks-212-191/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Slakoth" data-analytics-card-pokemon="Slakoth" data-analytics-card-set="Surging Sparks">Slakoth Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/slakoth-surging-sparks-212-191/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="sv8-212::English::Surging Sparks::212/191::Slakoth" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Slakoth" data-analytics-card-pokemon="Slakoth" data-analytics-card-set="Surging Sparks">Slakoth</a></h2>
               <p class="card-subtitle">Slakoth / English / Unknown artist</p>
               <div class="price-pill guide-card-price">$13.04</div>
               <p>Slakoth is basically built for the sleepy theme, and this modern card is an easy binder-page anchor.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/bulbasaur-151-166-165/" aria-label="View Bulbasaur card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Bulbasaur" data-analytics-card-pokemon="Bulbasaur" data-analytics-card-set="151">
+          <article class="guide-card" id="card-bulbasaur-151-166-165">
+            <a class="guide-card-image" href="../../cards/bulbasaur-151-166-165/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Bulbasaur card details" data-card-id="sv3pt5-166::English::151::166/165::Bulbasaur" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Bulbasaur" data-analytics-card-pokemon="Bulbasaur" data-analytics-card-set="151">
               <img src="https://images.pokemontcg.io/sv3pt5/166.png" alt="Bulbasaur sleepy Pokemon card from 151" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#9 / 151 / 166/165 / Illustration Rare</p>
-              <h2><a href="../../cards/bulbasaur-151-166-165/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Bulbasaur" data-analytics-card-pokemon="Bulbasaur" data-analytics-card-set="151">Bulbasaur Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/bulbasaur-151-166-165/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="sv3pt5-166::English::151::166/165::Bulbasaur" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Bulbasaur" data-analytics-card-pokemon="Bulbasaur" data-analytics-card-set="151">Bulbasaur</a></h2>
               <p class="card-subtitle">Bulbasaur / English / Yoriyuki Ikegami</p>
               <div class="price-pill guide-card-price">$80.41</div>
               <p>A fan-favorite Pokemon in a highly collectible set, useful when you want the page to include recognizable classics.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/litten-temporal-forces-167-162/" aria-label="View Litten card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Litten" data-analytics-card-pokemon="Litten" data-analytics-card-set="Temporal Forces">
+          <article class="guide-card" id="card-litten-temporal-forces-167-162">
+            <a class="guide-card-image" href="../../cards/litten-temporal-forces-167-162/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Litten card details" data-card-id="sv5-167::English::Temporal Forces::167/162::Litten" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Litten" data-analytics-card-pokemon="Litten" data-analytics-card-set="Temporal Forces">
               <img src="https://images.pokemontcg.io/sv5/167.png" alt="Litten sleepy Pokemon card from Temporal Forces" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#10 / Temporal Forces / 167/162 / Illustration Rare</p>
-              <h2><a href="../../cards/litten-temporal-forces-167-162/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Litten" data-analytics-card-pokemon="Litten" data-analytics-card-set="Temporal Forces">Litten Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/litten-temporal-forces-167-162/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="sv5-167::English::Temporal Forces::167/162::Litten" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Litten" data-analytics-card-pokemon="Litten" data-analytics-card-set="Temporal Forces">Litten</a></h2>
               <p class="card-subtitle">Litten / English / Makura Tami</p>
               <div class="price-pill guide-card-price">$38.29</div>
               <p>A cozy modern Illustration Rare with enough warmth and character to stand out from the bigger chase cards.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/snorlax-scarlet-and-violet-black-star-promos-51-215/" aria-label="View Snorlax card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Snorlax" data-analytics-card-pokemon="Snorlax" data-analytics-card-set="Scarlet &amp; Violet Black Star Promos">
+          <article class="guide-card" id="card-snorlax-scarlet-and-violet-black-star-promos-51-215">
+            <a class="guide-card-image" href="../../cards/snorlax-scarlet-and-violet-black-star-promos-51-215/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Snorlax card details" data-card-id="svp-51::English::Scarlet &amp; Violet Black Star Promos::51/215::Snorlax" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Snorlax" data-analytics-card-pokemon="Snorlax" data-analytics-card-set="Scarlet &amp; Violet Black Star Promos">
               <img src="https://images.pokemontcg.io/svp/51.png" alt="Snorlax sleepy Pokemon card from Scarlet &amp; Violet Black Star Promos" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#11 / Scarlet &amp; Violet Black Star Promos / 51/215 / Promo</p>
-              <h2><a href="../../cards/snorlax-scarlet-and-violet-black-star-promos-51-215/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Snorlax" data-analytics-card-pokemon="Snorlax" data-analytics-card-set="Scarlet &amp; Violet Black Star Promos">Snorlax Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/snorlax-scarlet-and-violet-black-star-promos-51-215/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="svp-51::English::Scarlet &amp; Violet Black Star Promos::51/215::Snorlax" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Snorlax" data-analytics-card-pokemon="Snorlax" data-analytics-card-set="Scarlet &amp; Violet Black Star Promos">Snorlax</a></h2>
               <p class="card-subtitle">Snorlax / English / GOSSAN</p>
               <div class="price-pill guide-card-price">$21.43</div>
               <p>No sleepy Pokemon guide feels complete without Snorlax, and this promo gives the theme an accessible anchor.</p>
             </div>
           </article>
-          <article class="guide-card">
-            <a class="guide-card-image" href="../../cards/raichu-paldea-evolved-211-193/" aria-label="View Raichu card details" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Raichu" data-analytics-card-pokemon="Raichu" data-analytics-card-set="Paldea Evolved">
+          <article class="guide-card" id="card-raichu-paldea-evolved-211-193">
+            <a class="guide-card-image" href="../../cards/raichu-paldea-evolved-211-193/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" aria-label="Preview Raichu card details" data-card-id="sv2-211::English::Paldea Evolved::211/193::Raichu" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Raichu" data-analytics-card-pokemon="Raichu" data-analytics-card-set="Paldea Evolved">
               <img src="https://images.pokemontcg.io/sv2/211.png" alt="Raichu sleepy Pokemon card from Paldea Evolved" loading="lazy" />
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#12 / Paldea Evolved / 211/193 / Illustration Rare</p>
-              <h2><a href="../../cards/raichu-paldea-evolved-211-193/" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Raichu" data-analytics-card-pokemon="Raichu" data-analytics-card-set="Paldea Evolved">Raichu Sleepy Pokemon Card</a></h2>
+              <h2><a href="../../cards/raichu-paldea-evolved-211-193/?fromGuide=best-sleepy-pokemon-cards&amp;guideTitle=Best%20Sleepy%20Pokemon%20Cards" data-card-id="sv2-211::English::Paldea Evolved::211/193::Raichu" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-card-name="Raichu" data-analytics-card-pokemon="Raichu" data-analytics-card-set="Paldea Evolved">Raichu</a></h2>
               <p class="card-subtitle">Raichu / English / Toshinao Aoki</p>
               <div class="price-pill guide-card-price">$102.19</div>
               <p>A premium modern Illustration Rare that adds color, popularity, and collector value to the shortlist.</p>
@@ -196,5 +232,24 @@
         </section>
       </main>
     </div>
+    <dialog id="cardDetailDialog" class="card-detail-dialog">
+      <div class="card-detail-frame card-detail-v3">
+        <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">×</button>
+        <div class="detail-art-column"><div class="detail-image-frame" id="detailImageFrame"></div></div>
+        <div class="detail-copy">
+          <p class="detail-kicker" id="detailEyebrow">Caught napping</p>
+          <h2 id="detailTitle"></h2>
+          <p class="card-subtitle" id="detailSubtitle"></p>
+          <div class="detail-price-row" id="detailPriceRow"></div>
+          <div class="curation-note" id="detailCurationNote"></div>
+          <div class="detail-guide-links" id="detailGuideLinks"></div>
+          <div class="curation-facts" id="detailCurationFacts"></div>
+          <div class="detail-moods" id="detailMoods"></div>
+          <div class="meta-grid" id="detailMetaGrid"></div>
+        </div>
+      </div>
+    </dialog>
+    <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="../../app.js?v=11"></script>
   </body>
 </html>
