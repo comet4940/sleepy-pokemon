@@ -173,7 +173,7 @@ function renderCardPage(card) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}"></script>
+    <script defer src="../../analytics.js?v=2" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
     <link rel="stylesheet" href="../../styles.css?v=3" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
@@ -187,7 +187,7 @@ function renderCardPage(card) {
             <div class="detail-image-frame">
             ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </div>
-            <a class="detail-full-link" href="../../collection/"><span aria-hidden="true">←</span> Back to the sleepy stack</a>
+            <a class="detail-full-link" href="../../collection/" data-analytics-event="navigation_clicked" data-analytics-source="card_page" data-analytics-destination="collection"><span aria-hidden="true">←</span> Back to the sleepy stack</a>
           </div>
           <div class="detail-copy">
             <p class="detail-kicker">Caught napping</p>

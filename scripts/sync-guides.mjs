@@ -83,7 +83,7 @@ async function writeGuidePages(guideList) {
 async function syncHomepageGuideIndex(guideList) {
   const guideItems = guideList.map((guide) => {
     const description = guide.description || "Curated sleepy Pokemon card guide.";
-    return `              <li><a href="guides/${escapeAttribute(guide.slug)}/"><strong>${escapeHtml(guide.title)}</strong><span>${escapeHtml(description)}</span></a></li>`;
+    return `              <li><a href="guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="homepage_guide_index" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}"><strong>${escapeHtml(guide.title)}</strong><span>${escapeHtml(description)}</span></a></li>`;
   }).join("\n");
 
   const section = guideItems ? `${GUIDE_INDEX_START}
@@ -151,7 +151,7 @@ function renderGuidesIndex(guideList) {
     <meta property="og:description" content="${escapeAttribute(description)}" />
     <meta property="og:url" content="${SITE_URL}/guides/" />
     <meta property="og:image" content="${escapeAttribute(guideList[0]?.cards[0]?.card.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`)}" />
-    <script defer src="../analytics.js" data-page-type="guides-index"></script>
+    <script defer src="../analytics.js?v=2" data-page-type="guides-index"></script>
     <link rel="stylesheet" href="../styles.css?v=3" />
     <link rel="stylesheet" href="../home-v3.css?v=3" />
     <link rel="stylesheet" href="../guides.css?v=1" />
@@ -179,7 +179,7 @@ ${renderSiteFooter()}
 function renderGuideDirectoryItem(guide, index) {
   const previewCards = guide.cards.slice(0, 3);
   return `          <article class="guide-directory-item">
-            <a class="guide-directory-art" href="${escapeAttribute(guide.slug)}/" aria-label="Read ${escapeAttribute(guide.title)}">
+            <a class="guide-directory-art" href="${escapeAttribute(guide.slug)}/" aria-label="Read ${escapeAttribute(guide.title)}" data-analytics-event="guide_opened" data-analytics-source="guides_index_art" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">
 ${previewCards.map(({ card }, cardIndex) => {
   const image = card.imageSmall || card.imageLarge;
   return image ? `              <img src="${escapeAttribute(image)}" alt="" loading="${index === 0 && cardIndex === 0 ? "eager" : "lazy"}" />` : "";
@@ -187,9 +187,9 @@ ${previewCards.map(({ card }, cardIndex) => {
             </a>
             <div class="guide-directory-copy">
               <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")} · ${guide.cards.length} cards</p>
-              <h2><a href="${escapeAttribute(guide.slug)}/">${escapeHtml(guide.title)}</a></h2>
+              <h2><a href="${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="guides_index_title" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a></h2>
               <p>${escapeHtml(guide.description || "Curated sleepy Pokemon card guide.")}</p>
-              <a class="guide-read-link" href="${escapeAttribute(guide.slug)}/">Read the guide <span aria-hidden="true">→</span></a>
+              <a class="guide-read-link" href="${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="guides_index_cta" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">Read the guide <span aria-hidden="true">→</span></a>
             </div>
           </article>`;
 }
@@ -241,7 +241,7 @@ function renderGuidePage(guide) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
+    <script defer src="../../analytics.js?v=2" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
     <link rel="stylesheet" href="../../styles.css?v=3" />
     <link rel="stylesheet" href="../../home-v3.css?v=3" />
     <link rel="stylesheet" href="../../guides.css?v=1" />
@@ -254,7 +254,7 @@ function renderGuidePage(guide) {
       <main class="guide-page-main">
         <section class="guide-hero" aria-labelledby="guideTitle">
           <div class="guide-hero-copy">
-            <a class="guide-back-link" href="../"><span aria-hidden="true">←</span> All guides</a>
+            <a class="guide-back-link" href="../" data-analytics-event="navigation_clicked" data-analytics-source="guide_page" data-analytics-destination="guides"><span aria-hidden="true">←</span> All guides</a>
             <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")} · ${guide.cards.length} cards</p>
             <h1 id="guideTitle">${escapeHtml(title)}</h1>
             <p>${escapeHtml(guide.description || description)}</p>
@@ -275,7 +275,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=11"></script>
+    <script src="../../app.js?v=12"></script>
   </body>
 </html>
 `;
@@ -310,12 +310,12 @@ function renderGuideCard(entry, index, guideSlug, guideTitle) {
   const cardUrl = `../../cards/${card.slug}/?fromGuide=${encodeURIComponent(guideSlug || "")}&guideTitle=${encodeURIComponent(guideTitle || "")}`;
   const cardId = getCardIdentity(card);
   return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
-            <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">
+            <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_selected" data-analytics-source="guide_card_art" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">
               ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </a>
             <div class="guide-card-copy">
               <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
-              <h2><a href="${escapeAttribute(cardUrl)}" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_clicked" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">${escapeHtml(card.name)}</a></h2>
+              <h2><a href="${escapeAttribute(cardUrl)}" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_selected" data-analytics-source="guide_card_title" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}">${escapeHtml(card.name)}</a></h2>
               <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
               <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
               <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>

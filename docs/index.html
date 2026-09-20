@@ -38,7 +38,7 @@
         "description": "A curated collector guide to sleepy Pokemon cards."
       }
     </script>
-    <script defer src="analytics.js" data-page-type="home"></script>
+    <script defer src="analytics.js?v=2" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css?v=3" />
     <link rel="stylesheet" href="home-v3.css?v=8" />
     <link rel="stylesheet" href="card-detail-v3.css" />
@@ -47,7 +47,7 @@
     <div class="app-shell">
       <!-- SITE_HEADER_START -->
 <header class="topbar">
-        <a class="brand-lockup" href="" aria-label="Sleepy Pokemon home">
+        <a class="brand-lockup" href="" aria-label="Sleepy Pokemon home" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="home">
           <svg class="sparkle-mark" viewBox="0 0 76 68" aria-hidden="true" focusable="false">
             <rect x="7" y="13" width="34" height="47" rx="9" fill="var(--soft-mint)" stroke="currentColor" stroke-width="4" transform="rotate(-15 24 36)" />
             <rect x="19" y="5" width="38" height="51" rx="9" fill="var(--lavender)" stroke="currentColor" stroke-width="4" transform="rotate(7 38 30)" />
@@ -62,8 +62,8 @@
           </div>
         </a>
         <nav class="topbar-actions" aria-label="Main navigation">
-          <a href="collection/">Browse</a>
-          <a href="guides/">Guides</a>
+          <a href="collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
+          <a href="guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
           <form class="header-search" action="collection/" method="get" role="search" data-header-search>
             <label class="header-search-field">
               <span class="sr-only">Search sleepy Pokemon cards</span>
@@ -90,7 +90,7 @@
             <svg class="hero-trail" viewBox="0 0 320 24" aria-hidden="true"><path d="M4 13c28-10 46 8 74 0s47-7 75 0 45 8 70 0 50-7 93 0" /></svg>
             <p class="hero-description">Obvious naps, quiet corners, and a few very debatable dozes. A growing collection, hand curated for the coziness!</p>
             <div class="hero-actions">
-              <a class="button primary-action" id="browseCollectionButton" href="collection/">Browse the sleepy stack <span aria-hidden="true">→</span></a>
+              <a class="button primary-action" id="browseCollectionButton" href="collection/" data-analytics-event="navigation_clicked" data-analytics-source="homepage_hero" data-analytics-destination="collection">Browse the sleepy stack <span aria-hidden="true">→</span></a>
               <button class="button quiet-action" id="surpriseButton" type="button">Show me a sleeper</button>
             </div>
           </div>
@@ -108,7 +108,7 @@
         <section class="library-panel latest-panel" aria-labelledby="latestTitle">
           <div class="library-header">
             <div class="section-heading"><div><p class="eyebrow" id="latestTitle">Freshly tucked in</p></div></div>
-            <a class="view-all-link" href="collection/">View all sleepers →</a>
+            <a class="view-all-link" href="collection/" data-analytics-event="navigation_clicked" data-analytics-source="freshly_tucked_in" data-analytics-destination="collection">View all sleepers →</a>
           </div>
           <div class="card-grid" id="latestGrid"></div>
         </section>
@@ -131,9 +131,9 @@
             <h2 id="seoGuideIndexTitle">Sleepy Pokemon card guides</h2>
             <p class="notes">Curated guide pages for collectors looking for themes, budgets, and standout cards.</p>
             <ol>
-              <li><a href="guides/best-sleepy-pokemon-cards/"><strong>Best Sleepy Pokemon Cards</strong><span>A curated shortlist of standout sleepy Pokemon cards, from iconic grails to cozy binder-friendly picks. These are the cards I would start with if I wanted a sleepy Pokemon page that feels beautiful, varied, and fun to collect.</span></a></li>
-              <li><a href="guides/sleepiest-pikachu-cards/"><strong>The Sleepiest of Pikachus</strong><span>Every sleepy Pikachu currently in the collection, plus two extremely important cameo appearances. Sometimes Pikachu is the nap. Sometimes Pikachu is the pillow. Both are doing excellent work.</span></a></li>
-              <li><a href="guides/sleepy-cat-pokemon-cards/"><strong>Sleepy Cat Pokemon Cards</strong><span>Every sleepy cat Pokemon card currently in the collection, researched with Om (linkcat): tiny kittens, dramatic big cats, psychic cats, electric cats, and a few cat-adjacent creatures making a very convincing case. We do not discriminate here.</span></a></li>
+              <li><a href="guides/best-sleepy-pokemon-cards/" data-analytics-event="guide_opened" data-analytics-source="homepage_guide_index" data-analytics-guide-slug="best-sleepy-pokemon-cards" data-analytics-guide-title="Best Sleepy Pokemon Cards"><strong>Best Sleepy Pokemon Cards</strong><span>A curated shortlist of standout sleepy Pokemon cards, from iconic grails to cozy binder-friendly picks. These are the cards I would start with if I wanted a sleepy Pokemon page that feels beautiful, varied, and fun to collect.</span></a></li>
+              <li><a href="guides/sleepiest-pikachu-cards/" data-analytics-event="guide_opened" data-analytics-source="homepage_guide_index" data-analytics-guide-slug="sleepiest-pikachu-cards" data-analytics-guide-title="The Sleepiest of Pikachus"><strong>The Sleepiest of Pikachus</strong><span>Every sleepy Pikachu currently in the collection, plus two extremely important cameo appearances. Sometimes Pikachu is the nap. Sometimes Pikachu is the pillow. Both are doing excellent work.</span></a></li>
+              <li><a href="guides/sleepy-cat-pokemon-cards/" data-analytics-event="guide_opened" data-analytics-source="homepage_guide_index" data-analytics-guide-slug="sleepy-cat-pokemon-cards" data-analytics-guide-title="Sleepy Cat Pokemon Cards"><strong>Sleepy Cat Pokemon Cards</strong><span>Every sleepy cat Pokemon card currently in the collection, researched with Om (linkcat): tiny kittens, dramatic big cats, psychic cats, electric cats, and a few cat-adjacent creatures making a very convincing case. We do not discriminate here.</span></a></li>
             </ol>
           </div>
         </section>
@@ -143,8 +143,8 @@
         <div class="site-footer-inner">
           <p>&copy; 2026 Semi Serious Labs LLC. All rights reserved.</p>
           <div class="site-footer-signoff">
-            <p>Made with <span class="footer-heart" aria-label="love">&hearts;</span> by <a class="footer-studio-link" href="https://semiseriousllc.com" target="_blank" rel="noopener noreferrer">Semi Serious Labs</a>.</p>
-            <a class="footer-coffee" href="https://buymeacoffee.com/cometakira" target="_blank" rel="noopener noreferrer" aria-label="Buy Comet a coffee" title="Buy Comet a coffee" data-analytics-event="coffee_clicked">
+            <p>Made with <span class="footer-heart" aria-label="love">&hearts;</span> by <a class="footer-studio-link" href="https://semiseriousllc.com" target="_blank" rel="noopener noreferrer" data-analytics-event="studio_link_clicked" data-analytics-source="global_footer" data-analytics-destination="semi_serious_labs">Semi Serious Labs</a>.</p>
+            <a class="footer-coffee" href="https://buymeacoffee.com/cometakira" target="_blank" rel="noopener noreferrer" aria-label="Buy Comet a coffee" title="Buy Comet a coffee" data-analytics-event="coffee_clicked" data-analytics-source="global_footer" data-analytics-destination="buy_me_a_coffee">
               <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
                 <path d="M5 7h11v7a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V7Z" />
                 <path d="M16 9h2.25a2.75 2.75 0 0 1 0 5.5H16" />
@@ -202,7 +202,7 @@
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="app.js?v=11"></script>
+    <script src="app.js?v=12"></script>
 
   </body>
 </html>
