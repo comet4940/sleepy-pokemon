@@ -1,7 +1,6 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 const CARD_RENDER_BATCH_SIZE = 24;
-const SEARCH_ANALYTICS_DELAY = 700;
 const TCGDEX_API = "https://api.tcgdex.net/v2/en/cards";
 
 const priorityRank = {
@@ -25,8 +24,8 @@ const state = {
     sort: PUBLIC_DEFAULT_SORT,
   },
   renderToken: 0,
-  searchAnalyticsTimer: 0,
   showAllCards: false,
+  suggestionLookupUsed: false,
 };
 
 const elements = {};
@@ -43,7 +42,20 @@ async function init() {
   ]);
   assignRandomOrder();
   render();
-  trackEvent("catalog_loaded", { card_count: state.cards.length });
+  const catalogSurface = getCatalogSurface();
+  if (catalogSurface) {
+    trackEvent("catalog_loaded", {
+      catalog_surface: catalogSurface,
+      card_count: state.cards.length,
+    });
+  }
+  if (elements.cardGrid && state.filters.search) {
+    trackEvent("search_results_viewed", {
+      interaction_source: "collection_url",
+      query_length: state.filters.search.length,
+      result_count: getFilteredCards().length,
+    });
+  }
 }
 
 function cacheElements() {
@@ -112,7 +124,6 @@ function bindEvents() {
     if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
     state.showAllCards = true;
     renderCards();
-    scheduleSearchAnalytics();
   });
 
   elements.moodChips.forEach((chip) => {
@@ -120,10 +131,12 @@ function bindEvents() {
       state.filters.mood = chip.classList.contains("is-active") ? "all" : (chip.dataset.mood || "all");
       state.showAllCards = true;
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
-      elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip));
+      elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip && state.filters.mood !== "all"));
       renderCards();
-      trackEvent("mood_filter_applied", {
-        mood: chip.textContent.trim(),
+      trackEvent("filter_changed", {
+        filter_name: "mood",
+        filter_value: state.filters.mood,
+        filter_action: state.filters.mood === "all" ? "removed" : "applied",
         result_count: getFilteredCards().length,
       });
     });
@@ -143,9 +156,10 @@ function bindEvents() {
     bind(element, "change", () => {
       state.filters[key] = element.value;
       renderCards();
-      trackEvent(key === "sort" ? "sort_changed" : "filter_applied", {
+      trackEvent(key === "sort" ? "sort_changed" : "filter_changed", {
         filter_name: key,
         filter_value: getAnalyticsFilterValue(key, element.value),
+        filter_action: element.value === "all" || element.value === "" ? "removed" : "applied",
         result_count: getFilteredCards().length,
       });
     });
@@ -160,9 +174,9 @@ function bindEvents() {
         event.preventDefault();
         openSuggestionDialog();
       }
-      trackEvent("sleepy_card_suggestion_clicked", {
-        source: link.dataset.suggestionSource || "unknown",
-        search_length: state.filters.search.length,
+      trackEvent("suggestion_opened", {
+        interaction_source: link.dataset.suggestionSource || "unknown",
+        has_active_search: Boolean(state.filters.search),
         result_count: getFilteredCards().length,
       });
     });
@@ -205,6 +219,7 @@ function handleHeaderSearchSubmit(event) {
   if (!elements.cardGrid) return;
   event.preventDefault();
   const query = elements.headerSearchInput.value.trim();
+  const previousQuery = state.filters.search;
   state.filters = {
     ...state.filters,
     search: query,
@@ -220,17 +235,22 @@ function handleHeaderSearchSubmit(event) {
   render();
   syncSearchUrl(query);
   document.querySelector("#collection")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  trackEvent("header_search_submitted", {
-    search_length: query.length,
-    result_count: getFilteredCards().length,
-  });
+  if (query) {
+    trackEvent("search_results_viewed", {
+      interaction_source: "global_header",
+      query_length: query.length,
+      result_count: getFilteredCards().length,
+    });
+  } else if (previousQuery) {
+    trackEvent("search_cleared", { result_count: getFilteredCards().length });
+  }
 }
 
 function showRandomSleeper() {
   const cards = getFilteredCards();
   const card = cards[Math.floor(Math.random() * cards.length)] || state.cards[0];
   if (!card) return;
-  openCardDetail(card);
+  openCardDetail(card, "random_sleeper");
   trackEvent("random_sleeper_clicked", getCardAnalyticsParams(card));
 }
 
@@ -269,6 +289,7 @@ function resetSuggestionForm() {
   elements.suggestionSelected.hidden = true;
   elements.suggestionSearchStatus.textContent = "";
   elements.suggestionSuccess.hidden = true;
+  state.suggestionLookupUsed = false;
 }
 
 let suggestionSearchTimer = 0;
@@ -286,6 +307,8 @@ function handleSuggestionSearch() {
 }
 
 async function searchSuggestionCards(query) {
+  state.suggestionLookupUsed = true;
+  const lookupType = getSuggestionLookupType(query);
   try {
     const numberMatch = query.match(/(?:^|\s)([A-Za-z]*\d[A-Za-z0-9]*(?:\/[A-Za-z0-9]+)?)$/);
     const name = query.replace(numberMatch?.[1] || "", "").trim();
@@ -298,10 +321,28 @@ async function searchSuggestionCards(query) {
     const cards = await response.json();
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
     renderSuggestionResults(cards);
+    trackEvent("suggestion_lookup_completed", {
+      lookup_type: lookupType,
+      lookup_outcome: cards.length ? "matches" : "no_matches",
+      result_count: cards.length,
+    });
   } catch (error) {
     elements.suggestionSearchStatus.textContent = "Lookup is taking a nap. Your typed card details will still be sent.";
     elements.suggestionResults.innerHTML = "";
+    trackEvent("suggestion_lookup_completed", {
+      lookup_type: lookupType,
+      lookup_outcome: "error",
+      result_count: 0,
+    });
   }
+}
+
+function getSuggestionLookupType(query) {
+  const hasNumber = /(?:^|\s)[A-Za-z]*\d[A-Za-z0-9]*(?:\/[A-Za-z0-9]+)?$/.test(query);
+  const hasName = query.replace(/(?:^|\s)[A-Za-z]*\d[A-Za-z0-9]*(?:\/[A-Za-z0-9]+)?$/, "").trim().length > 0;
+  if (hasNumber && hasName) return "name_and_number";
+  if (hasNumber) return "number";
+  return "name";
 }
 
 function renderSuggestionResults(cards) {
@@ -329,9 +370,17 @@ async function selectSuggestionCard(card) {
   elements.suggestionSelected.querySelector("button").addEventListener("click", () => {
     elements.suggestionCard.value = "";
     elements.suggestionSelected.hidden = true;
+    trackEvent("suggestion_card_removed");
   });
   elements.suggestionResults.innerHTML = "";
   elements.suggestionSearchStatus.textContent = "Card tucked in.";
+  trackEvent("suggestion_card_selected", getCardAnalyticsParams({
+    ...selectedCard,
+    setName,
+    number,
+    pokemon: selectedCard.name,
+    language: selectedCard.language || DEFAULT_LANGUAGE,
+  }));
 }
 
 async function handleSuggestionSubmit(event) {
@@ -343,16 +392,30 @@ async function handleSuggestionSubmit(event) {
     return;
   }
   if (!elements.suggestionCard.value) elements.suggestionCard.value = manualCard;
+  const submissionParams = {
+    selection_method: elements.suggestionSelected.hidden ? "manual" : "catalog_lookup",
+    lookup_used: state.suggestionLookupUsed,
+    has_notes: Boolean(elements.suggestionNotes.value.trim()),
+  };
   const endpoint = elements.suggestionForm.dataset.emailEndpoint;
   if (!endpoint || endpoint === "EMAIL_FORM_ENDPOINT_PLACEHOLDER") {
-    showSuggestionSuccess();
-    return;
-  }
-  const response = await fetch(endpoint, { method: "POST", body: new FormData(elements.suggestionForm), headers: { Accept: "application/json" } });
-  if (!response.ok) {
+    trackEvent("suggestion_submit_failed", { ...submissionParams, error_type: "configuration" });
     showToast("That suggestion did not send. Please try again in a moment.");
     return;
   }
+  try {
+    const response = await fetch(endpoint, { method: "POST", body: new FormData(elements.suggestionForm), headers: { Accept: "application/json" } });
+    if (!response.ok) {
+      trackEvent("suggestion_submit_failed", { ...submissionParams, error_type: "http" });
+      showToast("That suggestion did not send. Please try again in a moment.");
+      return;
+    }
+  } catch (error) {
+    trackEvent("suggestion_submit_failed", { ...submissionParams, error_type: "network" });
+    showToast("That suggestion did not send. Please try again in a moment.");
+    return;
+  }
+  trackEvent("suggestion_submitted", submissionParams);
   showSuggestionSuccess();
 }
 
@@ -582,6 +645,7 @@ function renderActiveFilterControls() {
         if (elements.headerSearchInput) elements.headerSearchInput.value = "";
         syncSearchUrl("");
         renderCards();
+        trackEvent("search_cleared", { result_count: getFilteredCards().length });
       }, { once: true });
     }
   }
@@ -676,14 +740,14 @@ function handleCardGridKeydown(event) {
   if (!tile) return;
   event.preventDefault();
   const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
-  if (card) openCardDetail(card);
+  if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleCardGridClick(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
   const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
-  if (card) openCardDetail(card);
+  if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleGuideCardClick(event) {
@@ -692,10 +756,14 @@ function handleGuideCardClick(event) {
   const card = state.cards.find((item) => getCardIdentity(item) === link.dataset.cardId);
   if (!card) return;
   event.preventDefault();
-  openCardDetail(card);
+  openCardDetail(card, "guide_page");
 }
 
-function openCardDetail(card) {
+function getCardDiscoverySource(tile) {
+  return elements.latestGrid?.contains(tile) ? "freshly_tucked_in" : "collection_grid";
+}
+
+function openCardDetail(card, interactionSource = "unknown") {
   const price = getDisplayPrice(card);
   const priceText = price ? formatCurrency(price) : "No price";
   const image = card.imageLarge || card.imageSmall;
@@ -731,7 +799,10 @@ function openCardDetail(card) {
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
   elements.cardDetailDialog.showModal();
-  trackEvent("card_opened", getCardAnalyticsParams(card));
+  trackEvent("card_opened", {
+    ...getCardAnalyticsParams(card),
+    interaction_source: interactionSource,
+  });
 }
 
 function renderGuideMemberships(card) {
@@ -740,7 +811,7 @@ function renderGuideMemberships(card) {
   const root = document.body.dataset.siteRoot || "";
   const links = guides.map((guide) => {
     const href = `${root}guides/${guide.slug}/`;
-    return `<a href="${escapeAttribute(href)}">${escapeHtml(guide.title)}</a>`;
+    return `<a href="${escapeAttribute(href)}" data-analytics-event="guide_opened" data-analytics-source="card_modal" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`;
   });
   const linkedTitles = links.length === 1
     ? links[0]
@@ -852,7 +923,12 @@ function downloadChecklist() {
   anchor.click();
   anchor.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  trackEvent("checklist_downloaded", { card_count: state.cards.length });
+  trackEvent("checklist_downloaded", {
+    checklist_scope: "full_collection",
+    card_count: state.cards.length,
+    file_format: "csv",
+    interaction_source: "collection_header",
+  });
   showToast("Checklist downloaded.");
 }
 
@@ -863,6 +939,7 @@ function escapeCsvCell(value) {
 }
 
 function clearFilters() {
+  const activeFilterCount = countActiveFilters();
   state.filters = {
     search: "",
     mood: "all",
@@ -877,7 +954,10 @@ function clearFilters() {
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   syncSearchUrl("");
   render();
-  trackEvent("filters_cleared", { result_count: state.cards.length });
+  trackEvent("filters_cleared", {
+    active_filter_count: activeFilterCount,
+    result_count: state.cards.length,
+  });
 }
 
 function syncSearchUrl(query) {
@@ -886,17 +966,6 @@ function syncSearchUrl(query) {
   else url.searchParams.delete("q");
   url.hash = "";
   window.history.replaceState(null, "", url);
-}
-
-function scheduleSearchAnalytics() {
-  window.clearTimeout(state.searchAnalyticsTimer);
-  state.searchAnalyticsTimer = window.setTimeout(() => {
-    if (!state.filters.search) return;
-    trackEvent("search_used", {
-      search_length: state.filters.search.length,
-      result_count: getFilteredCards().length,
-    });
-  }, SEARCH_ANALYTICS_DELAY);
 }
 
 function getCardAnalyticsParams(card) {
@@ -909,6 +978,12 @@ function getCardAnalyticsParams(card) {
     card_language: card.language,
     price_market: getDisplayPrice(card) || undefined,
   };
+}
+
+function getCatalogSurface() {
+  if (elements.cardGrid) return "collection";
+  if (elements.latestGrid) return "homepage_latest";
+  return "";
 }
 
 function getAnalyticsFilterValue(key, value) {

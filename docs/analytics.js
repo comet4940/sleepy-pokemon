@@ -1,7 +1,12 @@
 const SLEEPY_ANALYTICS_ID = "G-3HFVE8BEZH";
+const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
 
 (function initSleepyAnalytics() {
-  if (!SLEEPY_ANALYTICS_ID || window.location.protocol === "file:") return;
+  const productionHosts = new Set(["sleepypokemon.com", "www.sleepypokemon.com"]);
+  const debugRequested = new URLSearchParams(window.location.search).has("analytics_debug");
+  if (debugRequested) window.sessionStorage.setItem("sleepy_analytics_debug", "1");
+  const debugMode = debugRequested || window.sessionStorage.getItem("sleepy_analytics_debug") === "1";
+  if (!SLEEPY_ANALYTICS_ID || window.location.protocol === "file:" || (!productionHosts.has(window.location.hostname) && !debugMode)) return;
 
   const script = document.currentScript;
   const pageContext = script?.dataset || {};
@@ -14,7 +19,11 @@ const SLEEPY_ANALYTICS_ID = "G-3HFVE8BEZH";
     card_name: pageContext.cardName || undefined,
     card_pokemon: pageContext.cardPokemon || undefined,
     card_set: pageContext.cardSet || undefined,
+    card_number: pageContext.cardNumber || undefined,
+    card_rarity: pageContext.cardRarity || undefined,
+    card_language: pageContext.cardLanguage || undefined,
     guide_slug: pageContext.guideSlug || undefined,
+    debug_mode: debugMode || undefined,
   });
 
   window.sleepyAnalytics = {
@@ -22,6 +31,7 @@ const SLEEPY_ANALYTICS_ID = "G-3HFVE8BEZH";
       if (!window.gtag) return;
       window.gtag("event", eventName, cleanParams({
         page_type: pageContext.pageType || "unknown",
+        analytics_version: SLEEPY_ANALYTICS_VERSION,
         ...params,
       }));
     },
@@ -30,6 +40,7 @@ const SLEEPY_ANALYTICS_ID = "G-3HFVE8BEZH";
   loadGoogleAnalytics();
   trackStaticPageView(pageContext);
   bindDeclarativeEvents();
+  bindHeaderSearch();
 })();
 
 function loadGoogleAnalytics() {
@@ -45,6 +56,9 @@ function trackStaticPageView(pageContext) {
       card_name: pageContext.cardName,
       card_pokemon: pageContext.cardPokemon,
       card_set: pageContext.cardSet,
+      card_number: pageContext.cardNumber,
+      card_rarity: pageContext.cardRarity,
+      card_language: pageContext.cardLanguage,
     });
   }
 
@@ -62,13 +76,39 @@ function bindDeclarativeEvents() {
     if (!target || !window.sleepyAnalytics) return;
 
     window.sleepyAnalytics.track(target.dataset.analyticsEvent, {
-      link_url: target.href || undefined,
+      destination_path: getDestinationPath(target.href),
+      interaction_source: target.dataset.analyticsSource,
+      destination: target.dataset.analyticsDestination,
       card_name: target.dataset.analyticsCardName,
       card_pokemon: target.dataset.analyticsCardPokemon,
       card_set: target.dataset.analyticsCardSet,
       guide_slug: target.dataset.analyticsGuideSlug,
+      guide_title: target.dataset.analyticsGuideTitle,
     });
   });
+}
+
+function bindHeaderSearch() {
+  document.addEventListener("submit", (event) => {
+    const form = event.target.closest("[data-header-search]");
+    if (!form || !window.sleepyAnalytics) return;
+    const query = form.querySelector("[data-header-search-input]")?.value.trim() || "";
+    if (!query) return;
+    window.sleepyAnalytics.track("search_submitted", {
+      interaction_source: "global_header",
+      query_length: query.length,
+    });
+  });
+}
+
+function getDestinationPath(href) {
+  if (!href) return undefined;
+  try {
+    const url = new URL(href, window.location.href);
+    return url.origin === window.location.origin ? url.pathname : url.hostname;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 function cleanParams(params) {
