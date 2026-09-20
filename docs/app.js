@@ -283,6 +283,7 @@ function closeSuggestionDialog() {
 }
 
 function resetSuggestionForm() {
+  suggestionFormSessionId += 1;
   suggestionLookupRequestId += 1;
   suggestionSelectionRequestId += 1;
   suggestionSelectionPromise = null;
@@ -300,10 +301,14 @@ let suggestionSearchTimer = 0;
 let suggestionLookupRequestId = 0;
 let suggestionSelectionRequestId = 0;
 let suggestionSelectionPromise = null;
+let suggestionFormSessionId = 0;
 
 function handleSuggestionSearch() {
   const query = elements.suggestionCardSearch.value.trim();
   const requestId = ++suggestionLookupRequestId;
+  suggestionSelectionRequestId += 1;
+  elements.suggestionCard.value = "";
+  elements.suggestionSelected.hidden = true;
   window.clearTimeout(suggestionSearchTimer);
   if (query.length < 2) {
     elements.suggestionResults.innerHTML = "";
@@ -364,9 +369,10 @@ function selectSuggestionCard(card) {
   const selectionRequestId = ++suggestionSelectionRequestId;
   const selectionPromise = resolveSuggestionCardSelection(card, selectionRequestId);
   suggestionSelectionPromise = selectionPromise;
-  selectionPromise.finally(() => {
+  const clearPendingSelection = () => {
     if (suggestionSelectionPromise === selectionPromise) suggestionSelectionPromise = null;
-  });
+  };
+  selectionPromise.then(clearPendingSelection, clearPendingSelection);
   return selectionPromise;
 }
 
@@ -406,7 +412,14 @@ async function resolveSuggestionCardSelection(card, selectionRequestId) {
 
 async function handleSuggestionSubmit(event) {
   event.preventDefault();
-  if (suggestionSelectionPromise) await suggestionSelectionPromise;
+  const submissionSessionId = suggestionFormSessionId;
+  while (suggestionSelectionPromise) {
+    const pendingSelection = suggestionSelectionPromise;
+    await pendingSelection;
+    if (submissionSessionId !== suggestionFormSessionId) return;
+    if (pendingSelection === suggestionSelectionPromise) break;
+  }
+  if (submissionSessionId !== suggestionFormSessionId) return;
   const manualCard = elements.suggestionCardSearch.value.trim();
   if (!elements.suggestionCard.value && !manualCard) {
     elements.suggestionSearchStatus.textContent = "Tell us which card you spotted first.";
