@@ -2,7 +2,7 @@ const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 const CARD_RENDER_BATCH_SIZE = 24;
 const SEARCH_ANALYTICS_DELAY = 700;
-const POKEMON_TCG_API = "https://api.pokemontcg.io/v2/cards";
+const TCGDEX_API = "https://api.tcgdex.net/v2/en/cards";
 
 const priorityRank = {
   High: 0,
@@ -149,9 +149,9 @@ function bindEvents() {
   bind(elements.clearFiltersLink, "click", clearFilters);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
   elements.suggestionLinks.forEach((link) => {
-    bind(link, "click", () => {
+    bind(link, "click", (event) => {
       if (link.hasAttribute("data-open-suggestion-form")) {
-        event?.preventDefault?.();
+        event.preventDefault();
         openSuggestionDialog();
       }
       trackEvent("sleepy_card_suggestion_clicked", {
@@ -166,10 +166,7 @@ function bindEvents() {
     if (event.target === elements.suggestionDialog) closeSuggestionDialog();
   });
   bind(elements.suggestionDialog, "close", () => {
-    elements.suggestionForm?.reset();
-    elements.suggestionResults.innerHTML = "";
-    elements.suggestionSelected.hidden = true;
-    elements.suggestionSearchStatus.textContent = "";
+    resetSuggestionForm();
   });
   bind(elements.suggestionCardSearch, "input", handleSuggestionSearch);
   bind(elements.suggestionForm, "submit", handleSuggestionSubmit);
@@ -256,12 +253,15 @@ function openSuggestionDialog() {
 
 function closeSuggestionDialog() {
   elements.suggestionDialog?.close();
+}
+
+function resetSuggestionForm() {
   elements.suggestionForm?.reset();
+  elements.suggestionForm?.classList.remove("is-success");
   elements.suggestionResults.innerHTML = "";
   elements.suggestionSelected.hidden = true;
   elements.suggestionSearchStatus.textContent = "";
   elements.suggestionSuccess.hidden = true;
-  elements.suggestionForm?.querySelectorAll(":scope > *").forEach((child) => { child.hidden = false; });
 }
 
 let suggestionSearchTimer = 0;
@@ -280,15 +280,15 @@ function handleSuggestionSearch() {
 
 async function searchSuggestionCards(query) {
   try {
-    const numberMatch = query.match(/(?:^|\s)([A-Za-z0-9]+(?:\/[A-Za-z0-9]+)?)$/);
+    const numberMatch = query.match(/(?:^|\s)([A-Za-z]*\d[A-Za-z0-9]*(?:\/[A-Za-z0-9]+)?)$/);
     const name = query.replace(numberMatch?.[1] || "", "").trim();
-    const queryParts = [];
-    if (name) queryParts.push(`name:${name}`);
-    if (numberMatch) queryParts.push(`number:${numberMatch[1]}`);
-    const apiQuery = queryParts.join(" ") || `name:${query}`;
-    const response = await fetch(`${POKEMON_TCG_API}?q=${encodeURIComponent(apiQuery)}&pageSize=8`, { mode: "cors" });
+    const params = new URLSearchParams({ "pagination:page": "1", "pagination:itemsPerPage": "8" });
+    if (name) params.set("name", name);
+    if (numberMatch) params.set("localId", numberMatch[1].split("/")[0]);
+    if (!name && !numberMatch) params.set("name", query);
+    const response = await fetch(`${TCGDEX_API}?${params}`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
-    const cards = (await response.json()).data || [];
+    const cards = await response.json();
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
     renderSuggestionResults(cards);
   } catch (error) {
@@ -298,17 +298,27 @@ async function searchSuggestionCards(query) {
 }
 
 function renderSuggestionResults(cards) {
-  elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.setName || card.set?.name || "Unknown set")} · ${escapeHtml(card.number || "No number")}</span></button>`).join("");
+  elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>Card ${escapeHtml(card.localId || card.number || "number unavailable")}</span></button>`).join("");
   elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
 }
 
-function selectSuggestionCard(card) {
-  const setName = card.setName || card.set?.name || "Unknown set";
-  const details = `${card.name} — ${setName} · ${card.number || "No number"}`;
+async function selectSuggestionCard(card) {
+  let selectedCard = card;
+  if (card.id && !card.set) {
+    try {
+      const response = await fetch(`${TCGDEX_API}/${encodeURIComponent(card.id)}`, { mode: "cors" });
+      if (response.ok) selectedCard = await response.json();
+    } catch (error) {
+      console.warn("Could not load full card details", error);
+    }
+  }
+  const setName = selectedCard.setName || selectedCard.set?.name || "Set unavailable";
+  const number = selectedCard.localId || selectedCard.number || "No number";
+  const details = `${selectedCard.name} — ${setName} · ${number}`;
   elements.suggestionCard.value = details;
   elements.suggestionSelected.hidden = false;
-  const image = card.images?.small || card.imageSmall || "";
-  elements.suggestionSelected.innerHTML = `${image ? `<img src="${escapeHtml(image)}" alt="" />` : ""}<div><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(setName)} · ${escapeHtml(card.number || "No number")}</span></div><button type="button" aria-label="Remove selected card">×</button>`;
+  const image = selectedCard.image ? `${selectedCard.image}/low.webp` : (selectedCard.images?.small || selectedCard.imageSmall || "");
+  elements.suggestionSelected.innerHTML = `${image ? `<img src="${escapeHtml(image)}" alt="" />` : ""}<div><strong>${escapeHtml(selectedCard.name)}</strong><span>${escapeHtml(setName)} · ${escapeHtml(number)}</span></div><button type="button" aria-label="Remove selected card">×</button>`;
   elements.suggestionSelected.querySelector("button").addEventListener("click", () => {
     elements.suggestionCard.value = "";
     elements.suggestionSelected.hidden = true;
@@ -340,7 +350,7 @@ async function handleSuggestionSubmit(event) {
 }
 
 function showSuggestionSuccess() {
-  elements.suggestionForm.querySelectorAll(":scope > *:not(#suggestionSuccess)").forEach((child) => { child.hidden = true; });
+  elements.suggestionForm.classList.add("is-success");
   elements.suggestionSuccess.hidden = false;
   elements.suggestionDoneButton.focus();
 }

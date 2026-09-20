@@ -167,6 +167,8 @@ a { color: inherit; }
 .suggestion-submit { justify-self: start; border: 0; background: var(--pink); color: #17121b; }
 .suggestion-footnote { margin: -5px 0 0; color: var(--muted-cream); font-size: .76rem; }
 .suggestion-success { display: grid; gap: 14px; }
+.suggestion-success[hidden] { display: none !important; }
+.suggestion-panel.is-success > :not(.suggestion-success) { display: none; }
 .suggestion-success h2 { margin: 0; }
 .suggestion-success p:not(.eyebrow) { margin: 0; color: var(--muted-cream); }
 .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
