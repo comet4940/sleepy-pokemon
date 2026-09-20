@@ -44,13 +44,13 @@ async function init() {
   assignRandomOrder();
   render();
   const catalogSurface = getCatalogSurface();
-  if (catalogSurface) {
+  if (catalogSurface && !state.catalogLoadFailed) {
     trackEvent("catalog_loaded", {
       catalog_surface: catalogSurface,
       card_count: state.cards.length,
     });
   }
-  if (elements.cardGrid && state.filters.search) {
+  if (elements.cardGrid && state.filters.search && !state.catalogLoadFailed) {
     trackEvent("search_results_viewed", {
       interaction_source: "collection_url",
       query_length: state.filters.search.length,
@@ -595,6 +595,14 @@ function renderCards() {
   renderActiveFilterControls();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
+  if (state.catalogLoadFailed) {
+    elements.emptyState.classList.remove("hidden");
+    elements.emptyState.querySelector("h3").textContent = "Collection unavailable";
+    elements.emptyState.querySelector("p").textContent = "The sleepy stack is taking a nap. Please try again shortly.";
+    if (elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
+    elements.cardGrid.innerHTML = "";
+    return;
+  }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   if (elements.searchSuggestionPrompt) {
     elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
