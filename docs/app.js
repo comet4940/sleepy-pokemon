@@ -598,7 +598,12 @@ function getFilteredCards() {
       ].join(" ").toLowerCase();
 
       if (search && !searchable.includes(search)) return false;
-      if (state.filters.mood !== "all" && !card.moods.includes(state.filters.mood)) return false;
+      if (state.filters.mood !== "all") {
+        const moodMatches = card.moods.some((mood) => slugify(mood) === state.filters.mood);
+        const basisMatches = slugify(card.sleepinessBasis) === state.filters.mood;
+        const priceMatches = state.filters.mood === "under-5" && getDisplayPrice(card) > 0 && getDisplayPrice(card) <= 5;
+        if (!moodMatches && !basisMatches && !priceMatches) return false;
+      }
       if (state.filters.pokemon !== "all" && card.pokemon !== state.filters.pokemon) return false;
       if (state.filters.set !== "all" && card.setName !== state.filters.set) return false;
       if (state.filters.rarity !== "all" && card.rarity !== state.filters.rarity) return false;
