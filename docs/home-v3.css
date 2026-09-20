@@ -176,6 +176,10 @@ a { color: inherit; }
 .suggestion-success p:not(.eyebrow) { margin: 0; color: var(--muted-cream); }
 .suggestion-done { justify-self: start; min-height: 46px; padding: 0 24px; border: 0; border-radius: 24px; background: var(--pink); color: #17121b; font: inherit; font-weight: 700; cursor: pointer; }
 .suggestion-done:hover, .suggestion-done:focus-visible { background: var(--yellow); color: #17121b; }
+
+@media (min-width: 1100px) {
+  .homepage-suggestion h2 { max-width: none; white-space: nowrap; font-size: clamp(1.45rem, 2vw, 1.8rem); }
+}
 .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
 #latestGrid { grid-template-rows: 1fr; }
 .card-tile { overflow: visible; padding: 10px; border: 1px solid rgba(169,147,255,.2); border-radius: 18px; background: #191927; box-shadow: none; }
