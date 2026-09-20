@@ -283,6 +283,8 @@ function closeSuggestionDialog() {
 }
 
 function resetSuggestionForm() {
+  suggestionLookupRequestId += 1;
+  window.clearTimeout(suggestionSearchTimer);
   elements.suggestionForm?.reset();
   elements.suggestionForm?.classList.remove("is-success");
   elements.suggestionResults.innerHTML = "";
@@ -293,9 +295,11 @@ function resetSuggestionForm() {
 }
 
 let suggestionSearchTimer = 0;
+let suggestionLookupRequestId = 0;
 
 function handleSuggestionSearch() {
   const query = elements.suggestionCardSearch.value.trim();
+  const requestId = ++suggestionLookupRequestId;
   window.clearTimeout(suggestionSearchTimer);
   if (query.length < 2) {
     elements.suggestionResults.innerHTML = "";
@@ -303,10 +307,10 @@ function handleSuggestionSearch() {
     return;
   }
   elements.suggestionSearchStatus.textContent = "Looking through the card catalog...";
-  suggestionSearchTimer = window.setTimeout(() => searchSuggestionCards(query), 350);
+  suggestionSearchTimer = window.setTimeout(() => searchSuggestionCards(query, requestId), 350);
 }
 
-async function searchSuggestionCards(query) {
+async function searchSuggestionCards(query, requestId) {
   state.suggestionLookupUsed = true;
   const lookupType = getSuggestionLookupType(query);
   try {
@@ -319,6 +323,7 @@ async function searchSuggestionCards(query) {
     const response = await fetch(`${TCGDEX_API}?${params}`, { mode: "cors" });
     if (!response.ok) throw new Error("Card lookup failed");
     const cards = await response.json();
+    if (requestId !== suggestionLookupRequestId) return;
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
     renderSuggestionResults(cards);
     trackEvent("suggestion_lookup_completed", {
@@ -327,6 +332,7 @@ async function searchSuggestionCards(query) {
       result_count: cards.length,
     });
   } catch (error) {
+    if (requestId !== suggestionLookupRequestId) return;
     elements.suggestionSearchStatus.textContent = "Lookup is taking a nap. Your typed card details will still be sent.";
     elements.suggestionResults.innerHTML = "";
     trackEvent("suggestion_lookup_completed", {
