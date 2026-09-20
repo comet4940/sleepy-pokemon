@@ -357,6 +357,7 @@ function renderSuggestionResults(cards) {
 }
 
 async function selectSuggestionCard(card) {
+  const selectionRequestId = suggestionLookupRequestId;
   let selectedCard = card;
   if (card.id && !card.set) {
     try {
@@ -366,6 +367,7 @@ async function selectSuggestionCard(card) {
       console.warn("Could not load full card details", error);
     }
   }
+  if (selectionRequestId !== suggestionLookupRequestId) return;
   const setName = selectedCard.setName || selectedCard.set?.name || "Set unavailable";
   const number = selectedCard.localId || selectedCard.number || "No number";
   const details = `${selectedCard.name} — ${setName} · ${number}`;
