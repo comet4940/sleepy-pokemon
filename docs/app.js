@@ -12,6 +12,7 @@ const priorityRank = {
 
 const state = {
   cards: [],
+  guideMemberships: new Map(),
   randomOrder: new Map(),
   filters: {
     search: "",
@@ -36,7 +37,10 @@ async function init() {
   cacheElements();
   applyInitialSearch();
   bindEvents();
-  state.cards = await loadPublishedCards();
+  [state.cards, state.guideMemberships] = await Promise.all([
+    loadPublishedCards(),
+    loadGuideMemberships(),
+  ]);
   assignRandomOrder();
   render();
   trackEvent("catalog_loaded", { card_count: state.cards.length });
@@ -83,6 +87,7 @@ function cacheElements() {
   elements.detailSubtitle = document.querySelector("#detailSubtitle");
   elements.detailPriceRow = document.querySelector("#detailPriceRow");
   elements.detailCurationNote = document.querySelector("#detailCurationNote");
+  elements.detailGuideLinks = document.querySelector("#detailGuideLinks");
   elements.detailCurationFacts = document.querySelector("#detailCurationFacts");
   elements.detailMoods = document.querySelector("#detailMoods");
   elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
@@ -98,6 +103,7 @@ function cacheElements() {
   elements.suggestionNotes = document.querySelector("#suggestionNotes");
   elements.suggestionSuccess = document.querySelector("#suggestionSuccess");
   elements.suggestionDoneButton = document.querySelector("#suggestionDoneButton");
+  elements.guideCardList = document.querySelector(".guide-card-list");
 }
 
 function bindEvents() {
@@ -179,6 +185,7 @@ function bindEvents() {
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
   bind(elements.latestGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "keydown", handleCardGridKeydown);
+  bind(elements.guideCardList, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
@@ -371,6 +378,29 @@ async function loadPublishedCards() {
   }
 }
 
+async function loadGuideMemberships() {
+  try {
+    const guidesPath = document.body.dataset.guidesPath || "guides.json";
+    const response = await fetch(guidesPath, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Guide definitions failed with ${response.status}`);
+    const payload = await response.json();
+    const guides = Array.isArray(payload) ? payload : payload.guides;
+    if (!Array.isArray(guides)) return new Map();
+    const memberships = new Map();
+    guides.forEach((guide) => {
+      (guide.cards || []).forEach((entry) => {
+        const existing = memberships.get(entry.slug) || [];
+        existing.push({ slug: guide.slug, title: guide.title });
+        memberships.set(entry.slug, existing);
+      });
+    });
+    return memberships;
+  } catch (error) {
+    console.error(error);
+    return new Map();
+  }
+}
+
 function normalizeCard(card) {
   return {
     apiId: card.apiId || "",
@@ -402,6 +432,7 @@ function normalizeCard(card) {
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
+    slug: card.slug || slugify([card.name, card.setName, card.number].filter(Boolean).join(" ")),
     moods: Array.isArray(card.moods) ? card.moods : (Array.isArray(card.curation?.moods) ? card.curation.moods : deriveMoods(card)),
   };
 }
@@ -655,6 +686,15 @@ function handleCardGridClick(event) {
   if (card) openCardDetail(card);
 }
 
+function handleGuideCardClick(event) {
+  const link = event.target.closest(".guide-card a[data-card-id]");
+  if (!link) return;
+  const card = state.cards.find((item) => getCardIdentity(item) === link.dataset.cardId);
+  if (!card) return;
+  event.preventDefault();
+  openCardDetail(card);
+}
+
 function openCardDetail(card) {
   const price = getDisplayPrice(card);
   const priceText = price ? formatCurrency(price) : "No price";
@@ -672,6 +712,9 @@ function openCardDetail(card) {
   elements.detailCurationNote.innerHTML = whyItBelongs
     ? `<strong>Why it belongs.</strong> ${escapeHtml(whyItBelongs)}`
     : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
+  if (elements.detailGuideLinks) {
+    elements.detailGuideLinks.innerHTML = renderGuideMemberships(card);
+  }
   elements.detailCurationFacts.innerHTML = [
     curationFact("Nap classification", card.sleepinessBasis),
     curationFact("Sleep location", card.sleepLocation),
@@ -689,6 +732,20 @@ function openCardDetail(card) {
   ].join("");
   elements.cardDetailDialog.showModal();
   trackEvent("card_opened", getCardAnalyticsParams(card));
+}
+
+function renderGuideMemberships(card) {
+  const guides = state.guideMemberships.get(card.slug) || [];
+  if (!guides.length) return "";
+  const root = document.body.dataset.siteRoot || "";
+  const links = guides.map((guide) => {
+    const href = `${root}guides/${guide.slug}/`;
+    return `<a href="${escapeAttribute(href)}">${escapeHtml(guide.title)}</a>`;
+  });
+  const linkedTitles = links.length === 1
+    ? links[0]
+    : `${links.slice(0, -1).join(", ")}${links.length > 2 ? "," : ""} and ${links.at(-1)}`;
+  return `<p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${linkedTitles}.</p>`;
 }
 
 function curationSleepinessFact(value) {
