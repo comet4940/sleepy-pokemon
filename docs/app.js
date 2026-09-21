@@ -168,6 +168,8 @@ function bindEvents() {
 
   bind(elements.clearFiltersButton, "click", clearFilters);
   bind(elements.clearFiltersLink, "click", clearFilters);
+  bind(elements.headerSearchInput, "input", handleHeaderSearchClear);
+  bind(elements.headerSearchInput, "search", handleHeaderSearchClear);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
   elements.suggestionLinks.forEach((link) => {
     bind(link, "click", (event) => {
@@ -221,6 +223,10 @@ function handleHeaderSearchSubmit(event) {
   event.preventDefault();
   const query = elements.headerSearchInput.value.trim();
   const previousQuery = state.filters.search;
+  if (!query) {
+    if (previousQuery) clearSearchFilter("global_header");
+    return;
+  }
   state.filters = {
     ...state.filters,
     search: query,
@@ -242,9 +248,26 @@ function handleHeaderSearchSubmit(event) {
       query_length: query.length,
       result_count: getFilteredCards().length,
     });
-  } else if (previousQuery) {
-    trackEvent("search_cleared", { result_count: getFilteredCards().length });
   }
+}
+
+function handleHeaderSearchClear() {
+  if (elements.headerSearchInput?.value.trim() || !state.filters.search.trim()) return;
+  clearSearchFilter("global_header");
+}
+
+function clearSearchFilter(interactionSource) {
+  if (!state.filters.search.trim()) return;
+  state.filters.search = "";
+  state.showAllCards = true;
+  if (elements.searchFilter) elements.searchFilter.value = "";
+  if (elements.headerSearchInput) elements.headerSearchInput.value = "";
+  syncSearchUrl("");
+  renderCards();
+  trackEvent("search_cleared", {
+    interaction_source: interactionSource,
+    result_count: getFilteredCards().length,
+  });
 }
 
 function showRandomSleeper() {
@@ -691,11 +714,7 @@ function renderActiveFilterControls() {
       elements.activeSearchChip.innerHTML = `${escapeHtml(query)} <button type="button" aria-label="Remove search filter">×</button>`;
       elements.activeSearchChip.querySelector("button").addEventListener("click", (event) => {
         event.stopPropagation();
-        state.filters.search = "";
-        if (elements.headerSearchInput) elements.headerSearchInput.value = "";
-        syncSearchUrl("");
-        renderCards();
-        trackEvent("search_cleared", { result_count: getFilteredCards().length });
+        clearSearchFilter("collection_search_chip");
       }, { once: true });
     }
   }
