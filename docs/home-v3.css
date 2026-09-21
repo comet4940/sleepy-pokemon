@@ -229,10 +229,10 @@ a { color: inherit; }
   .collection-sort-control { justify-content: space-between; }
   .collection-sort-control select { flex: 1 1 auto; max-width: 240px; }
   .search-suggestion-prompt { align-items: flex-start; flex-direction: column; gap: 18px; }
-  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 14px; }
   #latestGrid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
   #latestGrid .card-tile { flex: 0 0 min(72vw, 240px); }
-  .card-tile { padding: 7px; border-radius: 13px; }
+  .card-tile { align-self: start; grid-template-rows: auto auto; padding: 7px; border-radius: 13px; }
   .card-image-frame { padding: 9px; border-radius: 9px; }
   .card-body { padding: 12px 3px 5px; }
   .card-title-row h3 { font-size: .98rem; }
