@@ -85,7 +85,7 @@ a { color: inherit; }
 .collection-meta { margin: 0; color: var(--muted-cream); font-size: .88rem; }
 .library-header h2 { color: var(--muted-cream); font-size: .9rem; font-weight: 400; }
 .library-actions { gap: 12px; }
-.library-actions .coffee-button, .library-actions .button { display: none; }
+.library-actions .coffee-button { display: none; }
 .collection-panel { padding-top: 44px; }
 .collection-page-main { min-height: calc(100vh - 101px); background: var(--night); }
 .collection-page-shell .topbar { position: sticky; top: 0; z-index: 20; background: rgba(17, 17, 26, .96); backdrop-filter: blur(14px); }
@@ -98,7 +98,10 @@ a { color: inherit; }
 .collection-page-main .active-filter-chip[hidden],
 .collection-page-main .clear-filters-link[hidden] { display: none !important; }
 .collection-panel .library-header { margin-bottom: 30px; }
-.collection-page-main .library-actions { display: none; }
+.collection-page-main .library-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.collection-page-main #downloadChecklistButton { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 16px; border: 1px solid rgba(169,147,255,.28); border-radius: 21px; background: #191827; color: var(--cream); font-family: inherit; font-size: .88rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: border-color 160ms ease, background 160ms ease, color 160ms ease; }
+.collection-page-main #downloadChecklistButton:hover:not(:disabled), .collection-page-main #downloadChecklistButton:focus-visible:not(:disabled) { border-color: var(--pink); background: #211e35; color: var(--cream); }
+.collection-page-main #downloadChecklistButton:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
 .collection-controls { display: grid; gap: 0; min-width: 0; max-width: 100%; margin-bottom: 34px; padding: 0; border: 0; }
 .collection-search-row { display: grid; grid-template-columns: minmax(190px, .42fr) minmax(320px, 1fr); align-items: end; gap: 34px; }
 .collection-control-copy h2 { margin: 0; color: var(--cream); font-family: var(--display); font-size: 1.45rem; font-weight: 500; }
