@@ -262,8 +262,8 @@ h3 {
 .header-search button {
   display: inline-grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -276,6 +276,11 @@ h3 {
 .header-search button:focus-visible {
   background: rgba(244, 211, 94, .14);
   outline: 0;
+}
+
+.collection-page-main,
+.library-panel {
+  scroll-margin-top: 24px;
 }
 
 .site-footer {

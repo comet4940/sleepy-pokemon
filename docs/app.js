@@ -222,6 +222,8 @@ function handleHeaderSearchSubmit(event) {
   if (!elements.cardGrid) return;
   event.preventDefault();
   const query = elements.headerSearchInput.value.trim();
+  // Blur before the result scroll so iOS Safari closes its keyboard and restores the viewport.
+  elements.headerSearchInput?.blur();
   const previousQuery = state.filters.search;
   if (!query) {
     if (previousQuery) clearSearchFilter("global_header");
