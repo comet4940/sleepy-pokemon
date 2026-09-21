@@ -206,6 +206,28 @@ a { color: inherit; }
 .seo-card-index a { color: var(--muted-cream); }
 .comet-intro { display: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(460px, calc(100vw - 36px));
+  padding: 13px 20px;
+  border: 1px solid rgba(169, 147, 255, .38);
+  border-radius: 24px;
+  background: rgba(25, 24, 39, .95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .48), 0 0 0 1px rgba(255, 247, 232, .06);
+  color: var(--cream);
+  font-family: var(--ui);
+  font-size: .92rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
 
 @media (max-width: 800px) {
   .app-shell { width: 100%; padding: 0; }
@@ -246,6 +268,7 @@ a { color: inherit; }
   .starter-banner { flex-wrap: wrap; }
   .starter-banner .quiet-action { margin-left: 0; }
   .seo-card-index-inner { width: min(100% - 48px, 1140px); }
+  .toast { right: 16px; left: 16px; bottom: 20px; max-width: none; justify-content: center; text-align: center; }
 }
 
 @media (min-width: 801px) and (max-width: 1100px) {
