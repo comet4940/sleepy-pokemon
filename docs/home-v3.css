@@ -206,8 +206,9 @@ a { color: inherit; }
 
 @media (max-width: 800px) {
   .app-shell { width: 100%; padding: 0; }
-  .topbar { border-radius: 0; padding: 18px 18px; }
-  .topbar-actions { width: 100%; justify-content: flex-start; gap: 14px; }
+  .topbar { align-items: flex-start; flex-wrap: wrap; border-radius: 0; padding: 18px 18px; }
+  .topbar-actions { display: grid; grid-template-columns: auto auto minmax(0, 1fr); width: 100%; min-width: 0; justify-content: flex-start; gap: 14px; }
+  .topbar-actions .header-search { grid-column: 1 / -1; width: 100%; min-width: 0; }
   .topbar-actions .header-cta { margin-left: auto; }
   .sleepy-hero { grid-template-columns: 1fr; min-height: 0; padding: 40px 24px 34px; }
   .hero-copy h2 { font-size: 4rem; }
