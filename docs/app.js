@@ -1048,16 +1048,28 @@ function getChecklistFilename() {
 
   const search = state.filters.search.trim();
   if (search) {
-    return `sleepy-pokemon-${slugify(search)}-checklist.csv`;
+    const searchSlug = slugify(search);
+    if (searchSlug) {
+      return `sleepy-pokemon-${searchSlug}-checklist.csv`;
+    }
   }
   if (state.filters.mood !== "all") {
-    return `sleepy-pokemon-${state.filters.mood}-checklist.csv`;
+    const moodSlug = slugify(state.filters.mood);
+    if (moodSlug) {
+      return `sleepy-pokemon-${moodSlug}-checklist.csv`;
+    }
   }
   if (state.filters.pokemon !== "all") {
-    return `sleepy-pokemon-${slugify(state.filters.pokemon)}-checklist.csv`;
+    const pokemonSlug = slugify(state.filters.pokemon);
+    if (pokemonSlug) {
+      return `sleepy-pokemon-${pokemonSlug}-checklist.csv`;
+    }
   }
   if (state.filters.set !== "all") {
-    return `sleepy-pokemon-${slugify(state.filters.set)}-checklist.csv`;
+    const setSlug = slugify(state.filters.set);
+    if (setSlug) {
+      return `sleepy-pokemon-${setSlug}-checklist.csv`;
+    }
   }
   return "sleepy-pokemon-filtered-checklist.csv";
 }

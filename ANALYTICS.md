@@ -83,16 +83,16 @@ No lookup query, suggested card text, reason, or notes are sent to GA4.
 | `coffee_clicked` | Buy Me a Coffee is selected | `interaction_source`, `destination`, `destination_path` |
 | `studio_link_clicked` | Semi Serious Labs is selected | `interaction_source`, `destination`, `destination_path` |
 
-## Reserved Checklist Event
+## Collector Checklist Event
 
-`checklist_downloaded` is reserved for the collector checklist experience. It should use:
+`checklist_downloaded` tracks collector checklist downloads:
 
 - `checklist_scope`: `full_collection`, `filtered_collection`, `selected_cards`, or `guide`
 - `card_count`
 - `file_format`
 - `interaction_source`
 
-The collection download follows this shape, exporting either the full collection or the active filtered subset.
+The collection download follows this shape, exporting either the full collection or the active filtered subset. Future binder or guide downloads will also share this schema.
 
 ## Shared Parameters
 
@@ -143,7 +143,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 
 Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, `active_filter_count`, and `price_market`.
 
-Mark `suggestion_submitted` as a GA4 key event. Consider `checklist_downloaded` only after the future checklist interaction launches. Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
+Mark `suggestion_submitted` and `checklist_downloaded` as GA4 key events (conversions representing contribution and collector intent). Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
 
 ## Product Questions
 
