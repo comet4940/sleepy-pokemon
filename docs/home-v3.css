@@ -129,7 +129,7 @@ a { color: inherit; }
 .view-all-link { display: inline-flex; }
 .view-all-link { color: var(--muted-cream); font-size: .9rem; text-decoration: none; }
 .active-filter-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; min-height: 46px; padding: 0 14px 0 18px; border: 1px solid var(--pink); border-radius: 24px; background: rgba(243,107,155,.88); color: #321624; font-size: .9rem; }
-.active-filter-chip button { display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1.25rem; line-height: 1; cursor: pointer; }
+.active-filter-chip button { display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -8px -8px -8px 0; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1.25rem; line-height: 1; cursor: pointer; }
 .active-filter-chip button:hover, .active-filter-chip button:focus-visible { background: rgba(50,22,36,.14); }
 .clear-filters-link { min-height: 44px; padding: 0 4px; border: 0; background: transparent; color: var(--muted-cream); font: inherit; font-size: .82rem; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .clear-filters-link:hover, .clear-filters-link:focus-visible { color: var(--cream); }

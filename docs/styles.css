@@ -177,11 +177,11 @@ h3 {
 
 .header-search-field {
   display: grid;
-  grid-template-columns: 18px minmax(90px, 1fr) 30px;
+  grid-template-columns: 18px minmax(90px, 1fr) 44px;
   align-items: center;
   gap: 8px;
-  min-height: 42px;
-  padding: 0 6px 0 13px;
+  min-height: 44px;
+  padding: 0 0 0 13px;
   border: 1px solid rgba(255, 247, 232, .24);
   border-radius: 22px;
   background: rgba(255, 247, 232, .055);
@@ -262,8 +262,8 @@ h3 {
 .header-search button {
   display: inline-grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -276,6 +276,11 @@ h3 {
 .header-search button:focus-visible {
   background: rgba(244, 211, 94, .14);
   outline: 0;
+}
+
+.collection-page-main,
+.library-panel {
+  scroll-margin-top: 108px;
 }
 
 .site-footer {
@@ -1413,6 +1418,13 @@ textarea:focus-visible {
 
   .search-button {
     grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 800px) {
+  .collection-page-main,
+  .library-panel {
+    scroll-margin-top: 216px;
   }
 }
 
