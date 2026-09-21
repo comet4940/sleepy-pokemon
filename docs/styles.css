@@ -28,14 +28,9 @@
   box-sizing: border-box;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   min-width: 320px;
-  overflow-x: hidden;
   color: var(--ink);
   background:
     linear-gradient(180deg, rgba(5, 8, 7, 0.99) 0 340px, rgba(5, 8, 7, 0.78) 540px, transparent 820px),

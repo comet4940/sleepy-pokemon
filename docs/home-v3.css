@@ -99,7 +99,7 @@ a { color: inherit; }
 .collection-page-main .clear-filters-link[hidden] { display: none !important; }
 .collection-panel .library-header { margin-bottom: 30px; }
 .collection-page-main .library-actions { display: none; }
-.collection-controls { display: grid; gap: 0; margin-bottom: 34px; padding: 0; border: 0; }
+.collection-controls { display: grid; gap: 0; min-width: 0; max-width: 100%; margin-bottom: 34px; padding: 0; border: 0; }
 .collection-search-row { display: grid; grid-template-columns: minmax(190px, .42fr) minmax(320px, 1fr); align-items: end; gap: 34px; }
 .collection-control-copy h2 { margin: 0; color: var(--cream); font-family: var(--display); font-size: 1.45rem; font-weight: 500; }
 .collection-control-copy p { margin: 6px 0 0; color: var(--muted-cream); font-size: .9rem; }
@@ -110,7 +110,7 @@ a { color: inherit; }
 .collection-search-field input::placeholder { color: rgba(185,182,199,.72); opacity: 1; }
 .collection-search-field input::-webkit-search-cancel-button { filter: invert(1); opacity: .86; }
 .collection-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.collection-page-main .collection-filter-row { display: block; }
+.collection-page-main .collection-filter-row { display: block; min-width: 0; max-width: 100%; }
 .collection-page-main .mood-chips { flex-wrap: nowrap; align-items: center; min-width: 0; max-width: 100%; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 .collection-sort-control { display: flex; align-items: center; flex: 0 0 auto; gap: 10px; color: var(--muted-cream); font-size: .8rem; }
 .collection-sort-control select { min-height: 44px; padding: 0 34px 0 14px; border: 1px solid rgba(255,247,232,.2); border-radius: 22px; background: #191927; color: var(--cream); font: inherit; }
