@@ -85,14 +85,14 @@ No lookup query, suggested card text, reason, or notes are sent to GA4.
 
 ## Reserved Checklist Event
 
-`checklist_downloaded` is reserved for the future collector checklist experience. It should use:
+`checklist_downloaded` is reserved for the collector checklist experience. It should use:
 
-- `checklist_scope`: `full_collection`, `selected_cards`, or `guide`
+- `checklist_scope`: `full_collection`, `filtered_collection`, `selected_cards`, or `guide`
 - `card_count`
 - `file_format`
 - `interaction_source`
 
-The currently hidden full-collection download already follows this shape, but it should not be used as a KPI until a visible checklist affordance ships.
+The collection download follows this shape, exporting either the full collection or the active filtered subset.
 
 ## Shared Parameters
 

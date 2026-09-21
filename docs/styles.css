@@ -454,6 +454,13 @@ textarea:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
+.button:disabled,
+.button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .button.primary:hover {
   background: linear-gradient(180deg, #8ce2ad, #56b984);
 }

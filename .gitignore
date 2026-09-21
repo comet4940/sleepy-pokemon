@@ -5,3 +5,11 @@
 /styles.css
 /personal-wishlist.html
 .DS_Store
+# Secrets and auth tokens
+*client_secret*.json
+client_secret.json
+token.json
+*service-account*.json
+.env*
+analytics-dashboard.html
+/data/analytics/
