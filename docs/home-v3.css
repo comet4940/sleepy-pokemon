@@ -206,7 +206,7 @@ a { color: inherit; }
 
 @media (max-width: 800px) {
   .app-shell { width: 100%; padding: 0; }
-  .topbar { align-items: flex-start; flex-wrap: wrap; border-radius: 0; padding: 18px 18px; }
+  .topbar { width: 100%; box-sizing: border-box; align-items: flex-start; flex-wrap: wrap; border-radius: 0; padding: 18px 18px; }
   .topbar-actions { display: grid; grid-template-columns: auto auto minmax(0, 1fr); width: 100%; min-width: 0; justify-content: flex-start; gap: 14px; }
   .topbar-actions .header-search { grid-column: 1 / -1; width: 100%; min-width: 0; }
   .topbar-actions .header-cta { margin-left: auto; }
@@ -232,10 +232,10 @@ a { color: inherit; }
   .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 14px; }
   #latestGrid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
   #latestGrid .card-tile { flex: 0 0 min(72vw, 240px); }
-  .card-tile { align-self: start; grid-template-rows: auto auto; min-width: 0; overflow: hidden; padding: 7px; border-radius: 13px; }
+  .card-tile { display: flex; flex-direction: column; flex: 0 0 auto; min-height: 0; height: auto; align-self: start; min-width: 0; overflow: hidden; padding: 7px; border-radius: 13px; }
   .card-image-frame { width: 100%; min-width: 0; overflow: hidden; padding: 9px; border-radius: 9px; }
   .card-image-frame img { min-width: 0; max-width: 100%; }
-  .card-body { min-width: 0; padding: 12px 3px 5px; }
+  .card-body { flex: 0 0 auto; width: 100%; min-width: 0; padding: 12px 3px 5px; }
   .card-title-row h3 { font-size: .98rem; }
   .card-subtitle { font-size: .75rem; }
   .starter-banner { align-items: flex-start; padding: 22px 24px; }
