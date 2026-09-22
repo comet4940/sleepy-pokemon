@@ -157,14 +157,14 @@ Know a card that belongs in the sleepy stack?
 The visual identity uses a warm, cozy twilight palette inspired by bedroom lamps and dusk skies:
 
 | Swatch | Name | Hex | Usage |
-| :--- | :--- | :--- | :--- |
-| ![#0e0e17](https://via.placeholder.com/15/0e0e17/000000?text=+) | **Ink** | `#0e0e17` | Deep night background |
-| ![#171724](https://via.placeholder.com/15/171724/000000?text=+) | **Night Surface** | `#171724` | Card panels, topbar & dialog surfaces |
-| ![#fff7e8](https://via.placeholder.com/15/fff7e8/000000?text=+) | **Cream** | `#fff7e8` | Primary text & headings |
-| ![#b9b6c7](https://via.placeholder.com/15/b9b6c7/000000?text=+) | **Muted Cream** | `#b9b6c7` | Secondary labels & metadata |
-| ![#f36b9b](https://via.placeholder.com/15/f36b9b/000000?text=+) | **Soft Pink** | `#f36b9b` | Accent highlights & active chips |
-| ![#f4d35e](https://via.placeholder.com/15/f4d35e/000000?text=+) | **Candle Yellow** | `#f4d35e` | Stars, sparkles & action prompts |
-| ![#b3c5ff](https://via.placeholder.com/15/b3c5ff/000000?text=+) | **Lavender** | `#b3c5ff` | Brand lockup cards & guide accents |
+| :---: | :--- | :--- | :--- |
+| ![#0e0e17](brand-kit/swatches/ink.png) | **Ink** | `#0e0e17` | Deep night background |
+| ![#171724](brand-kit/swatches/night-surface.png) | **Night Surface** | `#171724` | Card panels, topbar & dialog surfaces |
+| ![#fff7e8](brand-kit/swatches/cream.png) | **Cream** | `#fff7e8` | Primary text & headings |
+| ![#b9b6c7](brand-kit/swatches/muted-cream.png) | **Muted Cream** | `#b9b6c7` | Secondary labels & metadata |
+| ![#f36b9b](brand-kit/swatches/soft-pink.png) | **Soft Pink** | `#f36b9b` | Accent highlights & active chips |
+| ![#f4d35e](brand-kit/swatches/candle-yellow.png) | **Candle Yellow** | `#f4d35e` | Stars, sparkles & action prompts |
+| ![#b3c5ff](brand-kit/swatches/lavender.png) | **Lavender** | `#b3c5ff` | Brand lockup cards & guide accents |
 
 Typography is paired with **Fredoka** for friendly, rounded headings and **Inter** for crisp, legible metadata. See [`brand-kit/`](brand-kit/) for the full creative direction deck.
 
