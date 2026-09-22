@@ -5351,6 +5351,31 @@
       "whyItBelongs": "Munna floats through a dreamy pink twilight under a crescent moon, radiating sweet dreams with its 'Rest' attack. Down in the foreground, two little Pidoves are cuddled together on the ledge, sound asleep with eyes softly shut. A quiet, poetic Unova bedtime scene.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "apiId": "sv2-112",
+      "tcgdexId": "sv2-112",
+      "name": "Makuhita",
+      "pokemon": "Makuhita",
+      "setName": "Paldea Evolved",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv2",
+      "number": "112/193",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Kurata So",
+      "imageSmall": "https://images.pokemontcg.io/sv2/112.png",
+      "imageLarge": "https://images.pokemontcg.io/sv2/112_hires.png",
+      "setReleaseDate": "2023/06/09",
+      "priority": "Medium",
+      "notes": "Added from curator-provided metadata. Makuhita's accidental upright nap follows a determined round of slap-push drills.",
+      "sleepinessBasis": "Accidental nap",
+      "sleepLocation": "Tree",
+      "sleepiness": "3 — Convincing nap",
+      "moods": ["Outdoor Naps", "Cozy Corners"],
+      "whyItBelongs": "Accidental nap propped against a fallen log in a moonlit glade. Look closely at the tree trunk behind it to spot the splintered impact craters Makuhita punched into the bark during slap-push drills. True to its Pokédex lore of relentlessly slamming into giant trees to toughen its body, this round sumo trainee completely knocked itself out upright under the full moon. Kurata So’s luminous palette and Makuhita’s soft snoring expression turn an intense workout recovery into pure cozy binder magic.",
+      "createdAt": "2026-09-21T00:00:00.000Z",
+      "updatedAt": "2026-09-21T00:00:00.000Z"
     }
   ],
   "priceRefreshedAt": "2026-09-21T17:03:40.803Z"
