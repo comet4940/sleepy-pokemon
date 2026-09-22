@@ -27,6 +27,7 @@ const state = {
   showAllCards: false,
   suggestionLookupUsed: false,
   catalogLoadFailed: false,
+  modalFilterChanges: 0,
 };
 
 const elements = {};
@@ -139,11 +140,18 @@ function bindEvents() {
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
       elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip && state.filters.mood !== "all"));
       renderCards();
+      const moodAction = state.filters.mood === "all" ? "removed" : "applied";
+      const resultCount = getFilteredCards().length;
       trackEvent("filter_changed", {
         filter_name: "mood",
         filter_value: state.filters.mood,
-        filter_action: state.filters.mood === "all" ? "removed" : "applied",
-        result_count: getFilteredCards().length,
+        filter_action: moodAction,
+        result_count: resultCount,
+      });
+      trackEvent("filter_facet_mood", {
+        filter_value: state.filters.mood,
+        filter_action: moodAction,
+        result_count: resultCount,
       });
     });
   });
@@ -161,13 +169,24 @@ function bindEvents() {
   ].forEach(([element, key]) => {
     bind(element, "change", () => {
       state.filters[key] = element.value;
+      if (key !== "sort") state.modalFilterChanges += 1;
       renderCards();
+      const filterAction = element.value === "all" || element.value === "" ? "removed" : "applied";
+      const analyticsValue = getAnalyticsFilterValue(key, element.value);
+      const resultCount = getFilteredCards().length;
       trackEvent(key === "sort" ? "sort_changed" : "filter_changed", {
         filter_name: key,
-        filter_value: getAnalyticsFilterValue(key, element.value),
-        filter_action: element.value === "all" || element.value === "" ? "removed" : "applied",
-        result_count: getFilteredCards().length,
+        filter_value: analyticsValue,
+        filter_action: filterAction,
+        result_count: resultCount,
       });
+      if (key !== "sort") {
+        trackEvent(`filter_facet_${key}`, {
+          filter_action: filterAction,
+          filter_value: analyticsValue,
+          result_count: resultCount,
+        });
+      }
     });
   });
 
@@ -203,6 +222,18 @@ function bindEvents() {
   bind(elements.openFiltersButton, "click", openFiltersDialog);
   bind(elements.filtersDialog, "close", () => {
     elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
+    if (state.modalFilterChanges === 0) {
+      trackEvent("filters_modal_bounced", {
+        had_active_filters: hasActiveFilters(),
+        active_filter_count: countActiveFilters(),
+      });
+    } else {
+      trackEvent("filters_modal_applied", {
+        changes_count: state.modalFilterChanges,
+        active_filter_count: countActiveFilters(),
+        result_count: getFilteredCards().length,
+      });
+    }
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bind(elements.clearCollectionButton, "click", clearFilters);
@@ -301,6 +332,7 @@ function bind(element, eventName, handler) {
 
 function openFiltersDialog() {
   if (!elements.filtersDialog) return;
+  state.modalFilterChanges = 0;
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
   window.setTimeout(() => elements.pokemonFilter?.focus(), 50);
@@ -752,11 +784,22 @@ function renderActiveFilterControls() {
         state.filters[key] = key === "maxPrice" ? "" : "all";
         state.showAllCards = true;
         render();
+        const analyticsValue = getAnalyticsFilterValue(key, state.filters[key]);
+        const resultCount = getFilteredCards().length;
         trackEvent("filter_changed", {
           filter_name: key,
-          filter_value: getAnalyticsFilterValue(key, state.filters[key]),
+          filter_value: analyticsValue,
           filter_action: "removed",
-          result_count: getFilteredCards().length,
+          result_count: resultCount,
+        });
+        trackEvent(`filter_facet_${key}`, {
+          filter_action: "removed",
+          filter_value: analyticsValue,
+          result_count: resultCount,
+        });
+        trackEvent("filter_chip_removed", {
+          filter_name: key,
+          result_count: resultCount,
         });
       });
       chip.append(removeButton);
@@ -1125,6 +1168,9 @@ function escapeCsvCell(value) {
 
 function clearFilters() {
   const activeFilterCount = countActiveFilters();
+  if (elements.filtersDialog?.open) {
+    state.modalFilterChanges += 1;
+  }
   state.filters = {
     search: "",
     mood: "all",
