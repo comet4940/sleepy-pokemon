@@ -80,6 +80,9 @@ function cacheElements() {
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
   elements.viewAllLink = document.querySelector(".view-all-link");
   elements.downloadChecklistButton = document.querySelector("#downloadChecklistButton");
+  if (elements.downloadChecklistButton && !state.cards.length) {
+    elements.downloadChecklistButton.disabled = true;
+  }
   elements.filtersDialog = document.querySelector("#filtersDialog");
   elements.searchFilter = document.querySelector("#searchFilter");
   elements.headerSearchForm = document.querySelector("[data-header-search]");
@@ -617,6 +620,7 @@ function renderCards() {
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
   if (elements.resultCount) elements.resultCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
   updateCollectionHeading(filteredCards.length);
+  updateChecklistButton(filteredCards.length);
   renderActiveFilterControls();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
@@ -753,6 +757,35 @@ function updateCollectionHeading(resultCount) {
     elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   }
   if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
+}
+
+function updateChecklistButton(resultCount) {
+  if (!elements.downloadChecklistButton) return;
+  if (state.catalogLoadFailed || !state.cards.length) {
+    elements.downloadChecklistButton.disabled = true;
+    elements.downloadChecklistButton.textContent = "Download checklist";
+    return;
+  }
+  const isFiltered = hasActiveFilters();
+  if (resultCount === 0) {
+    elements.downloadChecklistButton.disabled = true;
+    elements.downloadChecklistButton.textContent = "Download checklist (0)";
+    elements.downloadChecklistButton.setAttribute("aria-label", "No cards match active filters to download");
+  } else if (isFiltered) {
+    elements.downloadChecklistButton.disabled = false;
+    elements.downloadChecklistButton.textContent = `Download checklist (${resultCount})`;
+    elements.downloadChecklistButton.setAttribute(
+      "aria-label",
+      `Download checklist for ${resultCount} filtered ${resultCount === 1 ? "card" : "cards"}`
+    );
+  } else {
+    elements.downloadChecklistButton.disabled = false;
+    elements.downloadChecklistButton.textContent = `Download checklist (${state.cards.length})`;
+    elements.downloadChecklistButton.setAttribute(
+      "aria-label",
+      `Download checklist for all ${state.cards.length} cards`
+    );
+  }
 }
 
 function assignRandomOrder() {
@@ -955,35 +988,37 @@ function slugify(value) {
 }
 
 function downloadChecklist() {
+  if (state.catalogLoadFailed || !state.cards.length) return;
+  const isFiltered = hasActiveFilters();
+  const exportCards = isFiltered ? getFilteredCards() : state.cards;
+  if (!exportCards.length) {
+    showToast("No cards to download.");
+    return;
+  }
+
   const columns = [
     "Collected",
-    "Pokemon",
-    "Card Name",
+    "Pokemon Card Name",
     "Set",
     "Number",
     "Rarity",
     "Language",
     "Artist",
-    "Market Price",
-    "Price Source",
-    "Release Date",
-    "Notes",
-    "Image URL",
+    "Price",
+    "Why it belongs",
+    "Image url",
   ];
-  const rows = state.cards.map((card) => [
+  const rows = exportCards.map((card) => [
     "",
-    card.pokemon,
-    card.name,
-    card.setName,
-    card.number,
-    card.rarity,
-    card.language,
-    card.artist,
-    getDisplayPrice(card) || "",
-    [card.priceSource, card.priceType].filter(Boolean).join(" / "),
-    card.setReleaseDate,
-    card.notes,
-    card.imageLarge || card.imageSmall,
+    card.name || card.pokemon || "",
+    card.setName || "",
+    card.number || "",
+    card.rarity || "",
+    card.language || "",
+    card.artist || "",
+    getDisplayPrice(card) ? formatCurrency(getDisplayPrice(card)) : "",
+    card.whyItBelongs || card.notes || "",
+    card.imageLarge || card.imageSmall || "",
   ]);
   const csv = [columns, ...rows]
     .map((row) => row.map(escapeCsvCell).join(","))
@@ -992,19 +1027,55 @@ function downloadChecklist() {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "sleepy-pokemon-checklist.csv";
+  anchor.download = getChecklistFilename();
   anchor.style.display = "none";
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   trackEvent("checklist_downloaded", {
-    checklist_scope: "full_collection",
-    card_count: state.cards.length,
+    checklist_scope: isFiltered ? "filtered_collection" : "full_collection",
+    card_count: exportCards.length,
     file_format: "csv",
     interaction_source: "collection_header",
   });
-  showToast("Checklist downloaded.");
+  showToast(
+    isFiltered
+      ? `Filtered checklist downloaded (${exportCards.length} cards).`
+      : `Checklist downloaded (${exportCards.length} cards).`
+  );
+}
+
+function getChecklistFilename() {
+  const isFiltered = hasActiveFilters();
+  if (!isFiltered) return "sleepy-pokemon-checklist.csv";
+
+  const search = state.filters.search.trim();
+  if (search) {
+    const searchSlug = slugify(search);
+    if (searchSlug) {
+      return `sleepy-pokemon-${searchSlug}-checklist.csv`;
+    }
+  }
+  if (state.filters.mood !== "all") {
+    const moodSlug = slugify(state.filters.mood);
+    if (moodSlug) {
+      return `sleepy-pokemon-${moodSlug}-checklist.csv`;
+    }
+  }
+  if (state.filters.pokemon !== "all") {
+    const pokemonSlug = slugify(state.filters.pokemon);
+    if (pokemonSlug) {
+      return `sleepy-pokemon-${pokemonSlug}-checklist.csv`;
+    }
+  }
+  if (state.filters.set !== "all") {
+    const setSlug = slugify(state.filters.set);
+    if (setSlug) {
+      return `sleepy-pokemon-${setSlug}-checklist.csv`;
+    }
+  }
+  return "sleepy-pokemon-filtered-checklist.csv";
 }
 
 function escapeCsvCell(value) {
