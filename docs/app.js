@@ -68,6 +68,7 @@ function cacheElements() {
   elements.collectionMeta = document.querySelector("#collectionMeta");
   elements.clearCollectionButton = document.querySelector("#clearCollectionButton");
   elements.activeSearchChip = document.querySelector("#activeSearchChip");
+  elements.activeAdvancedFilters = document.querySelector("#activeAdvancedFilters");
   elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
@@ -75,6 +76,7 @@ function cacheElements() {
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
   elements.surpriseButton = document.querySelector("#surpriseButton");
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
@@ -199,6 +201,9 @@ function bindEvents() {
   bind(elements.suggestionDoneButton, "click", closeSuggestionDialog);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  bind(elements.filtersDialog, "close", () => {
+    elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
+  });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bind(elements.clearCollectionButton, "click", clearFilters);
   bind(elements.cardGrid, "click", handleCardGridClick);
@@ -724,7 +729,41 @@ function renderActiveFilterControls() {
       }, { once: true });
     }
   }
-  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() <= 1;
+  if (elements.activeAdvancedFilters) {
+    const advancedFilters = [
+      ["pokemon", elements.pokemonFilter],
+      ["set", elements.setFilter],
+      ["rarity", elements.rarityFilter],
+      ["language", elements.languageFilter],
+    ].filter(([, element]) => element?.value && element.value !== "all");
+
+    if (state.filters.maxPrice) advancedFilters.push(["maxPrice", elements.maxPriceFilter]);
+    elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map(([key, element]) => {
+      const chip = document.createElement("span");
+      chip.className = "active-filter-chip";
+      const label = key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
+      chip.append(document.createTextNode(label || element.value));
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.setAttribute("aria-label", `Remove ${label || "filter"} filter`);
+      removeButton.textContent = "×";
+      removeButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        state.filters[key] = key === "maxPrice" ? "" : "all";
+        state.showAllCards = true;
+        render();
+        trackEvent("filter_changed", {
+          filter_name: key,
+          filter_value: getAnalyticsFilterValue(key, state.filters[key]),
+          filter_action: "removed",
+          result_count: getFilteredCards().length,
+        });
+      });
+      chip.append(removeButton);
+      return chip;
+    }));
+  }
+  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0;
 }
 
 function getRecentlyAddedCards() {
@@ -1098,6 +1137,7 @@ function clearFilters() {
   };
   state.showAllCards = false;
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
+  elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   syncSearchUrl("");
   render();
   trackEvent("filters_cleared", {

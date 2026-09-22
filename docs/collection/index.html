@@ -36,7 +36,7 @@
     </script>
     <script defer src="../analytics.js?v=2" data-page-type="collection"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
-    <link rel="stylesheet" href="../home-v3.css?v=11" />
+    <link rel="stylesheet" href="../home-v3.css?v=12" />
     <link rel="stylesheet" href="../card-detail-v3.css" />
   </head>
   <body data-app-mode="collection" data-guide-path="../published-cards.json" data-guides-path="../guides.json" data-site-root="../">
@@ -97,6 +97,7 @@
             <div class="collection-filter-row">
               <div class="mood-chips" id="moodChips" aria-label="Collection filters">
                 <span class="active-filter-chip" id="activeSearchChip" hidden></span>
+                <span id="activeAdvancedFilters" class="active-filter-group" aria-label="Active advanced filters"></span>
                 <button class="mood-chip" type="button" data-mood="under-5">under $5</button>
                 <button class="mood-chip" type="button" data-mood="cozy-corners">cozy corners</button>
                 <button class="mood-chip" type="button" data-mood="outdoor-naps">outdoor naps</button>
@@ -388,6 +389,6 @@
     </dialog>
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=13"></script>
+    <script src="../app.js?v=14"></script>
   </body>
 </html>
