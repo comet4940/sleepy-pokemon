@@ -68,6 +68,7 @@ function cacheElements() {
   elements.collectionMeta = document.querySelector("#collectionMeta");
   elements.clearCollectionButton = document.querySelector("#clearCollectionButton");
   elements.activeSearchChip = document.querySelector("#activeSearchChip");
+  elements.activeAdvancedFilters = document.querySelector("#activeAdvancedFilters");
   elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
@@ -724,7 +725,35 @@ function renderActiveFilterControls() {
       }, { once: true });
     }
   }
-  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() <= 1;
+  if (elements.activeAdvancedFilters) {
+    const advancedFilters = [
+      ["pokemon", elements.pokemonFilter],
+      ["set", elements.setFilter],
+      ["rarity", elements.rarityFilter],
+      ["language", elements.languageFilter],
+    ].filter(([, element]) => element?.value && element.value !== "all");
+
+    if (state.filters.maxPrice) advancedFilters.push(["maxPrice", elements.maxPriceFilter]);
+    elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map(([key, element]) => {
+      const chip = document.createElement("span");
+      chip.className = "active-filter-chip";
+      const label = key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
+      chip.append(document.createTextNode(label || element.value));
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.setAttribute("aria-label", `Remove ${label || "filter"} filter`);
+      removeButton.textContent = "×";
+      removeButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        state.filters[key] = key === "maxPrice" ? "" : "all";
+        state.showAllCards = true;
+        render();
+      });
+      chip.append(removeButton);
+      return chip;
+    }));
+  }
+  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0;
 }
 
 function getRecentlyAddedCards() {
