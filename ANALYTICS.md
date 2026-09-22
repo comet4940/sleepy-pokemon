@@ -50,7 +50,11 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count` |
 | `search_cleared` | The active query is removed | `result_count` |
 | `filters_opened` | The More filters dialog opens | none beyond shared parameters |
+| `filters_modal_bounced` | The More filters dialog is closed without modifying any filter | `had_active_filters`, `active_filter_count` |
+| `filters_modal_applied` | The More filters dialog is closed after modifying one or more filters | `changes_count`, `active_filter_count`, `result_count` |
 | `filter_changed` | A mood, Pokemon, set, rarity, language, or price filter changes | `filter_name`, `filter_value`, `filter_action`, `result_count` |
+| `filter_facet_<facet>` | Direct facet event (`mood`, `pokemon`, `set`, `rarity`, `language`, `maxPrice`) | `filter_action`, `filter_value`, `result_count` |
+| `filter_chip_removed` | An active filter pill is dismissed directly from the collection filter row | `filter_name`, `result_count` |
 | `sort_changed` | Collection order changes | `filter_name`, `filter_value`, `filter_action`, `result_count` |
 | `filters_cleared` | All active collection filters are cleared | `active_filter_count`, `result_count` |
 
@@ -136,6 +140,8 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `filter_name`
 - `filter_value`
 - `filter_action`
+- `changes_count`
+- `had_active_filters`
 - `lookup_type`
 - `lookup_outcome`
 - `selection_method`
@@ -152,6 +158,7 @@ Mark `suggestion_submitted` and `checklist_downloaded` as GA4 key events (conver
 | Are visitors discovering cards? | Sessions with `card_opened` or `card_page_view`, segmented by `interaction_source` and device |
 | Is global search useful? | `search_submitted` to `search_results_viewed`, followed by `card_opened`; inspect zero-result rate |
 | Are filters helping? | `filter_changed` followed by `card_opened`, segmented by `filter_name` |
+| How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
 | Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics |
 | Do creator links earn attention? | `coffee_clicked` and `studio_link_clicked` by page type |
