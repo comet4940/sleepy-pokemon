@@ -5392,6 +5392,31 @@
       "whyItBelongs": "Accidental nap propped against a fallen log in a moonlit glade. Look closely at the tree trunk behind it to spot the splintered impact craters Makuhita punched into the bark during slap-push drills. True to its Pokédex lore of relentlessly slamming into giant trees to toughen its body, this round sumo trainee completely knocked itself out upright under the full moon. Kurata So’s luminous palette and Makuhita’s soft snoring expression turn an intense workout recovery into pure cozy binder magic.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "apiId": "zsv10pt5-37",
+      "tcgdexId": "zsv10pt5-37",
+      "name": "Solosis",
+      "pokemon": "Solosis",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "037/086",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "LINNE",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/37.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/37_hires.png",
+      "setReleaseDate": "2025/08/01",
+      "priority": "Medium",
+      "notes": "Added from curator-provided metadata. Solosis is drifting in a sunlit creek, tucked inside its protective membrane beneath a rainbow.",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Water",
+      "sleepiness": "4 — Fully out",
+      "moods": ["Outdoor Naps", "Cozy Corners", "Tiny Tuck-Ins"],
+      "whyItBelongs": "Cozy nap drifting in a sunlit creek. After using \"Rollout\" to tumble like a bouncy jelly cushion through the wildflowers, Solosis plopped right by the brook to snooze peacefully inside its protective membrane while a delicate rainbow shimmers in the ripples below. Despite flavor text warning it can blast attackers away with psychic power, this tiny cell would clearly rather nap in the sunshine; giving LINNE’s pastel storybook art peak cozy-binder charm.",
+      "createdAt": "2026-09-22T00:00:00.000Z",
+      "updatedAt": "2026-09-22T00:00:00.000Z"
     }
   ],
   "priceRefreshedAt": "2026-09-22T15:32:16.929Z"
