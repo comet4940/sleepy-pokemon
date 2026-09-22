@@ -76,6 +76,7 @@ function cacheElements() {
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
   elements.surpriseButton = document.querySelector("#surpriseButton");
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
@@ -200,6 +201,9 @@ function bindEvents() {
   bind(elements.suggestionDoneButton, "click", closeSuggestionDialog);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  bind(elements.filtersDialog, "close", () => {
+    elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
+  });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bind(elements.clearCollectionButton, "click", clearFilters);
   bind(elements.cardGrid, "click", handleCardGridClick);
@@ -748,6 +752,12 @@ function renderActiveFilterControls() {
         state.filters[key] = key === "maxPrice" ? "" : "all";
         state.showAllCards = true;
         render();
+        trackEvent("filter_changed", {
+          filter_name: key,
+          filter_value: getAnalyticsFilterValue(key, state.filters[key]),
+          filter_action: "removed",
+          result_count: getFilteredCards().length,
+        });
       });
       chip.append(removeButton);
       return chip;
@@ -1127,6 +1137,7 @@ function clearFilters() {
   };
   state.showAllCards = false;
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
+  elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   syncSearchUrl("");
   render();
   trackEvent("filters_cleared", {
