@@ -80,6 +80,9 @@ function cacheElements() {
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
   elements.viewAllLink = document.querySelector(".view-all-link");
   elements.downloadChecklistButton = document.querySelector("#downloadChecklistButton");
+  if (elements.downloadChecklistButton && !state.cards.length) {
+    elements.downloadChecklistButton.disabled = true;
+  }
   elements.filtersDialog = document.querySelector("#filtersDialog");
   elements.searchFilter = document.querySelector("#searchFilter");
   elements.headerSearchForm = document.querySelector("[data-header-search]");
@@ -758,7 +761,7 @@ function updateCollectionHeading(resultCount) {
 
 function updateChecklistButton(resultCount) {
   if (!elements.downloadChecklistButton) return;
-  if (state.catalogLoadFailed) {
+  if (state.catalogLoadFailed || !state.cards.length) {
     elements.downloadChecklistButton.disabled = true;
     elements.downloadChecklistButton.textContent = "Download checklist";
     return;
@@ -985,6 +988,7 @@ function slugify(value) {
 }
 
 function downloadChecklist() {
+  if (state.catalogLoadFailed || !state.cards.length) return;
   const isFiltered = hasActiveFilters();
   const exportCards = isFiltered ? getFilteredCards() : state.cards;
   if (!exportCards.length) {
