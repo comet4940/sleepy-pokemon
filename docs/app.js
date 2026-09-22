@@ -758,6 +758,10 @@ function renderActiveFilterControls() {
       elements.activeSearchChip.querySelector("button").addEventListener("click", (event) => {
         event.stopPropagation();
         clearSearchFilter("collection_search_chip");
+        trackEvent("filter_chip_removed", {
+          filter_name: "search",
+          result_count: getFilteredCards().length,
+        });
       }, { once: true });
     }
   }
@@ -1168,7 +1172,7 @@ function escapeCsvCell(value) {
 
 function clearFilters() {
   const activeFilterCount = countActiveFilters();
-  if (elements.filtersDialog?.open) {
+  if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
   }
   state.filters = {
