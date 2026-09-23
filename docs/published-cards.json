@@ -5444,6 +5444,35 @@
       "priceType": "normal",
       "priceSource": "TCGPlayer",
       "priceUpdatedAt": "2026/09/23"
+    },
+    {
+      "apiId": "151C2-171",
+      "tcgdexId": "",
+      "name": "Pikachu",
+      "pokemon": "Pikachu",
+      "setName": "Collect 151: Hope",
+      "setSeries": "Scarlet & Violet",
+      "setId": "151C2",
+      "number": "171/151",
+      "rarity": "Art Rare (AR)",
+      "language": "Simplified Chinese",
+      "artist": "Oswaldo KATO",
+      "imageSmall": "https://img.simplifiedtcg.com/cards/zh/13078.webp",
+      "imageLarge": "https://img.simplifiedtcg.com/cards/zh/13078.webp",
+      "setReleaseDate": "2025/04/18",
+      "priority": "Medium",
+      "notes": "Added from curator-provided metadata. Pikachu looks on as Psyduck naps beside the water, with Dragonite and Jigglypuff sharing the wider meadow scene.",
+      "sleepinessBasis": "Cozy nap",
+      "sleepLocation": "Waterside meadow",
+      "sleepiness": "4 — Clearly asleep",
+      "moods": [
+        "Cameo Sleepers",
+        "Outdoor Naps",
+        "Cozy Companions"
+      ],
+      "whyItBelongs": "Psyduck has curled up for a peaceful nap beside the water while Pikachu stands amused nearby. With Dragonite flying overhead and Jigglypuff peeking across the meadow, the scene feels like a gentle pause in the middle of a larger adventure. Pikachu may be the star of the card, but the deeply snoozing Psyduck earns it a place in the sleepy collection.",
+      "createdAt": "2026-09-23T00:00:00.000Z",
+      "updatedAt": "2026-09-23T00:00:00.000Z"
     }
   ],
   "priceRefreshedAt": "2026-09-23T15:27:05.296Z"
