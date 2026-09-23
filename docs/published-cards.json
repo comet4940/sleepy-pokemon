@@ -348,13 +348,14 @@
       "createdAt": "2026-05-06T21:38:00.868Z",
       "updatedAt": "2026-09-15T15:32:40.066Z",
       "sleepinessBasis": "Cozy nap",
-      "sleepLocation": "Grass",
-      "sleepiness": "3 — Convincing nap",
+      "sleepLocation": "Sunny meadow",
+      "sleepiness": "4 — Clearly asleep",
       "moods": [
-        "Outdoor Naps",
-        "Cozy Corners"
+        "Cameo Sleepers",
+        "Group Naps",
+        "Outdoor Naps"
       ],
-      "whyItBelongs": "Cozy nap floating in a pastel flower meadow. Drifting gently through blossoms, this pink puff looks like it fell asleep to its own lullaby."
+      "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow."
     },
     {
       "apiId": "dp3-55",
