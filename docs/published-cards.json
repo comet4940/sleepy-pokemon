@@ -1299,15 +1299,16 @@
       "priority": "Medium",
       "notes": "Misty's Lapras from Destined Rivals 194/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Orca, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:03:55.441Z",
-      "updatedAt": "2026-09-24T15:48:37.784Z",
+      "updatedAt": "2026-09-24T18:25:00.000Z",
       "sleepinessBasis": "Cozy nap",
       "sleepLocation": "Another Pokemon",
       "sleepiness": "4 — Fully out",
       "moods": [
         "Outdoor Naps",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Sleepy Trainers"
       ],
-      "whyItBelongs": "Cozy nap on Lapras's shell. Young Misty fast asleep while her Lapras gently navigates calm turquoise waters makes for an exquisite character moment."
+      "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together."
     },
     {
       "apiId": "me1-136",
@@ -3127,15 +3128,16 @@
       "priority": "High",
       "notes": "Poppy from Obsidian Flames 227/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Ryota Murayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:45.008Z",
-      "updatedAt": "2026-09-24T15:48:48.517Z",
+      "updatedAt": "2026-09-24T18:15:00.000Z",
       "sleepinessBasis": "Cozy nap",
       "sleepLocation": "Another Pokemon",
       "sleepiness": "4 — Fully out",
       "moods": [
         "Tiny Tuck-Ins",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Sleepy Trainers"
       ],
-      "whyItBelongs": "Cozy nap leaning against her giant Copperajah. The tiniest Elite Four member completely tuckered out after battle."
+      "whyItBelongs": "Completely tuckered out, Poppy has fallen fast asleep against her enormous Copperajah, using the Steel-type giant like the world’s coziest living pillow. Her tiny curled-up pose against Copperajah’s massive frame makes the size contrast ridiculously sweet — one of Paldea’s smallest Elite Four members tucked safely into a very big nap spot."
     },
     {
       "apiId": "sv1-250",
@@ -3162,15 +3164,15 @@
       "priority": "High",
       "notes": "Jacq from Scarlet & Violet 250/198 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Oswaldo KATO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:29.947Z",
-      "updatedAt": "2026-09-23T15:26:45.259Z",
+      "updatedAt": "2026-09-24T17:55:00.000Z",
       "sleepinessBasis": "Accidental nap",
-      "sleepLocation": "Bed",
+      "sleepLocation": "Desk",
       "sleepiness": "4 — Fully out",
       "moods": [
         "Cozy Corners",
-        "Sleepover Club"
+        "Sleepy Trainers"
       ],
-      "whyItBelongs": "Accidental nap over biology research. Jacq passed out across textbooks with his Gulpin snoozing right alongside his head."
+      "whyItBelongs": "Research won. Jacq has fallen completely asleep at his desk, glasses still on, surrounded by books, loose papers, and the remnants of a long study session. Oswaldo KATO’s warm daylight and wonderfully cluttered workspace make this feel like the inevitable ending to an afternoon spent getting a little too absorbed in Pokémon biology."
     },
     {
       "apiId": "sv5-209",
@@ -3197,15 +3199,16 @@
       "priority": "High",
       "notes": "Bianca's Devotion from Temporal Forces 209/162 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Special Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Cona Nitanda, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T01:02:17.565Z",
-      "updatedAt": "2026-09-23T15:26:46.124Z",
+      "updatedAt": "2026-09-24T18:05:00.000Z",
       "sleepinessBasis": "Group nap",
-      "sleepLocation": "Bed",
+      "sleepLocation": "Couch",
       "sleepiness": "4 — Fully out",
       "moods": [
+        "Sleepy Trainers",
         "Sleepover Club",
         "Cozy Corners"
       ],
-      "whyItBelongs": "Group nap wrapped in sunset light. Bianca dozing peacefully with her psychic companions makes for a breathtaking SAR showpiece."
+      "whyItBelongs": "Group nap wrapped in warm, dreamy light. Bianca has dozed off on the couch with her signature Musharna snoozing alongside her, turning an ordinary afternoon crash into a beautifully soft little moment of companionship."
     },
     {
       "apiId": "swsh9-162",
@@ -4005,15 +4008,17 @@
       "priority": "High",
       "notes": "Pikachu from Lost Origin Trainer Gallery TG05/TG30 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Trainer Gallery Rare Holo, it connects nicely with the characterful, scene-driven side of modern Pokemon card collecting. The card is illustrated by Atsushi Furusawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
       "createdAt": "2026-05-05T00:50:51.196Z",
-      "updatedAt": "2026-09-21T17:03:29.300Z",
+      "updatedAt": "2026-09-24T18:35:00.000Z",
       "sleepinessBasis": "Group nap",
-      "sleepLocation": "Bed",
+      "sleepLocation": "Under a tree / outdoors",
       "sleepiness": "4 — Fully out",
       "moods": [
-        "Cozy Corners",
-        "Sleepover Club"
+        "Sleepy Trainers",
+        "Sleepover Club",
+        "Outdoor Naps",
+        "Cozy Corners"
       ],
-      "whyItBelongs": "Group nap with champion Red. Pikachu curled asleep on Red's chest is the ultimate nostalgic trainer bond."
+      "whyItBelongs": "Adventure can wait. Akari has curled up beneath a tree for a well-earned nap with Pikachu tucked into her arms, and somehow Pikachu has managed to wriggle half-free without waking either of them. Atsushi Furusawa turns a quiet break in Hisui into an incredibly sweet little snapshot of how comfortable these two are together."
     },
     {
       "apiId": "sv2-227",
