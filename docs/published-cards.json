@@ -3583,17 +3583,16 @@
       "priceUpdatedAt": "2026/09/23",
       "setReleaseDate": "2025/03/28",
       "priority": "High",
-      "notes": "Furret from Journey Together 168/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by REND, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "notes": "Furret from Journey Together 168/159 is included for its half-awake, just-woke-up-or-might-fall-back-asleep expression and warm, cozy REND illustration.",
       "createdAt": "2026-05-05T00:54:50.453Z",
-      "updatedAt": "2026-09-23T15:26:48.156Z",
-      "sleepinessBasis": "Cozy nap",
-      "sleepLocation": "Bed",
-      "sleepiness": "4 — Fully out",
+      "updatedAt": "2026-09-23T00:00:00.000Z",
+      "sleepinessBasis": "Heavy-Lidded",
+      "sleepLocation": "Outdoors",
+      "sleepiness": "2 — Drowsy",
       "moods": [
-        "Cozy Corners",
-        "Tiny Tuck-Ins"
+        "Cozy Corners"
       ],
-      "whyItBelongs": "Cozy nap coiled in a blanket basket. REND paints the long boy coiled up like a giant fluffy pastry in a cozy wooden box."
+      "whyItBelongs": "Furret is awake… technically. One glossy eye remains open while the other is squeezed shut, a paw resting against its cheek in a very familiar just-woke-up-or-might-fall-back-asleep pose. REND’s warm golden glow completes the picture: maximum cozy, minimum urgency."
     },
     {
       "apiId": "sm10-147",
