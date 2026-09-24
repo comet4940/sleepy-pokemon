@@ -368,6 +368,7 @@ let suggestionLookupRequestId = 0;
 let suggestionSelectionRequestId = 0;
 let suggestionSelectionPromise = null;
 let suggestionFormSessionId = 0;
+const suggestionCardDetailsCache = new Map();
 
 function handleSuggestionSearch() {
   const query = elements.suggestionCardSearch.value.trim();
@@ -400,7 +401,7 @@ async function searchSuggestionCards(query, requestId) {
     const cards = await response.json();
     if (requestId !== suggestionLookupRequestId) return;
     elements.suggestionSearchStatus.textContent = cards.length ? "Choose the card you spotted." : "No cards found yet. Try a Pokemon name or collector number.";
-    renderSuggestionResults(cards);
+    renderSuggestionResults(cards, requestId);
     trackEvent("suggestion_lookup_completed", {
       lookup_type: lookupType,
       lookup_outcome: cards.length ? "matches" : "no_matches",
@@ -426,9 +427,63 @@ function getSuggestionLookupType(query) {
   return "name";
 }
 
-function renderSuggestionResults(cards) {
-  elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span>Card ${escapeHtml(card.localId || card.number || "number unavailable")}</span></button>`).join("");
+function renderSuggestionResults(cards, requestId) {
+  elements.suggestionResults.innerHTML = cards.map((card, index) => `<button type="button" class="suggestion-result" data-suggestion-card-index="${index}"><strong>${escapeHtml(card.name)}</strong><span data-suggestion-card-meta>${escapeHtml(formatSuggestionCardLabel(card))}</span></button>`).join("");
   elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]").forEach((button, index) => button.addEventListener("click", () => selectSuggestionCard(cards[index])));
+
+  Promise.all(cards.map(fetchSuggestionCardDetails)).then((detailedCards) => {
+    if (requestId !== suggestionLookupRequestId) return;
+    const buttons = elements.suggestionResults.querySelectorAll("[data-suggestion-card-index]");
+    detailedCards.forEach((card, index) => {
+      cards[index] = card;
+      const label = buttons[index]?.querySelector("[data-suggestion-card-meta]");
+      if (label) label.textContent = formatSuggestionCardLabel(card);
+    });
+  });
+}
+
+function fetchSuggestionCardDetails(card) {
+  if (!card.id || card.set) return Promise.resolve(card);
+  if (!suggestionCardDetailsCache.has(card.id)) {
+    const request = fetch(`${TCGDEX_API}/${encodeURIComponent(card.id)}`, { mode: "cors" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Card details unavailable");
+        return response.json();
+      })
+      .then((details) => {
+        if (details?.set) return details;
+        suggestionCardDetailsCache.delete(card.id);
+        return card;
+      })
+      .catch(() => {
+        suggestionCardDetailsCache.delete(card.id);
+        return card;
+      });
+    suggestionCardDetailsCache.set(card.id, request);
+  }
+  return suggestionCardDetailsCache.get(card.id);
+}
+
+function formatSuggestionCardLabel(card) {
+  return `${getSuggestionSetName(card)} · ${formatSuggestionCollectorNumber(card)}`;
+}
+
+function getSuggestionSetName(card) {
+  const localId = String(card.localId || card.number || "").trim();
+  const fallbackSetId = card.id && localId && card.id.endsWith(`-${localId}`)
+    ? card.id.slice(0, -(localId.length + 1))
+    : card.id;
+  return card.setName || card.set?.name || fallbackSetId || "Set unavailable";
+}
+
+function formatSuggestionCollectorNumber(card) {
+  const localId = String(card.localId || card.number || "").trim();
+  if (!localId) return "number unavailable";
+  if (localId.includes("/")) return localId;
+  const officialCount = Number(card.set?.cardCount?.official);
+  if (!/^\d+$/.test(localId) || officialCount <= 0) return localId;
+  const total = String(officialCount).padStart(localId.length, "0");
+  return `${localId}/${total}`;
 }
 
 function selectSuggestionCard(card) {
@@ -443,18 +498,10 @@ function selectSuggestionCard(card) {
 }
 
 async function resolveSuggestionCardSelection(card, selectionRequestId) {
-  let selectedCard = card;
-  if (card.id && !card.set) {
-    try {
-      const response = await fetch(`${TCGDEX_API}/${encodeURIComponent(card.id)}`, { mode: "cors" });
-      if (response.ok) selectedCard = await response.json();
-    } catch (error) {
-      console.warn("Could not load full card details", error);
-    }
-  }
+  const selectedCard = await fetchSuggestionCardDetails(card);
   if (selectionRequestId !== suggestionSelectionRequestId) return;
-  const setName = selectedCard.setName || selectedCard.set?.name || "Set unavailable";
-  const number = selectedCard.localId || selectedCard.number || "No number";
+  const setName = getSuggestionSetName(selectedCard);
+  const number = formatSuggestionCollectorNumber(selectedCard);
   const details = `${selectedCard.name} — ${setName} · ${number}`;
   elements.suggestionCard.value = details;
   elements.suggestionSelected.hidden = false;
