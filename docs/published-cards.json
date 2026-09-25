@@ -2087,7 +2087,7 @@
       "apiId": "sm12-211",
       "tcgdexId": "",
       "name": "Vileplume-GX",
-      "pokemon": "Vileplume-",
+      "pokemon": "Vileplume",
       "setName": "Cosmic Eclipse",
       "setSeries": "Sun & Moon",
       "setId": "sm12",
@@ -2108,15 +2108,17 @@
       "priority": "High",
       "notes": "Vileplume-GX from Cosmic Eclipse 211/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Ultra, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Kagemaru Himeno, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T21:32:09.882Z",
-      "updatedAt": "2026-09-23T15:26:29.036Z",
-      "sleepinessBasis": "Cozy nap",
-      "sleepLocation": "Another Pokemon",
+      "updatedAt": "2026-09-25T21:00:59.000Z",
+      "sleepinessBasis": "Group nap",
+      "sleepLocation": "Under a tree",
       "sleepiness": "4 — Fully out",
       "moods": [
-        "Outdoor Naps",
-        "Cozy Corners"
+        "Sleepy Trainers",
+        "Group Nap",
+        "Sleepover Club",
+        "Outdoor Naps"
       ],
-      "whyItBelongs": "Cozy nap draped over giant flower petals. Erika using her beloved Vileplume as an oversized fragrant pillow is full-art romance at its finest."
+      "whyItBelongs": "Erika has dozed off against her Vileplume, and her longtime partner seems to have drifted off right alongside her. It’s especially fitting for a Gym Leader who has been caught snoozing in the games since Kanto: surrounded by flowers and leaning into one of her signature Pokémon, Erika has apparently found yet another place to fall asleep."
     },
     {
       "apiId": "sv3-19",
