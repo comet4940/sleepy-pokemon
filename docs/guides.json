@@ -4,55 +4,71 @@
     "title": "Best Sleepy Pokemon Cards",
     "eyebrow": "Collector guide",
     "description": "A curated shortlist of standout sleepy Pokemon cards, from iconic grails to cozy binder-friendly picks. These are the cards I would start with if I wanted a sleepy Pokemon page that feels beautiful, varied, and fun to collect.",
-    "metaDescription": "A curated guide to the best sleepy Pokemon cards, including standout Snorlax, Dragonite V, Spheal, Rockruff, Mew, and other cozy collector picks.",
+    "metaDescription": "A personal shortlist of sleeping Pokemon cards, from the Dragonite V grail and cozy Pikachu scenes to beloved favorites like Bulbasaur, Snorlax, and Munna.",
     "cards": [
       {
         "slug": "dragonite-v-evolving-skies-192-203",
-        "reason": "The grail pick: expensive, iconic, and instantly recognizable as one of the strongest sleepy Pokemon chase cards."
+        "reason": "Somewhere between sky and nap, Dragonite has become the grail that makes collectors stop scrolling."
       },
       {
-        "slug": "espeon-vmax-fusion-strike-270-264",
-        "reason": "A dreamy high-end card with major collector appeal, perfect for the top row of a serious sleepy binder page."
+        "slug": "munna-black-bolt-116-086",
+        "reason": "Munna drifts beneath a crescent moon while two tiny Pidove sleep along the ledge below, easy to miss in Teeziro’s dreamy pink scene."
+      },
+      {
+        "slug": "pikachu-lost-origin-trainer-gallery-tg05-tg30",
+        "reason": "Adventure can wait: Akari and Pikachu are both out beneath the tree, still curled close together."
       },
       {
         "slug": "tyranitar-v-battle-styles-155-163",
-        "reason": "One of the clearest nap-themed alternate arts, and a natural centerpiece for collectors who like big personality cards."
+        "reason": "After that feast, nobody is getting Tyranitar back up. The empty dishes make the case."
       },
       {
-        "slug": "spheal-surging-sparks-199-191",
-        "reason": "A modern Illustration Rare that feels playful, affordable, and visually soft enough to represent the whole theme."
+        "slug": "dedenne-generations-radiant-collection-rc10-rc32",
+        "reason": "Curled among the folded clothes in an open drawer, Dedenne has found a hiding place that looks softer than any proper bed."
       },
       {
-        "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
-        "reason": "A charming Trainer Gallery card that balances character, coziness, and approachable pricing."
+        "slug": "snorlax-crown-zenith-109-159",
+        "reason": "Asako Ito turns Snorlax into a knitted daydream; even the tiny felt flowers look ready for bed."
       },
       {
-        "slug": "mew-crown-zenith-galarian-gallery-gg10-gg70",
-        "reason": "A beloved Pokemon with a gentle collector-card feel, making it a strong bridge between cute and premium."
-      },
-      {
-        "slug": "dunsparce-crown-zenith-galarian-gallery-gg23-gg70",
-        "reason": "A budget-friendly pick that still has full-art personality, great for making the guide feel attainable."
-      },
-      {
-        "slug": "slakoth-surging-sparks-212-191",
-        "reason": "Slakoth is basically built for the sleepy theme, and this modern card is an easy binder-page anchor."
+        "slug": "pikachu-me-30th-celebration-027-128",
+        "reason": "The attack is called Nap. The knitted Pikachu is asleep. Exhibit A rests."
       },
       {
         "slug": "bulbasaur-151-166-165",
-        "reason": "A fan-favorite Pokemon in a highly collectible set, useful when you want the page to include recognizable classics."
+        "reason": "Yoriyuki Ikegami gives Bulbasaur a quiet patch of morning sunshine, with broad leaves overhead and not a care in sight."
       },
       {
-        "slug": "litten-temporal-forces-167-162",
-        "reason": "A cozy modern Illustration Rare with enough warmth and character to stand out from the bigger chase cards."
-      },
-      {
-        "slug": "snorlax-scarlet-and-violet-black-star-promos-51-215",
-        "reason": "No sleepy Pokemon guide feels complete without Snorlax, and this promo gives the theme an accessible anchor."
+        "slug": "mesprit-surging-sparks-204-191",
+        "reason": "Even a guardian of emotion needs a quiet minute above Lake Verity. This one feels suspended in a dream."
       },
       {
         "slug": "raichu-paldea-evolved-211-193",
-        "reason": "A premium modern Illustration Rare that adds color, popularity, and collector value to the shortlist."
+        "reason": "Raichu is fast asleep on a bed, paws tucked in and eyes closed while sunlight spills across the room. Toshinao Aoki gives this bedroom nap a wonderfully peaceful feel."
+      },
+      {
+        "slug": "drowzee-scarlet-and-violet-210-198",
+        "reason": "A little dream logic, a lot of Komiya character. Drowzee makes the sleepy shortlist feel delightfully odd."
+      },
+      {
+        "slug": "oshawott-white-flare-105-86",
+        "reason": "Oshawott has nodded off in a striped hammock above the ocean, with bright beach flowers framing the gentle sway. OKACHEKE makes this seaside nap look like an ideal afternoon."
+      },
+      {
+        "slug": "snorlax-wizards-black-star-promos-49",
+        "reason": "The old-school blueprint: enormous Snorlax, Eevee along for the ride, and comic-book Zs. Still perfect."
+      },
+      {
+        "slug": "zorua-shrouded-fable-75-64",
+        "reason": "Look between the garden stones: the little trickster has dropped the illusion and gone still."
+      },
+      {
+        "slug": "pawmi-paldean-fates-226-91",
+        "reason": "One bright pink Pawmi stays awake among its sleeping companions, who are tucked into and piled across a hollow log. REND turns their group nap into a sunlit woodland hideaway."
+      },
+      {
+        "slug": "larvesta-surging-sparks-196-191",
+        "reason": "Larvesta is sprawled on a cushioned pet bed, completely at ease as a beam of window light crosses the room. Whisker’s quiet indoor scene makes the little fire moth look especially cozy."
       }
     ]
   },
