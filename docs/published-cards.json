@@ -1102,10 +1102,10 @@
       "tcgdexId": "",
       "name": "Growlithe",
       "pokemon": "Growlithe",
-      "setName": "Legendary Treasures",
+      "setName": "Legendary Treasures Radiant Collection",
       "setSeries": "Black & White",
       "setId": "bw11",
-      "number": "RC4/RC113",
+      "number": "RC4/RC25",
       "rarity": "Uncommon",
       "language": "English",
       "artist": "Sanosuke Sakuma",
@@ -1120,17 +1120,18 @@
       "priceUpdatedAt": "2026/09/24",
       "setReleaseDate": "2013/11/06",
       "priority": "Medium",
-      "notes": "Growlithe from Legendary Treasures RC4/RC113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
+      "notes": "Growlithe from Legendary Treasures Radiant Collection RC4/RC25 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:07:51.321Z",
-      "updatedAt": "2026-09-24T15:48:24.792Z",
+      "updatedAt": "2026-09-25T01:35:00.000Z",
       "sleepinessBasis": "Cozy nap",
       "sleepLocation": "Bed",
-      "sleepiness": "4 — Fully out",
+      "sleepiness": "3 — Convincing nap",
       "moods": [
+        "Sleepover Club",
         "Cozy Corners",
-        "Deep Sleepers"
+        "Group Nap"
       ],
-      "whyItBelongs": "Cozy nap in an afternoon sunbeam. Radiant warmth and pure puppy bliss from the iconic Radiant Collection subset."
+      "whyItBelongs": "Two sleepy Growlithe have piled together into a nest of soft pink blankets, one already fast asleep while the other lets out what looks like an enormous yawn with a paw draped over its companion. Sanosuke Sakuma turns puppy nap time into pure Radiant Collection sweetness — and an attack literally called Rest makes the sleepy theme impossible to miss."
     },
     {
       "apiId": "xy7-55",
