@@ -2,8 +2,29 @@ const SLEEPY_ANALYTICS_ID = "G-3HFVE8BEZH";
 const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
 
 (function initSleepyAnalytics() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlOptOut = urlParams.get("optout") === "1" || urlParams.get("analytics_optout") === "1";
+  const urlOptIn = urlParams.get("optout") === "0" || urlParams.get("analytics_optout") === "0";
+
+  if (urlOptOut) {
+    try { window.localStorage.setItem("sleepy_analytics_optout", "1"); } catch (_) {}
+    console.info("[Sleepy Analytics] Developer opt-out ENABLED. Tracking is disabled for this browser.");
+  } else if (urlOptIn) {
+    try { window.localStorage.removeItem("sleepy_analytics_optout"); } catch (_) {}
+    console.info("[Sleepy Analytics] Developer opt-out DISABLED. Tracking re-enabled.");
+  }
+
+  let storedOptOut = false;
+  try { storedOptOut = window.localStorage.getItem("sleepy_analytics_optout") === "1"; } catch (_) {}
+
+  const isOptedOut = urlOptOut || (!urlOptIn && storedOptOut);
+  if (isOptedOut) {
+    console.info("[Sleepy Analytics] Tracking skipped (browser is opted out).");
+    return;
+  }
+
   const productionHosts = new Set(["sleepypokemon.com", "www.sleepypokemon.com"]);
-  const debugRequested = new URLSearchParams(window.location.search).has("analytics_debug");
+  const debugRequested = urlParams.has("analytics_debug");
   if (debugRequested) window.sessionStorage.setItem("sleepy_analytics_debug", "1");
   const debugMode = debugRequested || window.sessionStorage.getItem("sleepy_analytics_debug") === "1";
   if (!SLEEPY_ANALYTICS_ID || window.location.protocol === "file:" || (!productionHosts.has(window.location.hostname) && !debugMode)) return;
