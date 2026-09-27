@@ -187,15 +187,15 @@ a { color: inherit; }
 .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
 #latestGrid { grid-auto-rows: 1fr; align-items: stretch; }
 #latestGrid .card-tile { align-self: stretch; min-width: 0; }
-.card-tile { overflow: visible; padding: 10px; border: 1px solid rgba(169,147,255,.2); border-radius: 18px; background: #191927; box-shadow: none; }
+.card-tile { display: flex; flex-direction: column; overflow: visible; padding: 10px; border: 1px solid rgba(169,147,255,.2); border-radius: 18px; background: #191927; box-shadow: none; }
 .card-tile:hover, .card-tile:focus-visible { border-color: var(--pink); background: #211e35; box-shadow: 0 20px 40px rgba(0,0,0,.22); transform: translateY(-4px); }
 .card-tile:nth-child(7)::before { content: "⌁"; position: absolute; z-index: 2; top: -12px; right: 16px; color: var(--pink); font-size: 2.4rem; line-height: 1; transform: rotate(8deg); }
 .card-tile:nth-child(13)::before { content: "☾"; position: absolute; z-index: 2; top: -10px; left: 14px; color: var(--mint); font-size: 2rem; line-height: 1; transform: rotate(-14deg); }
 .card-image-frame { min-width: 0; min-height: 0; overflow: hidden; padding: 20px; border-radius: 12px; background: #1b2940; aspect-ratio: 3 / 4; }
 .card-image-frame img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
-.card-body { padding: 17px 6px 8px; }
+.card-body { display: flex; flex: 1 1 auto; flex-direction: column; gap: 12px; padding: 14px 6px; }
 .card-title-row h3 { color: var(--cream); font-size: 1.2rem; font-weight: 500; }
-.card-subtitle { color: var(--muted-cream); font-size: .88rem; }
+.card-subtitle { color: var(--muted-cream); font-size: .88rem; line-height: 1.35; }
 #latestGrid .card-subtitle { display: -webkit-box; min-height: calc(2 * 1.35em); overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .card-body .price-pill { display: none; }
 .starter-banner { display: flex; align-items: center; gap: 22px; margin: 0; padding: 34px clamp(28px, 9vw, 150px); border-top: 1px solid rgba(169,147,255,.25); border-bottom: 1px solid rgba(169,147,255,.25); background: #1d1b36; }
@@ -261,10 +261,10 @@ a { color: inherit; }
   #latestGrid { display: flex; grid-template-columns: none; grid-template-rows: none; align-items: stretch; gap: 14px; overflow-x: auto; padding: 8px 8px 14px; margin: -8px -8px 0; scroll-padding-inline: 8px; scrollbar-width: thin; }
   #latestGrid .card-tile { flex: 0 0 min(72vw, 240px); }
   #latestGrid .card-tile { align-self: stretch; }
-  .card-tile { display: flex; flex-direction: column; flex: 0 0 auto; min-height: 0; height: auto; min-width: 0; overflow: visible; padding: 7px; border-radius: 13px; }
+  .card-tile { flex: 0 0 auto; min-height: 0; height: auto; min-width: 0; padding: 7px; border-radius: 13px; }
   .card-image-frame { width: 100%; min-width: 0; overflow: hidden; padding: 9px; border-radius: 9px; }
   .card-image-frame img { width: 100%; height: 100%; min-width: 0; max-width: 100%; object-fit: contain; }
-  .card-body { flex: 1 1 auto; width: 100%; min-width: 0; padding: 12px 3px 5px; }
+  .card-body { width: 100%; min-width: 0; padding: 14px 6px; }
   .card-title-row h3 { font-size: .98rem; }
   .card-subtitle { font-size: .75rem; }
   .starter-banner { align-items: flex-start; padding: 22px 24px; }
