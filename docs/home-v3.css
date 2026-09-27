@@ -185,8 +185,8 @@ a { color: inherit; }
   .homepage-suggestion h2 { max-width: none; white-space: nowrap; font-size: clamp(1.45rem, 2vw, 1.8rem); }
 }
 .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
-#latestGrid { grid-auto-rows: 1fr; align-items: stretch; }
-#latestGrid .card-tile { align-self: stretch; min-width: 0; }
+#latestGrid { align-items: stretch; }
+#latestGrid .card-tile { align-self: stretch; min-width: 0; min-height: 0; }
 .card-tile { display: flex; flex-direction: column; overflow: visible; padding: 10px; border: 1px solid rgba(169,147,255,.2); border-radius: 18px; background: #191927; box-shadow: none; }
 .card-tile:hover, .card-tile:focus-visible { border-color: var(--pink); background: #211e35; box-shadow: 0 20px 40px rgba(0,0,0,.22); transform: translateY(-4px); }
 .card-tile:nth-child(7)::before { content: "⌁"; position: absolute; z-index: 2; top: -12px; right: 16px; color: var(--pink); font-size: 2.4rem; line-height: 1; transform: rotate(8deg); }
