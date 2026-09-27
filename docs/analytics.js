@@ -3,16 +3,21 @@ const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
 
 (function initSleepyAnalytics() {
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("optout") === "1" || urlParams.get("analytics_optout") === "1") {
+  const urlOptOut = urlParams.get("optout") === "1" || urlParams.get("analytics_optout") === "1";
+  const urlOptIn = urlParams.get("optout") === "0" || urlParams.get("analytics_optout") === "0";
+
+  if (urlOptOut) {
     try { window.localStorage.setItem("sleepy_analytics_optout", "1"); } catch (_) {}
     console.info("[Sleepy Analytics] Developer opt-out ENABLED. Tracking is disabled for this browser.");
-  } else if (urlParams.get("optout") === "0" || urlParams.get("analytics_optout") === "0") {
+  } else if (urlOptIn) {
     try { window.localStorage.removeItem("sleepy_analytics_optout"); } catch (_) {}
     console.info("[Sleepy Analytics] Developer opt-out DISABLED. Tracking re-enabled.");
   }
 
-  let isOptedOut = false;
-  try { isOptedOut = window.localStorage.getItem("sleepy_analytics_optout") === "1"; } catch (_) {}
+  let storedOptOut = false;
+  try { storedOptOut = window.localStorage.getItem("sleepy_analytics_optout") === "1"; } catch (_) {}
+
+  const isOptedOut = urlOptOut || (!urlOptIn && storedOptOut);
   if (isOptedOut) {
     console.info("[Sleepy Analytics] Tracking skipped (browser is opted out).");
     return;
