@@ -1976,8 +1976,8 @@
       "rarity": "Secret Rare",
       "language": "Chinese",
       "artist": "Hyogonosuke",
-      "imageSmall": "https://storage.googleapis.com/images.pricecharting.com/7cxecj2vxwlcva5m/1600.jpg",
-      "imageLarge": "https://storage.googleapis.com/images.pricecharting.com/7cxecj2vxwlcva5m/1600.jpg",
+      "imageSmall": "https://img.simplifiedtcg.com/cards/zh/13853.webp",
+      "imageLarge": "https://img.simplifiedtcg.com/cards/zh/13853.webp",
       "priceMarket": null,
       "priceLow": null,
       "priceMid": null,
@@ -1992,12 +1992,12 @@
       "updatedAt": "2026-05-05T22:44:16.358Z",
       "sleepinessBasis": "Cozy nap",
       "sleepLocation": "Literally wherever",
-      "sleepiness": "4 — Fully out",
+      "sleepiness": "3 — Convincing nap",
       "moods": [
         "Cozy Corners",
-        "Deep Sleepers"
+        "Outdoor Naps"
       ],
-      "whyItBelongs": "Cozy nap under the golden moon. Hyogonosuke's iconic silhouette of Umbreon curled on ceramic roof tiles is a holy-grail illustration."
+      "whyItBelongs": "Umbreon found a sunlit patch of forest and curled up for a cozy nap, with one eye still peeking at the world. Those golden rays and soft greenery make this an outdoor snooze with just a little watchfulness left."
     },
     {
       "apiId": "neo4-26",
