@@ -45,8 +45,22 @@ for (const path of htmlFiles) {
   if (!/data-analytics-event="navigation_clicked"[^>]+data-analytics-source="global_header"/.test(html)) {
     errors.push(`${label}: shared header navigation tracking is missing`);
   }
-  if (!/data-analytics-event="studio_link_clicked"/.test(html) || !/data-analytics-event="coffee_clicked"/.test(html)) {
-    errors.push(`${label}: shared footer tracking is incomplete`);
+  const footer = html.match(/<!-- SITE_FOOTER_START -->([\s\S]*?)<!-- SITE_FOOTER_END -->/)?.[1];
+  if (!footer) {
+    errors.push(`${label}: shared footer is missing`);
+  } else {
+    if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
+      errors.push(`${label}: shared footer studio-link tracking is missing`);
+    }
+    if (!/data-name="BMC-Widget"/.test(footer) || !/data-id="cometakira"/.test(footer) || !/data-color="#F36B9B"/.test(footer)) {
+      errors.push(`${label}: Buy Me a Coffee widget is missing or off-brand`);
+    }
+    if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
+      errors.push(`${label}: fan-made copyright disclaimer is missing`);
+    }
+    if (/class="footer-coffee"/.test(footer)) {
+      errors.push(`${label}: legacy footer coffee link remains`);
+    }
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
 }
