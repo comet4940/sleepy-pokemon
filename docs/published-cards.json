@@ -1117,7 +1117,8 @@
       "moods": [
         "Sleepover Club",
         "Cozy Corners",
-        "Deep Sleepers"
+        "Deep Sleepers",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub."
     },
@@ -1925,7 +1926,8 @@
       "sleepiness": "4 — Fully out",
       "moods": [
         "Tiny Tuck-Ins",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Cozy nap wrapped in motherly leaves. Leavanny cradling a sound asleep Sewaddle swaddled in custom foliage is pure tenderness."
     },
@@ -2102,9 +2104,10 @@
       "moods": [
         "Tiny Tuck-Ins",
         "Blink-and-you'll-miss-it",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Cameo Sleepers"
       ],
-      "whyItBelongs": "Cozy nap nestled atop Yamper's forehead. Look closely at the fluffy dog to spot the tiniest electric tick finding its ultimate charging spot."
+      "whyItBelongs": "Joltik is wide awake on Yamper’s head, while the big dog has nodded off below. The real sleepy cameo is the one you might miss at first glance."
     },
     {
       "apiId": "xy8-18",
@@ -2912,7 +2915,8 @@
       "sleepiness": "4 — Fully out",
       "moods": [
         "Blink-and-you'll-miss-it",
-        "Tiny Tuck-Ins"
+        "Tiny Tuck-Ins",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Cozy nap nestled between giant thunder ears. Look closely atop Zeraora’s forehead to spot a tiny Pachirisu fast asleep amidst raging electricity."
     },
@@ -4702,7 +4706,8 @@
       "sleepLocation": "Literally wherever",
       "sleepiness": "5 — Medically unavailable",
       "moods": [
-        "Deep Sleepers"
+        "Deep Sleepers",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon."
     },
@@ -5372,7 +5377,8 @@
       "sleepiness": "3 — Convincing nap",
       "moods": [
         "Outdoor Naps",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends."
     },
@@ -5438,7 +5444,8 @@
       "moods": [
         "Sleepover Club",
         "Tiny Tuck-Ins",
-        "Cozy Corners"
+        "Cozy Corners",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Group nap tucked into a pastel canopy bed. Pikachu and Eevee fast asleep under a floral quilt while Munna watches over their dreams make this budget common an absolute masterpiece of cozy cameos.",
       "createdAt": "2026-09-20T00:00:00.000Z",
@@ -5583,7 +5590,8 @@
         "Dream Sequence",
         "Outdoor Naps",
         "Blink-and-you'll-miss-it",
-        "Tiny Tuck-Ins"
+        "Tiny Tuck-Ins",
+        "Cameo Sleepers"
       ],
       "whyItBelongs": "Munna floats through a dreamy pink twilight under a crescent moon, radiating sweet dreams with its 'Rest' attack. Down in the foreground, two little Pidoves are cuddled together on the ledge, sound asleep with eyes softly shut. A quiet, poetic Unova bedtime scene.",
       "createdAt": "2026-09-21T00:00:00.000Z",

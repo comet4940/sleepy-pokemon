@@ -124,5 +124,58 @@
       { "slug": "umbreon-gem-pack-volume-2-06-15-15", "reason": "A second sleepy Umbreon strengthens the case. We remain open-minded when the evidence is this cozy." },
       { "slug": "eevee-scarlet-and-violet-promos-173-150", "reason": "Eevee is famously a little cat, dog, and fox at once. That is more than enough cat for this collection." }
     ]
+  },
+  {
+    "slug": "sleepy-pokemon-cameos",
+    "title": "Sleepy Pokemon Cameos",
+    "eyebrow": "Cameo field notes",
+    "description": "Sometimes the featured Pokemon is wide awake, but another sleeper quietly steals the scene. These cameos reward a closer look, and this growing shelf is here to help you spot them.",
+    "metaDescription": "Find sleeping Pokemon cameos in card art, from Pidove and Teddiursa to Sewaddle, Joltik, Pachirisu, Psyduck, and more.",
+    "cards": [
+      {
+        "slug": "munna-black-bolt-116-086",
+        "reason": "Munna drifts beneath a crescent moon while two tiny Pidove sleep along the ledge below, easy to miss in Teeziro’s dreamy pink scene."
+      },
+      {
+        "slug": "munna-unified-minds-88-236",
+        "reason": "Munna keeps watch from a pastel canopy bed while Pikachu and Eevee snooze beneath the floral quilt. The sweetest little bedroom cameos."
+      },
+      {
+        "slug": "lapras-me-30th-celebration-131-128",
+        "reason": "Lapras drifts through a sunny lagoon, with Psyduck and its companions bringing a sleepy little cameo to the scene."
+      },
+      {
+        "slug": "snorlax-wizards-black-star-promos-49",
+        "reason": "Snorlax is out cold under a comic-strip cloud of Zs, with Eevee tucked into the vintage snooze scene too."
+      },
+      {
+        "slug": "ursaring-legendary-treasures-rc16-rc113",
+        "reason": "Ursaring has become a giant forest mattress for its sleeping cub, Teddiursa. Protective parent, perfect pillow."
+      },
+      {
+        "slug": "joltik-paradox-rift-196-182",
+        "reason": "Joltik is wide awake on Yamper’s head, while the big dog has nodded off below. The real sleepy cameo is the one you might miss at first glance."
+      },
+      {
+        "slug": "leavanny-white-flare-89-86",
+        "reason": "Leavanny has tucked a sound-asleep Sewaddle into a swaddle of leaves. This leafy little nursery is all tenderness."
+      },
+      {
+        "slug": "zeraora-vmax-crown-zenith-galarian-gallery-gg42-gg70",
+        "reason": "Pachirisu is snoozing on Zeraora’s forehead while the electric powerhouse stays right in the middle of all that thunder."
+      },
+      {
+        "slug": "pikachu-collect-151-hope-171-151",
+        "reason": "Pikachu is having a perfectly nice day, but Psyduck has found a quiet spot by the water and is fully asleep. The little background nap is easy to miss on a first look."
+      },
+      {
+        "slug": "chansey-twilight-masquerade-187-167",
+        "reason": "Chansey is busy at the Pokemon Center while Snorlax has nodded off on the tiled floor. The whole room carries on around this absolutely unbothered snoozer."
+      },
+      {
+        "slug": "wigglytuff-unbroken-bonds-135-214",
+        "reason": "Wigglytuff is wide awake in the sunny meadow, but the two Jigglypuff beside it are out cold. The supporting cast has made this a group nap, with Wigglytuff on pillow duty."
+      }
+    ]
   }
 ]
