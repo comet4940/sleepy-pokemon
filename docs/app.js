@@ -995,7 +995,7 @@ function compareCards(a, b) {
 
 function renderCard(card) {
   return `
-    <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
+    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
@@ -1014,24 +1014,28 @@ function handleCardGridKeydown(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
   event.preventDefault();
-  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  const card = findCardByIdentity(tile.dataset.cardId);
   if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleCardGridClick(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
-  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  const card = findCardByIdentity(tile.dataset.cardId);
   if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleGuideCardClick(event) {
   const link = event.target.closest(".guide-card a[data-card-id]");
   if (!link) return;
-  const card = state.cards.find((item) => getCardIdentity(item) === link.dataset.cardId);
+  const card = findCardByIdentity(link.dataset.cardId);
   if (!card) return;
   event.preventDefault();
   openCardDetail(card, "guide_page");
+}
+
+function findCardByIdentity(cardId) {
+  return state.cards.find((item) => item.catalogIdentity === cardId);
 }
 
 function getCardDiscoverySource(tile) {
@@ -1278,7 +1282,7 @@ function isGuidePage() {
 
 function getGuideCardSelection() {
   const cardByIdentity = new Map(
-    state.cards.map((card) => [card.catalogIdentity || getCardIdentity(card), card])
+    state.cards.map((card) => [card.catalogIdentity, card])
   );
   const cardElements = [...(elements.guideCardList?.querySelectorAll(".guide-card") || [])];
   const cards = cardElements.map((cardElement) => {
