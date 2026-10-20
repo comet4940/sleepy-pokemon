@@ -199,6 +199,10 @@
   font-weight: 700;
 }
 
+.curation-note p {
+  margin: 10px 0 0;
+}
+
 .detail-guide-links:empty {
   display: none;
 }

@@ -861,9 +861,23 @@ function renderActiveFilterControls() {
 }
 
 function getRecentlyAddedCards() {
-  return [...state.cards]
-    .sort((a, b) => compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b)))
-    .slice(0, 4);
+  const sortedCards = [...state.cards]
+    .sort((a, b) => compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b)));
+  const uniquePokemon = [];
+  const repeats = [];
+  const seenPokemon = new Set();
+
+  sortedCards.forEach((card) => {
+    const pokemon = String(card.pokemon || card.name || "").trim().toLowerCase();
+    if (!pokemon || !seenPokemon.has(pokemon)) {
+      uniquePokemon.push(card);
+      if (pokemon) seenPokemon.add(pokemon);
+    } else {
+      repeats.push(card);
+    }
+  });
+
+  return [...uniquePokemon, ...repeats].slice(0, 4);
 }
 
 function updateCollectionHeading(resultCount) {
@@ -1019,7 +1033,7 @@ function openCardDetail(card, interactionSource = "unknown") {
     : `<span class="detail-no-price">No current market price</span>`;
   const whyItBelongs = card.whyItBelongs || card.notes;
   elements.detailCurationNote.innerHTML = whyItBelongs
-    ? `<strong>Why it belongs.</strong> ${escapeHtml(whyItBelongs)}`
+    ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
     : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
   if (elements.detailGuideLinks) {
     elements.detailGuideLinks.innerHTML = renderGuideMemberships(card);
@@ -1365,6 +1379,14 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function renderCurationNoteBody(value) {
+  const paragraphs = String(value).split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean);
+  if (paragraphs.length < 2) {
+    return ` ${escapeHtml(paragraphs[0] || "")}`;
+  }
+  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
 }
 
 function escapeAttribute(value) {

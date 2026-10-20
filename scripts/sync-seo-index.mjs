@@ -205,7 +205,7 @@ function renderCardPage(card, memberships) {
                 : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
             </div>
             <div class="curation-note">
-              <strong>Why it belongs.</strong> ${escapeHtml(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
+              <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
             </div>
 ${renderGuideMemberships(card, memberships)}${renderCurationFacts(card)}
 ${renderMoods(card)}
@@ -393,6 +393,14 @@ function escapeHtml(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function renderCurationNoteBody(value) {
+  const paragraphs = String(value).split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean);
+  if (paragraphs.length < 2) {
+    return ` ${escapeHtml(paragraphs[0] || "")}`;
+  }
+  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
 }
 
 function escapeAttribute(value) {
