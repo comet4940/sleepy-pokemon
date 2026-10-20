@@ -29,6 +29,7 @@ const requiredAppEvents = [
   "suggestion_card_removed",
   "suggestion_submitted",
   "suggestion_submit_failed",
+  "checklist_downloaded",
 ];
 
 const htmlFiles = (await walk(DOCS_DIR)).filter((path) => path.endsWith(".html"));
@@ -63,6 +64,9 @@ for (const path of htmlFiles) {
     }
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
+  if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
+    errors.push(`${label}: guide checklist download control is missing`);
+  }
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
@@ -77,6 +81,15 @@ for (const eventName of requiredAppEvents) {
   if (!appSource.includes(`"${eventName}"`)) errors.push(`missing app event: ${eventName}`);
 }
 if (!analyticsSource.includes('"search_submitted"')) errors.push("missing global search submission event");
+for (const scope of ["full_collection", "search_results", "filtered_collection", "guide"]) {
+  if (!appSource.includes(`"${scope}"`)) errors.push(`missing checklist analytics scope: ${scope}`);
+}
+if (!appSource.includes("download_surface: guidePage ? \"guide_page\" : \"collection\"")) {
+  errors.push("checklist downloads are missing their analytics surface");
+}
+if (!appSource.includes("guide_slug: guidePage ? document.body.dataset.guideSlug : undefined")) {
+  errors.push("guide checklist downloads are missing guide attribution");
+}
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 

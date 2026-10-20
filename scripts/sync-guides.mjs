@@ -154,7 +154,7 @@ function renderGuidesIndex(guideList) {
     <script defer src="../analytics.js?v=2" data-page-type="guides-index"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="stylesheet" href="../home-v3.css?v=10" />
-    <link rel="stylesheet" href="../guides.css?v=1" />
+    <link rel="stylesheet" href="../guides.css?v=2" />
   </head>
   <body data-app-mode="guides-index">
     <div class="app-shell guides-shell">
@@ -244,10 +244,10 @@ function renderGuidePage(guide) {
     <script defer src="../../analytics.js?v=2" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
     <link rel="stylesheet" href="../../home-v3.css?v=10" />
-    <link rel="stylesheet" href="../../guides.css?v=1" />
+    <link rel="stylesheet" href="../../guides.css?v=2" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
-  <body data-app-mode="guide-page" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
+  <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
       ${renderSiteHeader("../../")}
 
@@ -258,6 +258,9 @@ function renderGuidePage(guide) {
             <p class="eyebrow">${escapeHtml(guide.eyebrow || "Collector guide")} · ${guide.cards.length} cards</p>
             <h1 id="guideTitle">${escapeHtml(title)}</h1>
             <p>${escapeHtml(guide.description || description)}</p>
+            <div class="guide-actions">
+              <button class="button subtle" id="downloadChecklistButton" type="button" disabled>Download checklist (${guide.cards.length})</button>
+            </div>
           </div>
           <div class="guide-hero-stack" aria-hidden="true">
 ${guide.cards.slice(0, 3).map(({ card }, index) => {
@@ -275,7 +278,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=14"></script>
+    <script src="../../app.js?v=15"></script>
   </body>
 </html>
 `;
