@@ -151,7 +151,7 @@ function renderGuidesIndex(guideList) {
     <meta property="og:description" content="${escapeAttribute(description)}" />
     <meta property="og:url" content="${SITE_URL}/guides/" />
     <meta property="og:image" content="${escapeAttribute(guideList[0]?.cards[0]?.card.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`)}" />
-    <script defer src="../analytics.js?v=2" data-page-type="guides-index"></script>
+    <script defer src="../analytics.js?v=3" data-page-type="guides-index"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="stylesheet" href="../home-v3.css?v=10" />
     <link rel="stylesheet" href="../guides.css?v=2" />
@@ -241,7 +241,7 @@ function renderGuidePage(guide) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js?v=2" data-page-type="guide" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}"></script>
+    <script defer src="../../analytics.js?v=3" data-page-type="guide"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
     <link rel="stylesheet" href="../../home-v3.css?v=10" />
     <link rel="stylesheet" href="../../guides.css?v=2" />

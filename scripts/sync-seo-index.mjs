@@ -179,7 +179,7 @@ function renderCardPage(card, memberships) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js?v=2" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
+    <script defer src="../../analytics.js?v=3" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>

@@ -45,7 +45,7 @@ for (const path of htmlFiles) {
   const pageType = html.match(/data-page-type="([^"]+)"/)?.[1];
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
-  if (!/analytics\.js\?v=2/.test(html)) errors.push(`${label}: analytics script is not versioned at v2`);
+  if (!/analytics\.js\?v=3/.test(html)) errors.push(`${label}: analytics script is not versioned at v3`);
   if (!/data-analytics-event="navigation_clicked"[^>]+data-analytics-source="global_header"/.test(html)) {
     errors.push(`${label}: shared header navigation tracking is missing`);
   }
