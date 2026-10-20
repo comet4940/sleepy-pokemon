@@ -138,7 +138,11 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `card_number`
 - `card_rarity`
 - `card_language`
+- `checklist_scope`
+- `download_surface`
+- `file_format`
 - `guide_slug`
+- `guide_title`
 - `filter_name`
 - `filter_value`
 - `filter_action`
