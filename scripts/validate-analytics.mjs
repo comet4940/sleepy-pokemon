@@ -4,6 +4,9 @@ import { join, relative } from "node:path";
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
 const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card"]);
+const publishedPayload = JSON.parse(await readFile(join(DOCS_DIR, "published-cards.json"), "utf8"));
+const publishedCards = Array.isArray(publishedPayload) ? publishedPayload : publishedPayload.cards;
+const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -67,6 +70,20 @@ for (const path of htmlFiles) {
   if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
+  if (pageType === "guide") {
+    const cardIds = [...html.matchAll(/data-card-id="([^"]+)"/g)]
+      .map(([, cardId]) => decodeHtmlAttribute(cardId));
+    const uniqueCardIds = new Set(cardIds);
+    const renderedCards = [...html.matchAll(/<article class="guide-card"/g)].length;
+    if (uniqueCardIds.size !== renderedCards) {
+      errors.push(`${label}: guide card IDs do not cover every rendered guide card`);
+    }
+    for (const cardId of uniqueCardIds) {
+      if (!catalogIdentities.has(cardId)) {
+        errors.push(`${label}: guide card ID does not match a published catalog card`);
+      }
+    }
+  }
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
@@ -112,4 +129,19 @@ async function walk(directory) {
     return entry.isDirectory() ? walk(path) : [path];
   }));
   return paths.flat();
+}
+
+function getCardIdentity(card) {
+  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
+    .filter(Boolean)
+    .join("::");
+}
+
+function decodeHtmlAttribute(value) {
+  return value
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
