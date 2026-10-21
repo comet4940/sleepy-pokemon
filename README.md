@@ -75,6 +75,7 @@ sleepy-pokemon/
 │   ├── sync-guides.mjs          # Generates docs/guides/ pages & updates homepage
 │   ├── refresh-prices.mjs       # Updates live card prices from Pokémon TCG APIs
 │   ├── validate-analytics.mjs   # Verifies GA4 telemetry across all 156+ static pages
+│   ├── card-identity.mjs        # Shared card ID used by guide pages and validation
 │   ├── site-header.mjs          # Shared topbar header template
 │   └── site-footer.mjs          # Shared site footer template
 ├── brand-kit/                   # Visual brand deck, logo assets, and design tokens
@@ -125,7 +126,7 @@ node scripts/sync-guides.mjs
 ```
 
 ### 3. Validate Analytics Contract
-Ensures all static HTML pages (home, collection, card pages, and guides) strictly conform to the GA4 contract:
+Ensures all static HTML pages (home, collection, card pages, and guides) strictly conform to the GA4 contract. It also loads `docs/app.js` in a Node sandbox to check that its card IDs match `scripts/card-identity.mjs` and that each checklist download sends the expected analytics event:
 ```bash
 node scripts/validate-analytics.mjs
 ```

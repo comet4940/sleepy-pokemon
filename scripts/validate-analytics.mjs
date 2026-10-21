@@ -1,11 +1,13 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
+import vm from "node:vm";
+import { getCardIdentity } from "./card-identity.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
 const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card"]);
-const publishedPayload = JSON.parse(await readFile(join(DOCS_DIR, "published-cards.json"), "utf8"));
-const publishedCards = Array.isArray(publishedPayload) ? publishedPayload : publishedPayload.cards;
+const errors = [];
+const publishedCards = await loadPublishedCards();
 const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 const legacyEvents = [
   "search_used",
@@ -36,7 +38,6 @@ const requiredAppEvents = [
 ];
 
 const htmlFiles = (await walk(DOCS_DIR)).filter((path) => path.endsWith(".html"));
-const errors = [];
 const pageTypeCounts = new Map();
 
 for (const path of htmlFiles) {
@@ -70,20 +71,7 @@ for (const path of htmlFiles) {
   if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
-  if (pageType === "guide") {
-    const cardIds = [...html.matchAll(/data-card-id="([^"]+)"/g)]
-      .map(([, cardId]) => decodeHtmlAttribute(cardId));
-    const uniqueCardIds = new Set(cardIds);
-    const renderedCards = [...html.matchAll(/<article class="guide-card"/g)].length;
-    if (uniqueCardIds.size !== renderedCards) {
-      errors.push(`${label}: guide card IDs do not cover every rendered guide card`);
-    }
-    for (const cardId of uniqueCardIds) {
-      if (!catalogIdentities.has(cardId)) {
-        errors.push(`${label}: guide card ID does not match a published catalog card`);
-      }
-    }
-  }
+  if (pageType === "guide") checkGuideCards(html, label);
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
@@ -98,15 +86,8 @@ for (const eventName of requiredAppEvents) {
   if (!appSource.includes(`"${eventName}"`)) errors.push(`missing app event: ${eventName}`);
 }
 if (!analyticsSource.includes('"search_submitted"')) errors.push("missing global search submission event");
-for (const scope of ["full_collection", "search_results", "filtered_collection", "guide"]) {
-  if (!appSource.includes(`"${scope}"`)) errors.push(`missing checklist analytics scope: ${scope}`);
-}
-if (!appSource.includes("download_surface: guidePage ? \"guide_page\" : \"collection\"")) {
-  errors.push("checklist downloads are missing their analytics surface");
-}
-if (!appSource.includes("guide_slug: guidePage ? document.body.dataset.guideSlug : undefined")) {
-  errors.push("guide checklist downloads are missing guide attribution");
-}
+checkAppCardIdentity(appSource);
+checkChecklistDownloads(appSource);
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -131,10 +112,109 @@ async function walk(directory) {
   return paths.flat();
 }
 
-function getCardIdentity(card) {
-  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
-    .filter(Boolean)
-    .join("::");
+async function loadPublishedCards() {
+  try {
+    const payload = JSON.parse(await readFile(join(DOCS_DIR, "published-cards.json"), "utf8"));
+    const cards = Array.isArray(payload) ? payload : payload?.cards;
+    if (!Array.isArray(cards)) throw new Error("expected an array of cards or an object with a cards array");
+    return cards;
+  } catch (error) {
+    errors.push(`docs/published-cards.json: ${error.message}`);
+    return [];
+  }
+}
+
+// Every guide card must carry exactly one card ID, and it must be a published card.
+function checkGuideCards(html, label) {
+  const guideCards = [...html.matchAll(/<article\b[^>]*\bclass="[^"]*\bguide-card\b[^"]*"[^>]*>[\s\S]*?<\/article>/g)];
+  if (!guideCards.length) errors.push(`${label}: no guide cards found`);
+  guideCards.forEach(([block], index) => {
+    const cardIds = new Set([...block.matchAll(/data-card-id="([^"]*)"/g)].map(([, id]) => decodeHtmlAttribute(id)));
+    const position = `guide card ${index + 1}`;
+    if (cardIds.size === 0) errors.push(`${label}: ${position} has no data-card-id`);
+    else if (cardIds.size > 1) errors.push(`${label}: ${position} has conflicting card IDs: ${[...cardIds].join(" | ")}`);
+    else {
+      const [cardId] = cardIds;
+      if (!catalogIdentities.has(cardId)) errors.push(`${label}: ${position} ID is not a published card: ${cardId}`);
+    }
+  });
+}
+
+// Runs docs/app.js in a sandbox. Its only top-level side effect is registering
+// the DOMContentLoaded handler, so its functions and state can be called directly.
+function loadApp(appSource, bodyDataset = {}) {
+  const sandbox = {
+    console,
+    document: {
+      body: { dataset: { ...bodyDataset }, append() {} },
+      addEventListener() {},
+      querySelector: () => null,
+      querySelectorAll: () => [],
+      createElement: () => ({ style: {}, click() {}, remove() {} }),
+    },
+    window: { setTimeout() {} },
+    URL: { createObjectURL: () => "blob:checklist", revokeObjectURL() {} },
+    Blob: class {},
+  };
+  const context = vm.createContext(sandbox);
+  vm.runInContext(appSource, context, { filename: "docs/app.js" });
+  return {
+    context,
+    run: (code) => vm.runInContext(code, context),
+  };
+}
+
+// The browser's catalogIdentity must equal the data-card-id the build scripts write.
+// Also covers cards with optional fields missing, which normalizeCard fills in.
+function checkAppCardIdentity(appSource) {
+  const app = loadApp(appSource);
+  const sparseCards = publishedCards.slice(0, 1).flatMap((card) => [
+    { ...card, language: undefined },
+    { ...card, name: undefined },
+    { ...card, apiId: undefined, tcgdexId: undefined },
+  ]);
+  const mismatches = [...publishedCards, ...sparseCards]
+    .filter((card) => app.context.normalizeCard(card).catalogIdentity !== getCardIdentity(card));
+  if (mismatches.length) {
+    errors.push(`docs/app.js: card identity differs from scripts/card-identity.mjs for ${mismatches.length} card(s), e.g. ${getCardIdentity(mismatches[0])}`);
+  }
+}
+
+// Downloads each checklist scope through app.js and checks the analytics event it sends.
+function checkChecklistDownloads(appSource) {
+  if (!publishedCards.length) return;
+  const sampleCard = publishedCards.find((card) => card.setName && card.pokemon) || publishedCards[0];
+  const guideBody = { appMode: "guide-page", guideSlug: "test-guide", guideTitle: "Test Guide" };
+  const cases = [
+    { name: "full collection", expect: { checklist_scope: "full_collection", download_surface: "collection", interaction_source: "collection_header" } },
+    { name: "search results", filters: { search: sampleCard.pokemon }, expect: { checklist_scope: "search_results", download_surface: "collection", interaction_source: "collection_header" } },
+    { name: "filtered collection", filters: { set: sampleCard.setName }, expect: { checklist_scope: "filtered_collection", download_surface: "collection", interaction_source: "collection_header" } },
+    { name: "guide", body: guideBody, guide: true, expect: { checklist_scope: "guide", download_surface: "guide_page", interaction_source: "guide_page", guide_slug: "test-guide", guide_title: "Test Guide" } },
+  ];
+  for (const testCase of cases) {
+    const app = loadApp(appSource, testCase.body);
+    const events = [];
+    app.context.trackEvent = (name, params) => events.push({ name, params });
+    app.context.showToast = () => {};
+    app.context.__cards = publishedCards;
+    app.context.__filters = testCase.filters || {};
+    app.run("state.cards = __cards.map(normalizeCard); Object.assign(state.filters, __filters);");
+    if (testCase.guide) app.run("state.guideSelection = { cards: state.cards.slice(0, 2), complete: true };");
+    app.context.downloadChecklist();
+    const label = `docs/app.js: ${testCase.name} checklist download`;
+    const event = events.find(({ name }) => name === "checklist_downloaded");
+    if (!event) {
+      errors.push(`${label} sent no checklist_downloaded event`);
+      continue;
+    }
+    for (const [key, value] of Object.entries(testCase.expect)) {
+      if (event.params[key] !== value) errors.push(`${label} sent ${key}=${JSON.stringify(event.params[key])}, expected ${JSON.stringify(value)}`);
+    }
+    if (!testCase.guide && (event.params.guide_slug !== undefined || event.params.guide_title !== undefined)) {
+      errors.push(`${label} sent guide attribution outside a guide page`);
+    }
+    if (!(event.params.card_count > 0)) errors.push(`${label} exported no cards`);
+  }
 }
 
 function decodeHtmlAttribute(value) {
