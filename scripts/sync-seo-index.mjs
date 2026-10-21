@@ -207,7 +207,7 @@ function renderCardPage(card, memberships) {
             <div class="curation-note">
               <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
             </div>
-${renderGuideMemberships(card, memberships)}${renderCurationFacts(card)}
+${renderGuideMemberships(card, memberships)}
 ${renderMoods(card)}
             <div class="meta-grid">
               ${metaItem("Set", card.setName)}
@@ -261,24 +261,6 @@ function metaItem(label, value) {
                 <span>${escapeHtml(label)}</span>
                 <strong>${escapeHtml(value || "-")}</strong>
               </div>`;
-}
-
-function renderCurationFacts(card) {
-  const facts = [
-    ["Nap classification", card.sleepinessBasis],
-    ["Sleep location", card.sleepLocation],
-  ].filter(([, value]) => value);
-  const factMarkup = facts.map(([label, value]) => `<div class="curation-fact"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`);
-  if (card.sleepiness) factMarkup.push(renderSleepinessFact(card.sleepiness));
-  return factMarkup.length ? `<div class="curation-facts">${factMarkup.join("")}</div>` : "";
-}
-
-function renderSleepinessFact(value) {
-  const match = String(value).match(/^(\d+)/);
-  const level = match ? Math.max(0, Math.min(5, Number(match[1]))) : 0;
-  const label = String(value).replace(/^\d+\s*[—-]?\s*/, "");
-  const zzz = Array.from({ length: 5 }, (_, index) => `<span class="sleepiness-zzz${index < level ? " is-filled" : ""}">Z</span>`).join("");
-  return `<div class="curation-fact curation-fact--sleepiness"><span>Sleepiness</span><strong><span class="sleepiness-meter" aria-label="${escapeAttribute(value)}">${zzz}</span><span class="sleepiness-label">${escapeHtml(label || value)}</span></strong></div>`;
 }
 
 function renderMoods(card) {

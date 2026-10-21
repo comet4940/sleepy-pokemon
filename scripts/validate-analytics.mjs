@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
+import { MAX_MOODS_PER_CARD, MOODS } from "./moods.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -9,6 +10,7 @@ const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "
 const errors = [];
 const publishedCards = await loadPublishedCards();
 const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
+checkCardMoods();
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -72,6 +74,9 @@ for (const path of htmlFiles) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
   if (pageType === "guide") checkGuideCards(html, label);
+  for (const [, mood] of html.matchAll(/class="mood-chip"[^>]*data-mood="([^"]+)"/g)) {
+    if (mood !== "under-5" && !MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
+  }
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
@@ -122,6 +127,28 @@ async function loadPublishedCards() {
     errors.push(`docs/published-cards.json: ${error.message}`);
     return [];
   }
+}
+
+// Moods come from the fixed list in scripts/moods.mjs; retired curation fields stay retired.
+function checkCardMoods() {
+  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness"];
+  for (const card of publishedCards) {
+    const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
+    if (!Array.isArray(card.moods)) {
+      errors.push(`${label} has no moods array (use [] for none)`);
+      continue;
+    }
+    const unknown = card.moods.filter((mood) => !MOODS.includes(mood));
+    if (unknown.length) errors.push(`${label} has unknown moods: ${unknown.join(", ")}`);
+    if (new Set(card.moods).size !== card.moods.length) errors.push(`${label} lists a mood twice`);
+    if (card.moods.length > MAX_MOODS_PER_CARD) errors.push(`${label} has ${card.moods.length} moods; the limit is ${MAX_MOODS_PER_CARD}`);
+    const stale = retired.filter((field) => field in card);
+    if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
+  }
+}
+
+function slugify(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 // Every guide card must carry exactly one card ID, and it must be a published card.

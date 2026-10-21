@@ -31,8 +31,8 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
   - **Sleepiness Meter**: Rated on a scale of 1 to 5 Zs (*Drowsy* through *Medically unavailable*).
 - **Interactive Browsing & Search**:
   - Live search across Pokémon names, card titles, set names, and card numbers.
-  - Filter by **Moods** (*Deep Sleepers*, *Outdoor Naps*, *Sleepover Club*, *Tiny Tuck-Ins*, *Cozy Corners*, *Dream Sequence*, *Food Coma*, *Blink-and-you'll-miss-it*).
-  - Dynamic sorting by market price, set release date, card name, and sleepiness level.
+  - Filter by **Moods** (*Cozy Corners*, *Group Naps*, *Tiny Tuck-Ins*, *Dream Sequence*, *Nap Watch*, *Beach Naps*, *Snow Naps*, *Cameo Sleepers*, *Food Coma*, *Sleepy Trainers*).
+  - Sort by price, Pokémon, language, set, newest release, or curated order.
   - Price ceiling slider to help collectors find budget-friendly binder picks.
 - **Themed Collector Guides**: Editorial lists highlighting standout cards, cameos, and curated sub-themes (e.g. *Best Sleepy Pokemon Cards*, *The Sleepiest of Pikachus*, *Sleepy Cat Pokemon Cards*).
 - **Standalone Card Detail Pages**: Over 150 crawlable, standalone pages (`/cards/<slug>/`) with high-resolution imagery, release information, current market prices, and JSON-LD structured data for search engines.
