@@ -154,7 +154,7 @@ function renderGuidesIndex(guideList) {
     <meta property="og:image" content="${escapeAttribute(guideList[0]?.cards[0]?.card.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`)}" />
     <script defer src="../analytics.js?v=3" data-page-type="guides-index"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
-    <link rel="stylesheet" href="../home-v3.css?v=14" />
+    <link rel="stylesheet" href="../home-v3.css?v=15" />
     <link rel="stylesheet" href="../guides.css?v=2" />
   </head>
   <body data-app-mode="guides-index">
@@ -244,7 +244,7 @@ function renderGuidePage(guide) {
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js?v=3" data-page-type="guide"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
-    <link rel="stylesheet" href="../../home-v3.css?v=14" />
+    <link rel="stylesheet" href="../../home-v3.css?v=15" />
     <link rel="stylesheet" href="../../guides.css?v=2" />
     <link rel="stylesheet" href="../../card-detail-v3.css" />
   </head>
