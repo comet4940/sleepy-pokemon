@@ -9,6 +9,13 @@ const priorityRank = {
   Low: 2,
 };
 
+const CHECKLIST_LABELS = {
+  full_collection: "Full collection",
+  search_results: "Search results",
+  filtered_collection: "Filtered",
+  guide: "Guide",
+};
+
 const state = {
   cards: [],
   guideMemberships: new Map(),
@@ -1224,7 +1231,7 @@ function getChecklistContext(filteredCards) {
       scope: "guide",
       surface: "guide_page",
       source: "guide_page",
-      label: "Guide",
+      label: CHECKLIST_LABELS.guide,
       filename: fileSlug ? `sleepy-pokemon-${fileSlug}-checklist.csv` : "sleepy-pokemon-checklist.csv",
       guideSlug,
       guideTitle: document.body.dataset.guideTitle,
@@ -1232,13 +1239,14 @@ function getChecklistContext(filteredCards) {
   }
   const isFiltered = hasActiveFilters();
   const hasSearch = Boolean(state.filters.search);
+  const scope = hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
   return {
     cards: isFiltered ? filteredCards || getFilteredCards() : state.cards,
     complete: true,
-    scope: hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection",
+    scope,
     surface: "collection",
     source: "collection_header",
-    label: hasSearch ? "Search results" : isFiltered ? "Filtered" : "Full collection",
+    label: CHECKLIST_LABELS[scope],
     filename: getCollectionChecklistFilename(),
   };
 }

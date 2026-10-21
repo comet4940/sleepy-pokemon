@@ -143,6 +143,7 @@ function checkGuideCards(html, label) {
 // Runs docs/app.js in a sandbox. Its only top-level side effect is registering
 // the DOMContentLoaded handler, so its functions and state can be called directly.
 function loadApp(appSource, bodyDataset = {}) {
+  const downloads = [];
   const sandbox = {
     console,
     document: {
@@ -154,12 +155,17 @@ function loadApp(appSource, bodyDataset = {}) {
     },
     window: { setTimeout() {} },
     URL: { createObjectURL: () => "blob:checklist", revokeObjectURL() {} },
-    Blob: class {},
+    Blob: class {
+      constructor(parts) {
+        downloads.push(parts.join(""));
+      }
+    },
   };
   const context = vm.createContext(sandbox);
   vm.runInContext(appSource, context, { filename: "docs/app.js" });
   return {
     context,
+    downloads,
     run: (code) => vm.runInContext(code, context),
   };
 }
@@ -180,41 +186,126 @@ function checkAppCardIdentity(appSource) {
   }
 }
 
-// Downloads each checklist scope through app.js and checks the analytics event it sends.
+// Downloads each checklist scope through app.js and checks the CSV it writes,
+// the toast it shows and the analytics event it sends.
 function checkChecklistDownloads(appSource) {
   if (!publishedCards.length) return;
   const sampleCard = publishedCards.find((card) => card.setName && card.pokemon) || publishedCards[0];
   const guideBody = { appMode: "guide-page", guideSlug: "test-guide", guideTitle: "Test Guide" };
+  const collectionEvent = { download_surface: "collection", interaction_source: "collection_header" };
+  // expectedCards gets the app's normalized cards; subset cases must export some but not all of them.
   const cases = [
-    { name: "full collection", expect: { checklist_scope: "full_collection", download_surface: "collection", interaction_source: "collection_header" } },
-    { name: "search results", filters: { search: sampleCard.pokemon }, expect: { checklist_scope: "search_results", download_surface: "collection", interaction_source: "collection_header" } },
-    { name: "filtered collection", filters: { set: sampleCard.setName }, expect: { checklist_scope: "filtered_collection", download_surface: "collection", interaction_source: "collection_header" } },
-    { name: "guide", body: guideBody, guide: true, expect: { checklist_scope: "guide", download_surface: "guide_page", interaction_source: "guide_page", guide_slug: "test-guide", guide_title: "Test Guide" } },
+    {
+      name: "full collection",
+      label: "Full collection",
+      expectedCards: (app, cards) => cards,
+      expect: { ...collectionEvent, checklist_scope: "full_collection" },
+    },
+    {
+      name: "search results",
+      label: "Search results",
+      filters: { search: sampleCard.pokemon },
+      subset: true,
+      expectedCards: (app) => app.context.getFilteredCards(),
+      expect: { ...collectionEvent, checklist_scope: "search_results" },
+    },
+    {
+      name: "filtered collection",
+      label: "Filtered",
+      filters: { set: sampleCard.setName },
+      subset: true,
+      expectedCards: (app) => app.context.getFilteredCards(),
+      expect: { ...collectionEvent, checklist_scope: "filtered_collection" },
+    },
+    {
+      name: "guide",
+      label: "Guide",
+      body: guideBody,
+      guide: true,
+      subset: true,
+      expectedCards: (app, cards) => cards.slice(0, 2),
+      expect: { checklist_scope: "guide", download_surface: "guide_page", interaction_source: "guide_page", guide_slug: "test-guide", guide_title: "Test Guide" },
+    },
   ];
   for (const testCase of cases) {
     const app = loadApp(appSource, testCase.body);
     const events = [];
+    const toasts = [];
     app.context.trackEvent = (name, params) => events.push({ name, params });
-    app.context.showToast = () => {};
+    app.context.showToast = (message) => toasts.push(message);
     app.context.__cards = publishedCards;
     app.context.__filters = testCase.filters || {};
     app.run("state.cards = __cards.map(normalizeCard); Object.assign(state.filters, __filters);");
     if (testCase.guide) app.run("state.guideSelection = { cards: state.cards.slice(0, 2), complete: true };");
+    const allCards = app.run("state.cards");
+    const expectedNames = testCase.expectedCards(app, allCards).map((card) => card.name || card.pokemon || "");
     app.context.downloadChecklist();
     const label = `docs/app.js: ${testCase.name} checklist download`;
+
+    if (!expectedNames.length || (testCase.subset && expectedNames.length >= allCards.length)) {
+      errors.push(`${label}: test setup should select some but not all cards, selected ${expectedNames.length} of ${allCards.length}`);
+      continue;
+    }
+    if (app.downloads.length !== 1) {
+      errors.push(`${label} wrote ${app.downloads.length} files, expected 1`);
+      continue;
+    }
+    const [header, ...rows] = parseCsv(app.downloads[0].replace(/^\uFEFF/, ""));
+    const nameColumn = header.indexOf("Pokemon Card Name");
+    const exportedNames = rows.map((row) => row[nameColumn]);
+    if (nameColumn === -1) errors.push(`${label} CSV has no "Pokemon Card Name" column`);
+    else if (exportedNames.length !== expectedNames.length) {
+      errors.push(`${label} exported ${exportedNames.length} cards, expected ${expectedNames.length}`);
+    } else {
+      const row = exportedNames.findIndex((name, index) => name !== expectedNames[index]);
+      if (row !== -1) errors.push(`${label} CSV row ${row + 1} is ${JSON.stringify(exportedNames[row])}, expected ${JSON.stringify(expectedNames[row])}`);
+    }
+    if (!toasts.some((message) => message.startsWith(`${testCase.label} checklist downloaded (${expectedNames.length} cards)`))) {
+      errors.push(`${label} showed ${JSON.stringify(toasts)}, expected "${testCase.label} checklist downloaded (${expectedNames.length} cards)."`);
+    }
+
     const event = events.find(({ name }) => name === "checklist_downloaded");
     if (!event) {
       errors.push(`${label} sent no checklist_downloaded event`);
       continue;
     }
-    for (const [key, value] of Object.entries(testCase.expect)) {
+    for (const [key, value] of Object.entries({ ...testCase.expect, card_count: expectedNames.length })) {
       if (event.params[key] !== value) errors.push(`${label} sent ${key}=${JSON.stringify(event.params[key])}, expected ${JSON.stringify(value)}`);
     }
     if (!testCase.guide && (event.params.guide_slug !== undefined || event.params.guide_title !== undefined)) {
       errors.push(`${label} sent guide attribution outside a guide page`);
     }
-    if (!(event.params.card_count > 0)) errors.push(`${label} exported no cards`);
   }
+}
+
+// Minimal RFC 4180 parser: quoted cells may contain commas, quotes ("") and newlines.
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    if (quoted) {
+      if (char === '"' && text[index + 1] === '"') {
+        cell += '"';
+        index += 1;
+      } else if (char === '"') quoted = false;
+      else cell += char;
+    } else if (char === '"') quoted = true;
+    else if (char === ",") {
+      row.push(cell);
+      cell = "";
+    } else if (char === "\n" || char === "\r") {
+      if (char === "\r" && text[index + 1] === "\n") index += 1;
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else cell += char;
+  }
+  if (cell || row.length) rows.push([...row, cell]);
+  return rows;
 }
 
 function decodeHtmlAttribute(value) {
