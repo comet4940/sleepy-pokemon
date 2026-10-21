@@ -25,10 +25,7 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
 
 ## ✨ Key Features
 
-- **Handmade Nap Taxonomy**: Each card features custom curation metadata:
-  - **Nap Classification**: *Cozy nap*, *Group nap*, *Out cold*, *Accidental nap*, and *Questionably sleeping 😂*.
-  - **Sleep Location**: *Grass*, *Bed*, *Tree*, *Cave*, *Water*, *Another Pokémon*, and *Literally wherever*.
-  - **Sleepiness Meter**: Rated on a scale of 1 to 5 Zs (*Drowsy* through *Medically unavailable*).
+- **Handmade Nap Moods**: Each card carries up to three hand-picked moods for specific, visible scenes, such as *Nap Watch* (awake Pokémon around the sleeper), *Beach Naps* or *Snow Naps*, plus a curator's note on why it belongs. Moods are optional; the full list lives in `scripts/moods.mjs`.
 - **Interactive Browsing & Search**:
   - Live search across Pokémon names, card titles, set names, and card numbers.
   - Filter by **Moods** (*Cozy Corners*, *Group Naps*, *Tiny Tuck-Ins*, *Dream Sequence*, *Nap Watch*, *Beach Naps*, *Snow Naps*, *Cameo Sleepers*, *Food Coma*, *Sleepy Trainers*).
