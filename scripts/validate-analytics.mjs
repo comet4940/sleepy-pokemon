@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
@@ -144,6 +145,9 @@ function checkCardMoods() {
     if (card.moods.length > MAX_MOODS_PER_CARD) errors.push(`${label} has ${card.moods.length} moods; the limit is ${MAX_MOODS_PER_CARD}`);
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
+    for (const image of new Set([card.imageSmall, card.imageLarge])) {
+      if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
+    }
   }
 }
 

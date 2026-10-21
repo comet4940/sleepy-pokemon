@@ -78,8 +78,9 @@ async function fetchCard(apiId) {
 
 function applyUpdates(card, apiCard, nextPrice) {
   const before = JSON.stringify(pickComparableFields(card));
-  if (apiCard.images?.small) card.imageSmall = apiCard.images.small;
-  if (apiCard.images?.large) card.imageLarge = apiCard.images.large;
+  // Images under /assets/ were added by hand because the API image is wrong or missing; keep them.
+  if (apiCard.images?.small && !isLocalImage(card.imageSmall)) card.imageSmall = apiCard.images.small;
+  if (apiCard.images?.large && !isLocalImage(card.imageLarge)) card.imageLarge = apiCard.images.large;
 
   if (nextPrice.market !== null) {
     card.priceMarket = nextPrice.market;
@@ -97,6 +98,10 @@ function applyUpdates(card, apiCard, nextPrice) {
     return true;
   }
   return false;
+}
+
+function isLocalImage(url) {
+  return String(url || "").startsWith("/");
 }
 
 function pickComparableFields(card) {

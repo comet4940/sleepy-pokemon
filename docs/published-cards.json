@@ -366,7 +366,7 @@
       "updatedAt": "2026-10-20T18:50:46.000Z"
     },
     {
-      "apiId": "ex14-42",
+      "apiId": "ex16-42",
       "tcgdexId": "",
       "name": "Aron",
       "pokemon": "Aron",
@@ -377,22 +377,15 @@
       "rarity": "Common",
       "language": "English",
       "artist": "Tomokazu Komiya",
-      "imageSmall": "https://images.pokemontcg.io/ex14/42.png",
-      "imageLarge": "https://images.pokemontcg.io/ex14/42_hires.png",
+      "imageSmall": "/assets/cards/aron-ex-power-keepers-42.png",
+      "imageLarge": "/assets/cards/aron-ex-power-keepers-42.png",
       "setReleaseDate": "2007/02/14",
       "priority": "Medium",
       "notes": "Aron is curled up asleep on a quiet path.",
       "moods": [],
       "whyItBelongs": "Aron is stretched out along a set of railroad tracks at dusk, and its one visible eye is just a flat, sleepy line. The sky behind it fades from purple to deep red over a quiet sea, with a few early stars and a distant tower on the horizon. The gravel and rails look like an odd bed for anyone else, but a steel-plated Pokémon seems perfectly comfortable on them. It’s a quiet, slightly absurd little scene, and Aron doesn’t appear worried about the next train.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-21T15:55:44.325Z",
-      "priceMarket": 5.19,
-      "priceLow": 1,
-      "priceMid": 4.69,
-      "priceHigh": 96.88,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15"
+      "updatedAt": "2026-10-21T15:55:44.325Z"
     },
     {
       "apiId": "sm11-151",
