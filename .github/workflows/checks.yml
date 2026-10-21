@@ -1,0 +1,41 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check script syntax
+        run: |
+          for file in docs/*.js scripts/*.mjs; do
+            node --check "$file"
+          done
+
+      - name: Validate analytics
+        run: node scripts/validate-analytics.mjs
+
+      - name: Check generated pages are up to date
+        run: |
+          node scripts/sync-seo-index.mjs
+          node scripts/sync-guides.mjs
+          if [ -n "$(git status --porcelain -- docs)" ]; then
+            echo "::error::Generated pages are out of date. Run scripts/sync-seo-index.mjs and scripts/sync-guides.mjs, then commit the result."
+            git status --porcelain -- docs
+            exit 1
+          fi
