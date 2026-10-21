@@ -191,9 +191,11 @@ a { color: inherit; }
 .card-tile:hover, .card-tile:focus-visible { border-color: var(--pink); background: #211e35; box-shadow: 0 20px 40px rgba(0,0,0,.22); transform: translateY(-4px); }
 .card-tile:nth-child(7)::before { content: "⌁"; position: absolute; z-index: 2; top: -12px; right: 16px; color: var(--pink); font-size: 2.4rem; line-height: 1; transform: rotate(8deg); }
 .card-tile:nth-child(13)::before { content: "☾"; position: absolute; z-index: 2; top: -10px; left: 14px; color: var(--mint); font-size: 2rem; line-height: 1; transform: rotate(-14deg); }
-.card-image-frame { --frame-pad: 20px; position: relative; min-width: 0; min-height: 0; overflow: hidden; padding: var(--frame-pad); border-radius: 12px; background: #1b2940; aspect-ratio: 3 / 4; }
-/* Out of flow so only the frame's aspect-ratio sets its height; WebKit mis-sizes percentage-height images in grids. */
+/* 3:4 frame from percentage padding, not aspect-ratio: WebKit keeps a stale aspect-ratio
+   height in these grids when the viewport is resized. Contents sit out of flow. */
+.card-image-frame { --frame-pad: 20px; position: relative; min-width: 0; min-height: 0; height: 0; overflow: hidden; padding: calc(100% * 4 / 3) 0 0; border-radius: 12px; background: #1b2940; aspect-ratio: auto; }
 .card-image-frame img { position: absolute; inset: var(--frame-pad); width: calc(100% - 2 * var(--frame-pad)); height: calc(100% - 2 * var(--frame-pad)); object-fit: contain; }
+.card-image-frame .image-fallback { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .card-body { align-content: start; padding: 17px 6px 8px; }
 .card-title-row h3 { color: var(--cream); font-size: 1.2rem; font-weight: 500; }
 .card-subtitle { color: var(--muted-cream); font-size: .88rem; }
