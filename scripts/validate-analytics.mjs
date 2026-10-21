@@ -4,6 +4,9 @@ import { join, relative } from "node:path";
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
 const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card"]);
+const publishedPayload = JSON.parse(await readFile(join(DOCS_DIR, "published-cards.json"), "utf8"));
+const publishedCards = Array.isArray(publishedPayload) ? publishedPayload : publishedPayload.cards;
+const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -29,6 +32,7 @@ const requiredAppEvents = [
   "suggestion_card_removed",
   "suggestion_submitted",
   "suggestion_submit_failed",
+  "checklist_downloaded",
 ];
 
 const htmlFiles = (await walk(DOCS_DIR)).filter((path) => path.endsWith(".html"));
@@ -41,7 +45,7 @@ for (const path of htmlFiles) {
   const pageType = html.match(/data-page-type="([^"]+)"/)?.[1];
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
-  if (!/analytics\.js\?v=2/.test(html)) errors.push(`${label}: analytics script is not versioned at v2`);
+  if (!/analytics\.js\?v=3/.test(html)) errors.push(`${label}: analytics script is not versioned at v3`);
   if (!/data-analytics-event="navigation_clicked"[^>]+data-analytics-source="global_header"/.test(html)) {
     errors.push(`${label}: shared header navigation tracking is missing`);
   }
@@ -63,6 +67,23 @@ for (const path of htmlFiles) {
     }
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
+  if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
+    errors.push(`${label}: guide checklist download control is missing`);
+  }
+  if (pageType === "guide") {
+    const cardIds = [...html.matchAll(/data-card-id="([^"]+)"/g)]
+      .map(([, cardId]) => decodeHtmlAttribute(cardId));
+    const uniqueCardIds = new Set(cardIds);
+    const renderedCards = [...html.matchAll(/<article class="guide-card"/g)].length;
+    if (uniqueCardIds.size !== renderedCards) {
+      errors.push(`${label}: guide card IDs do not cover every rendered guide card`);
+    }
+    for (const cardId of uniqueCardIds) {
+      if (!catalogIdentities.has(cardId)) {
+        errors.push(`${label}: guide card ID does not match a published catalog card`);
+      }
+    }
+  }
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
@@ -77,6 +98,15 @@ for (const eventName of requiredAppEvents) {
   if (!appSource.includes(`"${eventName}"`)) errors.push(`missing app event: ${eventName}`);
 }
 if (!analyticsSource.includes('"search_submitted"')) errors.push("missing global search submission event");
+for (const scope of ["full_collection", "search_results", "filtered_collection", "guide"]) {
+  if (!appSource.includes(`"${scope}"`)) errors.push(`missing checklist analytics scope: ${scope}`);
+}
+if (!appSource.includes("download_surface: guidePage ? \"guide_page\" : \"collection\"")) {
+  errors.push("checklist downloads are missing their analytics surface");
+}
+if (!appSource.includes("guide_slug: guidePage ? document.body.dataset.guideSlug : undefined")) {
+  errors.push("guide checklist downloads are missing guide attribution");
+}
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -99,4 +129,19 @@ async function walk(directory) {
     return entry.isDirectory() ? walk(path) : [path];
   }));
   return paths.flat();
+}
+
+function getCardIdentity(card) {
+  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
+    .filter(Boolean)
+    .join("::");
+}
+
+function decodeHtmlAttribute(value) {
+  return value
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }

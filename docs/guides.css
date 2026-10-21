@@ -227,6 +227,11 @@
   line-height: 1.65;
 }
 
+.guide-actions {
+  display: flex;
+  margin-top: 24px;
+}
+
 .guide-hero-stack {
   position: relative;
   min-height: 330px;

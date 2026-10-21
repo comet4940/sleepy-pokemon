@@ -91,12 +91,14 @@ No lookup query, suggested card text, reason, or notes are sent to GA4.
 
 `checklist_downloaded` tracks collector checklist downloads:
 
-- `checklist_scope`: `full_collection`, `filtered_collection`, `selected_cards`, or `guide`
+- `checklist_scope`: `full_collection`, `search_results`, `filtered_collection`, or `guide`
+- `download_surface`: `collection` or `guide_page`
 - `card_count`
 - `file_format`
 - `interaction_source`
+- `guide_slug` and `guide_title` on guide downloads
 
-The collection download follows this shape, exporting either the full collection or the active filtered subset. Future binder or guide downloads will also share this schema.
+Collection downloads keep `interaction_source: collection_header` for compatibility with existing GA4 reports. Use `checklist_scope` to distinguish full collection, search results, and other filtered downloads. Guide downloads use `interaction_source: guide_page` and include the guide slug and title.
 
 ## Shared Parameters
 
@@ -136,7 +138,11 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `card_number`
 - `card_rarity`
 - `card_language`
+- `checklist_scope`
+- `download_surface`
+- `file_format`
 - `guide_slug`
+- `guide_title`
 - `filter_name`
 - `filter_value`
 - `filter_action`

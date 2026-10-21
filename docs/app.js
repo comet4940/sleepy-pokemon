@@ -615,6 +615,7 @@ async function loadGuideMemberships() {
 
 function normalizeCard(card) {
   return {
+    catalogIdentity: getCardIdentity(card),
     apiId: card.apiId || "",
     tcgdexId: card.tcgdexId || "",
     name: card.name || card.pokemon || "Unknown card",
@@ -913,6 +914,25 @@ function updateChecklistButton(resultCount) {
     elements.downloadChecklistButton.textContent = "Download checklist";
     return;
   }
+  if (isGuidePage()) {
+    const guideSelection = getGuideCardSelection();
+    const guideCardCount = guideSelection.cards.length;
+    elements.downloadChecklistButton.disabled = !guideSelection.complete || guideCardCount === 0;
+    elements.downloadChecklistButton.textContent = !guideSelection.complete
+      ? "Checklist unavailable"
+      : guideCardCount
+        ? `Download checklist (${guideCardCount})`
+        : "Download checklist";
+    elements.downloadChecklistButton.setAttribute(
+      "aria-label",
+      !guideSelection.complete
+        ? "Unable to match every card in this guide"
+        : guideCardCount
+          ? `Download checklist for all ${guideCardCount} cards in this guide`
+          : "No cards in this guide to download"
+    );
+    return;
+  }
   const isFiltered = hasActiveFilters();
   if (resultCount === 0) {
     elements.downloadChecklistButton.disabled = true;
@@ -975,7 +995,7 @@ function compareCards(a, b) {
 
 function renderCard(card) {
   return `
-    <article class="card-tile" data-card-id="${escapeAttribute(getCardIdentity(card))}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
+    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
@@ -994,24 +1014,28 @@ function handleCardGridKeydown(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
   event.preventDefault();
-  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  const card = findCardByIdentity(tile.dataset.cardId);
   if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleCardGridClick(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
-  const card = state.cards.find((item) => getCardIdentity(item) === tile.dataset.cardId);
+  const card = findCardByIdentity(tile.dataset.cardId);
   if (card) openCardDetail(card, getCardDiscoverySource(tile));
 }
 
 function handleGuideCardClick(event) {
   const link = event.target.closest(".guide-card a[data-card-id]");
   if (!link) return;
-  const card = state.cards.find((item) => getCardIdentity(item) === link.dataset.cardId);
+  const card = findCardByIdentity(link.dataset.cardId);
   if (!card) return;
   event.preventDefault();
   openCardDetail(card, "guide_page");
+}
+
+function findCardByIdentity(cardId) {
+  return state.cards.find((item) => item.catalogIdentity === cardId);
 }
 
 function getCardDiscoverySource(tile) {
@@ -1136,8 +1160,19 @@ function slugify(value) {
 
 function downloadChecklist() {
   if (state.catalogLoadFailed || !state.cards.length) return;
-  const isFiltered = hasActiveFilters();
-  const exportCards = isFiltered ? getFilteredCards() : state.cards;
+  const guidePage = isGuidePage();
+  const guideSelection = guidePage ? getGuideCardSelection() : null;
+  if (guideSelection && !guideSelection.complete) {
+    showToast("Could not match every card in this guide. Please reload before downloading.");
+    return;
+  }
+  const isFiltered = !guidePage && hasActiveFilters();
+  const hasSearch = !guidePage && Boolean(state.filters.search);
+  const exportCards = guidePage
+    ? guideSelection.cards
+    : isFiltered
+      ? getFilteredCards()
+      : state.cards;
   if (!exportCards.length) {
     showToast("No cards to download.");
     return;
@@ -1181,19 +1216,35 @@ function downloadChecklist() {
   anchor.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   trackEvent("checklist_downloaded", {
-    checklist_scope: isFiltered ? "filtered_collection" : "full_collection",
+    checklist_scope: guidePage
+      ? "guide"
+      : hasSearch
+        ? "search_results"
+        : isFiltered
+          ? "filtered_collection"
+          : "full_collection",
+    download_surface: guidePage ? "guide_page" : "collection",
     card_count: exportCards.length,
     file_format: "csv",
-    interaction_source: "collection_header",
+    interaction_source: guidePage ? "guide_page" : "collection_header",
+    guide_slug: guidePage ? document.body.dataset.guideSlug : undefined,
+    guide_title: guidePage ? document.body.dataset.guideTitle : undefined,
   });
-  showToast(
-    isFiltered
-      ? `Filtered checklist downloaded (${exportCards.length} cards).`
-      : `Checklist downloaded (${exportCards.length} cards).`
-  );
+  const checklistLabel = guidePage
+    ? "Guide"
+    : hasSearch
+      ? "Search results"
+      : isFiltered
+        ? "Filtered"
+        : "Full collection";
+  showToast(`${checklistLabel} checklist downloaded (${exportCards.length} cards).`);
 }
 
 function getChecklistFilename() {
+  if (isGuidePage()) {
+    const guideSlug = slugify(document.body.dataset.guideSlug);
+    if (guideSlug) return `sleepy-pokemon-${guideSlug}-checklist.csv`;
+  }
   const isFiltered = hasActiveFilters();
   if (!isFiltered) return "sleepy-pokemon-checklist.csv";
 
@@ -1223,6 +1274,25 @@ function getChecklistFilename() {
     }
   }
   return "sleepy-pokemon-filtered-checklist.csv";
+}
+
+function isGuidePage() {
+  return document.body.dataset.appMode === "guide-page";
+}
+
+function getGuideCardSelection() {
+  const cardByIdentity = new Map(
+    state.cards.map((card) => [card.catalogIdentity, card])
+  );
+  const cardElements = [...(elements.guideCardList?.querySelectorAll(".guide-card") || [])];
+  const cards = cardElements.map((cardElement) => {
+    const cardId = cardElement.querySelector("[data-card-id]")?.dataset.cardId;
+    return cardByIdentity.get(cardId) || null;
+  });
+  return {
+    cards: cards.filter(Boolean),
+    complete: cards.every(Boolean),
+  };
 }
 
 function escapeCsvCell(value) {

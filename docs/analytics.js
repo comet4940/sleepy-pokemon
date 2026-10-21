@@ -30,7 +30,12 @@ const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
   if (!SLEEPY_ANALYTICS_ID || window.location.protocol === "file:" || (!productionHosts.has(window.location.hostname) && !debugMode)) return;
 
   const script = document.currentScript;
-  const pageContext = script?.dataset || {};
+  const guideContext = document.body?.dataset || {};
+  const pageContext = {
+    ...script?.dataset,
+    guideSlug: guideContext.guideSlug,
+    guideTitle: guideContext.guideTitle,
+  };
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments); };
