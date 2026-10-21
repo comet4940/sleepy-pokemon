@@ -1,6 +1,7 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
+import { getCardIdentity } from "./card-identity.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -278,7 +279,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=18"></script>
+    <script src="../../app.js?v=19"></script>
   </body>
 </html>
 `;
@@ -324,12 +325,6 @@ function renderGuideCard(entry, index, guideSlug, guideTitle) {
               <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>
             </div>
           </article>`;
-}
-
-function getCardIdentity(card) {
-  return [card.apiId, card.tcgdexId, card.language, card.setName, card.number, card.name]
-    .filter(Boolean)
-    .join("::");
 }
 
 function buildVisibleSummary(card) {

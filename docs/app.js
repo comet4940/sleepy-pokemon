@@ -9,9 +9,17 @@ const priorityRank = {
   Low: 2,
 };
 
+const CHECKLIST_LABELS = {
+  full_collection: "Full collection",
+  search_results: "Search results",
+  filtered_collection: "Filtered",
+  guide: "Guide",
+};
+
 const state = {
   cards: [],
   guideMemberships: new Map(),
+  guideSelection: null,
   randomOrder: new Map(),
   filters: {
     search: "",
@@ -42,6 +50,7 @@ async function init() {
     loadPublishedCards(),
     loadGuideMemberships(),
   ]);
+  state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
   assignRandomOrder();
   render();
   const catalogSurface = getCatalogSurface();
@@ -705,7 +714,7 @@ function renderCards() {
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
   if (elements.resultCount) elements.resultCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
   updateCollectionHeading(filteredCards.length);
-  updateChecklistButton(filteredCards.length);
+  updateChecklistButton(filteredCards);
   renderActiveFilterControls();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
@@ -907,52 +916,41 @@ function updateCollectionHeading(resultCount) {
   if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
 }
 
-function updateChecklistButton(resultCount) {
-  if (!elements.downloadChecklistButton) return;
+function updateChecklistButton(filteredCards) {
+  const button = elements.downloadChecklistButton;
+  if (!button) return;
   if (state.catalogLoadFailed || !state.cards.length) {
-    elements.downloadChecklistButton.disabled = true;
-    elements.downloadChecklistButton.textContent = "Download checklist";
+    button.disabled = true;
+    button.textContent = "Download checklist";
     return;
   }
-  if (isGuidePage()) {
-    const guideSelection = getGuideCardSelection();
-    const guideCardCount = guideSelection.cards.length;
-    elements.downloadChecklistButton.disabled = !guideSelection.complete || guideCardCount === 0;
-    elements.downloadChecklistButton.textContent = !guideSelection.complete
-      ? "Checklist unavailable"
-      : guideCardCount
-        ? `Download checklist (${guideCardCount})`
-        : "Download checklist";
-    elements.downloadChecklistButton.setAttribute(
-      "aria-label",
-      !guideSelection.complete
-        ? "Unable to match every card in this guide"
-        : guideCardCount
-          ? `Download checklist for all ${guideCardCount} cards in this guide`
-          : "No cards in this guide to download"
-    );
-    return;
+  const checklist = getChecklistContext(filteredCards);
+  const { text, ariaLabel } = describeChecklistButton(checklist);
+  button.disabled = !checklist.complete || !checklist.cards.length;
+  button.textContent = text;
+  button.setAttribute("aria-label", ariaLabel);
+}
+
+function describeChecklistButton(checklist) {
+  const count = checklist.cards.length;
+  if (checklist.scope === "guide") {
+    if (!checklist.complete) {
+      return { text: "Checklist unavailable", ariaLabel: "Unable to match every card in this guide" };
+    }
+    if (!count) return { text: "Download checklist", ariaLabel: "No cards in this guide to download" };
+    return {
+      text: `Download checklist (${count})`,
+      ariaLabel: `Download checklist for all ${count} cards in this guide`,
+    };
   }
-  const isFiltered = hasActiveFilters();
-  if (resultCount === 0) {
-    elements.downloadChecklistButton.disabled = true;
-    elements.downloadChecklistButton.textContent = "Download checklist (0)";
-    elements.downloadChecklistButton.setAttribute("aria-label", "No cards match active filters to download");
-  } else if (isFiltered) {
-    elements.downloadChecklistButton.disabled = false;
-    elements.downloadChecklistButton.textContent = `Download checklist (${resultCount})`;
-    elements.downloadChecklistButton.setAttribute(
-      "aria-label",
-      `Download checklist for ${resultCount} filtered ${resultCount === 1 ? "card" : "cards"}`
-    );
-  } else {
-    elements.downloadChecklistButton.disabled = false;
-    elements.downloadChecklistButton.textContent = `Download checklist (${state.cards.length})`;
-    elements.downloadChecklistButton.setAttribute(
-      "aria-label",
-      `Download checklist for all ${state.cards.length} cards`
-    );
+  if (!count) return { text: "Download checklist (0)", ariaLabel: "No cards match active filters to download" };
+  if (checklist.scope === "full_collection") {
+    return { text: `Download checklist (${count})`, ariaLabel: `Download checklist for all ${count} cards` };
   }
+  return {
+    text: `Download checklist (${count})`,
+    ariaLabel: `Download checklist for ${count} filtered ${count === 1 ? "card" : "cards"}`,
+  };
 }
 
 function assignRandomOrder() {
@@ -1160,19 +1158,12 @@ function slugify(value) {
 
 function downloadChecklist() {
   if (state.catalogLoadFailed || !state.cards.length) return;
-  const guidePage = isGuidePage();
-  const guideSelection = guidePage ? getGuideCardSelection() : null;
-  if (guideSelection && !guideSelection.complete) {
+  const checklist = getChecklistContext();
+  if (!checklist.complete) {
     showToast("Could not match every card in this guide. Please reload before downloading.");
     return;
   }
-  const isFiltered = !guidePage && hasActiveFilters();
-  const hasSearch = !guidePage && Boolean(state.filters.search);
-  const exportCards = guidePage
-    ? guideSelection.cards
-    : isFiltered
-      ? getFilteredCards()
-      : state.cards;
+  const exportCards = checklist.cards;
   if (!exportCards.length) {
     showToast("No cards to download.");
     return;
@@ -1209,44 +1200,59 @@ function downloadChecklist() {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = getChecklistFilename();
+  anchor.download = checklist.filename;
   anchor.style.display = "none";
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   trackEvent("checklist_downloaded", {
-    checklist_scope: guidePage
-      ? "guide"
-      : hasSearch
-        ? "search_results"
-        : isFiltered
-          ? "filtered_collection"
-          : "full_collection",
-    download_surface: guidePage ? "guide_page" : "collection",
+    checklist_scope: checklist.scope,
+    download_surface: checklist.surface,
     card_count: exportCards.length,
     file_format: "csv",
-    interaction_source: guidePage ? "guide_page" : "collection_header",
-    guide_slug: guidePage ? document.body.dataset.guideSlug : undefined,
-    guide_title: guidePage ? document.body.dataset.guideTitle : undefined,
+    interaction_source: checklist.source,
+    guide_slug: checklist.guideSlug,
+    guide_title: checklist.guideTitle,
   });
-  const checklistLabel = guidePage
-    ? "Guide"
-    : hasSearch
-      ? "Search results"
-      : isFiltered
-        ? "Filtered"
-        : "Full collection";
-  showToast(`${checklistLabel} checklist downloaded (${exportCards.length} cards).`);
+  showToast(`${checklist.label} checklist downloaded (${exportCards.length} cards).`);
 }
 
-function getChecklistFilename() {
+// Everything the checklist button, CSV download and analytics need to agree on.
+// filteredCards lets renderCards pass the list it already computed.
+function getChecklistContext(filteredCards) {
   if (isGuidePage()) {
-    const guideSlug = slugify(document.body.dataset.guideSlug);
-    if (guideSlug) return `sleepy-pokemon-${guideSlug}-checklist.csv`;
+    const selection = state.guideSelection || { cards: [], complete: false };
+    const guideSlug = document.body.dataset.guideSlug;
+    const fileSlug = slugify(guideSlug);
+    return {
+      cards: selection.cards,
+      complete: selection.complete,
+      scope: "guide",
+      surface: "guide_page",
+      source: "guide_page",
+      label: CHECKLIST_LABELS.guide,
+      filename: fileSlug ? `sleepy-pokemon-${fileSlug}-checklist.csv` : "sleepy-pokemon-checklist.csv",
+      guideSlug,
+      guideTitle: document.body.dataset.guideTitle,
+    };
   }
   const isFiltered = hasActiveFilters();
-  if (!isFiltered) return "sleepy-pokemon-checklist.csv";
+  const hasSearch = Boolean(state.filters.search);
+  const scope = hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
+  return {
+    cards: isFiltered ? filteredCards || getFilteredCards() : state.cards,
+    complete: true,
+    scope,
+    surface: "collection",
+    source: "collection_header",
+    label: CHECKLIST_LABELS[scope],
+    filename: getCollectionChecklistFilename(),
+  };
+}
+
+function getCollectionChecklistFilename() {
+  if (!hasActiveFilters()) return "sleepy-pokemon-checklist.csv";
 
   const search = state.filters.search.trim();
   if (search) {
