@@ -447,6 +447,22 @@
     display: inline-flex;
   }
 
+  /* Wrap the nav onto its own row and give search the full width, so phones never scroll sideways. */
+  .card-page-shell .topbar-actions {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px 18px;
+  }
+
+  .card-page-shell .header-cta {
+    margin-left: auto;
+  }
+
+  .card-page-shell .header-search {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
   .card-page-shell .header-cta {
     min-height: 40px;
     padding: 9px 13px;

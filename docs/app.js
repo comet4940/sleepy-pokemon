@@ -219,6 +219,14 @@ function bindEvents() {
       });
     });
   });
+  // The header Suggest pill links to collection/?suggest=1; where the form is on the page, open it in place instead.
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-header-suggest]");
+    if (!link || !elements.suggestionDialog) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    openSuggestionDialog();
+  });
   bind(elements.closeSuggestionButton, "click", closeSuggestionDialog);
   bind(elements.suggestionDialog, "click", (event) => {
     if (event.target === elements.suggestionDialog) closeSuggestionDialog();
@@ -262,6 +270,12 @@ function bindEvents() {
 
 function applyInitialSearch() {
   const params = new URLSearchParams(window.location.search);
+  if (params.get("suggest") === "1" && elements.suggestionDialog) {
+    openSuggestionDialog();
+    const url = new URL(window.location.href);
+    url.searchParams.delete("suggest");
+    window.history.replaceState(window.history.state, "", url);
+  }
   const mood = slugify(params.get("mood"));
   if (mood && elements.cardGrid) {
     state.filters.mood = mood;
