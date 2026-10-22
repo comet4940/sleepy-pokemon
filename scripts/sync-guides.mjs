@@ -279,7 +279,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=19"></script>
+    <script src="../../app.js?v=20"></script>
   </body>
 </html>
 `;
@@ -297,7 +297,6 @@ function renderCardDetailDialog() {
           <div class="detail-price-row" id="detailPriceRow"></div>
           <div class="curation-note" id="detailCurationNote"></div>
           <div class="detail-guide-links" id="detailGuideLinks"></div>
-          <div class="curation-facts" id="detailCurationFacts"></div>
           <div class="detail-moods" id="detailMoods"></div>
           <div class="meta-grid" id="detailMetaGrid"></div>
         </div>

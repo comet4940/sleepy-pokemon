@@ -116,7 +116,6 @@ function cacheElements() {
   elements.detailPriceRow = document.querySelector("#detailPriceRow");
   elements.detailCurationNote = document.querySelector("#detailCurationNote");
   elements.detailGuideLinks = document.querySelector("#detailGuideLinks");
-  elements.detailCurationFacts = document.querySelector("#detailCurationFacts");
   elements.detailMoods = document.querySelector("#detailMoods");
   elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
   elements.suggestionDialog = document.querySelector("#suggestionDialog");
@@ -648,14 +647,11 @@ function normalizeCard(card) {
     setReleaseDate: card.setReleaseDate || "",
     priority: card.priority || "Medium",
     notes: card.notes || "",
-    sleepinessBasis: card.sleepinessBasis || card.curation?.sleepinessBasis || "",
-    sleepLocation: card.sleepLocation || card.curation?.sleepLocation || "",
-    sleepiness: card.sleepiness || card.curation?.sleepiness || "",
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
     slug: card.slug || slugify([card.name, card.setName, card.number].filter(Boolean).join(" ")),
-    moods: Array.isArray(card.moods) ? card.moods : (Array.isArray(card.curation?.moods) ? card.curation.moods : deriveMoods(card)),
+    moods: Array.isArray(card.moods) ? card.moods : (Array.isArray(card.curation?.moods) ? card.curation.moods : []),
   };
 }
 
@@ -768,9 +764,8 @@ function getFilteredCards() {
       if (search && !searchable.includes(search)) return false;
       if (state.filters.mood !== "all") {
         const moodMatches = card.moods.some((mood) => slugify(mood) === state.filters.mood);
-        const basisMatches = slugify(card.sleepinessBasis) === state.filters.mood;
         const priceMatches = state.filters.mood === "under-5" && getDisplayPrice(card) > 0 && getDisplayPrice(card) <= 5;
-        if (!moodMatches && !basisMatches && !priceMatches) return false;
+        if (!moodMatches && !priceMatches) return false;
       }
       if (state.filters.pokemon !== "all" && card.pokemon !== state.filters.pokemon) return false;
       if (state.filters.set !== "all" && card.setName !== state.filters.set) return false;
@@ -1060,11 +1055,6 @@ function openCardDetail(card, interactionSource = "unknown") {
   if (elements.detailGuideLinks) {
     elements.detailGuideLinks.innerHTML = renderGuideMemberships(card);
   }
-  elements.detailCurationFacts.innerHTML = [
-    curationFact("Nap classification", card.sleepinessBasis),
-    curationFact("Sleep location", card.sleepLocation),
-    curationSleepinessFact(card.sleepiness),
-  ].filter(Boolean).join("");
   elements.detailMoods.innerHTML = card.moods?.length
     ? card.moods.map((mood) => `<span class="mood-tag">${escapeHtml(formatMoodLabel(mood))}</span>`).join("")
     : "";
@@ -1096,15 +1086,6 @@ function renderGuideMemberships(card) {
   return `<p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${linkedTitles}.</p>`;
 }
 
-function curationSleepinessFact(value) {
-  if (!value) return "";
-  const match = String(value).match(/^(\d+)/);
-  const level = match ? Math.max(0, Math.min(5, Number(match[1]))) : 0;
-  const label = String(value).replace(/^\d+\s*[—-]?\s*/, "");
-  const zzz = Array.from({ length: 5 }, (_, index) => `<span class="sleepiness-zzz${index < level ? " is-filled" : ""}">Z</span>`).join("");
-  return `<div class="curation-fact curation-fact--sleepiness"><span>Sleepiness</span><strong><span class="sleepiness-meter" aria-label="${escapeAttribute(value)}">${zzz}</span><span class="sleepiness-label">${escapeHtml(label || value)}</span></strong></div>`;
-}
-
 function closeCardDetail() {
   elements.cardDetailDialog?.close();
 }
@@ -1122,11 +1103,6 @@ function metaItem(label, value) {
       <strong>${escapeHtml(value || "-")}</strong>
     </div>
   `;
-}
-
-function curationFact(label, value) {
-  if (!value) return "";
-  return `<div class="curation-fact"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`;
 }
 
 function formatMoodLabel(value) {
@@ -1372,21 +1348,6 @@ function trackEvent(eventName, params = {}) {
 function uniqueValues(key) {
   return [...new Set(state.cards.map((card) => card[key]).filter(Boolean))]
     .sort((a, b) => a.localeCompare(b));
-}
-
-function deriveMoods(card) {
-  const text = [card.name, card.pokemon, card.setName, card.notes].join(" ").toLowerCase();
-  const moods = [];
-  const price = getDisplayPrice(card);
-  const tinySnoozers = new Set([
-    "abra", "dedenne", "eevee", "exeggcute", "joltik", "meowth", "pawmi", "pikachu", "skitty", "togepi", "togedemaru",
-  ]);
-
-  if (price > 0 && price <= 5) moods.push("under-5");
-  if (/(group|together|family|friends|pile|team|siblings)/.test(text)) moods.push("group-naps");
-  if (/(grass|forest|garden|field|outdoor|water|beach|sky|meadow|lake)/.test(text)) moods.push("outdoor-sleepers");
-  if (tinySnoozers.has(card.pokemon.toLowerCase())) moods.push("tiny-snoozers");
-  return moods;
 }
 
 function derivePokemonName(name) {

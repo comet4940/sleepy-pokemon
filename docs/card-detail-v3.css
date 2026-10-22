@@ -239,76 +239,8 @@
   color: var(--detail-yellow);
 }
 
-.curation-facts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.curation-facts:empty,
 .detail-moods:empty {
   display: none;
-}
-
-.curation-fact {
-  min-width: 0;
-  padding: 12px 11px;
-  border-top: 2px solid var(--detail-mint);
-  background: rgba(255, 247, 232, .045);
-}
-
-.curation-fact span {
-  display: block;
-  color: var(--detail-muted);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.curation-fact strong {
-  display: block;
-  margin-top: 7px;
-  color: var(--detail-cream);
-  font-size: .85rem;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-}
-
-.curation-fact--sleepiness strong {
-  display: grid;
-  gap: 6px;
-}
-
-.curation-fact .sleepiness-meter {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: flex-end;
-  gap: 3px;
-  width: max-content;
-  min-height: 28px;
-  white-space: nowrap;
-}
-
-.curation-fact .sleepiness-zzz {
-  display: inline-block;
-  color: rgba(255, 247, 232, .2);
-  font: 700 1rem/1 var(--detail-display);
-}
-
-.curation-fact .sleepiness-zzz:nth-child(2) { font-size: 1.08rem; }
-.curation-fact .sleepiness-zzz:nth-child(3) { font-size: 1.16rem; }
-.curation-fact .sleepiness-zzz:nth-child(4) { font-size: 1.24rem; }
-.curation-fact .sleepiness-zzz:nth-child(5) { font-size: 1.32rem; }
-
-.sleepiness-zzz.is-filled {
-  color: var(--detail-pink);
-}
-
-.sleepiness-label {
-  display: block;
-  color: var(--detail-cream);
-  font: inherit;
 }
 
 .detail-image-frame {
@@ -540,10 +472,6 @@
 }
 
 @media (max-width: 430px) {
-  .curation-facts {
-    grid-template-columns: 1fr;
-  }
-
   .card-detail-v3 .meta-grid {
     grid-template-columns: 1fr 1fr;
   }
