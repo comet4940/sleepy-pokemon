@@ -61,8 +61,8 @@ export function renderAboutPage(cardBySlug) {
     <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
     <script defer src="../analytics.js?v=4" data-page-type="about"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
-    <link rel="stylesheet" href="../home-v3.css?v=17" />
-    <link rel="stylesheet" href="../card-detail-v3.css?v=5" />
+    <link rel="stylesheet" href="../home-v3.css?v=18" />
+    <link rel="stylesheet" href="../card-detail-v3.css?v=6" />
     <link rel="stylesheet" href="../about.css?v=2" />
   </head>
   <body data-app-mode="about" data-guide-path="cards.json" data-guides-path="../guides.json" data-site-root="../">

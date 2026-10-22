@@ -492,10 +492,12 @@
 
   .card-page-shell .topbar-actions > a:not(.header-cta) {
     grid-row: 3;
+    align-items: center;
+    min-height: 44px;
   }
 
   .card-page-shell .header-cta {
-    min-height: 40px;
+    min-height: 44px;
     padding: 9px 13px;
     font-size: .78rem;
   }

@@ -249,9 +249,9 @@ a { color: inherit; }
   .brand-lockup h1 { font-size: 1.35rem; white-space: nowrap; }
   .sparkle-mark { flex-basis: 44px; width: 44px; height: 44px; }
   .brand-byline { margin-top: 4px; }
-  .topbar-actions .header-cta { grid-column: 4; grid-row: 1; justify-self: end; min-height: 36px; padding: 0 13px; font-size: .82rem; }
+  .topbar-actions .header-cta { grid-column: 4; grid-row: 1; justify-self: end; min-height: 44px; padding: 0 14px; font-size: .82rem; }
   .topbar-actions .header-search { grid-column: 1 / -1; grid-row: 2; width: 100%; min-width: 0; }
-  .topbar-actions > a:not(.header-cta) { grid-row: 3; }
+  .topbar-actions > a:not(.header-cta) { grid-row: 3; display: inline-flex; align-items: center; min-height: 44px; }
   .sleepy-hero { grid-template-columns: 1fr; min-height: 0; padding: 40px 24px 34px; }
   .hero-copy h2 { font-size: 4rem; }
   .hero-card-stage { min-height: 470px; margin-top: 10px; }
