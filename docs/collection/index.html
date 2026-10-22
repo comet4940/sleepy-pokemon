@@ -36,7 +36,7 @@
     </script>
     <script defer src="../analytics.js?v=4" data-page-type="collection"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
-    <link rel="stylesheet" href="../home-v3.css?v=18" />
+    <link rel="stylesheet" href="../home-v3.css?v=19" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=6" />
     <link rel="stylesheet" href="../filter-drawer.css?v=1" />
   </head>
@@ -99,6 +99,7 @@
           <div class="collection-controls" aria-label="Collection filters">
             <div class="collection-filter-row">
               <div class="mood-chips" id="moodChips" aria-label="Collection filters">
+                <button class="mood-chip more-chip" id="openFiltersButton" type="button" aria-haspopup="dialog">All filters</button>
                 <span class="active-filter-chip" id="activeSearchChip" hidden></span>
                 <span id="activeAdvancedFilters" class="active-filter-group" aria-label="Active advanced filters"></span>
                 <button class="mood-chip" type="button" data-mood="under-5">under $5</button>
@@ -107,7 +108,6 @@
                 <button class="mood-chip" type="button" data-mood="snow-naps">snow naps</button>
                 <button class="mood-chip" type="button" data-mood="food-coma">food coma</button>
                 <button class="mood-chip" type="button" data-mood="sleepy-trainers">sleepy trainers</button>
-                <button class="mood-chip more-chip" id="openFiltersButton" type="button" aria-haspopup="dialog">All filters</button>
                 <button class="clear-filters-link" id="clearFiltersLink" type="button" hidden>Clear all</button>
               </div>
             </div>
