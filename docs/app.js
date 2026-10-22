@@ -697,7 +697,7 @@ function renderFilters() {
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
   elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === state.filters.mood));
   const drawerFilterCount = ["set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
-  if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `Filters · ${drawerFilterCount}` : "Filters";
+  if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
   ["mood", "rarity", "set", "language", "maxPrice", "sort"].forEach(renderDrawerOptions);
   renderDrawerShowButton();
 }

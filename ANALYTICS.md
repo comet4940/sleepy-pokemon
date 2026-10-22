@@ -50,7 +50,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `search_submitted` | A non-empty global-header search is submitted | `interaction_source`, `query_length` |
 | `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count` |
 | `search_cleared` | The active query is removed | `result_count` |
-| `filters_opened` | The filter drawer opens (the **Filters** button on the collection) | none beyond shared parameters |
+| `filters_opened` | The filter drawer opens (the **All filters** button on the collection) | none beyond shared parameters |
 | `filters_modal_bounced` | The filter drawer is closed without modifying any filter | `had_active_filters`, `active_filter_count` |
 | `filters_modal_applied` | The filter drawer is closed after modifying one or more filters | `changes_count`, `active_filter_count`, `result_count` |
 | `filter_changed` | A mood, set, rarity, language, or price filter changes. Rarity values are drawer groups (`common`, `uncommon`, `rare-holo`, `illustration-rare`, `ultra-secret`, `trainer-gallery`, `promo`); price values are the max price (`5`, `10`, `25`, `50`) | `filter_name`, `filter_value`, `filter_action`, `result_count` |
