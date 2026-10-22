@@ -20,7 +20,6 @@ const PRICE_OPTIONS = [
 const DRAWER_PREVIEW_LIMITS = { mood: 8, set: 12 };
 const SORT_OPTIONS = [
   { value: "random", label: "Shuffle" },
-  { value: "priority", label: "Curated" },
   { value: "newest", label: "Newest sets" },
   { value: "price-low", label: "Price: low to high" },
   { value: "price-high", label: "Price: high to low" },
