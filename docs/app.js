@@ -174,8 +174,8 @@ function bindEvents() {
       state.filters.mood = chip.classList.contains("is-active") ? "all" : (chip.dataset.mood || "all");
       state.showAllCards = true;
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
-      elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip && state.filters.mood !== "all"));
-      renderCards();
+      // render() also refreshes the All filters count and the drawer, not just the cards.
+      render();
       const moodAction = state.filters.mood === "all" ? "removed" : "applied";
       const resultCount = getFilteredCards().length;
       trackEvent("filter_changed", {
@@ -696,7 +696,8 @@ function renderFilters() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
   elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === state.filters.mood));
-  const drawerFilterCount = ["set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
+  // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
+  const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
   ["mood", "rarity", "set", "language", "maxPrice", "sort"].forEach(renderDrawerOptions);
   renderDrawerShowButton();
