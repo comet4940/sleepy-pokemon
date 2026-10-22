@@ -16,10 +16,6 @@ export function renderSiteHeader(basePath = "") {
           </div>
         </a>
         <nav class="topbar-actions" aria-label="Main navigation">
-          <a href="${basePath}collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
-          <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
-          <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
-          <a class="header-cta" href="${basePath}collection/?suggest=1" data-header-suggest data-analytics-event="suggestion_opened" data-analytics-source="global_header" data-analytics-destination="suggestion_form"><span aria-hidden="true">✦</span> Suggest</a>
           <form class="header-search" action="${basePath}collection/" method="get" role="search" data-header-search>
             <label class="header-search-field">
               <span class="sr-only">Search sleepy Pokemon cards</span>
@@ -33,6 +29,10 @@ export function renderSiteHeader(basePath = "") {
               </button>
             </label>
           </form>
+          <a href="${basePath}collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
+          <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
+          <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
+          <a class="header-cta" href="${basePath}collection/?suggest=1" data-header-suggest data-analytics-event="suggestion_opened" data-analytics-source="global_header" data-analytics-destination="suggestion_form"><span aria-hidden="true">✦</span> Suggest</a>
         </nav>
       </header>
 `.trim();

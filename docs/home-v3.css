@@ -242,10 +242,16 @@ a { color: inherit; }
 
 @media (max-width: 800px) {
   .app-shell { width: 100%; padding: 0; }
-  .topbar { width: 100%; box-sizing: border-box; align-items: flex-start; flex-wrap: wrap; border-radius: 0; padding: 18px 18px; }
-  .topbar-actions { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); width: 100%; min-width: 0; justify-content: flex-start; gap: 14px; }
-  .topbar-actions .header-search { grid-column: 1 / -1; width: 100%; min-width: 0; }
-  .topbar-actions .header-cta { justify-self: end; min-height: 36px; padding: 0 13px; font-size: .82rem; }
+  /* Phones: logo + Suggest on top, full-width search next, then the quiet nav links. */
+  .topbar { width: 100%; box-sizing: border-box; display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 14px 18px; border-radius: 0; padding: 16px 18px; }
+  .topbar-actions { display: contents; }
+  .brand-lockup { grid-column: 1 / 4; grid-row: 1; min-width: 0; gap: 10px; }
+  .brand-lockup h1 { font-size: 1.35rem; white-space: nowrap; }
+  .sparkle-mark { flex-basis: 44px; width: 44px; height: 44px; }
+  .brand-byline { margin-top: 4px; }
+  .topbar-actions .header-cta { grid-column: 4; grid-row: 1; justify-self: end; min-height: 36px; padding: 0 13px; font-size: .82rem; }
+  .topbar-actions .header-search { grid-column: 1 / -1; grid-row: 2; width: 100%; min-width: 0; }
+  .topbar-actions > a:not(.header-cta) { grid-row: 3; }
   .sleepy-hero { grid-template-columns: 1fr; min-height: 0; padding: 40px 24px 34px; }
   .hero-copy h2 { font-size: 4rem; }
   .hero-card-stage { min-height: 470px; margin-top: 10px; }

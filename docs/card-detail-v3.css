@@ -447,20 +447,51 @@
     display: inline-flex;
   }
 
-  /* Wrap the nav onto its own row and give search the full width, so phones never scroll sideways. */
+  /* Phones: logo + Suggest on top, full-width search next, then the quiet nav links (matches home-v3.css). */
+  .card-page-shell .topbar {
+    display: grid;
+    grid-template-columns: auto auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px 18px;
+  }
+
   .card-page-shell .topbar-actions {
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px 18px;
+    display: contents;
+  }
+
+  .card-page-shell .brand-lockup {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .card-page-shell .brand-lockup h1 {
+    font-size: 1.35rem;
+    white-space: nowrap;
+  }
+
+  .card-page-shell .sparkle-mark {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
   }
 
   .card-page-shell .header-cta {
-    margin-left: auto;
+    grid-column: 4;
+    grid-row: 1;
+    justify-self: end;
   }
 
   .card-page-shell .header-search {
-    flex: 1 1 100%;
+    grid-column: 1 / -1;
+    grid-row: 2;
     width: 100%;
+    min-width: 0;
+  }
+
+  .card-page-shell .topbar-actions > a:not(.header-cta) {
+    grid-row: 3;
   }
 
   .card-page-shell .header-cta {

@@ -181,7 +181,7 @@ function renderCardPage(card, memberships) {
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
     <script defer src="../../analytics.js?v=4" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=4" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=5" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
