@@ -273,6 +273,23 @@
   background: rgba(167, 232, 212, .12);
 }
 
+/* Mood pills are links: give touch screens a 44px tap target without changing how the pill looks. */
+@media (pointer: coarse) {
+  .detail-moods {
+    row-gap: 14px;
+  }
+
+  .mood-tag {
+    position: relative;
+  }
+
+  .mood-tag::before {
+    content: "";
+    position: absolute;
+    inset: -7px -4px;
+  }
+}
+
 .card-detail-v3 .meta-grid {
   gap: 8px;
 }

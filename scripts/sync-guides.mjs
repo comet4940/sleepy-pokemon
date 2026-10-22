@@ -246,7 +246,7 @@ function renderGuidePage(guide) {
     <link rel="stylesheet" href="../../styles.css?v=4" />
     <link rel="stylesheet" href="../../home-v3.css?v=15" />
     <link rel="stylesheet" href="../../guides.css?v=2" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=2" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=3" />
   </head>
   <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
