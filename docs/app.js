@@ -1453,6 +1453,7 @@ function clearFilters() {
     sort: PUBLIC_DEFAULT_SORT,
   };
   state.showAllCards = false;
+  if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   syncSearchUrl("");
