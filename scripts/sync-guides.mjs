@@ -285,7 +285,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=23"></script>
+    <script src="../../app.js?v=24"></script>
   </body>
 </html>
 `;

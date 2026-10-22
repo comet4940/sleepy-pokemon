@@ -1035,6 +1035,8 @@ function handleCardGridClick(event) {
 }
 
 function handleGuideCardClick(event) {
+  // Let modified and non-primary clicks open the card page in a new tab or window.
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const link = event.target.closest(".guide-card a[data-card-id], .about-main a[data-card-id]");
   if (!link) return;
   const card = findCardByIdentity(link.dataset.cardId);
