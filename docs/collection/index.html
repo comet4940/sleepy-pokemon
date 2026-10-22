@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="stylesheet" href="../home-v3.css?v=18" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=6" />
+    <link rel="stylesheet" href="../filter-drawer.css?v=1" />
   </head>
   <body data-app-mode="collection" data-guide-path="../published-cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell collection-page-shell">
@@ -106,7 +107,7 @@
                 <button class="mood-chip" type="button" data-mood="snow-naps">snow naps</button>
                 <button class="mood-chip" type="button" data-mood="food-coma">food coma</button>
                 <button class="mood-chip" type="button" data-mood="sleepy-trainers">sleepy trainers</button>
-                <button class="mood-chip more-chip" id="openFiltersButton" type="button">More filters</button>
+                <button class="mood-chip more-chip" id="openFiltersButton" type="button" aria-haspopup="dialog">Filters</button>
                 <button class="clear-filters-link" id="clearFiltersLink" type="button" hidden>Clear all</button>
               </div>
             </div>
@@ -392,46 +393,46 @@
       <!-- SITE_FOOTER_END -->
     </div>
 
-    <dialog id="filtersDialog" class="filters-dialog">
-      <form method="dialog" class="filters-panel" aria-label="Refine collection">
-        <div class="filter-heading">
-          <div>
-            <p class="eyebrow">Refine view</p>
-            <h2>Refine the sleepy stack</h2>
-          </div>
-          <div class="filter-heading-actions">
-            <button id="clearFiltersButton" class="link-button" type="button">Clear all</button>
-            <button class="icon-button" id="closeFiltersButton" value="cancel" aria-label="Close filters" type="submit">x</button>
-          </div>
+    <dialog id="filtersDialog" class="filter-drawer" aria-labelledby="filterDrawerTitle">
+      <div class="drawer-panel">
+        <div class="drawer-grab" aria-hidden="true"></div>
+        <div class="drawer-head">
+          <h2 id="filterDrawerTitle" tabindex="-1">Filters &amp; sort</h2>
+          <button id="clearFiltersButton" class="drawer-reset" type="button">Reset</button>
+          <button id="closeFiltersButton" class="drawer-close" type="button" aria-label="Close filters">&times;</button>
         </div>
-
-        <div class="filter-group">
-          <p class="filter-group-label">Card details</p>
-          <label class="field compact-field"><span>Pokemon</span><select id="pokemonFilter"></select></label>
-          <label class="field compact-field"><span>Set</span><select id="setFilter"></select></label>
-          <label class="field compact-field"><span>Rarity</span><select id="rarityFilter"></select></label>
-          <label class="field compact-field"><span>Language</span><select id="languageFilter"></select></label>
+        <div class="drawer-body" id="filterDrawerBody">
+          <section class="drawer-section" aria-labelledby="drawerMoodTitle">
+            <h3 id="drawerMoodTitle">Mood</h3>
+            <div class="drawer-options" data-filter-options="mood"></div>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerRarityTitle">
+            <h3 id="drawerRarityTitle">Rarity</h3>
+            <div class="drawer-options" data-filter-options="rarity"></div>
+            <p class="drawer-hint">Illustration Rare includes Special Illustration Rare and Art Rare. Ultra &amp; Secret includes Secret, Rainbow, Triple, VMAX and Pikachu Rare.</p>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerSetTitle">
+            <h3 id="drawerSetTitle">Set</h3>
+            <input class="drawer-set-search" id="drawerSetSearch" type="search" placeholder="Find a set" aria-label="Find a set" autocomplete="off" />
+            <div class="drawer-options drawer-sets" data-filter-options="set"></div>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerLanguageTitle">
+            <h3 id="drawerLanguageTitle">Language</h3>
+            <div class="drawer-options" data-filter-options="language"></div>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerPriceTitle">
+            <h3 id="drawerPriceTitle">Price</h3>
+            <div class="drawer-options" data-filter-options="maxPrice"></div>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerSortTitle">
+            <h3 id="drawerSortTitle">Sort</h3>
+            <div class="drawer-options" data-filter-options="sort"></div>
+          </section>
         </div>
-
-        <div class="filter-group filter-group-secondary">
-          <p class="filter-group-label">Sort</p>
-          <label class="field compact-field"><span>Order</span><select id="sortSelect">
-            <option value="random">Shuffle each visit</option>
-            <option value="priority">Curated order</option>
-            <option value="price-low">Price low-high</option>
-            <option value="price-high">Price high-low</option>
-            <option value="pokemon">Pokemon A-Z</option>
-            <option value="language">Language A-Z</option>
-            <option value="set">Set A-Z</option>
-            <option value="newest">Newest release</option>
-          </select></label>
+        <div class="drawer-foot">
+          <button class="drawer-show" id="drawerShowButton" type="button">Show sleepers</button>
         </div>
-
-        <div class="filter-group filter-group-secondary">
-          <p class="filter-group-label">Price</p>
-          <label class="field compact-field"><span>Max price</span><input id="maxPriceFilter" type="number" min="0" step="1" placeholder="Any" /></label>
-        </div>
-      </form>
+      </div>
     </dialog>
 
     <dialog id="suggestionDialog" class="suggestion-dialog">
@@ -472,6 +473,6 @@
     </dialog>
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=27"></script>
+    <script src="../app.js?v=28"></script>
   </body>
 </html>

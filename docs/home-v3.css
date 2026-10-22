@@ -121,18 +121,6 @@ a { color: inherit; }
 .collection-page-main .mood-chips { flex-wrap: nowrap; align-items: center; min-width: 0; max-width: 100%; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 .collection-sort-control { display: flex; align-items: center; flex: 0 0 auto; gap: 10px; color: var(--muted-cream); font-size: .8rem; }
 .collection-sort-control select { min-height: 44px; padding: 0 34px 0 14px; border: 1px solid rgba(255,247,232,.2); border-radius: 22px; background: #191927; color: var(--cream); font: inherit; }
-.filters-dialog .filters-panel { color: var(--cream); background: #171724; }
-.filters-dialog .filter-heading { border-color: var(--hairline); }
-.filters-dialog .filter-heading h2 { color: var(--cream); font-family: var(--display); font-weight: 500; }
-.filters-dialog .filter-heading .eyebrow, .filters-dialog .filter-group-label { color: var(--pink); }
-.filters-dialog .filter-group { border-color: var(--hairline); background: rgba(255,247,232,.035); }
-.filters-dialog .field span { color: var(--muted-cream); }
-.filters-dialog .field select, .filters-dialog .field input { border-color: rgba(255,247,232,.2); background: #101019; color: var(--cream); color-scheme: dark; }
-.filters-dialog .field input::placeholder { color: rgba(185,182,199,.72); }
-.filters-dialog .field select:focus-visible, .filters-dialog .field input:focus-visible { border-color: var(--pink); outline-color: rgba(243,107,155,.28); }
-.filters-dialog .link-button { color: var(--mint); }
-.filters-dialog .icon-button { border-color: rgba(255,247,232,.22); background: #101019; color: var(--cream); }
-.filters-dialog .filter-group-secondary { grid-template-columns: minmax(0, 1fr); }
 .view-all-link { display: inline-flex; }
 .view-all-link { color: var(--muted-cream); font-size: .9rem; text-decoration: none; }
 .active-filter-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; min-height: 46px; padding: 0 14px 0 18px; border: 1px solid var(--pink); border-radius: 24px; background: rgba(243,107,155,.88); color: #321624; font-size: .9rem; }

@@ -50,11 +50,11 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `search_submitted` | A non-empty global-header search is submitted | `interaction_source`, `query_length` |
 | `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count` |
 | `search_cleared` | The active query is removed | `result_count` |
-| `filters_opened` | The More filters dialog opens | none beyond shared parameters |
-| `filters_modal_bounced` | The More filters dialog is closed without modifying any filter | `had_active_filters`, `active_filter_count` |
-| `filters_modal_applied` | The More filters dialog is closed after modifying one or more filters | `changes_count`, `active_filter_count`, `result_count` |
-| `filter_changed` | A mood, Pokemon, set, rarity, language, or price filter changes | `filter_name`, `filter_value`, `filter_action`, `result_count` |
-| `filter_facet_<facet>` | Direct facet event (`mood`, `pokemon`, `set`, `rarity`, `language`, `maxPrice`) | `filter_action`, `filter_value`, `result_count` |
+| `filters_opened` | The filter drawer opens (the **Filters** button on the collection) | none beyond shared parameters |
+| `filters_modal_bounced` | The filter drawer is closed without modifying any filter | `had_active_filters`, `active_filter_count` |
+| `filters_modal_applied` | The filter drawer is closed after modifying one or more filters | `changes_count`, `active_filter_count`, `result_count` |
+| `filter_changed` | A mood, set, rarity, language, or price filter changes. Rarity values are drawer groups (`common`, `uncommon`, `rare-holo`, `illustration-rare`, `ultra-secret`, `trainer-gallery`, `promo`); price values are the max price (`5`, `10`, `25`, `50`) | `filter_name`, `filter_value`, `filter_action`, `result_count` |
+| `filter_facet_<facet>` | Direct facet event (`mood`, `set`, `rarity`, `language`, `maxPrice`; `pokemon` was retired with the filter drawer) | `filter_action`, `filter_value`, `result_count` |
 | `filter_chip_removed` | An active filter pill is dismissed directly from the collection filter row | `filter_name`, `result_count` |
 | `sort_changed` | Collection order changes | `filter_name`, `filter_value`, `filter_action`, `result_count` |
 | `filters_cleared` | All active collection filters are cleared | `active_filter_count`, `result_count` |
