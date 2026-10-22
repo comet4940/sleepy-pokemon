@@ -25,10 +25,10 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
 
 ## ✨ Key Features
 
-- **Handmade Nap Moods**: Each card carries up to three hand-picked moods for specific, visible scenes, such as *Nap Watch* (awake Pokémon around the sleeper), *Beach Naps* or *Snow Naps*, plus a curator's note on why it belongs. Moods are optional; the full list lives in `scripts/moods.mjs`.
+- **Handmade Nap Moods**: Each card carries hand-picked moods for specific, visible things in the art, such as *Belly Up*, *Nap Watch* (awake Pokémon around the sleeper) or *Snow Naps*, plus a curator's note on why it belongs. A mood is only tagged when it truly shows; moods are optional and the full list lives in `scripts/moods.mjs`.
 - **Interactive Browsing & Search**:
   - Live search across Pokémon names, card titles, set names, and card numbers.
-  - Filter by **Moods** (*Cozy Corners*, *Group Naps*, *Tiny Tuck-Ins*, *Dream Sequence*, *Nap Watch*, *Beach Naps*, *Snow Naps*, *Cameo Sleepers*, *Food Coma*, *Sleepy Trainers*).
+  - Filter by **Moods** (*Group Naps*, *Nap Watch*, *Dream Sequence*, *Cameo Sleepers*, *Sleepy Trainers*, *Food Coma*, *Belly Up*, *Face-Plant*, *Propped Up*, *Hug Buddy*, *Pokémon Pillow*, *Drool & Snore*, *Bedtime*, *Couch & Cushion*, *Study Break*, *Flower Beds*, *Treetop Naps*, *Water Naps*, *Beach Naps*, *Snow Naps*, *Autumn Leaves*, *Sunbeam Naps*, *Moonlit Naps*, *Town Naps*, *Handmade*).
   - Sort by price, Pokémon, language, set, newest release, or curated order.
   - Price ceiling slider to help collectors find budget-friendly binder picks.
 - **Themed Collector Guides**: Editorial lists highlighting standout cards, cameos, and curated sub-themes (e.g. *Best Sleepy Pokemon Cards*, *The Sleepiest of Pikachus*, *Sleepy Cat Pokemon Cards*).

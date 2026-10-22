@@ -3,7 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
-import { MAX_MOODS_PER_CARD, MOODS } from "./moods.mjs";
+import { MOODS } from "./moods.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -142,7 +142,6 @@ function checkCardMoods() {
     const unknown = card.moods.filter((mood) => !MOODS.includes(mood));
     if (unknown.length) errors.push(`${label} has unknown moods: ${unknown.join(", ")}`);
     if (new Set(card.moods).size !== card.moods.length) errors.push(`${label} lists a mood twice`);
-    if (card.moods.length > MAX_MOODS_PER_CARD) errors.push(`${label} has ${card.moods.length} moods; the limit is ${MAX_MOODS_PER_CARD}`);
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
