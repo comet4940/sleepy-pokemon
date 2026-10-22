@@ -219,13 +219,14 @@ function bindEvents() {
       });
     });
   });
-  // The header Suggest pill links to collection/?suggest=1; where the form is on the page, open it in place instead.
+  // The header Suggest pill links to collection/?suggest=header; where the form is on the page, open it in place instead.
   document.addEventListener("click", (event) => {
     const link = event.target.closest("[data-header-suggest]");
     if (!link || !elements.suggestionDialog) return;
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     openSuggestionDialog();
+    trackEvent("suggestion_opened", { interaction_source: "global_header" });
   });
   bind(elements.closeSuggestionButton, "click", closeSuggestionDialog);
   bind(elements.suggestionDialog, "click", (event) => {
@@ -270,10 +271,11 @@ function bindEvents() {
 
 function applyInitialSearch() {
   const params = new URLSearchParams(window.location.search);
-  if (params.get("suggest") === "1" && elements.suggestionDialog) {
+  const suggest = params.get("suggest");
+  if (suggest && elements.suggestionDialog) {
     openSuggestionDialog();
-    // A header pill click on another page was already tracked; count direct visits (shared or bookmarked links) here.
-    if (!isSameSiteReferrer()) trackEvent("suggestion_opened", { interaction_source: "suggest_link" });
+    // Each form open is tracked once, here: ?suggest=header comes from the header pill, anything else is a shared or bookmarked link.
+    trackEvent("suggestion_opened", { interaction_source: suggest === "header" ? "global_header" : "suggest_link" });
     const url = new URL(window.location.href);
     url.searchParams.delete("suggest");
     window.history.replaceState(window.history.state, "", url);
@@ -290,14 +292,6 @@ function applyInitialSearch() {
   state.showAllCards = true;
   if (elements.searchFilter) elements.searchFilter.value = query;
   if (elements.headerSearchInput) elements.headerSearchInput.value = query;
-}
-
-function isSameSiteReferrer() {
-  try {
-    return Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
-  } catch (error) {
-    return false;
-  }
 }
 
 function handleHeaderSearchSubmit(event) {
