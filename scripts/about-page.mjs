@@ -1,5 +1,7 @@
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
+import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
+import { getCardIdentity } from "./card-identity.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const INSTAGRAM_URL = "https://www.instagram.com/sprigatitosquad/";
@@ -59,9 +61,10 @@ export function renderAboutPage(cardBySlug) {
     <script defer src="../analytics.js?v=4" data-page-type="about"></script>
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="stylesheet" href="../home-v3.css?v=15" />
+    <link rel="stylesheet" href="../card-detail-v3.css?v=3" />
     <link rel="stylesheet" href="../about.css?v=1" />
   </head>
-  <body data-app-mode="about">
+  <body data-app-mode="about" data-guide-path="../published-cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell about-shell">
       ${renderSiteHeader("../")}
       <main class="about-main">
@@ -134,6 +137,8 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
       </main>
 ${renderSiteFooter()}
     </div>
+    ${renderCardDetailDialog()}
+    <script src="../app.js?v=23"></script>
   </body>
 </html>
 `;
@@ -169,8 +174,9 @@ function renderCardImage(card) {
     : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
 }
 
+// app.js opens these links in the card lightbox and tracks card_opened with this source; the href stays for crawlers and new tabs.
 function cardLinkAnalytics(card, source) {
-  return `data-analytics-event="navigation_clicked" data-analytics-source="${source}" data-analytics-destination="card_page" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}" data-analytics-card-number="${escapeAttribute(card.number || "")}"`;
+  return `data-card-id="${escapeAttribute(getCardIdentity(card))}" data-lightbox-source="${source}"`;
 }
 
 function escapeHtml(value) {

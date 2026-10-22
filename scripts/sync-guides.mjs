@@ -3,6 +3,7 @@ import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
 import { renderAboutPage } from "./about-page.mjs";
+import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
@@ -284,30 +285,12 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=22"></script>
+    <script src="../../app.js?v=23"></script>
   </body>
 </html>
 `;
 }
 
-function renderCardDetailDialog() {
-  return `<dialog id="cardDetailDialog" class="card-detail-dialog">
-      <div class="card-detail-frame card-detail-v3">
-        <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">×</button>
-        <div class="detail-art-column"><div class="detail-image-frame" id="detailImageFrame"></div></div>
-        <div class="detail-copy">
-          <p class="detail-kicker" id="detailEyebrow">Caught napping</p>
-          <h2 id="detailTitle"></h2>
-          <p class="card-subtitle" id="detailSubtitle"></p>
-          <div class="detail-price-row" id="detailPriceRow"></div>
-          <div class="curation-note" id="detailCurationNote"></div>
-          <div class="detail-guide-links" id="detailGuideLinks"></div>
-          <div class="detail-moods" id="detailMoods"></div>
-          <div class="meta-grid" id="detailMetaGrid"></div>
-        </div>
-      </div>
-    </dialog>`;
-}
 
 function renderGuideCard(entry, index, guideSlug, guideTitle) {
   const card = entry.card;

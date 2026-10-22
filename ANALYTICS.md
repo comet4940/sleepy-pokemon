@@ -32,9 +32,9 @@ Every product event includes `page_type` and `analytics_version` automatically.
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) and About page links (`about_page`, plus `about_favorite`, `about_origin`, `about_current_chase` and `about_current_chase_art` for card links) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only), `card_name`, `card_set` and `card_number` (About page card links only) |
+| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) and About page links (`about_page`) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
-| `card_opened` | A card opens in the detail lightbox | card parameters, `interaction_source` |
+| `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) | card parameters, `interaction_source` |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
 | `card_page_view` | A crawlable card page loads | card parameters |
 | `guide_opened` | A guide link is selected | `guide_slug`, `guide_title`, `interaction_source`, `destination_path` |
