@@ -836,11 +836,16 @@ function renderActiveFilterControls() {
     ].filter(([, element]) => element?.value && element.value !== "all");
 
     if (state.filters.maxPrice) advancedFilters.push(["maxPrice", elements.maxPriceFilter]);
+    // A mood opened from a card pill may have no mood chip of its own, so show it as a removable chip.
+    const moodHasChip = elements.moodChips.some((chip) => chip.dataset.mood === state.filters.mood);
+    if (state.filters.mood !== "all" && !moodHasChip) advancedFilters.unshift(["mood", null]);
     elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map(([key, element]) => {
       const chip = document.createElement("span");
       chip.className = "active-filter-chip";
-      const label = key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
-      chip.append(document.createTextNode(label || element.value));
+      const label = key === "mood"
+        ? getMoodLabel(state.filters.mood)
+        : key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
+      chip.append(document.createTextNode(label || element?.value || state.filters[key]));
       const removeButton = document.createElement("button");
       removeButton.type = "button";
       removeButton.setAttribute("aria-label", `Remove ${label || "filter"} filter`);
