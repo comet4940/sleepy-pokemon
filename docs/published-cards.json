@@ -229,7 +229,7 @@
       "name": "Horsea",
       "pokemon": "Horsea",
       "setName": "Aquapolis",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard2",
       "number": "84/147",
       "rarity": "Common",
@@ -246,7 +246,7 @@
       ],
       "whyItBelongs": "Horsea is stretched out with its snout resting on top of a Shellder and its eyes shut tight, completely content. Shellder is much less thrilled. It’s glaring out from under its shell with its tongue sticking out and a sweat drop on its brow, clearly aware it has been turned into a pillow and clearly unable to do anything about it. Behind them are swaying seaweed, a few rocks and a bubble trail drifting up, so the whole scene feels like a calm, slightly comic corner of the seafloor.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-22T15:51:48.793Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "priceMarket": 9.58,
       "priceLow": 4.99,
       "priceMid": 9.45,
@@ -463,7 +463,7 @@
       "name": "Snorlax",
       "pokemon": "Snorlax",
       "setName": "Skyridge",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard3",
       "number": "100/144",
       "rarity": "Common",
@@ -479,7 +479,7 @@
       ],
       "whyItBelongs": "Snorlax is relaxing in a hot spring with only its big face above the surface, and steam curls up around it from the warm water. Far off in the distance, snowy mountains fade into the haze. Its eyes are shut in two flat lines, its small fangs show, and its expression says it has no plans to leave. The scenery is cool and quiet, but Snorlax is clearly the one who found the warmest spot around.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-21T15:55:45.877Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "priceMarket": 179.36,
       "priceLow": 149.95,
       "priceMid": 220,
@@ -624,7 +624,7 @@
       "tcgdexId": "",
       "name": "Snorlax",
       "pokemon": "Snorlax",
-      "setName": "Sword & Shield Promos",
+      "setName": "SWSH Black Star Promos",
       "setSeries": "Sword & Shield",
       "setId": "swshp",
       "number": "SWSH032",
@@ -644,14 +644,15 @@
       ],
       "whyItBelongs": "A soft night sky, a cozy patch of ground, and Snorlax sleeping through it all. A classic little bedtime scene.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-22T19:36:42.825Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "priceMarket": 32.93,
       "priceLow": 32.78,
       "priceMid": 41,
       "priceHigh": 245.8,
       "priceType": "holofoil",
       "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15"
+      "priceUpdatedAt": "2026/10/15",
+      "slug": "snorlax-sword-and-shield-promos-swsh032"
     },
     {
       "apiId": "",
@@ -1122,7 +1123,7 @@
       "tcgdexId": "",
       "name": "Eevee",
       "pokemon": "Eevee",
-      "setName": "Scarlet & Violet Promos",
+      "setName": "Scarlet & Violet Black Star Promos",
       "setSeries": "Scarlet & Violet",
       "setId": "svp",
       "number": "173/150",
@@ -1142,12 +1143,13 @@
       "priority": "Medium",
       "notes": "Eevee from Scarlet & Violet Promos 173/150 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a promo card, it brings a slightly different collecting path than main-set sleepy Pokemon cards. The card is illustrated by Makura Tami, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-07T03:40:48.216Z",
-      "updatedAt": "2026-10-16T15:21:30.682Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Belly Up",
         "Couch & Cushion"
       ],
-      "whyItBelongs": "Cozy nap curled on a sunny cushion. Eevee rolled into a soft cinnamon loaf next to tea is promo perfection for any cozy binder page."
+      "whyItBelongs": "Cozy nap curled on a sunny cushion. Eevee rolled into a soft cinnamon loaf next to tea is promo perfection for any cozy binder page.",
+      "slug": "eevee-scarlet-and-violet-promos-173-150"
     },
     {
       "apiId": "ex3-55",
@@ -1819,7 +1821,7 @@
       "name": "Slowpoke",
       "pokemon": "Slowpoke",
       "setName": "Aquapolis",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard2",
       "number": "108/147",
       "rarity": "Common",
@@ -1838,7 +1840,7 @@
       "priority": "Medium",
       "notes": "Slowpoke from Aquapolis 108/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Aya Kusube, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:26:34.911Z",
-      "updatedAt": "2026-10-15T15:35:44.131Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Face-Plant"
       ],
@@ -2383,7 +2385,7 @@
       "name": "Bulbasaur",
       "pokemon": "Bulbasaur",
       "setName": "Expedition Base Set",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard1",
       "number": "94/165",
       "rarity": "Common",
@@ -2402,7 +2404,7 @@
       "priority": "Medium",
       "notes": "Bulbasaur from Expedition Base Set 94/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sachi Matoba, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T01:57:08.681Z",
-      "updatedAt": "2026-10-18T14:33:37.247Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Belly Up",
         "Flower Beds"
@@ -2570,7 +2572,7 @@
       "name": "Umbreon",
       "pokemon": "Umbreon",
       "setName": "Gem Pack Volume 2",
-      "setSeries": "",
+      "setSeries": "Other",
       "setId": "",
       "number": "06 15/15",
       "rarity": "Secret Rare",
@@ -2589,7 +2591,7 @@
       "priority": "Medium",
       "notes": "Umbreon from Gem Pack Volume 2 06 15/15 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Secret Rare, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Hyogonosuke, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Because current pricing is unclear, it is worth checking recent listings before adding it to a wishlist or binder plan. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier. This entry is tracked as a Chinese card, which may matter for collectors comparing international printings.",
       "createdAt": "2026-05-05T22:40:17.426Z",
-      "updatedAt": "2026-10-22T19:54:59.748Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Sunbeam Naps"
       ],
@@ -3175,7 +3177,7 @@
       "name": "Drowzee",
       "pokemon": "Drowzee",
       "setName": "Aquapolis",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard2",
       "number": "74/147",
       "rarity": "Common",
@@ -3194,7 +3196,7 @@
       "priority": "Medium",
       "notes": "Drowzee from Aquapolis 74/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:22:14.204Z",
-      "updatedAt": "2026-10-15T15:37:12.507Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Belly Up",
         "Town Naps"
@@ -3207,7 +3209,7 @@
       "name": "Corsola",
       "pokemon": "Corsola",
       "setName": "Expedition Base Set",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard1",
       "number": "102/165",
       "rarity": "Common",
@@ -3226,7 +3228,7 @@
       "priority": "Medium",
       "notes": "Corsola from Expedition Base Set 102/165 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-05T21:21:43.116Z",
-      "updatedAt": "2026-10-15T15:37:12.708Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Water Naps"
       ],
@@ -5096,8 +5098,8 @@
       "tcgdexId": "",
       "name": "Whitney's Furret",
       "pokemon": "Furret",
-      "setName": "Pokemon VS",
-      "setSeries": "VS",
+      "setName": "Pokémon VS",
+      "setSeries": "Pokémon VS",
       "setId": "vs1_jp",
       "number": "018/141",
       "rarity": "Common",
@@ -5116,9 +5118,10 @@
       "priority": "Medium",
       "notes": "Whitney's Furret from Pokemon VS 018/141 is included in this guide because the artwork shows Furret asleep on the ground, a gentle older Japanese-card sleepy scene. Suggested by GitHub issue #12.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [],
-      "whyItBelongs": "Cozy nap coiled into a perfect cinnamon swirl. Whitney's beloved partner curled into total clay contentment in this Japanese VS exclusive."
+      "whyItBelongs": "Cozy nap coiled into a perfect cinnamon swirl. Whitney's beloved partner curled into total clay contentment in this Japanese VS exclusive.",
+      "slug": "whitney-s-furret-pokemon-vs-018-141"
     },
     {
       "apiId": "me04-053",
@@ -5217,7 +5220,7 @@
       "name": "Gloom",
       "pokemon": "Gloom",
       "setName": "Aquapolis",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard2",
       "number": "49/147",
       "rarity": "Uncommon",
@@ -5236,7 +5239,7 @@
       "priority": "Medium",
       "notes": "Gloom from Aquapolis 49/147 is included in this guide because Gloom is asleep on a tree branch, adding a classic e-Card era sleepy scene to the list. Suggested by GitHub issue #8.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-10-22T15:53:15.417Z",
+      "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Drool & Snore",
         "Treetop Naps"
@@ -7009,7 +7012,7 @@
       "tcgdexId": "",
       "name": "Arcanine",
       "pokemon": "Arcanine",
-      "setName": "Sword & Shield Promos",
+      "setName": "SWSH Black Star Promos",
       "setSeries": "Sword & Shield",
       "setId": "swshp",
       "number": "SWSH304",
@@ -7032,7 +7035,8 @@
       ],
       "whyItBelongs": "Arcanine is not fully asleep, but its long, eyes-closed yawn and sprawling sunlit pose make it look moments away from a nap. REND's Illustration Contest scene captures that satisfying, sleepy stretch before settling down.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-21T15:57:04.940Z"
+      "updatedAt": "2026-10-22T19:59:05.759Z",
+      "slug": "arcanine-sword-and-shield-promos-swsh304"
     },
     {
       "apiId": "sm6-45",
@@ -7199,7 +7203,7 @@
       "name": "Swinub",
       "pokemon": "Swinub",
       "setName": "Skyridge",
-      "setSeries": "E-Card",
+      "setSeries": "e-Card",
       "setId": "ecard3",
       "number": "108/144",
       "rarity": "Common",
@@ -7220,7 +7224,7 @@
       "moods": [],
       "whyItBelongs": "This Skyridge Swinub has the compact, tucked-in posture of a creature fully settled for a nap. Its quiet natural setting makes a lovely vintage companion to the other sleepy Swinub prints.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-21T15:57:06.978Z"
+      "updatedAt": "2026-10-22T19:59:05.759Z"
     },
     {
       "apiId": "sm4-19",
@@ -7383,7 +7387,7 @@
       "name": "Bulbasaur",
       "pokemon": "Bulbasaur",
       "setName": "POP Series 2",
-      "setSeries": "POP",
+      "setSeries": "POP Series",
       "setId": "pop2",
       "number": "12/17",
       "rarity": "Common",
@@ -7407,7 +7411,7 @@
       ],
       "whyItBelongs": "The two Bulbasaur make this card feel like a companionable shared rest, with a quiet grassy setting and gentle, contented energy. It brings a sweet early-era group nap into the collection.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-22T15:53:38.298Z"
+      "updatedAt": "2026-10-22T19:59:05.759Z"
     }
   ],
   "priceRefreshedAt": "2026-10-22T15:53:38.298Z"
