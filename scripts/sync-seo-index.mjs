@@ -43,7 +43,8 @@ function assignSlugs(cardList) {
     used.set(baseSlug, count + 1);
     return {
       ...card,
-      slug: count ? `${baseSlug}-${count + 1}` : baseSlug,
+      // A stored slug pins the page address, e.g. when a set name is corrected after the page went live.
+      slug: card.slug || (count ? `${baseSlug}-${count + 1}` : baseSlug),
     };
   });
 }
