@@ -116,6 +116,7 @@ function cacheElements() {
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
   elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
+  elements.priceChip = document.querySelector(".mood-chip[data-max-price]");
   elements.surpriseButton = document.querySelector("#surpriseButton");
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
   elements.viewAllLink = document.querySelector(".view-all-link");
@@ -189,6 +190,28 @@ function bindEvents() {
         filter_action: moodAction,
         result_count: resultCount,
       });
+    });
+  });
+
+  // The "under $5" chip is a shortcut for the drawer's Price filter, so both stay in sync.
+  bind(elements.priceChip, "click", () => {
+    const value = elements.priceChip.dataset.maxPrice;
+    state.filters.maxPrice = state.filters.maxPrice === value ? "" : value;
+    state.showAllCards = true;
+    render();
+    const priceAction = state.filters.maxPrice ? "applied" : "removed";
+    const analyticsValue = getAnalyticsFilterValue("maxPrice", state.filters.maxPrice);
+    const resultCount = getFilteredCards().length;
+    trackEvent("filter_changed", {
+      filter_name: "maxPrice",
+      filter_value: analyticsValue,
+      filter_action: priceAction,
+      result_count: resultCount,
+    });
+    trackEvent("filter_facet_maxPrice", {
+      filter_value: analyticsValue,
+      filter_action: priceAction,
+      result_count: resultCount,
     });
   });
 
@@ -283,7 +306,11 @@ function applyInitialSearch() {
     window.history.replaceState(window.history.state, "", url);
   }
   const mood = slugify(params.get("mood"));
-  if (mood && elements.cardGrid) {
+  // Old links used ?mood=under-5 for what is now the Price filter.
+  if (mood === "under-5" && elements.cardGrid) {
+    state.filters.maxPrice = "5";
+    state.showAllCards = true;
+  } else if (mood && elements.cardGrid) {
     state.filters.mood = mood;
     state.showAllCards = true;
     elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === mood));
@@ -696,6 +723,7 @@ function renderFilters() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
   elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === state.filters.mood));
+  elements.priceChip?.classList.toggle("is-active", elements.priceChip.dataset.maxPrice === state.filters.maxPrice);
   // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
   const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
@@ -902,9 +930,7 @@ function filterCards(filters) {
 
       if (search && !searchable.includes(search)) return false;
       if (filters.mood !== "all") {
-        const moodMatches = card.moods.some((mood) => slugify(mood) === filters.mood);
-        const priceMatches = filters.mood === "under-5" && getDisplayPrice(card) > 0 && getDisplayPrice(card) <= 5;
-        if (!moodMatches && !priceMatches) return false;
+        if (!card.moods.some((mood) => slugify(mood) === filters.mood)) return false;
       }
       if (filters.set !== "all" && card.setName !== filters.set) return false;
       if (filters.rarity !== "all" && getRarityGroup(card.rarity).id !== filters.rarity) return false;
@@ -954,7 +980,8 @@ function renderActiveFilterControls() {
   }
   if (elements.activeAdvancedFilters) {
     const advancedFilters = ["set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
-    if (state.filters.maxPrice) advancedFilters.push("maxPrice");
+    // The "under $5" chip already shows that price, so only other prices get a removable chip.
+    if (state.filters.maxPrice && state.filters.maxPrice !== elements.priceChip?.dataset.maxPrice) advancedFilters.push("maxPrice");
     // A mood opened from a card pill may have no mood chip of its own, so show it as a removable chip.
     const moodHasChip = elements.moodChips.some((chip) => chip.dataset.mood === state.filters.mood);
     if (state.filters.mood !== "all" && !moodHasChip) advancedFilters.unshift("mood");
