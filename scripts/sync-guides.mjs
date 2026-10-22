@@ -2,12 +2,15 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
+import { ABOUT_CARD_SLUGS, renderAboutPage } from "./about-page.mjs";
+import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
 const GUIDES_PATH = "docs/guides.json";
 const INDEX_PATH = "docs/index.html";
 const GUIDES_DIR = "docs/guides";
+const ABOUT_DIR = "docs/about";
 const SITEMAP_PATH = "docs/sitemap.xml";
 const CARD_INDEX_START = "<!-- SEO_CARD_INDEX_START -->";
 const GUIDE_INDEX_START = "<!-- SEO_GUIDE_INDEX_START -->";
@@ -28,6 +31,10 @@ const guides = guideDefs
   .filter((guide) => guide.slug && guide.cards.length);
 
 await writeGuidePages(guides);
+await mkdir(ABOUT_DIR, { recursive: true });
+await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
+// The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
+await writeFile(`${ABOUT_DIR}/cards.json`, `${JSON.stringify({ cards: ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug)) }, null, 2)}\n`, "utf8");
 await syncHomepageGuideIndex(guides);
 await writeSitemap(cardsWithSlugs, guides);
 
@@ -119,6 +126,7 @@ async function writeSitemap(cardList, guideList) {
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
     sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
     sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "monthly", "0.9"),
+    sitemapUrl(`${SITE_URL}/about/`, homepageLastmod, "monthly", "0.6"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");
@@ -279,30 +287,12 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=22"></script>
+    <script src="../../app.js?v=24"></script>
   </body>
 </html>
 `;
 }
 
-function renderCardDetailDialog() {
-  return `<dialog id="cardDetailDialog" class="card-detail-dialog">
-      <div class="card-detail-frame card-detail-v3">
-        <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">×</button>
-        <div class="detail-art-column"><div class="detail-image-frame" id="detailImageFrame"></div></div>
-        <div class="detail-copy">
-          <p class="detail-kicker" id="detailEyebrow">Caught napping</p>
-          <h2 id="detailTitle"></h2>
-          <p class="card-subtitle" id="detailSubtitle"></p>
-          <div class="detail-price-row" id="detailPriceRow"></div>
-          <div class="curation-note" id="detailCurationNote"></div>
-          <div class="detail-guide-links" id="detailGuideLinks"></div>
-          <div class="detail-moods" id="detailMoods"></div>
-          <div class="meta-grid" id="detailMetaGrid"></div>
-        </div>
-      </div>
-    </dialog>`;
-}
 
 function renderGuideCard(entry, index, guideSlug, guideTitle) {
   const card = entry.card;

@@ -7,7 +7,7 @@ import { MOODS } from "./moods.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
-const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card"]);
+const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card", "about"]);
 const errors = [];
 const publishedCards = await loadPublishedCards();
 const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
