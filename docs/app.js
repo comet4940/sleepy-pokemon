@@ -705,9 +705,17 @@ function renderFilters() {
 function renderDrawerOptions(key) {
   const container = elements.filterDrawerBody?.querySelector(`[data-filter-options="${key}"]`);
   if (!container || !state.cards.length) return;
-  const options = getDrawerOptions(key);
   const selected = state.filters[key];
+  let options = getDrawerOptions(key).map((option) => ({
+    ...option,
+    count: key === "sort" ? null : filterCards({ ...state.filters, [key]: option.value }).length,
+  }));
   const limit = DRAWER_PREVIEW_LIMITS[key];
+  if (limit) {
+    // Long lists put options that still have matches first; sets with no matches are hidden.
+    const available = options.filter((option) => option.count > 0 || option.value === selected);
+    options = key === "set" ? available : [...available, ...options.filter((option) => !available.includes(option))];
+  }
   const searching = key === "set" && Boolean(elements.drawerSetSearch?.value.trim());
   const collapsible = Boolean(limit) && options.length > limit && !searching;
   const expanded = state.expandedDrawerSections.has(key);
@@ -721,11 +729,11 @@ function renderDrawerOptions(key) {
   container.innerHTML = visible.length
     ? visible.map((option) => {
       const isSelected = option.value === selected;
-      const count = key === "sort" ? null : filterCards({ ...state.filters, [key]: option.value }).length;
+      const { count } = option;
       const disabled = count === 0 && !isSelected ? " disabled" : "";
       return `<button class="drawer-option" type="button" data-filter-key="${key}" data-filter-value="${escapeAttribute(option.value)}" aria-pressed="${isSelected}"${disabled}>${escapeHtml(option.label)}${count === null ? "" : ` <small>${count}</small>`}</button>`;
     }).join("") + toggle
-    : `<p class="drawer-empty">No sets match.</p>`;
+    : `<p class="drawer-empty">No sets match${searching ? "" : " these filters"}.</p>`;
 }
 
 function getDrawerOptions(key) {
