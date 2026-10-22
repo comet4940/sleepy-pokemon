@@ -1027,7 +1027,6 @@ function updateCollectionHeading(resultCount) {
   if (!elements.collectionTitle || !elements.collectionMeta) return;
   const active = hasActiveFilters();
   const search = state.filters.search.trim();
-  const mood = getMoodLabel(state.filters.mood);
   if (state.catalogLoadFailed) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     return;
@@ -1038,11 +1037,13 @@ function updateCollectionHeading(resultCount) {
   } else if (search) {
     elements.collectionTitle.textContent = `Matching “${search}”`;
     elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
-  } else if (mood) {
-    elements.collectionTitle.textContent = mood;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   } else {
-    elements.collectionTitle.textContent = "Filtered sleepy Pokemon";
+    // Name what is filtered: up to two filter names, then "+N".
+    const labels = ["mood", "rarity", "set", "language", "maxPrice"]
+      .filter((key) => (key === "maxPrice" ? Boolean(state.filters.maxPrice) : state.filters[key] !== "all"))
+      .map((key) => getFilterLabel(key, state.filters[key]))
+      .map((label) => label.charAt(0).toUpperCase() + label.slice(1));
+    elements.collectionTitle.textContent = labels.slice(0, 2).join(" · ") + (labels.length > 2 ? `\u00a0+${labels.length - 2}` : "");
     elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   }
   if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
