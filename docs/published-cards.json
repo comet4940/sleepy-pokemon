@@ -1154,7 +1154,7 @@
       "tcgdexId": "",
       "name": "Geodude",
       "pokemon": "Geodude",
-      "setName": "Dragon",
+      "setName": "EX Dragon",
       "setSeries": "EX",
       "setId": "ex3",
       "number": "55/97",
@@ -1174,9 +1174,10 @@
       "priority": "Medium",
       "notes": "Geodude from Dragon 55/97 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
       "createdAt": "2026-05-06T21:38:24.651Z",
-      "updatedAt": "2026-10-15T15:34:52.662Z",
+      "updatedAt": "2026-10-22T19:58:25.200Z",
       "moods": [],
-      "whyItBelongs": "Out cold on a sunlit slope. Geodude looking less like a rigid rock and more like a peaceful sleeping pup makes this budget vintage common a sleeper hit."
+      "whyItBelongs": "Out cold on a sunlit slope. Geodude looking less like a rigid rock and more like a peaceful sleeping pup makes this budget vintage common a sleeper hit.",
+      "slug": "geodude-dragon-55-97"
     },
     {
       "apiId": "sm10-135",
