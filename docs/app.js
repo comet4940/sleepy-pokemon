@@ -782,6 +782,7 @@ function handleFilterOptionClick(event) {
     if (state.expandedDrawerSections.has(key)) state.expandedDrawerSections.delete(key);
     else state.expandedDrawerSections.add(key);
     renderDrawerOptions(key);
+    restoreDrawerFocus(`[data-expand-section="${key}"]`);
     return;
   }
   const option = event.target.closest("[data-filter-key]");
@@ -791,6 +792,14 @@ function handleFilterOptionClick(event) {
   // Tapping the selected option clears it; sort always keeps one choice.
   const cleared = key === "maxPrice" ? "" : "all";
   setFilterValue(key, key !== "sort" && state.filters[key] === value ? cleared : value);
+  // Re-rendering replaces the pills, so put keyboard focus back on the one just used.
+  restoreDrawerFocus(`[data-filter-key="${key}"][data-filter-value="${CSS.escape(value)}"]`, key);
+}
+
+function restoreDrawerFocus(selector, fallbackKey) {
+  const target = elements.filterDrawerBody?.querySelector(selector);
+  const fallback = fallbackKey && elements.filterDrawerBody?.querySelector(`[data-filter-key="${fallbackKey}"]:not(:disabled)`);
+  (target && !target.disabled ? target : fallback)?.focus({ preventScroll: true });
 }
 
 function setFilterValue(key, value) {
