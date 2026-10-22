@@ -191,6 +191,29 @@
   margin: 0 0 14px;
 }
 
+.about-copy .about-stats {
+  display: inline-block;
+  margin: 4px 0 20px;
+  padding: 10px 16px;
+  border: 1px solid rgba(169, 147, 255, .28);
+  border-radius: 14px;
+  color: var(--cream);
+  font-size: .92rem;
+}
+
+.about-stats span {
+  white-space: nowrap;
+}
+
+.about-stats strong {
+  color: var(--pink);
+}
+
+.about-stats a {
+  color: var(--mint);
+  font-weight: 600;
+}
+
 .about-origin-cards {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 28px;

@@ -63,7 +63,7 @@ export function renderAboutPage(cardBySlug) {
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="stylesheet" href="../home-v3.css?v=15" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=3" />
-    <link rel="stylesheet" href="../about.css?v=1" />
+    <link rel="stylesheet" href="../about.css?v=2" />
   </head>
   <body data-app-mode="about" data-guide-path="cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell about-shell">
@@ -98,6 +98,7 @@ ${renderFavorite(card(FAVORITES.linkcat))}
           <div class="about-copy">
             <p>It started innocently enough: we were hunting down every Sprigatito card when we stumbled upon the <em>Paldea Evolved</em> illustration rare, a little grass cat snoozing among the flowers. We were instantly smitten, and a new quest was born: find every Pokemon caught napping.</p>
             <p>Sleepy Pikachu from the <em>Lost Origin</em> Trainer Gallery was next, and then we realized we’d already been sitting on the Snorlax promo (fitting, honestly). We dug through our bulk for more dozers, went looking for a master list, and came up empty. So we made one!</p>
+${renderCollectionStats([...cardBySlug.values()])}
             <p>Consider it our gift to fellow collectors who love a good Pokemon nap.</p>
             <p>Everything here is hand-curated and free to browse: no ads, paywalls, subscriptions, or sponsored placements.</p>
           </div>
@@ -144,6 +145,23 @@ ${renderSiteFooter()}
   </body>
 </html>
 `;
+}
+
+// Counted from the catalog at build time, so the line keeps up as cards are added.
+function renderCollectionStats(cards) {
+  const count = (key) => new Set(cards.map((card) => card[key]).filter(Boolean)).size;
+  const years = cards.map((card) => String(card.setReleaseDate || "").slice(0, 4)).filter((year) => /^\d{4}$/.test(year)).sort();
+  const napsByPokemon = new Map();
+  cards.forEach((card) => card.pokemon && napsByPokemon.set(card.pokemon, (napsByPokemon.get(card.pokemon) || 0) + 1));
+  const [leader, leaderNaps] = [...napsByPokemon].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0] || [];
+  const facts = [
+    `<a href="../collection/" data-analytics-event="navigation_clicked" data-analytics-source="about_page" data-analytics-destination="collection">${cards.length} sleepy cards</a>`,
+    `${count("pokemon")} Pokemon`,
+    `${count("setName")} sets`,
+    years.length ? `${years[0]}–${years.at(-1)}` : "",
+    leader ? `${escapeHtml(leader)} leads with ${leaderNaps} naps` : "",
+  ].filter(Boolean);
+  return `            <p class="about-stats"><strong>So far:</strong> ${facts.map((fact) => `<span>${fact}</span>`).join(" · ")}</p>`;
 }
 
 function renderFavorite(card) {
