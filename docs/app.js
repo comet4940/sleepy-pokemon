@@ -272,6 +272,8 @@ function applyInitialSearch() {
   const params = new URLSearchParams(window.location.search);
   if (params.get("suggest") === "1" && elements.suggestionDialog) {
     openSuggestionDialog();
+    // A header pill click on another page was already tracked; count direct visits (shared or bookmarked links) here.
+    if (!isSameSiteReferrer()) trackEvent("suggestion_opened", { interaction_source: "suggest_link" });
     const url = new URL(window.location.href);
     url.searchParams.delete("suggest");
     window.history.replaceState(window.history.state, "", url);
@@ -288,6 +290,14 @@ function applyInitialSearch() {
   state.showAllCards = true;
   if (elements.searchFilter) elements.searchFilter.value = query;
   if (elements.headerSearchInput) elements.headerSearchInput.value = query;
+}
+
+function isSameSiteReferrer() {
+  try {
+    return Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
+  } catch (error) {
+    return false;
+  }
 }
 
 function handleHeaderSearchSubmit(event) {

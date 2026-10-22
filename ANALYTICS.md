@@ -65,7 +65,7 @@ Search text is intentionally excluded. `query_length` is the only query-level pa
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `suggestion_opened` | The suggestion dialog opens, or the header Suggest pill is selected (`interaction_source: global_header`, on every page) | `interaction_source`, `has_active_search`, `result_count` (dialog links only), `destination_path` (header pill only) |
+| `suggestion_opened` | The suggestion dialog opens, or the header Suggest pill is selected (`interaction_source: global_header`, on every page). A direct visit to `collection/?suggest=1` from outside the site (shared or bookmarked link) is tracked as `interaction_source: suggest_link`; arriving from the header pill is not counted twice | `interaction_source`, `has_active_search`, `result_count` (dialog links only), `destination_path` (header pill only) |
 | `suggestion_lookup_completed` | An external card lookup returns or fails | `lookup_type`, `lookup_outcome`, `result_count` |
 | `suggestion_card_selected` | A lookup result is selected | card parameters |
 | `suggestion_card_removed` | A selected lookup result is removed | none beyond shared parameters |
