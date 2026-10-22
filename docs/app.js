@@ -371,6 +371,8 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
+  // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
+  renderFilters();
   elements.filtersDialog.showModal();
   trackEvent("filters_opened");
   elements.filterDrawerTitle?.focus();
