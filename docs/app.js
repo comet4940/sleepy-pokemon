@@ -51,6 +51,8 @@ async function init() {
     loadGuideMemberships(),
   ]);
   state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
+  // A mood link from a card pill may name a mood no card carries any more.
+  if (state.filters.mood !== "all" && !getMoodLabel(state.filters.mood)) state.filters.mood = "all";
   assignRandomOrder();
   render();
   const catalogSurface = getCatalogSurface();
@@ -257,7 +259,14 @@ function bindEvents() {
 }
 
 function applyInitialSearch() {
-  const query = new URLSearchParams(window.location.search).get("q")?.trim() || "";
+  const params = new URLSearchParams(window.location.search);
+  const mood = slugify(params.get("mood"));
+  if (mood && elements.cardGrid) {
+    state.filters.mood = mood;
+    state.showAllCards = true;
+    elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === mood));
+  }
+  const query = params.get("q")?.trim() || "";
   if (!query) return;
   state.filters.search = query;
   state.showAllCards = true;
@@ -702,6 +711,7 @@ function elementToFilterKey(element) {
 }
 
 function renderCards() {
+  syncMoodParam();
   const filteredCards = getFilteredCards();
   const renderToken = state.renderToken + 1;
   state.renderToken = renderToken;
@@ -826,11 +836,16 @@ function renderActiveFilterControls() {
     ].filter(([, element]) => element?.value && element.value !== "all");
 
     if (state.filters.maxPrice) advancedFilters.push(["maxPrice", elements.maxPriceFilter]);
+    // A mood opened from a card pill may have no mood chip of its own, so show it as a removable chip.
+    const moodHasChip = elements.moodChips.some((chip) => chip.dataset.mood === state.filters.mood);
+    if (state.filters.mood !== "all" && !moodHasChip) advancedFilters.unshift(["mood", null]);
     elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map(([key, element]) => {
       const chip = document.createElement("span");
       chip.className = "active-filter-chip";
-      const label = key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
-      chip.append(document.createTextNode(label || element.value));
+      const label = key === "mood"
+        ? getMoodLabel(state.filters.mood)
+        : key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
+      chip.append(document.createTextNode(label || element?.value || state.filters[key]));
       const removeButton = document.createElement("button");
       removeButton.type = "button";
       removeButton.setAttribute("aria-label", `Remove ${label || "filter"} filter`);
@@ -889,8 +904,7 @@ function updateCollectionHeading(resultCount) {
   if (!elements.collectionTitle || !elements.collectionMeta) return;
   const active = hasActiveFilters();
   const search = state.filters.search.trim();
-  const moodChip = elements.moodChips.find((chip) => chip.dataset.mood === state.filters.mood);
-  const mood = moodChip?.textContent.trim();
+  const mood = getMoodLabel(state.filters.mood);
   if (state.catalogLoadFailed) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     return;
@@ -1056,7 +1070,7 @@ function openCardDetail(card, interactionSource = "unknown") {
     elements.detailGuideLinks.innerHTML = renderGuideMemberships(card);
   }
   elements.detailMoods.innerHTML = card.moods?.length
-    ? card.moods.map((mood) => `<span class="mood-tag">${escapeHtml(formatMoodLabel(mood))}</span>`).join("")
+    ? card.moods.map((mood) => renderMoodLink(mood)).join("")
     : "";
   elements.detailMetaGrid.innerHTML = [
     metaItem("Set", card.setName),
@@ -1105,10 +1119,30 @@ function metaItem(label, value) {
   `;
 }
 
-function formatMoodLabel(value) {
-  return String(value || "")
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+// Mood pills link to the collection filtered to that mood, from every page.
+function renderMoodLink(mood) {
+  const root = document.body.dataset.siteRoot || "";
+  return `<a class="mood-tag" href="${escapeAttribute(root)}collection/?mood=${escapeAttribute(slugify(mood))}" data-analytics-event="navigation_clicked" data-analytics-source="card_mood_pill" data-analytics-destination="collection" data-analytics-filter-value="${escapeAttribute(slugify(mood))}">${escapeHtml(mood)}</a>`;
+}
+
+function getMoodLabel(moodSlug) {
+  if (!moodSlug || moodSlug === "all") return "";
+  for (const card of state.cards) {
+    const mood = card.moods.find((item) => slugify(item) === moodSlug);
+    if (mood) return mood;
+  }
+  return elements.moodChips.find((item) => item.dataset.mood === moodSlug)?.textContent.trim() || "";
+}
+
+// Keep ?mood= in the collection URL matching the active mood, so a reload or shared link shows the same cards.
+function syncMoodParam() {
+  if (!elements.cardGrid) return;
+  const url = new URL(window.location.href);
+  const mood = state.filters.mood === "all" ? "" : state.filters.mood;
+  if ((url.searchParams.get("mood") || "") === mood) return;
+  if (mood) url.searchParams.set("mood", mood);
+  else url.searchParams.delete("mood");
+  window.history.replaceState(window.history.state, "", url);
 }
 
 function formatShortDate(value) {

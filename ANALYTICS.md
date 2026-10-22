@@ -31,7 +31,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `navigation_clicked` | A measured site navigation link is selected | `interaction_source`, `destination`, `destination_path` |
+| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox | card parameters, `interaction_source` |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
