@@ -26,12 +26,13 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `guides-index` | Collector guides directory |
 | `guide` | Individual editorial guide |
 | `card` | Individual crawlable card page |
+| `about` | About page: the collectors, how the collection started, the sleepy standard, and the current chase |
 
 ## Discovery And Navigation
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
+| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) and About page links (`about_page`, plus `about_favorite`, `about_origin`, `about_current_chase` and `about_current_chase_art` for card links) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only), `card_name`, `card_set` and `card_number` (About page card links only) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox | card parameters, `interaction_source` |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
