@@ -497,7 +497,7 @@
       "setSeries": "XY",
       "setId": "xy0",
       "number": "26/39",
-      "rarity": "",
+      "rarity": "Common",
       "language": "English",
       "artist": "Naoki Saito",
       "imageSmall": "https://images.pokemontcg.io/xy0/26.png",
@@ -511,7 +511,7 @@
       ],
       "whyItBelongs": "Snorlax is flopped face-down in a woodland clearing, sunk into a bed of white flowers, with leaves drifting past and sunlight coming through the trees. Its eyes are closed, there’s a small satisfied smile on its face, and its big round body is draped over the grass like a giant, very soft boulder. It’s one of the most gently peaceful pieces of art in the stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z"
+      "updatedAt": "2026-10-22T19:54:59.748Z"
     },
     {
       "apiId": "g1-58",
@@ -1251,7 +1251,7 @@
       "setSeries": "XY",
       "setId": "xy0",
       "number": "27/39",
-      "rarity": "",
+      "rarity": "Common",
       "language": "English",
       "artist": "Akira Komayama",
       "imageSmall": "https://images.pokemontcg.io/xy0/27.png",
@@ -1267,7 +1267,7 @@
       "priority": "Medium",
       "notes": "Miltank from Kalos Starter Set 27/39 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. It is useful as a quieter binder slot for collectors who care more about the sleepy theme than rarity labels. The card is illustrated by Akira Komayama, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
       "createdAt": "2026-05-06T21:37:41.745Z",
-      "updatedAt": "2026-10-17T14:10:50.948Z",
+      "updatedAt": "2026-10-22T19:54:59.748Z",
       "moods": [
         "Flower Beds"
       ],
@@ -2573,7 +2573,7 @@
       "setId": "",
       "number": "06 15/15",
       "rarity": "Secret Rare",
-      "language": "Chinese",
+      "language": "Simplified Chinese",
       "artist": "Hyogonosuke",
       "imageSmall": "https://img.simplifiedtcg.com/cards/zh/13853.webp",
       "imageLarge": "https://img.simplifiedtcg.com/cards/zh/13853.webp",
@@ -2588,7 +2588,7 @@
       "priority": "Medium",
       "notes": "Umbreon from Gem Pack Volume 2 06 15/15 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Secret Rare, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Hyogonosuke, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Because current pricing is unclear, it is worth checking recent listings before adding it to a wishlist or binder plan. It is a flexible binder pick for a 3x3 or 4x4 sleepy Pokemon page, especially when grouped by Pokemon, set era, or price tier. This entry is tracked as a Chinese card, which may matter for collectors comparing international printings.",
       "createdAt": "2026-05-05T22:40:17.426Z",
-      "updatedAt": "2026-05-05T22:44:16.358Z",
+      "updatedAt": "2026-10-22T19:54:59.748Z",
       "moods": [
         "Sunbeam Naps"
       ],
@@ -5897,7 +5897,7 @@
       "setSeries": "Scarlet & Violet",
       "setId": "151C2",
       "number": "171/151",
-      "rarity": "Art Rare (AR)",
+      "rarity": "Art Rare",
       "language": "Simplified Chinese",
       "artist": "Oswaldo KATO",
       "imageSmall": "https://img.simplifiedtcg.com/cards/zh/13078.webp",
@@ -5910,7 +5910,7 @@
       ],
       "whyItBelongs": "Psyduck has curled up for a peaceful nap beside the water while Pikachu stands amused nearby. With Dragonite flying overhead and Jigglypuff peeking across the meadow, the scene feels like a gentle pause in the middle of a larger adventure. Pikachu may be the star of the card, but the deeply snoozing Psyduck earns it a place in the sleepy collection.",
       "createdAt": "2026-09-23T00:00:00.000Z",
-      "updatedAt": "2026-09-23T00:00:00.000Z"
+      "updatedAt": "2026-10-22T19:54:59.748Z"
     },
     {
       "apiId": "miscpp_jp-025",
