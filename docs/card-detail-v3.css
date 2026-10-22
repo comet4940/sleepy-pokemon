@@ -263,6 +263,14 @@
   color: var(--detail-mint);
   font-size: .77rem;
   font-weight: 600;
+  text-decoration: none;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.mood-tag:hover,
+.mood-tag:focus-visible {
+  border-color: var(--detail-mint);
+  background: rgba(167, 232, 212, .12);
 }
 
 .card-detail-v3 .meta-grid {

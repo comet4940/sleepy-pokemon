@@ -105,6 +105,7 @@ function bindDeclarativeEvents() {
       destination_path: getDestinationPath(target.href),
       interaction_source: target.dataset.analyticsSource,
       destination: target.dataset.analyticsDestination,
+      filter_value: target.dataset.analyticsFilterValue,
       card_name: target.dataset.analyticsCardName,
       card_pokemon: target.dataset.analyticsCardPokemon,
       card_set: target.dataset.analyticsCardSet,

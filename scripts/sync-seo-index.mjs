@@ -179,9 +179,9 @@ function renderCardPage(card, memberships) {
     <meta name="twitter:image" content="${escapeAttribute(image)}" />
 
     <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js?v=3" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
+    <script defer src="../../analytics.js?v=4" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
     <link rel="stylesheet" href="../../styles.css?v=4" />
-    <link rel="stylesheet" href="../../card-detail-v3.css" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=2" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -265,13 +265,8 @@ function metaItem(label, value) {
 
 function renderMoods(card) {
   if (!Array.isArray(card.moods) || !card.moods.length) return "";
-  return `<div class="detail-moods">${card.moods.map((mood) => `<span class="mood-tag">${escapeHtml(formatMoodLabel(mood))}</span>`).join("")}</div>`;
-}
-
-function formatMoodLabel(value) {
-  return String(value || "")
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  // Each pill links to the collection filtered to that mood, matching the card lightbox.
+  return `<div class="detail-moods">${card.moods.map((mood) => `<a class="mood-tag" href="../../collection/?mood=${escapeAttribute(slugify(mood))}" data-analytics-event="navigation_clicked" data-analytics-source="card_mood_pill" data-analytics-destination="collection" data-analytics-filter-value="${escapeAttribute(slugify(mood))}">${escapeHtml(mood)}</a>`).join("")}</div>`;
 }
 
 function formatShortDate(value) {
