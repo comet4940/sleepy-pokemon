@@ -2,12 +2,14 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
+import { renderAboutPage } from "./about-page.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
 const GUIDE_PATH = "docs/published-cards.json";
 const GUIDES_PATH = "docs/guides.json";
 const INDEX_PATH = "docs/index.html";
 const GUIDES_DIR = "docs/guides";
+const ABOUT_DIR = "docs/about";
 const SITEMAP_PATH = "docs/sitemap.xml";
 const CARD_INDEX_START = "<!-- SEO_CARD_INDEX_START -->";
 const GUIDE_INDEX_START = "<!-- SEO_GUIDE_INDEX_START -->";
@@ -28,6 +30,8 @@ const guides = guideDefs
   .filter((guide) => guide.slug && guide.cards.length);
 
 await writeGuidePages(guides);
+await mkdir(ABOUT_DIR, { recursive: true });
+await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
 await syncHomepageGuideIndex(guides);
 await writeSitemap(cardsWithSlugs, guides);
 
@@ -119,6 +123,7 @@ async function writeSitemap(cardList, guideList) {
     sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
     sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
     sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "monthly", "0.9"),
+    sitemapUrl(`${SITE_URL}/about/`, homepageLastmod, "monthly", "0.6"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
   ].join("\n");

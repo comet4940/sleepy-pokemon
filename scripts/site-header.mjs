@@ -18,6 +18,7 @@ export function renderSiteHeader(basePath = "") {
         <nav class="topbar-actions" aria-label="Main navigation">
           <a href="${basePath}collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
           <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
+          <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
           <form class="header-search" action="${basePath}collection/" method="get" role="search" data-header-search>
             <label class="header-search-field">
               <span class="sr-only">Search sleepy Pokemon cards</span>
