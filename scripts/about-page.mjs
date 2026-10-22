@@ -17,6 +17,7 @@ const ORIGIN_CARDS = [
   "snorlax-scarlet-and-violet-black-star-promos-51-215",
 ];
 const CURRENT_CHASE = "espeon-vmax-fusion-strike-270-264";
+export const ABOUT_CARD_SLUGS = [...Object.values(FAVORITES), ...ORIGIN_CARDS, CURRENT_CHASE];
 
 export function renderAboutPage(cardBySlug) {
   const card = (slug) => {
@@ -64,7 +65,7 @@ export function renderAboutPage(cardBySlug) {
     <link rel="stylesheet" href="../card-detail-v3.css?v=3" />
     <link rel="stylesheet" href="../about.css?v=1" />
   </head>
-  <body data-app-mode="about" data-guide-path="../published-cards.json" data-guides-path="../guides.json" data-site-root="../">
+  <body data-app-mode="about" data-guide-path="cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell about-shell">
       ${renderSiteHeader("../")}
       <main class="about-main">

@@ -2,7 +2,7 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
-import { renderAboutPage } from "./about-page.mjs";
+import { ABOUT_CARD_SLUGS, renderAboutPage } from "./about-page.mjs";
 import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 
 const SITE_URL = "https://www.sleepypokemon.com";
@@ -33,6 +33,8 @@ const guides = guideDefs
 await writeGuidePages(guides);
 await mkdir(ABOUT_DIR, { recursive: true });
 await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
+// The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
+await writeFile(`${ABOUT_DIR}/cards.json`, `${JSON.stringify({ cards: ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug)) }, null, 2)}\n`, "utf8");
 await syncHomepageGuideIndex(guides);
 await writeSitemap(cardsWithSlugs, guides);
 
