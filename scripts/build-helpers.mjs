@@ -1,0 +1,194 @@
+// Shared helpers for the page generators (sync-seo-index.mjs, sync-guides.mjs, about-page.mjs).
+// Card page URLs come from slugify() and assignSlugs(), so every generator must use these copies.
+import { readFile } from "node:fs/promises";
+
+export const SITE_URL = "https://www.sleepypokemon.com";
+export const CARDS_PATH = "docs/published-cards.json";
+export const GUIDES_PATH = "docs/guides.json";
+
+// Cache-busting versions for every CSS and JS file. Bump a number here and run the generators;
+// generated pages and the hand-written homepage and collection page all pick it up.
+export const ASSET_VERSIONS = {
+  "styles.css": 5,
+  "home-v3.css": 20,
+  "filter-drawer.css": 1,
+  "card-detail-v3.css": 6,
+  "guides.css": 2,
+  "about.css": 2,
+  "analytics.js": 4,
+  "app.js": 43,
+};
+
+export function assetUrl(root, file) {
+  if (!(file in ASSET_VERSIONS)) throw new Error(`No version for ${file} in ASSET_VERSIONS`);
+  return `${root}${file}?v=${ASSET_VERSIONS[file]}`;
+}
+
+// Rewrites every "<file>?v=<n>" in a hand-written page to the current version.
+export function syncAssetVersions(html) {
+  return Object.entries(ASSET_VERSIONS).reduce(
+    (result, [file, version]) => result.replace(new RegExp(`${escapeRegExp(file)}\\?v=\\d+`, "g"), `${file}?v=${version}`),
+    html,
+  );
+}
+
+export async function loadCardData() {
+  const payload = JSON.parse(await readFile(CARDS_PATH, "utf8"));
+  const cards = Array.isArray(payload) ? payload : payload.cards;
+  if (!Array.isArray(cards)) throw new Error(`${CARDS_PATH} does not contain a cards array.`);
+  return { payload, cards: assignSlugs(cards) };
+}
+
+export async function loadGuideDefs() {
+  try {
+    const payload = JSON.parse(await readFile(GUIDES_PATH, "utf8"));
+    return Array.isArray(payload) ? payload : payload.guides || [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+export function assignSlugs(cardList) {
+  const used = new Map();
+  return cardList.map((card) => {
+    const baseSlug = slugify([card.name, card.setName, card.number].filter(Boolean).join(" ")) || "card";
+    const count = used.get(baseSlug) || 0;
+    used.set(baseSlug, count + 1);
+    return {
+      ...card,
+      // A stored slug pins the page address, e.g. when a set name is corrected after the page went live.
+      slug: card.slug || (count ? `${baseSlug}-${count + 1}` : baseSlug),
+    };
+  });
+}
+
+export function slugify(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90)
+    .replace(/-+$/g, "");
+}
+
+// The shared <head> for generated pages. `root` is the relative path back to docs/ ("../" or "../../");
+// `socialTitle` is the shorter title for link previews when the tab title carries a site suffix.
+export function renderHead({
+  root,
+  title,
+  socialTitle = title,
+  description,
+  canonicalUrl,
+  image,
+  ogType = "website",
+  twitter = false,
+  fonts = true,
+  jsonLd,
+  pageType,
+  analyticsData = {},
+  stylesheets,
+}) {
+  const analyticsAttributes = Object.entries(analyticsData)
+    .map(([name, value]) => ` data-${name}="${escapeAttribute(value ?? "")}"`)
+    .join("");
+  return [
+    `<meta charset="utf-8" />`,
+    `<meta name="viewport" content="width=device-width, initial-scale=1" />`,
+    `<title>${escapeHtml(title)}</title>`,
+    `<meta name="description" content="${escapeAttribute(description)}" />`,
+    `<meta name="robots" content="index, follow" />`,
+    `<link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />`,
+    `<link rel="icon" href="${root}assets/favicon.svg" type="image/svg+xml" />`,
+    `<link rel="apple-touch-icon" href="${root}assets/sleepy-pokemon.png" />`,
+    ...(fonts ? [
+      `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
+      `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
+      `<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />`,
+    ] : []),
+    `<meta property="og:type" content="${ogType}" />`,
+    `<meta property="og:site_name" content="Sleepy Pokemon Cards" />`,
+    `<meta property="og:title" content="${escapeAttribute(socialTitle)}" />`,
+    `<meta property="og:description" content="${escapeAttribute(description)}" />`,
+    `<meta property="og:url" content="${escapeAttribute(canonicalUrl)}" />`,
+    `<meta property="og:image" content="${escapeAttribute(image)}" />`,
+    ...(twitter ? [
+      `<meta name="twitter:card" content="summary_large_image" />`,
+      `<meta name="twitter:title" content="${escapeAttribute(socialTitle)}" />`,
+      `<meta name="twitter:description" content="${escapeAttribute(description)}" />`,
+      `<meta name="twitter:image" content="${escapeAttribute(image)}" />`,
+    ] : []),
+    ...(jsonLd ? [`<script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>`] : []),
+    `<script defer src="${assetUrl(root, "analytics.js")}" data-page-type="${pageType}"${analyticsAttributes}></script>`,
+    ...stylesheets.map((file) => `<link rel="stylesheet" href="${assetUrl(root, file)}" />`),
+  ].map((line) => `    ${line}`).join("\n");
+}
+
+export function buildImageAlt(card) {
+  const cardName = card.name || card.pokemon || "Pokemon";
+  const setPart = card.setName ? ` from ${card.setName}` : "";
+  return `${cardName} sleepy Pokemon card${setPart}`.replace(/\s+/g, " ").trim();
+}
+
+// Sitemap lastmod for a card: its newest change, falling back to when the card list was exported.
+export function getCardLastmod(card, exportedAt) {
+  return getNewestDate([card.updatedAt, card.priceUpdatedAt, card.createdAt, exportedAt]);
+}
+
+export function getNewestDate(values) {
+  const dates = values
+    .map(normalizeDate)
+    .filter(Boolean)
+    .sort();
+  return dates.at(-1) || "2026-05-01";
+}
+
+export function normalizeDate(value) {
+  if (!value) return "";
+  const normalized = String(value).replaceAll("/", "-").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return "";
+  const date = new Date(`${normalized}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? "" : normalized;
+}
+
+export function sitemapUrl(loc, lastmod, changefreq, priority) {
+  return `  <url>
+    <loc>${escapeHtml(loc)}</loc>
+    <lastmod>${escapeHtml(lastmod)}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}
+
+export function formatCurrency(value) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+}
+
+export function numericOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+export function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+export function escapeAttribute(value) {
+  return escapeHtml(value).replace(/'/g, "&#39;");
+}
+
+export function escapeScriptJson(value) {
+  return value.replace(/</g, "\\u003c");
+}
+
+export function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}

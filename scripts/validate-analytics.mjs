@@ -4,6 +4,7 @@ import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { MOODS } from "./moods.mjs";
+import { slugify } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -168,10 +169,6 @@ async function checkCardFields() {
     const missing = [...fields].filter(([field, required]) => required && (card[field] === undefined || card[field] === null || card[field] === ""));
     if (missing.length) errors.push(`${label} is missing required fields: ${missing.map(([field]) => field).join(", ")}`);
   }
-}
-
-function slugify(value) {
-  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 // Every guide card must carry exactly one card ID, and it must be a published card.
