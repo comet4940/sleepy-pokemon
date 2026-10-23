@@ -3,6 +3,33 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Growlithe",
+      "pokemon": "Growlithe",
+      "setName": "Vending Machine Series 3",
+      "setSeries": "Vending Machine",
+      "setId": "vending3-jp",
+      "number": "58",
+      "rarity": "Common",
+      "language": "Japanese",
+      "artist": "Tomokazu Komiya",
+      "imageSmall": "https://storage.googleapis.com/images.pricecharting.com/93f0389e9b6811184255a62f68b784450e9478e3a270135bf42f1cd9661fe84e/240.jpg",
+      "imageLarge": "https://storage.googleapis.com/images.pricecharting.com/93f0389e9b6811184255a62f68b784450e9478e3a270135bf42f1cd9661fe84e/1600.jpg",
+      "imageSource": "PriceCharting",
+      "imageSourceUrl": "https://www.pricecharting.com/game/pokemon-japanese-vending/growlithe-series-iii-58",
+      "setReleaseDate": "1998/11/24",
+      "priority": "Medium",
+      "notes": "Community submission via the Suggest a card form. Growlithe is curled up asleep under the dinner table.",
+      "moods": [
+        "Food Coma",
+        "Face-Plant"
+      ],
+      "whyItBelongs": "Dinner is still on the table, and Growlithe has already curled up underneath it, eyes shut, done for the night.",
+      "createdAt": "2026-10-23T18:00:00.000Z",
+      "updatedAt": "2026-10-23T18:00:00.000Z"
+    },
+    {
       "apiId": "sm10-158",
       "tcgdexId": "",
       "name": "Snorlax",
@@ -705,10 +732,10 @@
       "tcgdexId": "",
       "name": "Abra",
       "pokemon": "Abra",
-      "setName": "Vending Machine Series 1 (Blue)",
+      "setName": "Vending Machine Series 1",
       "setSeries": "Vending Machine",
       "setId": "vending1-jp",
-      "number": "20/36",
+      "number": "63",
       "rarity": "Common",
       "language": "Japanese",
       "artist": "Aya Kusube",
@@ -723,7 +750,8 @@
       ],
       "whyItBelongs": "Abra has found a branch, tucked itself into the crook, and fallen asleep above the grassy field.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z"
+      "updatedAt": "2026-10-23T18:00:00.000Z",
+      "slug": "abra-vending-machine-series-1-blue-20-36"
     },
     {
       "apiId": "base5-49",
