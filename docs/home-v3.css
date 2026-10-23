@@ -77,6 +77,12 @@ a { color: inherit; }
 .mood-chip.is-active { border-color: var(--pink); background: #191827; color: var(--cream); box-shadow: 0 4px 0 rgba(243, 107, 155, .16); }
 .mood-chip.is-active::after { content: ""; position: absolute; inset: -5px -7px; border: 3px solid var(--pink); border-radius: 48% 52% 51% 49%; transform: rotate(-4deg); pointer-events: none; }
 .more-chip { border-style: dashed; }
+/* Chips in the collection row never shrink or wrap their text; the row scrolls instead. */
+.collection-page-main .mood-chips > .mood-chip, .collection-page-main .active-filter-chip { flex: none; white-space: nowrap; }
+/* All filters leads the chip row and stays pinned while the chips scroll under it; --filters-accent sets its color. */
+.collection-page-main #openFiltersButton { --filters-accent: var(--lavender); position: sticky; left: 0; z-index: 2; flex: none; border: 1px solid var(--filters-accent); background: #221f38; box-shadow: 12px 0 12px -6px var(--night); }
+.collection-page-main #openFiltersButton::before { content: "\2699\FE0E"; content: "\2699\FE0E" / ""; margin-right: 6px; color: var(--filters-accent); }
+.collection-page-main #openFiltersButton:hover, .collection-page-main #openFiltersButton:focus-visible { border-color: var(--filters-accent); background: #2b2747; }
 .library-panel { position: relative; padding: 72px clamp(28px, 9vw, 150px) 76px; border: 0; border-radius: 0; background: var(--night); box-shadow: none; }
 .latest-panel { padding-bottom: 40px; }
 .latest-panel::after { content: "✦"; position: absolute; top: 36px; left: 7%; color: var(--yellow); font-size: 1.35rem; transform: rotate(12deg); }
@@ -121,18 +127,6 @@ a { color: inherit; }
 .collection-page-main .mood-chips { flex-wrap: nowrap; align-items: center; min-width: 0; max-width: 100%; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 .collection-sort-control { display: flex; align-items: center; flex: 0 0 auto; gap: 10px; color: var(--muted-cream); font-size: .8rem; }
 .collection-sort-control select { min-height: 44px; padding: 0 34px 0 14px; border: 1px solid rgba(255,247,232,.2); border-radius: 22px; background: #191927; color: var(--cream); font: inherit; }
-.filters-dialog .filters-panel { color: var(--cream); background: #171724; }
-.filters-dialog .filter-heading { border-color: var(--hairline); }
-.filters-dialog .filter-heading h2 { color: var(--cream); font-family: var(--display); font-weight: 500; }
-.filters-dialog .filter-heading .eyebrow, .filters-dialog .filter-group-label { color: var(--pink); }
-.filters-dialog .filter-group { border-color: var(--hairline); background: rgba(255,247,232,.035); }
-.filters-dialog .field span { color: var(--muted-cream); }
-.filters-dialog .field select, .filters-dialog .field input { border-color: rgba(255,247,232,.2); background: #101019; color: var(--cream); color-scheme: dark; }
-.filters-dialog .field input::placeholder { color: rgba(185,182,199,.72); }
-.filters-dialog .field select:focus-visible, .filters-dialog .field input:focus-visible { border-color: var(--pink); outline-color: rgba(243,107,155,.28); }
-.filters-dialog .link-button { color: var(--mint); }
-.filters-dialog .icon-button { border-color: rgba(255,247,232,.22); background: #101019; color: var(--cream); }
-.filters-dialog .filter-group-secondary { grid-template-columns: minmax(0, 1fr); }
 .view-all-link { display: inline-flex; }
 .view-all-link { color: var(--muted-cream); font-size: .9rem; text-decoration: none; }
 .active-filter-chip { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; min-height: 46px; padding: 0 14px 0 18px; border: 1px solid var(--pink); border-radius: 24px; background: rgba(243,107,155,.88); color: #321624; font-size: .9rem; }
@@ -265,7 +259,7 @@ a { color: inherit; }
   .collection-search-row { grid-template-columns: 1fr; gap: 16px; }
   .collection-filter-row { align-items: stretch; flex-direction: column; }
   .collection-page-main .collection-filter-row { display: block; }
-  .collection-page-main .mood-chips { margin: -6px -4px; padding: 6px 4px 10px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 28px), transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 28px), transparent 100%); }
+  .collection-page-main .mood-chips { margin: -6px -4px; padding: 6px 4px 10px; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%); }
   .mood-chips { flex-wrap: nowrap; min-width: 0; max-width: 100%; margin: -6px -4px; padding: 6px 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
   .mood-chip { flex: 0 0 auto; }
   .collection-sort-control { justify-content: space-between; }

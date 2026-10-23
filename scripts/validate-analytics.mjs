@@ -76,7 +76,7 @@ for (const path of htmlFiles) {
   }
   if (pageType === "guide") checkGuideCards(html, label);
   for (const [, mood] of html.matchAll(/class="mood-chip"[^>]*data-mood="([^"]+)"/g)) {
-    if (mood !== "under-5" && !MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
+    if (!MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
   }
 }
 

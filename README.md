@@ -29,8 +29,7 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
 - **Interactive Browsing & Search**:
   - Live search across Pokémon names, card titles, set names, and card numbers.
   - Filter by **Moods** (*Group Naps*, *Nap Watch*, *Dream Sequence*, *Cameo Sleepers*, *Sleepy Trainers*, *Food Coma*, *Belly Up*, *Face-Plant*, *Propped Up*, *Hug Buddy*, *Pokémon Pillow*, *Drool & Snore*, *Bedtime*, *Couch & Cushion*, *Study Break*, *Flower Beds*, *Treetop Naps*, *Water Naps*, *Beach Naps*, *Snow Naps*, *Autumn Leaves*, *Sunbeam Naps*, *Moonlit Naps*, *Town Naps*, *Handmade*).
-  - Sort by price, Pokémon, language, set, newest release, or curated order.
-  - Price ceiling slider to help collectors find budget-friendly binder picks.
+  - A **filter drawer** (a bottom sheet on phones, a side drawer on desktop) with live counts on every option: moods, rarity groups (*Common*, *Uncommon*, *Rare & Holo*, *Illustration Rare*, *Ultra & Secret*, *Trainer Gallery*, *Promo*), searchable sets (newest first), language, price (*under $5* to *under $50*) and sort (shuffle, newest sets, price, set or Pokémon A–Z).
 - **Themed Collector Guides**: Editorial lists highlighting standout cards, cameos, and curated sub-themes (e.g. *Best Sleepy Pokemon Cards*, *The Sleepiest of Pikachus*, *Sleepy Cat Pokemon Cards*).
 - **Standalone Card Detail Pages**: Over 150 crawlable, standalone pages (`/cards/<slug>/`) with high-resolution imagery, release information, current market prices, and JSON-LD structured data for search engines.
 - **Community Suggestions**: Integrated submission modal allowing visitors to suggest unlisted sleepy cards to the review queue.

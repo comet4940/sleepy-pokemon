@@ -1,5 +1,31 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
+// Rarity filter buckets: each card keeps its exact rarity, the drawer groups related ones.
+const RARITY_GROUPS = [
+  { id: "common", label: "Common", rarities: ["Common"] },
+  { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
+  { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
+  { id: "illustration-rare", label: "Illustration Rare", rarities: ["Illustration Rare", "Special Illustration Rare", "Art Rare"] },
+  { id: "ultra-secret", label: "Ultra & Secret", rarities: ["Ultra Rare", "Secret Rare", "Rare Rainbow", "Triple Rare", "Rare Holo VMAX", "Pikachu Rare"] },
+  { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
+  { id: "promo", label: "Promo", rarities: ["Promo"] },
+];
+const PRICE_OPTIONS = [
+  { value: "5", label: "Under $5" },
+  { value: "10", label: "Under $10" },
+  { value: "25", label: "Under $25" },
+  { value: "50", label: "Under $50" },
+];
+// Long option lists start short on phones and desktop alike; "Show all" expands them.
+const DRAWER_PREVIEW_LIMITS = { mood: 8, set: 12 };
+const SORT_OPTIONS = [
+  { value: "random", label: "Shuffle" },
+  { value: "newest", label: "Newest sets" },
+  { value: "price-low", label: "Price: low to high" },
+  { value: "price-high", label: "Price: high to low" },
+  { value: "set", label: "Set A–Z" },
+  { value: "pokemon", label: "Pokémon A–Z" },
+];
 const CARD_RENDER_BATCH_SIZE = 24;
 const TCGDEX_API = "https://api.tcgdex.net/v2/en/cards";
 
@@ -24,7 +50,6 @@ const state = {
   filters: {
     search: "",
     mood: "all",
-    pokemon: "all",
     set: "all",
     rarity: "all",
     language: "all",
@@ -36,6 +61,8 @@ const state = {
   suggestionLookupUsed: false,
   catalogLoadFailed: false,
   modalFilterChanges: 0,
+  drawerCloseMethod: "escape",
+  expandedDrawerSections: new Set(),
 };
 
 const elements = {};
@@ -90,6 +117,7 @@ function cacheElements() {
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
   elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
+  elements.priceChip = document.querySelector(".mood-chip[data-max-price]");
   elements.surpriseButton = document.querySelector("#surpriseButton");
   elements.browseCollectionButton = document.querySelector("#browseCollectionButton");
   elements.viewAllLink = document.querySelector(".view-all-link");
@@ -101,12 +129,11 @@ function cacheElements() {
   elements.searchFilter = document.querySelector("#searchFilter");
   elements.headerSearchForm = document.querySelector("[data-header-search]");
   elements.headerSearchInput = document.querySelector("[data-header-search-input]");
-  elements.pokemonFilter = document.querySelector("#pokemonFilter");
-  elements.setFilter = document.querySelector("#setFilter");
-  elements.rarityFilter = document.querySelector("#rarityFilter");
-  elements.languageFilter = document.querySelector("#languageFilter");
-  elements.maxPriceFilter = document.querySelector("#maxPriceFilter");
-  elements.sortSelect = document.querySelector("#sortSelect");
+  elements.filterDrawerBody = document.querySelector("#filterDrawerBody");
+  elements.filterDrawerTitle = document.querySelector("#filterDrawerTitle");
+  elements.closeFiltersButton = document.querySelector("#closeFiltersButton");
+  elements.drawerSetSearch = document.querySelector("#drawerSetSearch");
+  elements.drawerShowButton = document.querySelector("#drawerShowButton");
   elements.clearFiltersButton = document.querySelector("#clearFiltersButton");
   elements.toast = document.querySelector("#toast");
   elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
@@ -149,60 +176,34 @@ function bindEvents() {
       state.filters.mood = chip.classList.contains("is-active") ? "all" : (chip.dataset.mood || "all");
       state.showAllCards = true;
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
-      elements.moodChips.forEach((item) => item.classList.toggle("is-active", item === chip && state.filters.mood !== "all"));
-      renderCards();
-      const moodAction = state.filters.mood === "all" ? "removed" : "applied";
-      const resultCount = getFilteredCards().length;
-      trackEvent("filter_changed", {
-        filter_name: "mood",
-        filter_value: state.filters.mood,
-        filter_action: moodAction,
-        result_count: resultCount,
-      });
-      trackEvent("filter_facet_mood", {
-        filter_value: state.filters.mood,
-        filter_action: moodAction,
-        result_count: resultCount,
-      });
+      // render() also refreshes the All filters count and the drawer, not just the cards.
+      render();
+      trackFilterChange("mood", "mood_chip");
     });
   });
 
-  [elements.pokemonFilter, elements.setFilter, elements.rarityFilter, elements.languageFilter, elements.maxPriceFilter, elements.sortSelect]
-    .forEach((element) => bind(element, "change", () => { state.showAllCards = true; }));
-
-  [
-    [elements.pokemonFilter, "pokemon"],
-    [elements.setFilter, "set"],
-    [elements.rarityFilter, "rarity"],
-    [elements.languageFilter, "language"],
-    [elements.maxPriceFilter, "maxPrice"],
-    [elements.sortSelect, "sort"],
-  ].forEach(([element, key]) => {
-    bind(element, "change", () => {
-      state.filters[key] = element.value;
-      if (key !== "sort") state.modalFilterChanges += 1;
-      renderCards();
-      const filterAction = element.value === "all" || element.value === "" ? "removed" : "applied";
-      const analyticsValue = getAnalyticsFilterValue(key, element.value);
-      const resultCount = getFilteredCards().length;
-      trackEvent(key === "sort" ? "sort_changed" : "filter_changed", {
-        filter_name: key,
-        filter_value: analyticsValue,
-        filter_action: filterAction,
-        result_count: resultCount,
-      });
-      if (key !== "sort") {
-        trackEvent(`filter_facet_${key}`, {
-          filter_action: filterAction,
-          filter_value: analyticsValue,
-          result_count: resultCount,
-        });
-      }
-    });
+  // The "under $5" chip is a shortcut for the drawer's Price filter, so both stay in sync.
+  bind(elements.priceChip, "click", () => {
+    const value = elements.priceChip.dataset.maxPrice;
+    state.filters.maxPrice = state.filters.maxPrice === value ? "" : value;
+    state.showAllCards = true;
+    render();
+    trackFilterChange("maxPrice", "price_chip");
   });
 
-  bind(elements.clearFiltersButton, "click", clearFilters);
-  bind(elements.clearFiltersLink, "click", clearFilters);
+  bind(elements.filterDrawerBody, "click", handleFilterOptionClick);
+  bind(elements.drawerSetSearch, "input", () => renderDrawerOptions("set"));
+  bind(elements.closeFiltersButton, "click", () => closeFiltersDialog("close_button"));
+  bind(elements.drawerShowButton, "click", () => {
+    if (getFilteredCards().length) closeFiltersDialog("show_results");
+    else clearFilters("filter_drawer_no_matches");
+  });
+  bind(elements.filtersDialog, "click", (event) => {
+    if (event.target === elements.filtersDialog) closeFiltersDialog("backdrop");
+  });
+
+  bind(elements.clearFiltersButton, "click", () => clearFilters("filter_drawer_reset"));
+  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all"));
   bind(elements.headerSearchInput, "input", handleHeaderSearchClear);
   bind(elements.headerSearchInput, "search", handleHeaderSearchClear);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
@@ -244,11 +245,13 @@ function bindEvents() {
     elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
     if (state.modalFilterChanges === 0) {
       trackEvent("filters_modal_bounced", {
+        close_method: state.drawerCloseMethod,
         had_active_filters: hasActiveFilters(),
         active_filter_count: countActiveFilters(),
       });
     } else {
       trackEvent("filters_modal_applied", {
+        close_method: state.drawerCloseMethod,
         changes_count: state.modalFilterChanges,
         active_filter_count: countActiveFilters(),
         result_count: getFilteredCards().length,
@@ -256,7 +259,7 @@ function bindEvents() {
     }
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
-  bind(elements.clearCollectionButton, "click", clearFilters);
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
   bind(elements.latestGrid, "click", handleCardGridClick);
@@ -281,7 +284,11 @@ function applyInitialSearch() {
     window.history.replaceState(window.history.state, "", url);
   }
   const mood = slugify(params.get("mood"));
-  if (mood && elements.cardGrid) {
+  // Old links used ?mood=under-5 for what is now the Price filter.
+  if (mood === "under-5" && elements.cardGrid) {
+    state.filters.maxPrice = "5";
+    state.showAllCards = true;
+  } else if (mood && elements.cardGrid) {
     state.filters.mood = mood;
     state.showAllCards = true;
     elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === mood));
@@ -309,7 +316,6 @@ function handleHeaderSearchSubmit(event) {
     ...state.filters,
     search: query,
     mood: "all",
-    pokemon: "all",
     set: "all",
     rarity: "all",
     language: "all",
@@ -370,9 +376,18 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
+  // Escape closes the dialog natively; every other way out names itself in closeFiltersDialog().
+  state.drawerCloseMethod = "escape";
+  // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
+  renderFilters();
   elements.filtersDialog.showModal();
-  trackEvent("filters_opened");
-  window.setTimeout(() => elements.pokemonFilter?.focus(), 50);
+  trackEvent("filters_opened", { active_filter_count: countActiveFilters() });
+  elements.filterDrawerTitle?.focus();
+}
+
+function closeFiltersDialog(closeMethod) {
+  state.drawerCloseMethod = closeMethod;
+  elements.filtersDialog.close();
 }
 
 function openSuggestionDialog() {
@@ -690,44 +705,148 @@ function render() {
 }
 
 function renderFilters() {
-  syncFilterInputs();
-  fillSelect(elements.pokemonFilter, uniqueValues("pokemon"), state.filters.pokemon, "All Pokemon");
-  fillSelect(elements.setFilter, uniqueValues("setName"), state.filters.set, "All sets");
-  fillSelect(elements.rarityFilter, uniqueValues("rarity"), state.filters.rarity, "All rarities");
-  fillSelect(elements.languageFilter, uniqueValues("language"), state.filters.language, "All languages");
-}
-
-function syncFilterInputs() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
-  if (elements.maxPriceFilter) elements.maxPriceFilter.value = state.filters.maxPrice;
-  if (elements.sortSelect) elements.sortSelect.value = state.filters.sort;
+  elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === state.filters.mood));
+  elements.priceChip?.classList.toggle("is-active", elements.priceChip.dataset.maxPrice === state.filters.maxPrice);
+  // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
+  const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
+  if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
+  ["mood", "rarity", "set", "language", "maxPrice", "sort"].forEach(renderDrawerOptions);
+  renderDrawerShowButton();
 }
 
-function fillSelect(element, values, currentValue, allLabel) {
-  if (!element) return;
-  const currentExists = currentValue === "all" || values.includes(currentValue);
-  const safeValue = currentExists ? currentValue : "all";
-  if (safeValue !== currentValue) {
-    state.filters[elementToFilterKey(element)] = safeValue;
+// Filter drawer: each option is a pill showing how many cards it would return with the other filters kept.
+function renderDrawerOptions(key) {
+  const container = elements.filterDrawerBody?.querySelector(`[data-filter-options="${key}"]`);
+  if (!container || !state.cards.length) return;
+  const selected = state.filters[key];
+  let options = getDrawerOptions(key).map((option) => ({
+    ...option,
+    count: key === "sort" ? null : filterCards({ ...state.filters, [key]: option.value }).length,
+  }));
+  const limit = DRAWER_PREVIEW_LIMITS[key];
+  if (limit) {
+    // Long lists put options that still have matches first; sets with no matches are hidden.
+    const available = options.filter((option) => option.count > 0 || option.value === selected);
+    options = key === "set" ? available : [...available, ...options.filter((option) => !available.includes(option))];
   }
-
-  element.innerHTML = [
-    `<option value="all">${escapeHtml(allLabel)}</option>`,
-    ...values.map((value) => {
-      const selected = value === safeValue ? " selected" : "";
-      return `<option value="${escapeAttribute(value)}"${selected}>${escapeHtml(value)}</option>`;
-    }),
-  ].join("");
+  const searching = key === "set" && Boolean(elements.drawerSetSearch?.value.trim());
+  const collapsible = Boolean(limit) && options.length > limit && !searching;
+  const expanded = state.expandedDrawerSections.has(key);
+  let visible = collapsible && !expanded ? options.slice(0, limit) : options;
+  const selectedOption = options.find((option) => option.value === selected);
+  if (selectedOption && !visible.includes(selectedOption)) visible = [selectedOption, ...visible];
+  const noun = key === "mood" ? "moods" : "sets";
+  const toggle = collapsible
+    ? `<button class="drawer-more" type="button" data-expand-section="${key}">${expanded ? "Show fewer" : `Show all ${options.length} ${noun}`}</button>`
+    : "";
+  container.innerHTML = visible.length
+    ? visible.map((option) => {
+      const isSelected = option.value === selected;
+      const { count } = option;
+      const disabled = count === 0 && !isSelected ? " disabled" : "";
+      return `<button class="drawer-option" type="button" data-filter-key="${key}" data-filter-value="${escapeAttribute(option.value)}" aria-pressed="${isSelected}"${disabled}>${escapeHtml(option.label)}${count === null ? "" : ` <small>${count}</small>`}</button>`;
+    }).join("") + toggle
+    : `<p class="drawer-empty">No sets match${searching ? "" : " these filters"}.</p>`;
 }
 
-function elementToFilterKey(element) {
-  return {
-    pokemonFilter: "pokemon",
-    setFilter: "set",
-    rarityFilter: "rarity",
-    languageFilter: "language",
-  }[element.id];
+function getDrawerOptions(key) {
+  if (key === "sort") return SORT_OPTIONS;
+  if (key === "maxPrice") return PRICE_OPTIONS;
+  if (key === "rarity") {
+    const groups = new Map();
+    state.cards.forEach((card) => {
+      const group = getRarityGroup(card.rarity);
+      groups.set(group.id, group);
+    });
+    return [...RARITY_GROUPS.filter((group) => groups.has(group.id)), ...[...groups.values()].filter((group) => !RARITY_GROUPS.includes(group))]
+      .map((group) => ({ value: group.id, label: group.label }));
+  }
+  if (key === "mood") return countBy(state.cards.flatMap((card) => card.moods)).map(([mood]) => ({ value: slugify(mood), label: mood }));
+  if (key === "language") return countBy(state.cards.map((card) => card.language)).map(([language]) => ({ value: language, label: language }));
+  if (key === "set") {
+    // Newest sets first; the search box narrows the list but always keeps the selected set.
+    const query = elements.drawerSetSearch?.value.trim().toLowerCase() || "";
+    const newest = new Map();
+    state.cards.forEach((card) => {
+      if (!newest.has(card.setName) || compareDates(card.setReleaseDate, newest.get(card.setName)) > 0) newest.set(card.setName, card.setReleaseDate);
+    });
+    return [...newest.keys()]
+      .filter((setName) => !query || setName.toLowerCase().includes(query) || setName === state.filters.set)
+      .sort((a, b) => compareDates(newest.get(b), newest.get(a)) || a.localeCompare(b))
+      .map((setName) => ({ value: setName, label: setName }));
+  }
+  return [];
+}
+
+function countBy(values) {
+  const counts = new Map();
+  values.filter(Boolean).forEach((value) => counts.set(value, (counts.get(value) || 0) + 1));
+  return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+function getRarityGroup(rarity) {
+  return RARITY_GROUPS.find((group) => group.rarities.includes(rarity))
+    || { id: slugify(rarity || "unknown"), label: rarity || "Unknown", rarities: [rarity] };
+}
+
+function renderDrawerShowButton() {
+  if (!elements.drawerShowButton) return;
+  const count = getFilteredCards().length;
+  elements.drawerShowButton.textContent = count ? `Show ${count} ${count === 1 ? "sleeper" : "sleepers"} →` : "No matches · Reset filters";
+  elements.drawerShowButton.classList.toggle("is-empty", !count);
+}
+
+function handleFilterOptionClick(event) {
+  const expand = event.target.closest("[data-expand-section]");
+  if (expand) {
+    const key = expand.dataset.expandSection;
+    if (state.expandedDrawerSections.has(key)) state.expandedDrawerSections.delete(key);
+    else state.expandedDrawerSections.add(key);
+    renderDrawerOptions(key);
+    restoreDrawerFocus(`[data-expand-section="${key}"]`);
+    return;
+  }
+  const option = event.target.closest("[data-filter-key]");
+  if (!option || option.disabled) return;
+  const key = option.dataset.filterKey;
+  const value = option.dataset.filterValue;
+  // Re-tapping the current sort changes nothing, so it is not tracked or counted as a drawer change.
+  if (key === "sort" && state.filters.sort === value) return;
+  // Tapping the selected option clears it; sort always keeps one choice.
+  const cleared = key === "maxPrice" ? "" : "all";
+  setFilterValue(key, key !== "sort" && state.filters[key] === value ? cleared : value);
+  // Re-rendering replaces the pills, so put keyboard focus back on the one just used.
+  restoreDrawerFocus(`[data-filter-key="${key}"][data-filter-value="${CSS.escape(value)}"]`, key);
+}
+
+function restoreDrawerFocus(selector, fallbackKey) {
+  const target = elements.filterDrawerBody?.querySelector(selector);
+  const fallback = fallbackKey && elements.filterDrawerBody?.querySelector(`[data-filter-key="${fallbackKey}"]:not(:disabled)`);
+  (target && !target.disabled ? target : fallback)?.focus({ preventScroll: true });
+}
+
+function setFilterValue(key, value) {
+  state.filters[key] = value;
+  state.showAllCards = true;
+  // Sorting counts as using the drawer, so a sort-only visit is "applied", not "bounced".
+  state.modalFilterChanges += 1;
+  render();
+  trackFilterChange(key, "filter_drawer");
+}
+
+// One place for filter and sort analytics; interaction_source says where the change was made.
+function trackFilterChange(key, interactionSource) {
+  const value = state.filters[key];
+  const params = {
+    filter_value: getAnalyticsFilterValue(key, value),
+    filter_action: value === "all" || value === "" ? "removed" : "applied",
+    result_count: getFilteredCards().length,
+    interaction_source: interactionSource,
+  };
+  trackEvent(key === "sort" ? "sort_changed" : "filter_changed", { filter_name: key, ...params });
+  if (key !== "sort") trackEvent(`filter_facet_${key}`, params);
 }
 
 function renderCards() {
@@ -774,8 +893,12 @@ function renderCards() {
 }
 
 function getFilteredCards() {
-  const search = state.filters.search.toLowerCase();
-  const maxPrice = numericOrNull(state.filters.maxPrice);
+  return filterCards(state.filters).sort(compareCards);
+}
+
+function filterCards(filters) {
+  const search = filters.search.toLowerCase();
+  const maxPrice = numericOrNull(filters.maxPrice);
 
   return state.cards
     .filter((card) => {
@@ -792,26 +915,21 @@ function getFilteredCards() {
       ].join(" ").toLowerCase();
 
       if (search && !searchable.includes(search)) return false;
-      if (state.filters.mood !== "all") {
-        const moodMatches = card.moods.some((mood) => slugify(mood) === state.filters.mood);
-        const priceMatches = state.filters.mood === "under-5" && getDisplayPrice(card) > 0 && getDisplayPrice(card) <= 5;
-        if (!moodMatches && !priceMatches) return false;
+      if (filters.mood !== "all") {
+        if (!card.moods.some((mood) => slugify(mood) === filters.mood)) return false;
       }
-      if (state.filters.pokemon !== "all" && card.pokemon !== state.filters.pokemon) return false;
-      if (state.filters.set !== "all" && card.setName !== state.filters.set) return false;
-      if (state.filters.rarity !== "all" && card.rarity !== state.filters.rarity) return false;
-      if (state.filters.language !== "all" && card.language !== state.filters.language) return false;
-      if (maxPrice !== null && getDisplayPrice(card) > maxPrice) return false;
+      if (filters.set !== "all" && card.setName !== filters.set) return false;
+      if (filters.rarity !== "all" && getRarityGroup(card.rarity).id !== filters.rarity) return false;
+      if (filters.language !== "all" && card.language !== filters.language) return false;
+      if (maxPrice !== null && !(getDisplayPrice(card) > 0 && getDisplayPrice(card) <= maxPrice)) return false;
       return true;
-    })
-    .sort(compareCards);
+    });
 }
 
 function hasActiveFilters() {
   return Boolean(
     state.filters.search
     || state.filters.mood !== "all"
-    || state.filters.pokemon !== "all"
     || state.filters.set !== "all"
     || state.filters.rarity !== "all"
     || state.filters.language !== "all"
@@ -823,7 +941,6 @@ function countActiveFilters() {
   return [
     Boolean(state.filters.search),
     state.filters.mood !== "all",
-    state.filters.pokemon !== "all",
     state.filters.set !== "all",
     state.filters.rarity !== "all",
     state.filters.language !== "all",
@@ -848,24 +965,17 @@ function renderActiveFilterControls() {
     }
   }
   if (elements.activeAdvancedFilters) {
-    const advancedFilters = [
-      ["pokemon", elements.pokemonFilter],
-      ["set", elements.setFilter],
-      ["rarity", elements.rarityFilter],
-      ["language", elements.languageFilter],
-    ].filter(([, element]) => element?.value && element.value !== "all");
-
-    if (state.filters.maxPrice) advancedFilters.push(["maxPrice", elements.maxPriceFilter]);
+    const advancedFilters = ["set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
+    // The "under $5" chip already shows that price, so only other prices get a removable chip.
+    if (state.filters.maxPrice && state.filters.maxPrice !== elements.priceChip?.dataset.maxPrice) advancedFilters.push("maxPrice");
     // A mood opened from a card pill may have no mood chip of its own, so show it as a removable chip.
     const moodHasChip = elements.moodChips.some((chip) => chip.dataset.mood === state.filters.mood);
-    if (state.filters.mood !== "all" && !moodHasChip) advancedFilters.unshift(["mood", null]);
-    elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map(([key, element]) => {
+    if (state.filters.mood !== "all" && !moodHasChip) advancedFilters.unshift("mood");
+    elements.activeAdvancedFilters.replaceChildren(...advancedFilters.map((key) => {
       const chip = document.createElement("span");
       chip.className = "active-filter-chip";
-      const label = key === "mood"
-        ? getMoodLabel(state.filters.mood)
-        : key === "maxPrice" ? `under $${element.value}` : element.selectedOptions[0]?.textContent.trim();
-      chip.append(document.createTextNode(label || element?.value || state.filters[key]));
+      const label = getFilterLabel(key, state.filters[key]);
+      chip.append(document.createTextNode(label));
       const removeButton = document.createElement("button");
       removeButton.type = "button";
       removeButton.setAttribute("aria-label", `Remove ${label || "filter"} filter`);
@@ -875,22 +985,10 @@ function renderActiveFilterControls() {
         state.filters[key] = key === "maxPrice" ? "" : "all";
         state.showAllCards = true;
         render();
-        const analyticsValue = getAnalyticsFilterValue(key, state.filters[key]);
-        const resultCount = getFilteredCards().length;
-        trackEvent("filter_changed", {
-          filter_name: key,
-          filter_value: analyticsValue,
-          filter_action: "removed",
-          result_count: resultCount,
-        });
-        trackEvent(`filter_facet_${key}`, {
-          filter_action: "removed",
-          filter_value: analyticsValue,
-          result_count: resultCount,
-        });
+        trackFilterChange(key, "active_filter_chip");
         trackEvent("filter_chip_removed", {
           filter_name: key,
-          result_count: resultCount,
+          result_count: getFilteredCards().length,
         });
       });
       chip.append(removeButton);
@@ -898,6 +996,13 @@ function renderActiveFilterControls() {
     }));
   }
   if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0;
+}
+
+function getFilterLabel(key, value) {
+  if (key === "mood") return getMoodLabel(value) || value;
+  if (key === "rarity") return RARITY_GROUPS.find((group) => group.id === value)?.label || getRarityGroup(value).label;
+  if (key === "maxPrice") return `under $${value}`;
+  return value;
 }
 
 function getRecentlyAddedCards() {
@@ -924,7 +1029,6 @@ function updateCollectionHeading(resultCount) {
   if (!elements.collectionTitle || !elements.collectionMeta) return;
   const active = hasActiveFilters();
   const search = state.filters.search.trim();
-  const mood = getMoodLabel(state.filters.mood);
   if (state.catalogLoadFailed) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     return;
@@ -935,11 +1039,13 @@ function updateCollectionHeading(resultCount) {
   } else if (search) {
     elements.collectionTitle.textContent = `Matching “${search}”`;
     elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
-  } else if (mood) {
-    elements.collectionTitle.textContent = mood;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   } else {
-    elements.collectionTitle.textContent = "Filtered sleepy Pokemon";
+    // Name what is filtered: up to two filter names, then "+N".
+    const labels = ["mood", "rarity", "set", "language", "maxPrice"]
+      .filter((key) => (key === "maxPrice" ? Boolean(state.filters.maxPrice) : state.filters[key] !== "all"))
+      .map((key) => getFilterLabel(key, state.filters[key]))
+      .map((label) => label.charAt(0).toUpperCase() + label.slice(1));
+    elements.collectionTitle.textContent = labels.slice(0, 2).join(" · ") + (labels.length > 2 ? `\u00a0+${labels.length - 2}` : "");
     elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   }
   if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
@@ -1299,12 +1405,6 @@ function getCollectionChecklistFilename() {
       return `sleepy-pokemon-${moodSlug}-checklist.csv`;
     }
   }
-  if (state.filters.pokemon !== "all") {
-    const pokemonSlug = slugify(state.filters.pokemon);
-    if (pokemonSlug) {
-      return `sleepy-pokemon-${pokemonSlug}-checklist.csv`;
-    }
-  }
   if (state.filters.set !== "all") {
     const setSlug = slugify(state.filters.set);
     if (setSlug) {
@@ -1339,7 +1439,7 @@ function escapeCsvCell(value) {
   return `"${cell.replace(/"/g, '""')}"`;
 }
 
-function clearFilters() {
+function clearFilters(interactionSource) {
   const activeFilterCount = countActiveFilters();
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
@@ -1347,7 +1447,6 @@ function clearFilters() {
   state.filters = {
     search: "",
     mood: "all",
-    pokemon: "all",
     set: "all",
     rarity: "all",
     language: "all",
@@ -1355,11 +1454,13 @@ function clearFilters() {
     sort: PUBLIC_DEFAULT_SORT,
   };
   state.showAllCards = false;
+  if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   syncSearchUrl("");
   render();
   trackEvent("filters_cleared", {
+    interaction_source: interactionSource,
     active_filter_count: activeFilterCount,
     result_count: state.cards.length,
   });
@@ -1399,11 +1500,6 @@ function getAnalyticsFilterValue(key, value) {
 function trackEvent(eventName, params = {}) {
   if (!window.sleepyAnalytics) return;
   window.sleepyAnalytics.track(eventName, params);
-}
-
-function uniqueValues(key) {
-  return [...new Set(state.cards.map((card) => card[key]).filter(Boolean))]
-    .sort((a, b) => a.localeCompare(b));
 }
 
 function derivePokemonName(name) {
