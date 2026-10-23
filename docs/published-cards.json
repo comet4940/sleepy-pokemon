@@ -399,7 +399,14 @@
       ],
       "whyItBelongs": "Aron is stretched out along a set of railroad tracks at dusk, and its one visible eye is just a flat, sleepy line. The sky behind it fades from purple to deep red over a quiet sea, with a few early stars and a distant tower on the horizon. The gravel and rails look like an odd bed for anyone else, but a steel-plated Pokémon seems perfectly comfortable on them. It’s a quiet, slightly absurd little scene, and Aron doesn’t appear worried about the next train.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-21T15:55:44.325Z"
+      "updatedAt": "2026-10-23T15:43:20.109Z",
+      "priceMarket": 1.8,
+      "priceLow": 0.95,
+      "priceMid": 1.61,
+      "priceHigh": 35,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15"
     },
     {
       "apiId": "sm11-151",
@@ -511,7 +518,14 @@
       ],
       "whyItBelongs": "Snorlax is flopped face-down in a woodland clearing, sunk into a bed of white flowers, with leaves drifting past and sunlight coming through the trees. Its eyes are closed, there’s a small satisfied smile on its face, and its big round body is draped over the grass like a giant, very soft boulder. It’s one of the most gently peaceful pieces of art in the stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-22T19:54:59.748Z"
+      "updatedAt": "2026-10-23T15:43:21.311Z",
+      "priceMarket": 64.88,
+      "priceLow": 20.98,
+      "priceMid": 55.04,
+      "priceHigh": 681.22,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15"
     },
     {
       "apiId": "g1-58",
@@ -592,7 +606,14 @@
       ],
       "whyItBelongs": "Snorlax is rolling through a sunlit town fast asleep, curled into a huge round ball with its eyes shut and a dust cloud trailing behind it. A crowd of startled townspeople is scattering out of the way, with one man mid-leap and a couple of others looking alarmed, while on the right a woman seems to be calmly holding up her phone to take a photo. This is a very different kind of nap from the rest of the Snorlax cards: it’s the only one causing a stampede. The painted, slightly storybook style makes it funnier, since everyone is panicking over an unstoppable sleeper.\n\nThe card is all about this scene. Toss and Turn can be used even while Snorlax is Asleep, and if it is, the attack does 90 more damage. That’s the sleep-rolling you see in the artwork, where being asleep is what makes it so dangerous.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z"
+      "updatedAt": "2026-10-23T15:43:21.958Z",
+      "priceMarket": 10.08,
+      "priceLow": 4.87,
+      "priceMid": 10,
+      "priceHigh": 96.95,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15"
     },
     {
       "apiId": "",
@@ -864,7 +885,14 @@
       ],
       "whyItBelongs": "The fallen leaves make a soft little blanket, and Swinub has clearly decided this is the place to sleep for a while.",
       "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z"
+      "updatedAt": "2026-10-23T15:43:22.970Z",
+      "priceMarket": 0.29,
+      "priceLow": 0.15,
+      "priceMid": 0.35,
+      "priceHigh": 19.8,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15"
     },
     {
       "apiId": "xy8-81",
@@ -6336,13 +6364,13 @@
       "artist": "Atsuko Nishida",
       "imageSmall": "https://images.pokemontcg.io/ecard2/66.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/66_hires.png",
-      "priceMarket": null,
-      "priceLow": null,
-      "priceMid": null,
-      "priceHigh": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 95.49,
+      "priceLow": 86.51,
+      "priceMid": 94.24,
+      "priceHigh": 1309.62,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2003/01/15",
       "priority": "Medium",
       "notes": "Wooper is fast asleep on a bright red surface, tucked into a cozy indoor corner.",
@@ -6351,7 +6379,7 @@
       ],
       "whyItBelongs": "Wooper has nodded off in the middle of an everyday indoor scene, its little arms slack and eyes peacefully shut. Atsuko Nishida's bright, lived-in setting gives this vintage e-Card a sweet, familiar nap-time feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z"
+      "updatedAt": "2026-10-23T15:44:05.813Z"
     },
     {
       "apiId": "ex6-19",
@@ -6554,13 +6582,13 @@
       "artist": "Ken Sugimori",
       "imageSmall": "https://images.pokemontcg.io/dp4/64.png",
       "imageLarge": "https://images.pokemontcg.io/dp4/64_hires.png",
-      "priceMarket": null,
-      "priceLow": null,
-      "priceMid": null,
-      "priceHigh": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 0.68,
+      "priceLow": 0.2,
+      "priceMid": 0.48,
+      "priceHigh": 16.72,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2008/02/13",
       "priority": "Medium",
       "notes": "Clamperl rests asleep in the shelter of its shell on the ocean floor.",
@@ -6570,7 +6598,7 @@
       ],
       "whyItBelongs": "Clamperl has closed its eyes and settled into its shell, pearls tucked close as it sleeps below the surface. Ken Sugimori's underwater scene is quiet and uncluttered, just right for a gentle nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z"
+      "updatedAt": "2026-10-23T15:44:07.747Z"
     },
     {
       "apiId": "swsh10-120",
@@ -6681,13 +6709,13 @@
       "artist": "Sumiyoshi Kizuki",
       "imageSmall": "https://images.pokemontcg.io/dp2/102.png",
       "imageLarge": "https://images.pokemontcg.io/dp2/102_hires.png",
-      "priceMarket": null,
-      "priceLow": null,
-      "priceMid": null,
-      "priceHigh": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 1.38,
+      "priceLow": 0.15,
+      "priceMid": 0.76,
+      "priceHigh": 18.54,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2007/08/22",
       "priority": "Medium",
       "notes": "A little cluster of Spheal has gathered on a rocky island for a shared rest.",
@@ -6696,7 +6724,7 @@
       ],
       "whyItBelongs": "Several Spheal have hauled out together, with the sleepy group gathered around the same sun-warmed rock. Sumiyoshi Kizuki's playful scene has the easy, companionable feel of a group nap after a swim.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z"
+      "updatedAt": "2026-10-23T15:44:08.149Z"
     },
     {
       "apiId": "sm12-226",
@@ -6989,13 +7017,13 @@
       "artist": "Miki Tanaka",
       "imageSmall": "https://images.pokemontcg.io/sv10/54.png",
       "imageLarge": "https://images.pokemontcg.io/sv10/54_hires.png",
-      "priceMarket": null,
-      "priceLow": null,
-      "priceMid": null,
-      "priceHigh": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 0.11,
+      "priceLow": 0.01,
+      "priceMid": 0.15,
+      "priceHigh": 20,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2025/05/30",
       "priority": "Medium",
       "notes": "Clamperl is asleep in its shell beneath a bright, colorful reef.",
@@ -7005,7 +7033,7 @@
       ],
       "whyItBelongs": "Clamperl is tucked into its shell, eyes closed while the reef blooms with coral around it. Miki Tanaka's bright underwater colors make this modern print feel like a tiny safe bedroom beneath the waves.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z"
+      "updatedAt": "2026-10-23T15:44:08.905Z"
     },
     {
       "apiId": "swshp-SWSH304",
@@ -7180,13 +7208,13 @@
       "artist": "Atsuko Nishida",
       "imageSmall": "https://images.pokemontcg.io/xy8/80.png",
       "imageLarge": "https://images.pokemontcg.io/xy8/80_hires.png",
-      "priceMarket": null,
-      "priceLow": null,
-      "priceMid": null,
-      "priceHigh": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 0.38,
+      "priceLow": 0.06,
+      "priceMid": 0.36,
+      "priceHigh": 19.8,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2015/11/04",
       "priority": "Medium",
       "notes": "Swinub from BREAKthrough 80/162 rests among berries in a cozy, colorful scene.",
@@ -7195,7 +7223,7 @@
       ],
       "whyItBelongs": "Swinub looks comfortably settled among the berries, with the soft pose and warm colors giving the scene a snug, post-snack feel. It is a charming little nap tucked into the middle of an everyday moment.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z"
+      "updatedAt": "2026-10-23T15:44:09.324Z"
     },
     {
       "apiId": "ecard3-108",
@@ -7414,5 +7442,5 @@
       "updatedAt": "2026-10-22T19:59:05.759Z"
     }
   ],
-  "priceRefreshedAt": "2026-10-22T15:53:38.298Z"
+  "priceRefreshedAt": "2026-10-23T15:44:10.612Z"
 }
