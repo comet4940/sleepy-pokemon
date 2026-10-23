@@ -5368,7 +5368,7 @@
       "tcgdexId": "",
       "name": "Komala",
       "pokemon": "Komala",
-      "setName": "Sun & Moon Black Star Promos",
+      "setName": "Sun & Moon Promos",
       "setSeries": "Sun & Moon",
       "setId": "smp",
       "number": "SM41",
@@ -5388,13 +5388,14 @@
       "priority": "Medium",
       "notes": "Komala from Sun & Moon Black Star Promos SM41 is included in this guide because Komala is pressed sleepily against a tree, a sweet promo-card fit for the theme. Suggested by GitHub issue #5.",
       "createdAt": "2026-09-16T01:07:10.520Z",
-      "updatedAt": "2026-10-17T14:11:42.927Z",
+      "updatedAt": "2026-10-23T19:00:00.000Z",
       "moods": [
         "Hug Buddy",
         "Drool & Snore",
         "Treetop Naps"
       ],
-      "whyItBelongs": "Out cold on a tropical beach. Nagimiso’s breezy Alolan art showcases Komala doing what it does best: sleeping without a care."
+      "whyItBelongs": "Out cold on a tropical beach. Nagimiso’s breezy Alolan art showcases Komala doing what it does best: sleeping without a care.",
+      "slug": "komala-sun-and-moon-black-star-promos-sm41"
     },
     {
       "apiId": "swsh11-149",
