@@ -45,13 +45,11 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `imageSourceUrl` | No | Page the hosted image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
 | `whyItBelongs` | Yes | The curator's short note on what's happening in the art. Shown as "Why it belongs" | `Dinner is still on the table, and Growlithe...` |
-| `notes` | No | Extra curation or provenance notes (where it came from, community submission). Searchable; shown only when `whyItBelongs` is empty | `Community submission via the Suggest a card form.` |
-| `priority` | No | Legacy curation rank: `High`, `Medium` or `Low`. Only affects the fallback sort order now that the Curated sort is gone (#140) | `Medium` |
+| `notes` | No | Internal provenance and sources: where the card came from, which suggestion or issue it was, where the details were checked. Not shown on the site | `Community submission via the Suggest a card form.` |
 | `setReleaseDate` | No | Release date of the set, `YYYY/MM/DD`. Drives "Newest sets" sorting; cards without it sort last | `1998/11/24` |
 | `apiId` | No | pokemontcg.io card ID. Links the card to the price refresh (English cards only) | `smp-SM41` |
 | `tcgdexId` | No | TCGdex card ID, for cards pokemontcg.io doesn't have | `sv09-120` |
 | `scrydexId` | No | Scrydex card ID, for cards only Scrydex lists | `me55-131` |
-| `suggestionIssue` | No | GitHub issue the card was suggested in | `https://github.com/comet4940/sleepy-pokemon/issues/49` |
 | `slug` | No | Pinned card page URL segment. Leave it out for new cards; set it when renaming (see [Rules](#rules)) | `komala-sun-and-moon-black-star-promos-sm41` |
 | `priceMarket` | No | Market price in USD. Written by the price refresh, never by hand (except `priceSource: Manual`) | `80.68` |
 | `priceLow` | No | Low price in USD. Written by the price refresh | `57.27` |
@@ -65,7 +63,11 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 
 ### Retired fields
 
-`sleepinessBasis`, `sleepLocation` and `sleepiness` were retired in #132; moods and `whyItBelongs` cover them. The validator rejects any card that still has them.
+The validator rejects any card that still has these:
+
+- `sleepinessBasis`, `sleepLocation`, `sleepiness`: retired in #132; moods and `whyItBelongs` cover them.
+- `priority`: retired in #144. It only fed the Curated sort, which was removed in #140.
+- `suggestionIssue`: retired in #144. Record the suggestion in `notes` instead (e.g. "Suggested in GitHub issue #49.").
 
 ## Rules
 

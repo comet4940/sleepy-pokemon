@@ -29,11 +29,6 @@ const SORT_OPTIONS = [
 const CARD_RENDER_BATCH_SIZE = 24;
 const TCGDEX_API = "https://api.tcgdex.net/v2/en/cards";
 
-const priorityRank = {
-  High: 0,
-  Medium: 1,
-  Low: 2,
-};
 
 const CHECKLIST_LABELS = {
   full_collection: "Full collection",
@@ -689,7 +684,6 @@ function normalizeCard(card) {
     priceSource: card.priceSource || "",
     priceUpdatedAt: card.priceUpdatedAt || "",
     setReleaseDate: card.setReleaseDate || "",
-    priority: card.priority || "Medium",
     notes: card.notes || "",
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
@@ -1112,18 +1106,13 @@ function compareCards(a, b) {
   if (state.filters.sort === "pokemon") {
     return a.pokemon.localeCompare(b.pokemon) || a.name.localeCompare(b.name);
   }
-  if (state.filters.sort === "language") {
-    return a.language.localeCompare(b.language) || a.pokemon.localeCompare(b.pokemon);
-  }
   if (state.filters.sort === "set") {
     return a.setName.localeCompare(b.setName) || compareDates(a.setReleaseDate, b.setReleaseDate);
   }
   if (state.filters.sort === "newest") {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
   }
-  return (priorityRank[a.priority] ?? 1) - (priorityRank[b.priority] ?? 1)
-    || a.pokemon.localeCompare(b.pokemon)
-    || a.setName.localeCompare(b.setName);
+  return a.pokemon.localeCompare(b.pokemon) || a.setName.localeCompare(b.setName);
 }
 
 function renderCard(card) {
