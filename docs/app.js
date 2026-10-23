@@ -812,6 +812,8 @@ function handleFilterOptionClick(event) {
   if (!option || option.disabled) return;
   const key = option.dataset.filterKey;
   const value = option.dataset.filterValue;
+  // Re-tapping the current sort changes nothing, so it is not tracked or counted as a drawer change.
+  if (key === "sort" && state.filters.sort === value) return;
   // Tapping the selected option clears it; sort always keeps one choice.
   const cleared = key === "maxPrice" ? "" : "all";
   setFilterValue(key, key !== "sort" && state.filters[key] === value ? cleared : value);
