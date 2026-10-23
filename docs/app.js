@@ -61,6 +61,7 @@ const state = {
   suggestionLookupUsed: false,
   catalogLoadFailed: false,
   modalFilterChanges: 0,
+  drawerCloseMethod: "escape",
   expandedDrawerSections: new Set(),
 };
 
@@ -177,19 +178,7 @@ function bindEvents() {
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
       // render() also refreshes the All filters count and the drawer, not just the cards.
       render();
-      const moodAction = state.filters.mood === "all" ? "removed" : "applied";
-      const resultCount = getFilteredCards().length;
-      trackEvent("filter_changed", {
-        filter_name: "mood",
-        filter_value: state.filters.mood,
-        filter_action: moodAction,
-        result_count: resultCount,
-      });
-      trackEvent("filter_facet_mood", {
-        filter_value: state.filters.mood,
-        filter_action: moodAction,
-        result_count: resultCount,
-      });
+      trackFilterChange("mood", "mood_chip");
     });
   });
 
@@ -199,35 +188,22 @@ function bindEvents() {
     state.filters.maxPrice = state.filters.maxPrice === value ? "" : value;
     state.showAllCards = true;
     render();
-    const priceAction = state.filters.maxPrice ? "applied" : "removed";
-    const analyticsValue = getAnalyticsFilterValue("maxPrice", state.filters.maxPrice);
-    const resultCount = getFilteredCards().length;
-    trackEvent("filter_changed", {
-      filter_name: "maxPrice",
-      filter_value: analyticsValue,
-      filter_action: priceAction,
-      result_count: resultCount,
-    });
-    trackEvent("filter_facet_maxPrice", {
-      filter_value: analyticsValue,
-      filter_action: priceAction,
-      result_count: resultCount,
-    });
+    trackFilterChange("maxPrice", "price_chip");
   });
 
   bind(elements.filterDrawerBody, "click", handleFilterOptionClick);
   bind(elements.drawerSetSearch, "input", () => renderDrawerOptions("set"));
-  bind(elements.closeFiltersButton, "click", () => elements.filtersDialog.close());
+  bind(elements.closeFiltersButton, "click", () => closeFiltersDialog("close_button"));
   bind(elements.drawerShowButton, "click", () => {
-    if (getFilteredCards().length) elements.filtersDialog.close();
-    else clearFilters();
+    if (getFilteredCards().length) closeFiltersDialog("show_results");
+    else clearFilters("filter_drawer_no_matches");
   });
   bind(elements.filtersDialog, "click", (event) => {
-    if (event.target === elements.filtersDialog) elements.filtersDialog.close();
+    if (event.target === elements.filtersDialog) closeFiltersDialog("backdrop");
   });
 
-  bind(elements.clearFiltersButton, "click", clearFilters);
-  bind(elements.clearFiltersLink, "click", clearFilters);
+  bind(elements.clearFiltersButton, "click", () => clearFilters("filter_drawer_reset"));
+  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all"));
   bind(elements.headerSearchInput, "input", handleHeaderSearchClear);
   bind(elements.headerSearchInput, "search", handleHeaderSearchClear);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
@@ -269,11 +245,13 @@ function bindEvents() {
     elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
     if (state.modalFilterChanges === 0) {
       trackEvent("filters_modal_bounced", {
+        close_method: state.drawerCloseMethod,
         had_active_filters: hasActiveFilters(),
         active_filter_count: countActiveFilters(),
       });
     } else {
       trackEvent("filters_modal_applied", {
+        close_method: state.drawerCloseMethod,
         changes_count: state.modalFilterChanges,
         active_filter_count: countActiveFilters(),
         result_count: getFilteredCards().length,
@@ -281,7 +259,7 @@ function bindEvents() {
     }
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
-  bind(elements.clearCollectionButton, "click", clearFilters);
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.cardGrid, "keydown", handleCardGridKeydown);
   bind(elements.latestGrid, "click", handleCardGridClick);
@@ -398,11 +376,18 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
+  // Escape closes the dialog natively; every other way out names itself in closeFiltersDialog().
+  state.drawerCloseMethod = "escape";
   // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
   renderFilters();
   elements.filtersDialog.showModal();
-  trackEvent("filters_opened");
+  trackEvent("filters_opened", { active_filter_count: countActiveFilters() });
   elements.filterDrawerTitle?.focus();
+}
+
+function closeFiltersDialog(closeMethod) {
+  state.drawerCloseMethod = closeMethod;
+  elements.filtersDialog.close();
 }
 
 function openSuggestionDialog() {
@@ -843,24 +828,23 @@ function restoreDrawerFocus(selector, fallbackKey) {
 function setFilterValue(key, value) {
   state.filters[key] = value;
   state.showAllCards = true;
-  if (key !== "sort") state.modalFilterChanges += 1;
+  // Sorting counts as using the drawer, so a sort-only visit is "applied", not "bounced".
+  state.modalFilterChanges += 1;
   render();
-  const filterAction = value === "all" || value === "" ? "removed" : "applied";
-  const analyticsValue = getAnalyticsFilterValue(key, value);
-  const resultCount = getFilteredCards().length;
-  trackEvent(key === "sort" ? "sort_changed" : "filter_changed", {
-    filter_name: key,
-    filter_value: analyticsValue,
-    filter_action: filterAction,
-    result_count: resultCount,
-  });
-  if (key !== "sort") {
-    trackEvent(`filter_facet_${key}`, {
-      filter_action: filterAction,
-      filter_value: analyticsValue,
-      result_count: resultCount,
-    });
-  }
+  trackFilterChange(key, "filter_drawer");
+}
+
+// One place for filter and sort analytics; interaction_source says where the change was made.
+function trackFilterChange(key, interactionSource) {
+  const value = state.filters[key];
+  const params = {
+    filter_value: getAnalyticsFilterValue(key, value),
+    filter_action: value === "all" || value === "" ? "removed" : "applied",
+    result_count: getFilteredCards().length,
+    interaction_source: interactionSource,
+  };
+  trackEvent(key === "sort" ? "sort_changed" : "filter_changed", { filter_name: key, ...params });
+  if (key !== "sort") trackEvent(`filter_facet_${key}`, params);
 }
 
 function renderCards() {
@@ -999,22 +983,10 @@ function renderActiveFilterControls() {
         state.filters[key] = key === "maxPrice" ? "" : "all";
         state.showAllCards = true;
         render();
-        const analyticsValue = getAnalyticsFilterValue(key, state.filters[key]);
-        const resultCount = getFilteredCards().length;
-        trackEvent("filter_changed", {
-          filter_name: key,
-          filter_value: analyticsValue,
-          filter_action: "removed",
-          result_count: resultCount,
-        });
-        trackEvent(`filter_facet_${key}`, {
-          filter_action: "removed",
-          filter_value: analyticsValue,
-          result_count: resultCount,
-        });
+        trackFilterChange(key, "active_filter_chip");
         trackEvent("filter_chip_removed", {
           filter_name: key,
-          result_count: resultCount,
+          result_count: getFilteredCards().length,
         });
       });
       chip.append(removeButton);
@@ -1465,7 +1437,7 @@ function escapeCsvCell(value) {
   return `"${cell.replace(/"/g, '""')}"`;
 }
 
-function clearFilters() {
+function clearFilters(interactionSource) {
   const activeFilterCount = countActiveFilters();
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
@@ -1486,6 +1458,7 @@ function clearFilters() {
   syncSearchUrl("");
   render();
   trackEvent("filters_cleared", {
+    interaction_source: interactionSource,
     active_filter_count: activeFilterCount,
     result_count: state.cards.length,
   });
