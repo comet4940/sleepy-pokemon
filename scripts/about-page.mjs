@@ -60,7 +60,7 @@ export function renderAboutPage(cardBySlug) {
     <meta property="og:image" content="${escapeAttribute(image)}" />
     <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
     <script defer src="../analytics.js?v=4" data-page-type="about"></script>
-    <link rel="stylesheet" href="../styles.css?v=4" />
+    <link rel="stylesheet" href="../styles.css?v=5" />
     <link rel="stylesheet" href="../home-v3.css?v=20" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=6" />
     <link rel="stylesheet" href="../about.css?v=2" />
@@ -141,7 +141,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=41"></script>
+    <script src="../app.js?v=42"></script>
   </body>
 </html>
 `;

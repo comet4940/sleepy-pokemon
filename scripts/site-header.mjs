@@ -23,7 +23,7 @@ export function renderSiteHeader(basePath = "") {
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.35-4.35" />
               </svg>
-              <input type="search" name="q" autocomplete="off" placeholder="Search cards" data-header-search-input />
+              <input type="search" name="q" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search cards" data-header-search-input />
               <button type="submit" aria-label="Search sleepy Pokemon cards">
                 <span aria-hidden="true">→</span>
               </button>

@@ -847,7 +847,8 @@ function renderCards() {
   const cards = filteredCards;
   const latestCards = getRecentlyAddedCards();
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
-  if (elements.resultCount) elements.resultCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
+  // A polite live region, so screen readers hear the new count after a search or filter change.
+  if (elements.resultCount) elements.resultCount.textContent = describeResultCount(filteredCards.length);
   updateCollectionHeading(filteredCards.length);
   updateChecklistButton(filteredCards);
   renderActiveFilterControls();
@@ -857,6 +858,7 @@ function renderCards() {
     elements.emptyState.classList.remove("hidden");
     elements.emptyState.querySelector("h3").textContent = "Collection unavailable";
     elements.emptyState.querySelector("p").textContent = "The sleepy stack is taking a nap. Please try again shortly.";
+    if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = true;
     if (elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
     elements.cardGrid.innerHTML = "";
     return;
@@ -882,29 +884,41 @@ function renderCards() {
   renderBatch(0);
 }
 
+function normalizeSearchText(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function describeResultCount(count) {
+  if (!count) return "No cards match";
+  return `${count} ${count === 1 ? "card" : "cards"}`;
+}
+
 function getFilteredCards() {
   return filterCards(state.filters).sort(compareCards);
 }
 
 function filterCards(filters) {
-  const search = filters.search.toLowerCase();
+  // Every word must appear somewhere on the card, ignoring case and accents ("pokemon go" finds "Pokémon GO").
+  const searchTerms = normalizeSearchText(filters.search).split(/\s+/).filter(Boolean);
   const maxPrice = numericOrNull(filters.maxPrice);
 
   return state.cards
     .filter((card) => {
-      const searchable = [
-        card.name,
-        card.pokemon,
-        card.setName,
-        card.setSeries,
-        card.number,
-        card.rarity,
-        card.language,
-        card.artist,
-        card.whyItBelongs,
-      ].join(" ").toLowerCase();
-
-      if (search && !searchable.includes(search)) return false;
+      if (searchTerms.length) {
+        const searchable = normalizeSearchText([
+          card.name,
+          card.pokemon,
+          card.setName,
+          card.setSeries,
+          card.number,
+          card.rarity,
+          card.language,
+          card.artist,
+          card.whyItBelongs,
+          ...card.moods,
+        ].join(" "));
+        if (!searchTerms.every((term) => searchable.includes(term))) return false;
+      }
       if (filters.mood !== "all") {
         if (!card.moods.some((mood) => slugify(mood) === filters.mood)) return false;
       }
@@ -1094,7 +1108,11 @@ function compareCards(a, b) {
     return getRandomRank(a) - getRandomRank(b);
   }
   if (state.filters.sort === "price-low") {
-    return getDisplayPrice(a) - getDisplayPrice(b);
+    // Cards without a price go last instead of reading as $0.
+    const priceA = getDisplayPrice(a);
+    const priceB = getDisplayPrice(b);
+    if (!priceA || !priceB) return Number(!priceA) - Number(!priceB);
+    return priceA - priceB;
   }
   if (state.filters.sort === "price-high") {
     return getDisplayPrice(b) - getDisplayPrice(a);
@@ -1440,6 +1458,8 @@ function clearFilters(interactionSource) {
   };
   state.showAllCards = false;
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
+  if (elements.searchFilter) elements.searchFilter.value = "";
+  if (elements.headerSearchInput) elements.headerSearchInput.value = "";
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   syncSearchUrl("");

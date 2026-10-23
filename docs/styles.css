@@ -1140,6 +1140,7 @@ textarea:focus-visible {
 .empty-state {
   display: grid;
   place-items: center;
+  align-content: center;
   min-height: 260px;
   border: 1px dashed rgba(226, 237, 229, 0.24);
   border-radius: var(--radius);
@@ -1149,6 +1150,12 @@ textarea:focus-visible {
 
 .empty-state p {
   margin-bottom: 0;
+}
+
+.empty-state .empty-state-action {
+  justify-self: center;
+  width: auto;
+  margin-top: 16px;
 }
 
 .hidden {
