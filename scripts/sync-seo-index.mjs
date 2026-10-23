@@ -206,7 +206,7 @@ function renderCardPage(card, memberships) {
                 : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
             </div>
             <div class="curation-note">
-              <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || card.notes || "A curator's note is coming soon.")}
+              <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || "A curator's note is coming soon.")}
             </div>
 ${renderGuideMemberships(card, memberships)}
 ${renderMoods(card)}

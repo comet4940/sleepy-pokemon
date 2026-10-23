@@ -681,7 +681,6 @@ function normalizeCard(card) {
     priceSource: card.priceSource || "",
     priceUpdatedAt: card.priceUpdatedAt || "",
     setReleaseDate: card.setReleaseDate || "",
-    notes: card.notes || "",
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
@@ -902,7 +901,7 @@ function filterCards(filters) {
         card.rarity,
         card.language,
         card.artist,
-        card.notes,
+        card.whyItBelongs,
       ].join(" ").toLowerCase();
 
       if (search && !searchable.includes(search)) return false;
@@ -1176,7 +1175,7 @@ function openCardDetail(card, interactionSource = "unknown") {
   elements.detailPriceRow.innerHTML = price
     ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
     : `<span class="detail-no-price">No current market price</span>`;
-  const whyItBelongs = card.whyItBelongs || card.notes;
+  const { whyItBelongs } = card;
   elements.detailCurationNote.innerHTML = whyItBelongs
     ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
     : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
@@ -1314,7 +1313,7 @@ function downloadChecklist() {
     card.language || "",
     card.artist || "",
     getDisplayPrice(card) ? formatCurrency(getDisplayPrice(card)) : "",
-    card.whyItBelongs || card.notes || "",
+    card.whyItBelongs || "",
     card.imageLarge || card.imageSmall || "",
   ]);
   const csv = [columns, ...rows]
