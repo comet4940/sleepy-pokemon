@@ -1,25 +1,30 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter, syncSiteFooter } from "./site-footer.mjs";
+import {
+  SITE_URL,
+  buildImageAlt,
+  escapeAttribute,
+  escapeHtml,
+  escapeRegExp,
+  formatCurrency,
+  loadCardData,
+  loadGuideDefs,
+  normalizeDate,
+  numericOrNull,
+  renderHead,
+  slugify,
+  syncAssetVersions,
+} from "./build-helpers.mjs";
 
-const SITE_URL = "https://www.sleepypokemon.com";
-const GUIDE_PATH = "docs/published-cards.json";
 const INDEX_PATH = "docs/index.html";
 const COLLECTION_PATH = "docs/collection/index.html";
 const CARDS_DIR = "docs/cards";
-const SITEMAP_PATH = "docs/sitemap.xml";
 const START = "<!-- SEO_CARD_INDEX_START -->";
 const END = "<!-- SEO_CARD_INDEX_END -->";
 
-const guide = JSON.parse(await readFile(GUIDE_PATH, "utf8"));
-const cards = Array.isArray(guide) ? guide : guide.cards;
-const guideDefinitions = await loadGuideDefinitions();
-
-if (!Array.isArray(cards)) {
-  throw new Error(`${GUIDE_PATH} does not contain a cards array.`);
-}
-
-const cardsWithSlugs = assignSlugs(cards);
+const { cards: cardsWithSlugs } = await loadCardData();
+const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
 const sortedCards = [...cardsWithSlugs].sort((a, b) => {
   return String(a.pokemon || "").localeCompare(String(b.pokemon || ""))
@@ -30,24 +35,10 @@ const sortedCards = [...cardsWithSlugs].sort((a, b) => {
 await writeCardPages(cardsWithSlugs);
 await syncHomepage();
 await syncCollectionIndex(sortedCards);
-await writeSitemap(cardsWithSlugs);
 
-console.log(`Synced ${cardsWithSlugs.length} card pages, crawlable index, and sitemap.`);
+console.log(`Synced ${cardsWithSlugs.length} card pages and the crawlable index.`);
+// sync-guides.mjs writes the guide, About and sitemap pages, so one run of this script rebuilds everything.
 await import("./sync-guides.mjs");
-
-function assignSlugs(cardList) {
-  const used = new Map();
-  return cardList.map((card) => {
-    const baseSlug = slugify([card.name, card.setName, card.number].filter(Boolean).join(" ")) || "card";
-    const count = used.get(baseSlug) || 0;
-    used.set(baseSlug, count + 1);
-    return {
-      ...card,
-      // A stored slug pins the page address, e.g. when a set name is corrected after the page went live.
-      slug: card.slug || (count ? `${baseSlug}-${count + 1}` : baseSlug),
-    };
-  });
-}
 
 async function writeCardPages(cardList) {
   await rm(CARDS_DIR, { recursive: true, force: true });
@@ -66,7 +57,7 @@ async function syncHomepage() {
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
   );
-  html = syncSiteFooter(html);
+  html = syncAssetVersions(syncSiteFooter(html));
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`\\s*${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), "");
   }
@@ -98,7 +89,7 @@ ${items}
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader("../")}\n      <!-- SITE_HEADER_END -->`,
   );
-  html = syncSiteFooter(html);
+  html = syncAssetVersions(syncSiteFooter(html));
   html = html.replace(
     /(<span class="collection-meta" id="collectionMeta">)[^<]*(<\/span>)/,
     `$1${cardList.length} cards · zero alarm clocks$2`,
@@ -111,29 +102,9 @@ ${items}
   await writeFile(COLLECTION_PATH, html, "utf8");
 }
 
-async function writeSitemap(cardList) {
-  const homepageLastmod = getNewestDate([
-    guide.priceRefreshedAt,
-    guide.exportedAt,
-    ...cardList.map(getCardLastmod),
-  ]);
-  const urls = [
-    sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
-    sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
-    ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card), "weekly", "0.8")),
-  ].join("\n");
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>
-`;
-  await writeFile(SITEMAP_PATH, sitemap, "utf8");
-}
-
 function renderCardPage(card, memberships) {
   const title = `${card.name} Sleepy Pokemon Card - ${[card.setName, card.number].filter(Boolean).join(" ")}`.trim();
   const description = buildDescription(card);
-  const visibleDescription = buildVisibleSummary(card);
   const pageHeading = `${card.name || card.pokemon || "Pokemon"} Sleepy Pokemon Card`;
   const imageAlt = buildImageAlt(card);
   const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
@@ -158,31 +129,28 @@ function renderCardPage(card, memberships) {
   return `<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(title)}</title>
-    <meta name="description" content="${escapeAttribute(description)}" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />
-    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="../../assets/sleepy-pokemon.png" />
-
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="Sleepy Pokemon Cards" />
-    <meta property="og:title" content="${escapeAttribute(title)}" />
-    <meta property="og:description" content="${escapeAttribute(description)}" />
-    <meta property="og:url" content="${escapeAttribute(canonicalUrl)}" />
-    <meta property="og:image" content="${escapeAttribute(image)}" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${escapeAttribute(title)}" />
-    <meta name="twitter:description" content="${escapeAttribute(description)}" />
-    <meta name="twitter:image" content="${escapeAttribute(image)}" />
-
-    <script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>
-    <script defer src="../../analytics.js?v=4" data-page-type="card" data-card-name="${escapeAttribute(card.name || "")}" data-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-card-set="${escapeAttribute(card.setName || "")}" data-card-number="${escapeAttribute(card.number || "")}" data-card-rarity="${escapeAttribute(card.rarity || "")}" data-card-language="${escapeAttribute(card.language || "")}"></script>
-    <link rel="stylesheet" href="../../styles.css?v=5" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=6" />
+${renderHead({
+  root: "../../",
+  title,
+  description,
+  canonicalUrl,
+  image,
+  ogType: "article",
+  twitter: true,
+  // Card pages don't load the site fonts yet (to-do: shared header/footer styling).
+  fonts: false,
+  jsonLd,
+  pageType: "card",
+  analyticsData: {
+    "card-name": card.name || "",
+    "card-pokemon": card.pokemon || "",
+    "card-set": card.setName || "",
+    "card-number": card.number || "",
+    "card-rarity": card.rarity || "",
+    "card-language": card.language || "",
+  },
+  stylesheets: ["styles.css", "card-detail-v3.css"],
+})}
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -247,16 +215,6 @@ function renderGuideMemberships(card, memberships) {
   return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${links}.</p></div>\n`;
 }
 
-async function loadGuideDefinitions() {
-  try {
-    const payload = JSON.parse(await readFile("docs/guides.json", "utf8"));
-    return Array.isArray(payload) ? payload : payload.guides || [];
-  } catch (error) {
-    if (error.code === "ENOENT") return [];
-    throw error;
-  }
-}
-
 function metaItem(label, value) {
   return `              <div class="meta-item">
                 <span>${escapeHtml(label)}</span>
@@ -285,67 +243,6 @@ function buildDescription(card) {
   return `${card.name || card.pokemon}${setPart} is a sleepy Pokemon card${artist}. View set, number, rarity, release date, and collector details.`.replace(/\s+/g, " ").trim();
 }
 
-function buildVisibleSummary(card) {
-  const cardName = card.name || card.pokemon || "This card";
-  const setAndNumber = [card.setName, card.number].filter(Boolean).join(" ");
-  const origin = setAndNumber ? ` from ${setAndNumber}` : "";
-  const artist = card.artist ? ` illustrated by ${card.artist}` : "";
-  const rarity = card.rarity ? ` This ${card.rarity} card` : " This card";
-  return `${cardName}${origin} is a sleepy Pokemon card${artist}.${rarity} is part of the curated Sleepy Pokemon Cards guide.`.replace(/\s+/g, " ").trim();
-}
-
-function buildImageAlt(card) {
-  const cardName = card.name || card.pokemon || "Pokemon";
-  const setPart = card.setName ? ` from ${card.setName}` : "";
-  return `${cardName} sleepy Pokemon card${setPart}`.replace(/\s+/g, " ").trim();
-}
-
-function slugify(value) {
-  return String(value || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/&/g, " and ")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 90)
-    .replace(/-+$/g, "");
-}
-
-function getCardLastmod(card) {
-  return getNewestDate([
-    card.updatedAt,
-    card.priceUpdatedAt,
-    card.createdAt,
-    guide.exportedAt,
-  ]);
-}
-
-function getNewestDate(values) {
-  const dates = values
-    .map(normalizeDate)
-    .filter(Boolean)
-    .sort();
-  return dates.at(-1) || "2026-05-01";
-}
-
-
-function sitemapUrl(loc, lastmod, changefreq, priority) {
-  return `  <url>
-    <loc>${escapeHtml(loc)}</loc>
-    <lastmod>${escapeHtml(lastmod)}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
-}
-
-function normalizeDate(value) {
-  if (!value) return "";
-  const normalized = String(value).replaceAll("/", "-").slice(0, 10);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return "";
-  const date = new Date(`${normalized}T00:00:00Z`);
-  return Number.isNaN(date.getTime()) ? "" : normalized;
-}
 
 function formatDate(value) {
   const normalized = normalizeDate(value);
@@ -353,24 +250,6 @@ function formatDate(value) {
   const date = new Date(`${normalized}T00:00:00`);
   if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "numeric" }).format(date);
-}
-
-function formatCurrency(value) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
-}
-
-function numericOrNull(value) {
-  if (value === null || value === undefined || value === "") return null;
-  const number = Number(value);
-  return Number.isFinite(number) ? number : null;
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 }
 
 function renderCurationNoteBody(value) {
@@ -381,14 +260,3 @@ function renderCurationNoteBody(value) {
   return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
 }
 
-function escapeAttribute(value) {
-  return escapeHtml(value).replace(/'/g, "&#39;");
-}
-
-function escapeScriptJson(value) {
-  return value.replace(/</g, "\\u003c");
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}

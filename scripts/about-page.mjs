@@ -2,8 +2,8 @@ import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter } from "./site-footer.mjs";
 import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
+import { SITE_URL, assetUrl, escapeAttribute, escapeHtml, renderHead } from "./build-helpers.mjs";
 
-const SITE_URL = "https://www.sleepypokemon.com";
 const INSTAGRAM_URL = "https://www.instagram.com/sprigatitosquad/";
 
 // Cards named on the About page, by card-page slug. A missing slug fails the build so the page never links to nothing.
@@ -41,29 +41,16 @@ export function renderAboutPage(cardBySlug) {
   return `<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${escapeHtml(title)}</title>
-    <meta name="description" content="${escapeAttribute(description)}" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="${canonicalUrl}" />
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="../assets/sleepy-pokemon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Sleepy Pokemon Cards" />
-    <meta property="og:title" content="${escapeAttribute(title)}" />
-    <meta property="og:description" content="${escapeAttribute(description)}" />
-    <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:image" content="${escapeAttribute(image)}" />
-    <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
-    <script defer src="../analytics.js?v=4" data-page-type="about"></script>
-    <link rel="stylesheet" href="../styles.css?v=5" />
-    <link rel="stylesheet" href="../home-v3.css?v=20" />
-    <link rel="stylesheet" href="../card-detail-v3.css?v=6" />
-    <link rel="stylesheet" href="../about.css?v=2" />
+${renderHead({
+  root: "../",
+  title,
+  description,
+  canonicalUrl,
+  image,
+  jsonLd,
+  pageType: "about",
+  stylesheets: ["styles.css", "home-v3.css", "card-detail-v3.css", "about.css"],
+})}
   </head>
   <body data-app-mode="about" data-guide-path="cards.json" data-guides-path="../guides.json" data-site-root="../">
     <div class="app-shell about-shell">
@@ -141,7 +128,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../app.js?v=43"></script>
+    <script src="${assetUrl("../", "app.js")}"></script>
   </body>
 </html>
 `;
@@ -197,16 +184,4 @@ function renderCardImage(card) {
 // app.js opens these links in the card lightbox and tracks card_opened with this source; the href stays for crawlers and new tabs.
 function cardLinkAnalytics(card, source) {
   return `data-card-id="${escapeAttribute(getCardIdentity(card))}" data-lightbox-source="${source}"`;
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value).replace(/'/g, "&#39;");
 }

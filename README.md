@@ -111,17 +111,19 @@ Once running, open `http://localhost:8000` (or the port indicated) in your brows
 
 All automation scripts are written in standard ES modules and can be executed with either `node` (v18+) or `deno run -A`:
 
-### 1. Sync SEO Card Pages & Sitemap
-Generates all individual `/cards/<slug>/index.html` pages from `published-cards.json`, updates crawlable card indexes, and writes `docs/sitemap.xml`:
+### 1. Sync Card Pages (rebuilds everything)
+Generates all individual `/cards/<slug>/index.html` pages from `published-cards.json` and updates the crawlable card indexes, then runs `sync-guides.mjs` below, so this one command rebuilds every generated page:
 ```bash
 node scripts/sync-seo-index.mjs
 ```
 
-### 2. Sync Editorial Guides
-Compiles guide pages in `/guides/` based on `docs/guides.json` and updates the homepage guide directory:
+### 2. Sync Guides, About Page & Sitemap
+Compiles guide pages in `/guides/` from `docs/guides.json`, the About page, the homepage guide directory, and `docs/sitemap.xml` (the only sitemap writer):
 ```bash
 node scripts/sync-guides.mjs
 ```
+
+Both generators share `scripts/build-helpers.mjs`: card page slugs, escaping, the page `<head>`, sitemap helpers, and `ASSET_VERSIONS`. To cache-bust a CSS or JS file, bump its number in `ASSET_VERSIONS` and run the generators; generated pages and the hand-written homepage and collection page all update.
 
 ### 3. Validate Analytics Contract
 Ensures all static HTML pages (home, collection, card pages, and guides) strictly conform to the GA4 contract. It also loads `docs/app.js` in a Node sandbox to check that its card IDs match `scripts/card-identity.mjs` and that each checklist download sends the expected analytics event. It also checks every card in `published-cards.json` against the field table in `DATA-MODEL.md`:
