@@ -58,6 +58,9 @@ const state = {
   modalFilterChanges: 0,
   drawerCloseMethod: "escape",
   expandedDrawerSections: new Set(),
+  // "push" makes the next URL sync add a browser history entry; otherwise the URL is replaced in place.
+  historyMode: "replace",
+  drawerHistoryPushed: false,
 };
 
 const elements = {};
@@ -73,8 +76,10 @@ async function init() {
     loadGuideMemberships(),
   ]);
   state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
-  // A mood link from a card pill may name a mood no card carries any more.
-  if (state.filters.mood !== "all" && !getMoodLabel(state.filters.mood)) state.filters.mood = "all";
+  if (elements.cardGrid) {
+    Object.assign(state.filters, readUrlFilters());
+    if (hasActiveFilters()) state.showAllCards = true;
+  }
   assignRandomOrder();
   render();
   const catalogSurface = getCatalogSurface();
@@ -171,6 +176,7 @@ function bindEvents() {
       state.filters.mood = chip.classList.contains("is-active") ? "all" : (chip.dataset.mood || "all");
       state.showAllCards = true;
       if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
+      markHistoryStep();
       // render() also refreshes the All filters count and the drawer, not just the cards.
       render();
       trackFilterChange("mood", "mood_chip");
@@ -182,11 +188,13 @@ function bindEvents() {
     const value = elements.priceChip.dataset.maxPrice;
     state.filters.maxPrice = state.filters.maxPrice === value ? "" : value;
     state.showAllCards = true;
+    markHistoryStep();
     render();
     trackFilterChange("maxPrice", "price_chip");
   });
 
   bind(elements.filterDrawerBody, "click", handleFilterOptionClick);
+  window.addEventListener("popstate", handleFilterHistoryNavigation);
   bind(elements.drawerSetSearch, "input", () => renderDrawerOptions("set"));
   bind(elements.closeFiltersButton, "click", () => closeFiltersDialog("close_button"));
   bind(elements.drawerShowButton, "click", () => {
@@ -278,16 +286,6 @@ function applyInitialSearch() {
     url.searchParams.delete("suggest");
     window.history.replaceState(window.history.state, "", url);
   }
-  const mood = slugify(params.get("mood"));
-  // Old links used ?mood=under-5 for what is now the Price filter.
-  if (mood === "under-5" && elements.cardGrid) {
-    state.filters.maxPrice = "5";
-    state.showAllCards = true;
-  } else if (mood && elements.cardGrid) {
-    state.filters.mood = mood;
-    state.showAllCards = true;
-    elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === mood));
-  }
   const query = params.get("q")?.trim() || "";
   if (!query) return;
   state.filters.search = query;
@@ -318,8 +316,8 @@ function handleHeaderSearchSubmit(event) {
   };
   state.showAllCards = true;
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
+  markHistoryStep();
   render();
-  syncSearchUrl(query);
   document.querySelector("#collection")?.scrollIntoView({ behavior: "smooth", block: "start" });
   if (query) {
     trackEvent("search_results_viewed", {
@@ -341,7 +339,7 @@ function clearSearchFilter(interactionSource) {
   state.showAllCards = true;
   if (elements.searchFilter) elements.searchFilter.value = "";
   if (elements.headerSearchInput) elements.headerSearchInput.value = "";
-  syncSearchUrl("");
+  markHistoryStep();
   renderCards();
   trackEvent("search_cleared", {
     interaction_source: interactionSource,
@@ -371,6 +369,7 @@ function bind(element, eventName, handler) {
 function openFiltersDialog() {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
+  state.drawerHistoryPushed = false;
   // Escape closes the dialog natively; every other way out names itself in closeFiltersDialog().
   state.drawerCloseMethod = "escape";
   // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
@@ -822,6 +821,7 @@ function setFilterValue(key, value) {
   state.showAllCards = true;
   // Sorting counts as using the drawer, so a sort-only visit is "applied", not "bounced".
   state.modalFilterChanges += 1;
+  markHistoryStep();
   render();
   trackFilterChange(key, "filter_drawer");
 }
@@ -840,7 +840,7 @@ function trackFilterChange(key, interactionSource) {
 }
 
 function renderCards() {
-  syncMoodParam();
+  syncFilterUrl();
   const filteredCards = getFilteredCards();
   const renderToken = state.renderToken + 1;
   state.renderToken = renderToken;
@@ -988,6 +988,7 @@ function renderActiveFilterControls() {
         event.stopPropagation();
         state.filters[key] = key === "maxPrice" ? "" : "all";
         state.showAllCards = true;
+        markHistoryStep();
         render();
         trackFilterChange(key, "active_filter_chip");
         trackEvent("filter_chip_removed", {
@@ -1266,14 +1267,74 @@ function getMoodLabel(moodSlug) {
 }
 
 // Keep ?mood= in the collection URL matching the active mood, so a reload or shared link shows the same cards.
-function syncMoodParam() {
+// The collection URL carries every active filter, so shared links, reloads and back/forward show the same view.
+// e.g. /collection/?q=pikachu&mood=belly-up&rarity=promo&set=neo-destiny&language=japanese&maxPrice=10&sort=price-low
+const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "maxPrice", "sort"];
+
+function getFilterUrlParams(filters) {
+  const params = [];
+  if (filters.search.trim()) params.push(["q", filters.search.trim()]);
+  if (filters.mood !== "all") params.push(["mood", filters.mood]);
+  if (filters.rarity !== "all") params.push(["rarity", filters.rarity]);
+  if (filters.set !== "all") params.push(["set", slugify(filters.set)]);
+  if (filters.language !== "all") params.push(["language", slugify(filters.language)]);
+  if (filters.maxPrice) params.push(["maxPrice", filters.maxPrice]);
+  if (filters.sort !== PUBLIC_DEFAULT_SORT) params.push(["sort", filters.sort]);
+  return params;
+}
+
+function syncFilterUrl() {
   if (!elements.cardGrid) return;
   const url = new URL(window.location.href);
-  const mood = state.filters.mood === "all" ? "" : state.filters.mood;
-  if ((url.searchParams.get("mood") || "") === mood) return;
-  if (mood) url.searchParams.set("mood", mood);
-  else url.searchParams.delete("mood");
-  window.history.replaceState(window.history.state, "", url);
+  URL_FILTER_KEYS.forEach((key) => url.searchParams.delete(key));
+  getFilterUrlParams(state.filters).forEach(([key, value]) => url.searchParams.append(key, value));
+  url.hash = "";
+  const push = state.historyMode === "push";
+  state.historyMode = "replace";
+  if (url.href === window.location.href) return;
+  window.history[push ? "pushState" : "replaceState"](null, "", url);
+}
+
+// User changes add one history entry; a whole drawer visit counts as one step, so Back returns to the view before it.
+function markHistoryStep() {
+  if (elements.filtersDialog?.open) {
+    if (state.drawerHistoryPushed) return;
+    state.drawerHistoryPushed = true;
+  }
+  state.historyMode = "push";
+}
+
+// Reads filters from the URL once cards are loaded; unknown values fall back to "all".
+function readUrlFilters() {
+  const params = new URLSearchParams(window.location.search);
+  const filters = { mood: "all", rarity: "all", set: "all", language: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT };
+  const mood = slugify(params.get("mood"));
+  // Old links used ?mood=under-5 for what is now the Price filter.
+  if (mood === "under-5") filters.maxPrice = "5";
+  else if (mood && getMoodLabel(mood)) filters.mood = mood;
+  const rarity = params.get("rarity");
+  if (rarity && getDrawerOptions("rarity").some((option) => option.value === rarity)) filters.rarity = rarity;
+  const findByName = (value, names) => names.find((name) => slugify(name) === slugify(value)) || "all";
+  if (params.get("set")) filters.set = findByName(params.get("set"), [...new Set(state.cards.map((card) => card.setName))]);
+  if (params.get("language")) filters.language = findByName(params.get("language"), [...new Set(state.cards.map((card) => card.language))]);
+  const maxPrice = params.get("maxPrice");
+  if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
+  const sort = params.get("sort");
+  if (SORT_OPTIONS.some((option) => option.value === sort)) filters.sort = sort;
+  return filters;
+}
+
+function handleFilterHistoryNavigation() {
+  if (!elements.cardGrid || !state.cards.length) return;
+  const search = new URLSearchParams(window.location.search).get("q")?.trim() || "";
+  const next = { ...state.filters, ...readUrlFilters(), search };
+  if (JSON.stringify(next) === JSON.stringify(state.filters)) return;
+  state.filters = next;
+  state.showAllCards = hasActiveFilters();
+  if (elements.searchFilter) elements.searchFilter.value = search;
+  if (elements.headerSearchInput) elements.headerSearchInput.value = search;
+  if (elements.filtersDialog?.open) closeFiltersDialog("browser_back");
+  render();
 }
 
 function formatShortDate(value) {
@@ -1462,21 +1523,13 @@ function clearFilters(interactionSource) {
   if (elements.headerSearchInput) elements.headerSearchInput.value = "";
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
-  syncSearchUrl("");
+  markHistoryStep();
   render();
   trackEvent("filters_cleared", {
     interaction_source: interactionSource,
     active_filter_count: activeFilterCount,
     result_count: state.cards.length,
   });
-}
-
-function syncSearchUrl(query) {
-  const url = new URL(window.location.href);
-  if (query) url.searchParams.set("q", query);
-  else url.searchParams.delete("q");
-  url.hash = "";
-  window.history.replaceState(null, "", url);
 }
 
 function getCardAnalyticsParams(card) {

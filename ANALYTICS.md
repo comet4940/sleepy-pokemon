@@ -67,7 +67,7 @@ Filter `interaction_source` values say where the change was made:
 | `sort_changed` | `filter_drawer` |
 | `filters_cleared` | `filter_drawer_reset` (drawer Reset), `filter_drawer_no_matches` (the drawer's "No matches · Reset filters" button), `collection_clear_all` (the chip row's Clear all), `collection_empty_state` (the empty results button) |
 
-`close_method` says how the drawer was closed: `show_results` (the "Show N sleepers" button), `close_button` (×), `backdrop`, or `escape`.
+`close_method` says how the drawer was closed: `show_results` (the "Show N sleepers" button), `close_button` (×), `backdrop`, `escape`, or `browser_back` (the browser's Back button while the drawer is open).
 
 Search text is intentionally excluded. `query_length` is the only query-level parameter. A header search that navigates to the collection produces `search_submitted` on the source page and `search_results_viewed` on the destination page.
 
