@@ -42,7 +42,7 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
 The entire site is static and hosted on **GitHub Pages** directly from the [`docs/`](docs/) directory. There are zero production build steps, Node.js dependencies, or client-side runtime frameworks.
 
 - **Frontend**: Vanilla HTML5, modern CSS3 (Custom Properties, Grid, Flexbox, responsive viewports), and standard ES modules (`docs/app.js`).
-- **Data Source**: Canonical card entries are stored in [`docs/published-cards.json`](docs/published-cards.json), while editorial guides live in [`docs/guides.json`](docs/guides.json).
+- **Data Source**: Canonical card entries are stored in [`docs/published-cards.json`](docs/published-cards.json) (every field and curation rule is documented in [`DATA-MODEL.md`](DATA-MODEL.md)), while editorial guides live in [`docs/guides.json`](docs/guides.json).
 - **SEO & Schema**: Pre-rendered static HTML pages for every card and guide, complete with OpenGraph tags, Twitter Cards, and Schema.org `ItemPage` / `CollectionPage` JSON-LD.
 - **Analytics Contract**: Privacy-conscious Google Analytics 4 telemetry adhering strictly to the documented schema in [`ANALYTICS.md`](ANALYTICS.md). Does not log search queries, user notes, or personal data.
 
@@ -76,6 +76,7 @@ sleepy-pokemon/
 │   └── site-footer.mjs          # Shared site footer template
 ├── brand-kit/                   # Visual brand deck, logo assets, and design tokens
 ├── ANALYTICS.md                 # GA4 instrumentation and telemetry specification
+├── DATA-MODEL.md                # Card fields, curation rules and how to add a card
 └── README.md
 ```
 
@@ -122,7 +123,7 @@ node scripts/sync-guides.mjs
 ```
 
 ### 3. Validate Analytics Contract
-Ensures all static HTML pages (home, collection, card pages, and guides) strictly conform to the GA4 contract. It also loads `docs/app.js` in a Node sandbox to check that its card IDs match `scripts/card-identity.mjs` and that each checklist download sends the expected analytics event:
+Ensures all static HTML pages (home, collection, card pages, and guides) strictly conform to the GA4 contract. It also loads `docs/app.js` in a Node sandbox to check that its card IDs match `scripts/card-identity.mjs` and that each checklist download sends the expected analytics event. It also checks every card in `published-cards.json` against the field table in `DATA-MODEL.md`:
 ```bash
 node scripts/validate-analytics.mjs
 ```
