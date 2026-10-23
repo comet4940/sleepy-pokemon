@@ -677,9 +677,6 @@ function normalizeCard(card) {
     imageSmall: card.imageSmall || card.imageLarge || "",
     imageLarge: card.imageLarge || card.imageSmall || "",
     priceMarket: numericOrNull(card.priceMarket),
-    priceLow: numericOrNull(card.priceLow),
-    priceMid: numericOrNull(card.priceMid),
-    priceHigh: numericOrNull(card.priceHigh),
     priceType: card.priceType || "",
     priceSource: card.priceSource || "",
     priceUpdatedAt: card.priceUpdatedAt || "",
@@ -1502,7 +1499,7 @@ function derivePokemonName(name) {
 }
 
 function getDisplayPrice(card) {
-  return numericOrNull(card.priceMarket ?? card.priceMid ?? card.priceLow) || 0;
+  return numericOrNull(card.priceMarket) || 0;
 }
 
 function numericOrNull(value) {

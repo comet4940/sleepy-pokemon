@@ -51,10 +51,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `tcgdexId` | No | TCGdex card ID, for cards pokemontcg.io doesn't have | `sv09-120` |
 | `scrydexId` | No | Scrydex card ID, for cards only Scrydex lists | `me55-131` |
 | `slug` | No | Pinned card page URL segment. Leave it out for new cards; set it when renaming (see [Rules](#rules)) | `komala-sun-and-moon-black-star-promos-sm41` |
-| `priceMarket` | No | Market price in USD. Written by the price refresh, never by hand (except `priceSource: Manual`) | `80.68` |
-| `priceLow` | No | Low price in USD. Written by the price refresh | `57.27` |
-| `priceMid` | No | Mid price in USD. Written by the price refresh | `79.49` |
-| `priceHigh` | No | High price in USD. Written by the price refresh | `149.99` |
+| `priceMarket` | No | Market price in USD: TCGPlayer's market price, or its mid or low price when there's no market price. Written by the price refresh, never by hand (except `priceSource: Manual`). The only price shown and used for price filters and sorting | `80.68` |
 | `priceType` | No | Which printing the price is for | `normal`, `holofoil`, `1stEdition` |
 | `priceSource` | No | Where the price came from | `TCGPlayer`, `Manual` |
 | `priceUpdatedAt` | No | Date of the price, `YYYY/MM/DD` | `2026/10/15` |
@@ -67,6 +64,7 @@ The validator rejects any card that still has these:
 
 - `sleepinessBasis`, `sleepLocation`, `sleepiness`: retired in #132; moods and `whyItBelongs` cover them.
 - `priority`: retired in #144. It only fed the Curated sort, which was removed in #140.
+- `priceLow`, `priceMid`, `priceHigh`: retired in #144. Never shown; `priceMarket` already falls back to mid or low.
 - `suggestionIssue`: retired in #144. Record the suggestion in `notes` instead (e.g. "Suggested in GitHub issue #49.").
 
 ## Rules
@@ -75,7 +73,7 @@ The validator rejects any card that still has these:
 - **One name per set.** A set has a single `setName` across all its cards: no colour or sheet suffixes like "(Blue)", and no two names for the same set. Duplicates show up as separate sets in the filter drawer.
 - **Vending Machine cards use their Pokédex number.** They don't print a set number, so `number` is the Pokédex number as PriceCharting lists it (Snorlax `143`, Abra `63`, Growlithe `58`).
 - **Images: hosted first.** Prefer a card API image (pokemontcg.io, TCGdex, Scrydex) or another stable host with `imageSource` credit. Store a file in `docs/assets/cards/` only when there's no hosted image or the local scan is clearly better. Name local files after the card, e.g. `growlithe-vending-machine-series-3-58.jpg`.
-- **Prices come from the refresh.** `scripts/refresh-prices.mjs` (run by `refresh-prices.yml`) updates the `price*` fields for English cards with an `apiId`. Don't edit them by hand; cards without an `apiId` simply have no price.
+- **Prices come from the refresh.** `scripts/refresh-prices.mjs` (run by `refresh-prices.yml`) updates `priceMarket`, `priceType`, `priceSource` and `priceUpdatedAt` for English cards with an `apiId`. Don't edit them by hand; cards without an `apiId` simply have no price.
 - **Moods are a fixed list.** Add a new mood to `scripts/moods.mjs` before using it. A mood is only tagged when it truly shows in the art.
 
 ## Adding a card

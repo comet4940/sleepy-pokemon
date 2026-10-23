@@ -133,7 +133,7 @@ async function loadPublishedCards() {
 
 // Moods come from the fixed list in scripts/moods.mjs; retired curation fields stay retired.
 function checkCardMoods() {
-  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue"];
+  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue", "priceLow", "priceMid", "priceHigh"];
   for (const card of publishedCards) {
     const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
     if (!Array.isArray(card.moods)) {
