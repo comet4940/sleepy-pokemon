@@ -12,6 +12,7 @@ const errors = [];
 const publishedCards = await loadPublishedCards();
 const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 checkCardMoods();
+await checkCardFields();
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -132,7 +133,7 @@ async function loadPublishedCards() {
 
 // Moods come from the fixed list in scripts/moods.mjs; retired curation fields stay retired.
 function checkCardMoods() {
-  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness"];
+  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue", "priceLow", "priceMid", "priceHigh"];
   for (const card of publishedCards) {
     const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
     if (!Array.isArray(card.moods)) {
@@ -147,6 +148,25 @@ function checkCardMoods() {
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
     }
+  }
+}
+
+// DATA-MODEL.md is the source of truth for card fields: a card may only use documented fields,
+// and fields the table marks Required must be non-empty.
+async function checkCardFields() {
+  const doc = await readFile(join(ROOT, "DATA-MODEL.md"), "utf8").catch(() => "");
+  const section = doc.split(/^## Card fields$/m)[1]?.split(/^## /m)[0] || "";
+  const fields = new Map([...section.matchAll(/^\| `(\w+)` \| (Yes|No) \|/gm)].map(([, field, required]) => [field, required === "Yes"]));
+  if (!fields.size) {
+    errors.push("DATA-MODEL.md: no card field table found under \"## Card fields\"");
+    return;
+  }
+  for (const card of publishedCards) {
+    const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
+    const undocumented = Object.keys(card).filter((field) => !fields.has(field));
+    if (undocumented.length) errors.push(`${label} has fields not documented in DATA-MODEL.md: ${undocumented.join(", ")}`);
+    const missing = [...fields].filter(([field, required]) => required && (card[field] === undefined || card[field] === null || card[field] === ""));
+    if (missing.length) errors.push(`${label} is missing required fields: ${missing.map(([field]) => field).join(", ")}`);
   }
 }
 

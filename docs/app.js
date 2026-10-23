@@ -29,11 +29,6 @@ const SORT_OPTIONS = [
 const CARD_RENDER_BATCH_SIZE = 24;
 const TCGDEX_API = "https://api.tcgdex.net/v2/en/cards";
 
-const priorityRank = {
-  High: 0,
-  Medium: 1,
-  Low: 2,
-};
 
 const CHECKLIST_LABELS = {
   full_collection: "Full collection",
@@ -682,15 +677,10 @@ function normalizeCard(card) {
     imageSmall: card.imageSmall || card.imageLarge || "",
     imageLarge: card.imageLarge || card.imageSmall || "",
     priceMarket: numericOrNull(card.priceMarket),
-    priceLow: numericOrNull(card.priceLow),
-    priceMid: numericOrNull(card.priceMid),
-    priceHigh: numericOrNull(card.priceHigh),
     priceType: card.priceType || "",
     priceSource: card.priceSource || "",
     priceUpdatedAt: card.priceUpdatedAt || "",
     setReleaseDate: card.setReleaseDate || "",
-    priority: card.priority || "Medium",
-    notes: card.notes || "",
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
     updatedAt: card.updatedAt || "",
@@ -911,7 +901,7 @@ function filterCards(filters) {
         card.rarity,
         card.language,
         card.artist,
-        card.notes,
+        card.whyItBelongs,
       ].join(" ").toLowerCase();
 
       if (search && !searchable.includes(search)) return false;
@@ -1112,18 +1102,13 @@ function compareCards(a, b) {
   if (state.filters.sort === "pokemon") {
     return a.pokemon.localeCompare(b.pokemon) || a.name.localeCompare(b.name);
   }
-  if (state.filters.sort === "language") {
-    return a.language.localeCompare(b.language) || a.pokemon.localeCompare(b.pokemon);
-  }
   if (state.filters.sort === "set") {
     return a.setName.localeCompare(b.setName) || compareDates(a.setReleaseDate, b.setReleaseDate);
   }
   if (state.filters.sort === "newest") {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
   }
-  return (priorityRank[a.priority] ?? 1) - (priorityRank[b.priority] ?? 1)
-    || a.pokemon.localeCompare(b.pokemon)
-    || a.setName.localeCompare(b.setName);
+  return a.pokemon.localeCompare(b.pokemon) || a.setName.localeCompare(b.setName);
 }
 
 function renderCard(card) {
@@ -1190,7 +1175,7 @@ function openCardDetail(card, interactionSource = "unknown") {
   elements.detailPriceRow.innerHTML = price
     ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
     : `<span class="detail-no-price">No current market price</span>`;
-  const whyItBelongs = card.whyItBelongs || card.notes;
+  const { whyItBelongs } = card;
   elements.detailCurationNote.innerHTML = whyItBelongs
     ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
     : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
@@ -1328,7 +1313,7 @@ function downloadChecklist() {
     card.language || "",
     card.artist || "",
     getDisplayPrice(card) ? formatCurrency(getDisplayPrice(card)) : "",
-    card.whyItBelongs || card.notes || "",
+    card.whyItBelongs || "",
     card.imageLarge || card.imageSmall || "",
   ]);
   const csv = [columns, ...rows]
@@ -1513,7 +1498,7 @@ function derivePokemonName(name) {
 }
 
 function getDisplayPrice(card) {
-  return numericOrNull(card.priceMarket ?? card.priceMid ?? card.priceLow) || 0;
+  return numericOrNull(card.priceMarket) || 0;
 }
 
 function numericOrNull(value) {

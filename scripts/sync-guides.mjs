@@ -288,7 +288,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-    <script src="../../app.js?v=40"></script>
+    <script src="../../app.js?v=41"></script>
   </body>
 </html>
 `;
@@ -312,7 +312,7 @@ function renderGuideCard(entry, index, guideSlug, guideTitle) {
               <h2><a href="${escapeAttribute(cardUrl)}" data-card-id="${escapeAttribute(cardId)}" data-analytics-event="guide_card_selected" data-analytics-source="guide_card_title" data-analytics-guide-slug="${escapeAttribute(guideSlug || "")}" data-analytics-card-name="${escapeAttribute(card.name || "")}" data-analytics-card-pokemon="${escapeAttribute(card.pokemon || "")}" data-analytics-card-set="${escapeAttribute(card.setName || "")}" data-analytics-card-number="${escapeAttribute(card.number || "")}" data-analytics-card-rarity="${escapeAttribute(card.rarity || "")}" data-analytics-card-language="${escapeAttribute(card.language || "")}" data-analytics-price-market="${escapeAttribute(card.priceMarket ?? "")}">${escapeHtml(card.name)}</a></h2>
               <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
               <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
-              <p>${escapeHtml(entry.reason || card.notes || buildVisibleSummary(card))}</p>
+              <p>${escapeHtml(entry.reason || card.whyItBelongs || buildVisibleSummary(card))}</p>
             </div>
           </article>`;
 }

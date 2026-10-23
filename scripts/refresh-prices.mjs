@@ -84,9 +84,6 @@ function applyUpdates(card, apiCard, nextPrice) {
 
   if (nextPrice.market !== null) {
     card.priceMarket = nextPrice.market;
-    card.priceLow = nextPrice.low;
-    card.priceMid = nextPrice.mid;
-    card.priceHigh = nextPrice.high;
     card.priceType = nextPrice.type;
     card.priceSource = nextPrice.source;
     card.priceUpdatedAt = nextPrice.updatedAt;
@@ -109,9 +106,6 @@ function pickComparableFields(card) {
     imageSmall: card.imageSmall || "",
     imageLarge: card.imageLarge || "",
     priceMarket: numericOrNull(card.priceMarket),
-    priceLow: numericOrNull(card.priceLow),
-    priceMid: numericOrNull(card.priceMid),
-    priceHigh: numericOrNull(card.priceHigh),
     priceType: card.priceType || "",
     priceSource: card.priceSource || "",
     priceUpdatedAt: card.priceUpdatedAt || "",
@@ -141,9 +135,6 @@ function selectBestPrice(apiCard) {
         source: "TCGPlayer",
         type,
         market,
-        low: numericOrNull(values.low),
-        mid: numericOrNull(values.mid),
-        high: numericOrNull(values.high),
         updatedAt: apiCard.tcgplayer?.updatedAt || "",
       };
     }
