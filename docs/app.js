@@ -1328,12 +1328,14 @@ function handleFilterHistoryNavigation() {
   if (!elements.cardGrid || !state.cards.length) return;
   const search = new URLSearchParams(window.location.search).get("q")?.trim() || "";
   const next = { ...state.filters, ...readUrlFilters(), search };
+  // Back always closes an open drawer, even when the entry it lands on has the same filters
+  // (e.g. a pill picked and unpicked in one drawer visit).
+  if (elements.filtersDialog?.open) closeFiltersDialog("browser_back");
   if (JSON.stringify(next) === JSON.stringify(state.filters)) return;
   state.filters = next;
   state.showAllCards = hasActiveFilters();
   if (elements.searchFilter) elements.searchFilter.value = search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = search;
-  if (elements.filtersDialog?.open) closeFiltersDialog("browser_back");
   render();
 }
 
