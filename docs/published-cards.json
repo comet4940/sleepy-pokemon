@@ -14,10 +14,8 @@
       "rarity": "Common",
       "language": "Japanese",
       "artist": "Tomokazu Komiya",
-      "imageSmall": "https://storage.googleapis.com/images.pricecharting.com/93f0389e9b6811184255a62f68b784450e9478e3a270135bf42f1cd9661fe84e/240.jpg",
-      "imageLarge": "https://storage.googleapis.com/images.pricecharting.com/93f0389e9b6811184255a62f68b784450e9478e3a270135bf42f1cd9661fe84e/1600.jpg",
-      "imageSource": "PriceCharting",
-      "imageSourceUrl": "https://www.pricecharting.com/game/pokemon-japanese-vending/growlithe-series-iii-58",
+      "imageSmall": "/assets/cards/growlithe-vending-machine-series-3-58.jpg",
+      "imageLarge": "/assets/cards/growlithe-vending-machine-series-3-58.jpg",
       "setReleaseDate": "1998/11/24",
       "priority": "Medium",
       "notes": "Community submission via the Suggest a card form. Growlithe is curled up asleep under the dinner table.",
@@ -27,7 +25,7 @@
       ],
       "whyItBelongs": "Dinner is still on the table, and Growlithe has already curled up underneath it, eyes shut, done for the night.",
       "createdAt": "2026-10-23T18:00:00.000Z",
-      "updatedAt": "2026-10-23T18:00:00.000Z"
+      "updatedAt": "2026-10-23T18:30:00.000Z"
     },
     {
       "apiId": "sm10-158",
