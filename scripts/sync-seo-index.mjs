@@ -16,6 +16,7 @@ import {
   slugify,
   syncAssetVersions,
 } from "./build-helpers.mjs";
+import { getSetHubs, loadSetDefs } from "./set-pages.mjs";
 
 const INDEX_PATH = "docs/index.html";
 const COLLECTION_PATH = "docs/collection/index.html";
@@ -26,6 +27,7 @@ const END = "<!-- SEO_CARD_INDEX_END -->";
 const { cards: cardsWithSlugs } = await loadCardData();
 const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
+const setHubByName = new Map(getSetHubs(cardsWithSlugs, await loadSetDefs()).map((hub) => [hub.name, hub]));
 const sortedCards = [...cardsWithSlugs].sort((a, b) => {
   return String(a.pokemon || "").localeCompare(String(b.pokemon || ""))
     || String(a.name || "").localeCompare(String(b.name || ""))
@@ -176,7 +178,7 @@ ${renderHead({
             <div class="curation-note">
               <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || "A curator's note is coming soon.")}
             </div>
-${renderGuideMemberships(card, memberships)}
+${renderFieldNotes(card, memberships)}
 ${renderMoods(card)}
             <div class="meta-grid">
               ${metaItem("Set", card.setName)}
@@ -208,11 +210,20 @@ function buildGuideMemberships(guideList) {
   return memberships;
 }
 
-function renderGuideMemberships(card, memberships) {
+// "In the field notes": the guides a card appears in, and its set page when the set has one.
+function renderFieldNotes(card, memberships) {
   const guides = memberships.get(card.slug) || [];
-  if (!guides.length) return "";
-  const links = guides.map((guide) => `<a href="../../guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="card_page" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`).join(" and ");
-  return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${links}.</p></div>\n`;
+  const hub = setHubByName.get(card.setName);
+  if (!guides.length && !hub) return "";
+  const lines = [];
+  if (guides.length) {
+    const links = guides.map((guide) => `<a href="../../guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="card_page" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`).join(" and ");
+    lines.push(`<p>This card can be found in ${links}.</p>`);
+  }
+  if (hub) {
+    lines.push(`<p>It's one of ${hub.cards.length} sleepy cards from <a href="../../sets/${escapeAttribute(hub.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page" data-analytics-destination="set_page">${escapeHtml(hub.name)}</a>.</p>`);
+  }
+  return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p>${lines.join("")}</div>\n`;
 }
 
 function metaItem(label, value) {

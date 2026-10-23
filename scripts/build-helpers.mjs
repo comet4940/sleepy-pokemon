@@ -13,7 +13,7 @@ export const ASSET_VERSIONS = {
   "home-v3.css": 20,
   "filter-drawer.css": 1,
   "card-detail-v3.css": 6,
-  "guides.css": 2,
+  "guides.css": 3,
   "about.css": 2,
   "analytics.js": 4,
   "app.js": 43,
@@ -125,6 +125,33 @@ export function renderHead({
     `<script defer src="${assetUrl(root, "analytics.js")}" data-page-type="${pageType}"${analyticsAttributes}></script>`,
     ...stylesheets.map((file) => `<link rel="stylesheet" href="${assetUrl(root, file)}" />`),
   ].map((line) => `    ${line}`).join("\n");
+}
+
+// One card in a guide or set page list. `linkAttributes(source)` returns the data-* attributes for the
+// image and title links (lightbox card ID plus analytics); `text` is the note shown under the card.
+export function renderCardEntry({ card, index, text, linkAttributes }) {
+  const image = card.imageSmall || card.imageLarge;
+  const price = numericOrNull(card.priceMarket);
+  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
+  const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
+  const cardUrl = `../../cards/${card.slug}/`;
+  return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
+            <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" ${linkAttributes("art")}>
+              ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+            </a>
+            <div class="guide-card-copy">
+              <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
+              <h2><a href="${escapeAttribute(cardUrl)}" ${linkAttributes("title")}>${escapeHtml(card.name)}</a></h2>
+              <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
+              <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
+              <p>${escapeHtml(text)}</p>
+            </div>
+          </article>`;
+}
+
+// Data attributes from a { name: value } map, escaped: data-name="value" ...
+export function dataAttributes(attributes) {
+  return Object.entries(attributes).map(([name, value]) => `data-${name}="${escapeAttribute(value ?? "")}"`).join(" ");
 }
 
 export function buildImageAlt(card) {

@@ -8,11 +8,12 @@ import { slugify } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
-const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "card", "about"]);
+const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "sets-index", "set", "card", "about"]);
 const errors = [];
 const publishedCards = await loadPublishedCards();
 const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 checkCardMoods();
+await checkSetIntros();
 await checkCardFields();
 const legacyEvents = [
   "search_used",
@@ -76,7 +77,7 @@ for (const path of htmlFiles) {
   if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
-  if (pageType === "guide") checkGuideCards(html, label);
+  if (pageType === "guide" || pageType === "set") checkGuideCards(html, label);
   for (const [, mood] of html.matchAll(/class="mood-chip"[^>]*data-mood="([^"]+)"/g)) {
     if (!MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
   }
@@ -149,6 +150,16 @@ function checkCardMoods() {
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
     }
+  }
+}
+
+// Every intro in docs/sets.json must name a real set, so renaming a set can't silently drop its intro.
+async function checkSetIntros() {
+  const setDefs = JSON.parse(await readFile(join(DOCS_DIR, "sets.json"), "utf8"));
+  if (!Number.isInteger(setDefs.minCards) || setDefs.minCards < 1) errors.push("docs/sets.json: minCards must be a positive whole number");
+  const setNames = new Set(publishedCards.map((card) => card.setName));
+  for (const name of Object.keys(setDefs.intros || {})) {
+    if (!setNames.has(name)) errors.push(`docs/sets.json: intro for "${name}" matches no set in docs/published-cards.json`);
   }
 }
 
