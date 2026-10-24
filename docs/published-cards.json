@@ -613,7 +613,7 @@
       "tcgdexId": "",
       "name": "Snorlax",
       "pokemon": "Snorlax",
-      "setName": "SWSH Black Star Promos",
+      "setName": "Sword & Shield Promos",
       "setSeries": "Sword & Shield",
       "setId": "swshp",
       "number": "SWSH032",
@@ -1054,7 +1054,7 @@
       "tcgdexId": "",
       "name": "Eevee",
       "pokemon": "Eevee",
-      "setName": "Scarlet & Violet Black Star Promos",
+      "setName": "Scarlet & Violet Promos",
       "setSeries": "Scarlet & Violet",
       "setId": "svp",
       "number": "173/150",
@@ -1267,7 +1267,7 @@
       "tcgdexId": "",
       "name": "Blissey",
       "pokemon": "Blissey",
-      "setName": "XY Black Star Promos",
+      "setName": "XY Promos",
       "setSeries": "XY",
       "setId": "xyp",
       "number": "XY56/XY211",
@@ -1286,7 +1286,8 @@
       ],
       "whyItBelongs": "Blissey has dozed off against the base of a huge tree, eyes closed and wearing a tiny contented smile. It’s an unusually peaceful look for a Pokémon so associated with caring for everyone else. For once, Blissey is the one taking the break.",
       "tcgplayerProductId": 108593,
-      "tcgplayerGroupId": 1451
+      "tcgplayerGroupId": 1451,
+      "slug": "blissey-xy-black-star-promos-xy56-xy211"
     },
     {
       "apiId": "sm11-207",
@@ -2142,7 +2143,7 @@
       "tcgdexId": "",
       "name": "Charizard V",
       "pokemon": "Charizard",
-      "setName": "SWSH Black Star Promos",
+      "setName": "Sword & Shield Promos",
       "setSeries": "Sword & Shield",
       "setId": "swshp",
       "number": "SWSH260/SWSH307",
@@ -2161,7 +2162,8 @@
       ],
       "whyItBelongs": "Out cold at the roots of a giant forest tree. The fiercest dragon peacefully dozing makes this UPC promo an essential sleep showstopper.",
       "tcgplayerProductId": 285384,
-      "tcgplayerGroupId": 2545
+      "tcgplayerGroupId": 2545,
+      "slug": "charizard-v-swsh-black-star-promos-swsh260-swsh307"
     },
     {
       "apiId": "sm12-3",
@@ -3755,7 +3757,7 @@
       "tcgdexId": "",
       "name": "Koraidon",
       "pokemon": "Koraidon",
-      "setName": "Scarlet & Violet Black Star Promos",
+      "setName": "Scarlet & Violet Promos",
       "setSeries": "Scarlet & Violet",
       "setId": "svp",
       "number": "14/215",
@@ -3774,7 +3776,8 @@
       ],
       "whyItBelongs": "Cozy nap on the back porch deck. An ancient apex predator curled up like a golden retriever in the midday sun.",
       "tcgplayerProductId": 490721,
-      "tcgplayerGroupId": 22872
+      "tcgplayerGroupId": 22872,
+      "slug": "koraidon-scarlet-and-violet-black-star-promos-14-215"
     },
     {
       "apiId": "sv3-209",
@@ -4100,7 +4103,7 @@
       "tcgdexId": "",
       "name": "Snorlax",
       "pokemon": "Snorlax",
-      "setName": "Scarlet & Violet Black Star Promos",
+      "setName": "Scarlet & Violet Promos",
       "setSeries": "Scarlet & Violet",
       "setId": "svp",
       "number": "51/215",
@@ -4120,7 +4123,8 @@
       ],
       "whyItBelongs": "Snorlax has simply fallen asleep wherever it pleased, sprawled beside a quiet pond while the park carries on around it. A Pidgey has turned its enormous belly into a perch and a Diglett pops up from the path nearby, neither doing anything to disturb the nap. GOSSAN turns Snorlax’s legendary ability to sleep through absolutely everything into its own tiny ecosystem.",
       "tcgplayerProductId": 517175,
-      "tcgplayerGroupId": 22872
+      "tcgplayerGroupId": 22872,
+      "slug": "snorlax-scarlet-and-violet-black-star-promos-51-215"
     },
     {
       "apiId": "sv3pt5-166",
@@ -4311,7 +4315,7 @@
       "tcgdexId": "",
       "name": "Snorlax",
       "pokemon": "Snorlax",
-      "setName": "Wizards Black Star Promos",
+      "setName": "Wizards Promos",
       "setSeries": "Other",
       "setId": "basep",
       "number": "49",
@@ -4332,14 +4336,15 @@
       ],
       "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon.",
       "tcgplayerProductId": 89385,
-      "tcgplayerGroupId": 1418
+      "tcgplayerGroupId": 1418,
+      "slug": "snorlax-wizards-black-star-promos-49"
     },
     {
       "apiId": "xyp-XY148",
       "tcgdexId": "",
       "name": "Shaymin-EX",
       "pokemon": "Shaymin",
-      "setName": "XY Black Star Promos",
+      "setName": "XY Promos",
       "setSeries": "XY",
       "setId": "xyp",
       "number": "XY148/XY211",
@@ -4359,7 +4364,8 @@
       ],
       "whyItBelongs": "Cozy nap in a Gracidea flowerbed. Kanako Eo wraps the mythical hedgehog in brilliant storybook blossoms.",
       "tcgplayerProductId": 121947,
-      "tcgplayerGroupId": 1451
+      "tcgplayerGroupId": 1451,
+      "slug": "shaymin-ex-xy-black-star-promos-xy148-xy211"
     },
     {
       "apiId": "miscpp_jp-035",
@@ -5997,7 +6003,7 @@
       "tcgdexId": "",
       "name": "Arcanine",
       "pokemon": "Arcanine",
-      "setName": "SWSH Black Star Promos",
+      "setName": "Sword & Shield Promos",
       "setSeries": "Sword & Shield",
       "setId": "swshp",
       "number": "SWSH304",
