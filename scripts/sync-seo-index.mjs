@@ -18,6 +18,10 @@ import {
 } from "./build-helpers.mjs";
 import { getSetHubs, loadSetDefs } from "./set-pages.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
+import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
+
+// The hand-written homepage and collection carry the shared lightbox markup too.
+const CARD_DETAIL_DIALOG = /<dialog id="cardDetailDialog"[\s\S]*?<\/dialog>/;
 
 const INDEX_PATH = "docs/index.html";
 const FEATURED_PATH = "docs/featured.json";
@@ -61,7 +65,7 @@ async function syncHomepage() {
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
   );
-  html = syncAssetVersions(syncSiteFooter(html));
+  html = syncAssetVersions(syncSiteFooter(html)).replace(CARD_DETAIL_DIALOG, renderCardDetailDialog());
   html = html.replace(
     /            <!-- FEATURED_START -->[\s\S]*?            <!-- FEATURED_END -->/,
     `            <!-- FEATURED_START -->\n${await renderFeaturedCard()}\n            <!-- FEATURED_END -->`,
@@ -109,7 +113,7 @@ ${items}
     /      <!-- SITE_HEADER_START -->[\s\S]*?      <!-- SITE_HEADER_END -->/,
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader("../")}\n      <!-- SITE_HEADER_END -->`,
   );
-  html = syncAssetVersions(syncSiteFooter(html));
+  html = syncAssetVersions(syncSiteFooter(html)).replace(CARD_DETAIL_DIALOG, renderCardDetailDialog());
   html = html.replace(
     /(<span class="collection-meta" id="collectionMeta">)[^<]*(<\/span>)/,
     `$1${cardList.length} cards · zero alarm clocks$2`,

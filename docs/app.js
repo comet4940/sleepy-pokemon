@@ -91,6 +91,7 @@ async function init() {
   }
   assignRandomOrder();
   render();
+  restoreCardDetailFromHistory();
   const catalogSurface = getCatalogSurface();
   if (catalogSurface && !state.catalogLoadFailed) {
     trackEvent("catalog_loaded", {
@@ -146,6 +147,7 @@ function cacheElements() {
   elements.clearFiltersButton = document.querySelector("#clearFiltersButton");
   elements.toast = document.querySelector("#toast");
   elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
+  elements.detailScroll = document.querySelector("#detailScroll");
   elements.closeCardDetailButton = document.querySelector("#closeCardDetailButton");
   elements.detailImageFrame = document.querySelector("#detailImageFrame");
   elements.detailEyebrow = document.querySelector("#detailEyebrow");
@@ -281,6 +283,19 @@ function bindEvents() {
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
+  // However the lightbox closes (×, backdrop, Escape), drop its history entry so Back doesn't reopen nothing.
+  bind(elements.cardDetailDialog, "close", () => {
+    if (window.history.state?.cardDetail) window.history.back();
+  });
+  // Back closes the lightbox; Forward onto its entry reopens the card it showed.
+  window.addEventListener("popstate", () => {
+    const cardId = window.history.state?.cardDetail;
+    if (elements.cardDetailDialog?.open && !cardId) elements.cardDetailDialog.close();
+    if (!elements.cardDetailDialog?.open && cardId) {
+      const card = findCardByIdentity(cardId);
+      if (card) openCardDetail(card, "browser_forward", { fromHistory: true });
+    }
+  });
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
@@ -1213,7 +1228,23 @@ function getCardDiscoverySource(tile) {
   return elements.latestGrid?.contains(tile) ? "freshly_tucked_in" : "collection_grid";
 }
 
-function openCardDetail(card, interactionSource = "unknown") {
+// A reload (or a return to a page the browser didn't keep in memory) lands on the lightbox's history entry with
+// the lightbox closed: reopen its card, so Back closes it rather than stepping to an identical page. If the card
+// is gone, drop the marker instead.
+function restoreCardDetailFromHistory() {
+  const cardId = window.history.state?.cardDetail;
+  if (!cardId || elements.cardDetailDialog?.open) return;
+  const card = findCardByIdentity(cardId);
+  if (card) {
+    openCardDetail(card, "browser_restore", { fromHistory: true });
+    return;
+  }
+  const { cardDetail, ...state } = window.history.state;
+  window.history.replaceState(Object.keys(state).length ? state : null, "");
+}
+
+// fromHistory: reopened by Forward onto the lightbox's own history entry, so there's no entry to add.
+function openCardDetail(card, interactionSource = "unknown", { fromHistory = false } = {}) {
   const image = card.imageLarge || card.imageSmall;
   elements.detailEyebrow.textContent = "Caught napping";
   elements.detailTitle.textContent = card.name;
@@ -1239,7 +1270,13 @@ function openCardDetail(card, interactionSource = "unknown") {
     card.artist ? metaLinkItem("Artist", card.artist, renderArtistHref(card.artist), "card_modal") : metaItem("Artist", "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
-  elements.cardDetailDialog.showModal();
+  if (elements.detailScroll) elements.detailScroll.scrollTop = 0;
+  if (!elements.cardDetailDialog.open) {
+    elements.cardDetailDialog.showModal();
+    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
+    // The card's identity lets Forward reopen it.
+    if (!fromHistory) window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
+  }
   trackEvent("card_opened", {
     ...getCardAnalyticsParams(card),
     interaction_source: interactionSource,
