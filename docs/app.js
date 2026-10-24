@@ -91,6 +91,7 @@ async function init() {
   }
   assignRandomOrder();
   render();
+  restoreCardDetailFromHistory();
   const catalogSurface = getCatalogSurface();
   if (catalogSurface && !state.catalogLoadFailed) {
     trackEvent("catalog_loaded", {
@@ -295,11 +296,6 @@ function bindEvents() {
       if (card) openCardDetail(card, "browser_forward", { fromHistory: true });
     }
   });
-  // Coming back to a page that was reloaded rather than restored: its lightbox entry has nothing to close.
-  if (window.history.state?.cardDetail && !elements.cardDetailDialog?.open) {
-    const { cardDetail, ...state } = window.history.state;
-    window.history.replaceState(Object.keys(state).length ? state : null, "");
-  }
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
@@ -1230,6 +1226,21 @@ function findCardByIdentity(cardId) {
 
 function getCardDiscoverySource(tile) {
   return elements.latestGrid?.contains(tile) ? "freshly_tucked_in" : "collection_grid";
+}
+
+// A reload (or a return to a page the browser didn't keep in memory) lands on the lightbox's history entry with
+// the lightbox closed: reopen its card, so Back closes it rather than stepping to an identical page. If the card
+// is gone, drop the marker instead.
+function restoreCardDetailFromHistory() {
+  const cardId = window.history.state?.cardDetail;
+  if (!cardId || elements.cardDetailDialog?.open) return;
+  const card = findCardByIdentity(cardId);
+  if (card) {
+    openCardDetail(card, "browser_restore", { fromHistory: true });
+    return;
+  }
+  const { cardDetail, ...state } = window.history.state;
+  window.history.replaceState(Object.keys(state).length ? state : null, "");
 }
 
 // fromHistory: reopened by Forward onto the lightbox's own history entry, so there's no entry to add.
