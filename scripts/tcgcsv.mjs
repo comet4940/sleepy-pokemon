@@ -34,7 +34,10 @@ async function request(path) {
 
 async function results(path) {
   const payload = await (await request(path)).json();
-  if (!Array.isArray(payload.results)) throw new Error(`TCGCSV returned no results for ${path}`);
+  // TCGCSV can answer 200 with { success: false, errors: [...] }; that's a failed request, not an empty set.
+  if (payload.success === false || !Array.isArray(payload.results)) {
+    throw new Error(`TCGCSV request failed for ${path}: ${(payload.errors || []).join("; ") || "no results"}`);
+  }
   return payload.results;
 }
 
