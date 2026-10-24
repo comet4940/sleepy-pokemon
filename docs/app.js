@@ -170,6 +170,7 @@ function cacheElements() {
   elements.suggestionDoneButton = document.querySelector("#suggestionDoneButton");
   elements.guideCardList = document.querySelector(".guide-card-list");
   elements.aboutMain = document.querySelector(".about-main");
+  elements.featuredCard = document.querySelector("a.hero-card[data-card-id]");
 }
 
 function bindEvents() {
@@ -278,6 +279,7 @@ function bindEvents() {
   bind(elements.latestGrid, "keydown", handleCardGridKeydown);
   bind(elements.guideCardList, "click", handleGuideCardClick);
   bind(elements.aboutMain, "click", handleGuideCardClick);
+  bind(elements.featuredCard, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
@@ -1195,7 +1197,7 @@ function handleCardGridClick(event) {
 function handleGuideCardClick(event) {
   // Let modified and non-primary clicks open the card page in a new tab or window.
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-  const link = event.target.closest(".guide-card a[data-card-id], .about-main a[data-card-id]");
+  const link = event.target.closest(".guide-card a[data-card-id], .about-main a[data-card-id], a.hero-card[data-card-id]");
   if (!link) return;
   const card = findCardByIdentity(link.dataset.cardId);
   if (!card) return;

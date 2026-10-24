@@ -103,6 +103,31 @@ Market prices live in their own file, `docs/prices.json`, not in the cards or th
 - **Manual prices.** For a card TCGplayer doesn't sell, add an entry with `"source": "Manual"` and today's date. The refresh leaves it alone; re-check it every few months. The site shows it as the curator's estimate.
 - **Renaming a card changes its identity.** The refresh moves TCGplayer prices to the new key on its next run; move a `Manual` entry by hand (the validator flags entries that match no card).
 
+## Featured sleeper
+
+The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the curator's own picks in `docs/featured.json`:
+
+```json
+{
+  "showing": "meowth-me-30th-celebration-144-128",
+  "current": { "startsOn": "2026-10-25", "cards": ["meowth-me-30th-celebration-144-128", "mew-crown-zenith-galarian-gallery-gg10-gg70"] },
+  "upcoming": null,
+  "history": [{ "week": "2026-10-25", "card": "meowth-me-30th-celebration-144-128" }]
+}
+```
+
+| Key | Meaning |
+| --- | --- |
+| `current` | The batch being shown: card slugs in order, one per week, starting the Sunday `startsOn` |
+| `upcoming` | The next batch (`{ "cards": [...] }`), or `null`. It starts the Sunday after `current` runs out |
+| `showing` | The card on the homepage now. Written by the rotation, not by hand |
+| `history` | Every week's featured card (`week` is the Sunday it went up), newest last. A record to look back on |
+
+- **The rotation runs itself.** `featured-card.yml` runs `scripts/rotate-featured.mjs` every Sunday night (05:00 UTC Monday), regenerates the homepage and deploys. When `current` runs out it switches to `upcoming`; with nothing upcoming it loops back to the first card.
+- **A reminder comes in time.** With three weeks left in the batch and nothing upcoming, the workflow opens a GitHub issue asking for the next batch.
+- **Adding the next batch:** put the card slugs (the `cards/<slug>/` part of a card page URL) in `upcoming.cards`. To replace the list early instead, set `current` to the new cards with `startsOn` set to the coming Sunday.
+- The validator checks every slug is a published card and `startsOn` is a Sunday.
+
 ## Adding a card
 
 1. **Check it isn't already listed**: search `published-cards.json` for the Pokémon, set and number.
