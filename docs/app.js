@@ -71,9 +71,10 @@ async function init() {
   cacheElements();
   applyInitialSearch();
   bindEvents();
-  [state.cards, state.guideMemberships] = await Promise.all([
+  [state.cards, state.guideMemberships, state.setPages] = await Promise.all([
     loadPublishedCards(),
     loadGuideMemberships(),
+    loadSetPages(),
   ]);
   state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
   if (elements.cardGrid) {
@@ -633,6 +634,18 @@ async function loadPublishedCards() {
     state.catalogLoadFailed = true;
     showToast("Could not load the card guide.");
     return [];
+  }
+}
+
+// Sets with their own page (generated sets/index.json), by set name.
+async function loadSetPages() {
+  try {
+    const response = await fetch(`${document.body.dataset.siteRoot || ""}sets/index.json`);
+    if (!response.ok) return new Map();
+    const { sets } = await response.json();
+    return new Map((sets || []).map((set) => [set.name, set]));
+  } catch {
+    return new Map();
   }
 }
 
@@ -1220,8 +1233,13 @@ function openCardDetail(card, interactionSource = "unknown") {
 
 function renderGuideMemberships(card) {
   const guides = state.guideMemberships.get(card.slug) || [];
-  if (!guides.length) return "";
+  const setPage = state.setPages?.get(card.setName);
+  if (!guides.length && !setPage) return "";
   const root = document.body.dataset.siteRoot || "";
+  const setLine = setPage
+    ? `<p>It's one of ${setPage.count} sleepy cards from <a href="${escapeAttribute(`${root}sets/${setPage.slug}/`)}" data-analytics-event="navigation_clicked" data-analytics-source="card_modal" data-analytics-destination="set_page">${escapeHtml(setPage.name)}</a>.</p>`
+    : "";
+  if (!guides.length) return `<p class="detail-guide-kicker">In the field notes</p>${setLine}`;
   const links = guides.map((guide) => {
     const href = `${root}guides/${guide.slug}/`;
     return `<a href="${escapeAttribute(href)}" data-analytics-event="guide_opened" data-analytics-source="card_modal" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`;
@@ -1229,7 +1247,7 @@ function renderGuideMemberships(card) {
   const linkedTitles = links.length === 1
     ? links[0]
     : `${links.slice(0, -1).join(", ")}${links.length > 2 ? "," : ""} and ${links.at(-1)}`;
-  return `<p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${linkedTitles}.</p>`;
+  return `<p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${linkedTitles}.</p>${setLine}`;
 }
 
 function closeCardDetail() {

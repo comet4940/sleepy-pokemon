@@ -32,6 +32,7 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
   - A **filter drawer** (a bottom sheet on phones, a side drawer on desktop) with live counts on every option: moods, rarity groups (*Common*, *Uncommon*, *Rare & Holo*, *Illustration Rare*, *Ultra & Secret*, *Trainer Gallery*, *Promo*), searchable sets (newest first), language, price (*under $5* to *under $50*) and sort (shuffle, newest sets, price, set or Pokémon A–Z).
   - **Shareable views**: the collection URL carries every active filter and the search (e.g. `/collection/?mood=belly-up&rarity=promo&maxPrice=10`), so links, reloads and the browser's Back/Forward all show the same view.
 - **Themed Collector Guides**: Editorial lists highlighting standout cards, cameos, and curated sub-themes (e.g. *Best Sleepy Pokemon Cards*, *The Sleepiest of Pikachus*, *Sleepy Cat Pokemon Cards*).
+- **Set Pages**: `/sets/<set>/` for every set with 5 or more sleepy cards (built automatically as sets reach the threshold), each with a curator intro and the cards with the first sentence of their notes. `/sets/` lists them all, and card pages and the lightbox link to a card's set page. The threshold and intros live in [`docs/sets.json`](docs/sets.json).
 - **Standalone Card Detail Pages**: Over 150 crawlable, standalone pages (`/cards/<slug>/`) with high-resolution imagery, release information, current market prices, and JSON-LD structured data for search engines.
 - **Community Suggestions**: Integrated submission modal allowing visitors to suggest unlisted sleepy cards to the review queue.
 - **Responsive & Accessible**: Optimized for mobile Safari (iOS WebKit) and Chrome Mobile (Android Blink), with full orientation-change resilience and WCAG-compliant touch targets (≥ 44×44px).
@@ -66,6 +67,7 @@ sleepy-pokemon/
 │   ├── guides.css               # Editorial guide layouts & hero stacks
 │   ├── published-cards.json     # Canonical catalog dataset
 │   ├── guides.json              # Guide definitions & card slug references
+│   ├── sets.json                # Set page threshold (minCards) & curator intros by set name
 │   └── sitemap.xml              # Search engine sitemap
 ├── scripts/                     # Node / Deno automation scripts
 │   ├── sync-seo-index.mjs       # Generates docs/cards/ pages & crawls indexes
@@ -118,7 +120,7 @@ node scripts/sync-seo-index.mjs
 ```
 
 ### 2. Sync Guides, About Page & Sitemap
-Compiles guide pages in `/guides/` from `docs/guides.json`, the About page, the homepage guide directory, and `docs/sitemap.xml` (the only sitemap writer):
+Compiles guide pages in `/guides/` from `docs/guides.json`, set pages in `/sets/` from `docs/sets.json`, the About page, the homepage guide directory, and `docs/sitemap.xml` (the only sitemap writer):
 ```bash
 node scripts/sync-guides.mjs
 ```

@@ -4,19 +4,19 @@ import { renderSiteFooter } from "./site-footer.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
 import { ABOUT_CARD_SLUGS, renderAboutPage } from "./about-page.mjs";
 import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
+import { getSetHubs, loadSetDefs, writeSetPages } from "./set-pages.mjs";
 import {
   SITE_URL,
   assetUrl,
-  buildImageAlt,
+  dataAttributes,
   escapeAttribute,
   escapeHtml,
   escapeRegExp,
-  formatCurrency,
   getCardLastmod,
   getNewestDate,
   loadCardData,
   loadGuideDefs,
-  numericOrNull,
+  renderCardEntry,
   renderHead,
   sitemapUrl,
 } from "./build-helpers.mjs";
@@ -36,15 +36,18 @@ const guides = guideDefs
   .map((guide) => resolveGuide(guide, cardBySlug))
   .filter((guide) => guide.slug && guide.cards.length);
 
+const setHubs = getSetHubs(cardsWithSlugs, await loadSetDefs());
+
 await writeGuidePages(guides);
+await writeSetPages(setHubs);
 await mkdir(ABOUT_DIR, { recursive: true });
 await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
 // The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
 await writeFile(`${ABOUT_DIR}/cards.json`, `${JSON.stringify({ cards: ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug)) }, null, 2)}\n`, "utf8");
 await syncHomepageGuideIndex(guides);
-await writeSitemap(cardsWithSlugs, guides);
+await writeSitemap(cardsWithSlugs, guides, setHubs);
 
-console.log(`Synced ${guides.length} guide pages.`);
+console.log(`Synced ${guides.length} guide pages and ${setHubs.length} set pages.`);
 
 function resolveGuide(guide, cardsBySlug) {
   return {
@@ -100,7 +103,7 @@ ${guideItems}
 }
 
 // The only sitemap writer: it lists every generated page.
-async function writeSitemap(cardList, guideList) {
+async function writeSitemap(cardList, guideList, hubs) {
   const homepageLastmod = getNewestDate([
     guideData.priceRefreshedAt,
     guideData.exportedAt,
@@ -112,6 +115,8 @@ async function writeSitemap(cardList, guideList) {
     sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "monthly", "0.9"),
     sitemapUrl(`${SITE_URL}/about/`, homepageLastmod, "monthly", "0.6"),
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
+    sitemapUrl(`${SITE_URL}/sets/`, homepageLastmod, "monthly", "0.8"),
+    ...hubs.map((hub) => sitemapUrl(`${SITE_URL}/sets/${hub.slug}/`, getNewestDate(hub.cards.map((card) => getCardLastmod(card, guideData.exportedAt))), "weekly", "0.8")),
     ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card, guideData.exportedAt), "weekly", "0.8")),
   ].join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -250,24 +255,12 @@ ${renderSiteFooter()}
 
 
 function renderGuideCard(entry, index, guideSlug) {
-  const card = entry.card;
-  const image = card.imageSmall || card.imageLarge;
-  const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
-  const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
-  const cardUrl = `../../cards/${card.slug}/`;
-  return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
-            <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" ${guideCardLinkAttributes(card, guideSlug, "guide_card_art")}>
-              ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
-            </a>
-            <div class="guide-card-copy">
-              <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
-              <h2><a href="${escapeAttribute(cardUrl)}" ${guideCardLinkAttributes(card, guideSlug, "guide_card_title")}>${escapeHtml(card.name)}</a></h2>
-              <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
-              <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
-              <p>${escapeHtml(entry.reason || card.whyItBelongs)}</p>
-            </div>
-          </article>`;
+  return renderCardEntry({
+    card: entry.card,
+    index,
+    text: entry.reason || entry.card.whyItBelongs,
+    linkAttributes: (part) => guideCardLinkAttributes(entry.card, guideSlug, `guide_card_${part}`),
+  });
 }
 
 // Lets the page open the card in the lightbox (data-card-id) and tracks guide_card_selected.
@@ -285,5 +278,5 @@ function guideCardLinkAttributes(card, guideSlug, source) {
     "analytics-card-language": card.language || "",
     "analytics-price-market": card.priceMarket ?? "",
   };
-  return Object.entries(attributes).map(([name, value]) => `data-${name}="${escapeAttribute(value)}"`).join(" ");
+  return dataAttributes(attributes);
 }

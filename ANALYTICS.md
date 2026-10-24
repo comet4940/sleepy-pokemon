@@ -25,6 +25,8 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `collection` | Search results, browse grid, filters, sorting, and collection suggestion prompt |
 | `guides-index` | Collector guides directory |
 | `guide` | Individual editorial guide |
+| `sets-index` | Sets directory (`/sets/`) |
+| `set` | Set page (`/sets/<set>/`): the sleepy cards from one set with 5 or more of them |
 | `card` | Individual crawlable card page |
 | `about` | About page: the collectors, how the collection started, the sleepy standard, and the current chase |
 
@@ -32,9 +34,9 @@ Every product event includes `page_type` and `analytics_version` automatically.
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`) and About page links (`about_page`) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
+| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`), About page links (`about_page`), and set navigation: `sets_index` → `set_page`, `set_page` → `sets` (All sets), and `card_page` / `card_modal` → `set_page` (the field notes on a card page or in the lightbox) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
-| `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) | card parameters, `interaction_source` |
+| `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) and set page cards (`set_page`) | card parameters, `interaction_source` |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
 | `card_page_view` | A crawlable card page loads | card parameters |
 | `guide_opened` | A guide link is selected | `guide_slug`, `guide_title`, `interaction_source`, `destination_path` |

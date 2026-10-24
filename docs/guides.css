@@ -232,6 +232,13 @@
   margin-top: 24px;
 }
 
+/* Long set names ("Explore ME: 30th Celebration in the collection") wrap instead of widening the page on phones. */
+.guide-actions .button {
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+}
+
 .guide-hero-stack {
   position: relative;
   min-height: 330px;
