@@ -1054,6 +1054,12 @@ textarea:focus-visible {
   line-height: 1.35;
 }
 
+/* Price slots are filled from prices.json by prices.js; keep their space until then. */
+[data-price-for]:empty {
+  visibility: hidden;
+  min-height: 1.5em;
+}
+
 .price-pill {
   flex: 0 0 auto;
   min-width: 82px;

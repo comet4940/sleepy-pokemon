@@ -123,7 +123,6 @@ Card parameters:
 - `card_number`
 - `card_rarity`
 - `card_language`
-- `price_market` when available
 
 Common parameters:
 
@@ -167,7 +166,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `selection_method`
 - `error_type`
 
-Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, `active_filter_count`, and `price_market`.
+Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, and `active_filter_count`. Events no longer carry `price_market` (removed in #152: the site doesn't measure sales, and prices aren't in the page HTML anymore); archive the custom metric in GA4 if it was registered.
 
 Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` as GA4 key events (conversions representing contribution, collector intent, and a collector refining the collection with the filter drawer). Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
 

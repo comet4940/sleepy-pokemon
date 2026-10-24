@@ -7,14 +7,12 @@ import {
   escapeAttribute,
   escapeHtml,
   escapeRegExp,
-  formatCurrency,
+  assetUrl,
   loadCardData,
-  noPriceLabel,
-  priceCredit,
   loadGuideDefs,
   normalizeDate,
-  numericOrNull,
   renderHead,
+  renderPriceSlot,
   slugify,
   syncAssetVersions,
 } from "./build-helpers.mjs";
@@ -26,7 +24,7 @@ const CARDS_DIR = "docs/cards";
 const START = "<!-- SEO_CARD_INDEX_START -->";
 const END = "<!-- SEO_CARD_INDEX_END -->";
 
-const { payload: cardData, cards: cardsWithSlugs } = await loadCardData();
+const { cards: cardsWithSlugs } = await loadCardData();
 const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
 const setHubByName = new Map(getSetHubs(cardsWithSlugs, await loadSetDefs()).map((hub) => [hub.name, hub]));
@@ -113,8 +111,6 @@ function renderCardPage(card, memberships) {
   const imageAlt = buildImageAlt(card);
   const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
   const image = card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
-  const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? noPriceLabel(card, cardData.priceRefreshedAt) : formatCurrency(price);
   const release = formatDate(card.setReleaseDate) || "Unknown";
   const jsonLd = {
     "@context": "https://schema.org",
@@ -172,11 +168,7 @@ ${renderHead({
             <p class="detail-kicker">Caught napping</p>
             <h1>${escapeHtml(card.name || card.pokemon || "Pokemon")}</h1>
             <p class="card-subtitle">${escapeHtml([card.setName, card.number, card.rarity].filter(Boolean).join(" · "))}</p>
-            <div class="detail-price-row">
-              ${price === null
-                ? `<span class="detail-no-price">${escapeHtml(priceLabel)}</span>`
-                : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(priceCredit(card))}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
-            </div>
+            ${renderPriceSlot(card, "row", "detail-price-row")}
             <div class="curation-note">
               <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || "A curator's note is coming soon.")}
             </div>
@@ -195,6 +187,7 @@ ${renderMoods(card)}
       </main>
 ${renderSiteFooter()}
     </div>
+    <script src="${assetUrl("../../", "prices.js")}"></script>
   </body>
 </html>
 `;
@@ -239,15 +232,6 @@ function renderMoods(card) {
   if (!Array.isArray(card.moods) || !card.moods.length) return "";
   // Each pill links to the collection filtered to that mood, matching the card lightbox.
   return `<div class="detail-moods">${card.moods.map((mood) => `<a class="mood-tag" href="../../collection/?mood=${escapeAttribute(slugify(mood))}" data-analytics-event="navigation_clicked" data-analytics-source="card_mood_pill" data-analytics-destination="collection" data-analytics-filter-value="${escapeAttribute(slugify(mood))}">${escapeHtml(mood)}</a>`).join("")}</div>`;
-}
-
-function formatShortDate(value) {
-  const match = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
-  const date = match
-    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
-    : new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 function buildDescription(card) {

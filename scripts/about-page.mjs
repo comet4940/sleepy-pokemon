@@ -128,6 +128,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="${assetUrl("../", "prices.js")}"></script>
     <script src="${assetUrl("../", "app.js")}"></script>
   </body>
 </html>

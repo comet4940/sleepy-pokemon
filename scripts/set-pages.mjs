@@ -44,7 +44,7 @@ export function getSetHubs(cards, setDefs) {
     .sort((a, b) => b.releaseDate.localeCompare(a.releaseDate) || a.name.localeCompare(b.name));
 }
 
-export async function writeSetPages(hubs, pricesAsOf) {
+export async function writeSetPages(hubs) {
   await rm(SETS_DIR, { recursive: true, force: true });
   await mkdir(SETS_DIR, { recursive: true });
   await writeFile(`${SETS_DIR}/index.html`, renderSetsIndex(hubs), "utf8");
@@ -54,7 +54,7 @@ export async function writeSetPages(hubs, pricesAsOf) {
   await Promise.all(hubs.map(async (hub) => {
     const dir = `${SETS_DIR}/${hub.slug}`;
     await mkdir(dir, { recursive: true });
-    await writeFile(`${dir}/index.html`, renderSetPage(hub, pricesAsOf), "utf8");
+    await writeFile(`${dir}/index.html`, renderSetPage(hub), "utf8");
     // The lightbox only needs this set's cards, so the page loads this subset instead of the full catalog.
     await writeFile(`${dir}/cards.json`, `${JSON.stringify({ cards: hub.cards }, null, 2)}\n`, "utf8");
   }));
@@ -125,7 +125,7 @@ ${hub.cards.slice(0, 3).map((card, cardIndex) => {
           </article>`;
 }
 
-function renderSetPage(hub, pricesAsOf) {
+function renderSetPage(hub) {
   const title = `Sleepy Pokemon Cards from ${hub.name}`;
   const [first, second, third] = [...new Set(hub.cards.map((card) => card.pokemon))];
   const highlights = third ? `${first}, ${second} and ${third}` : [first, second].filter(Boolean).join(" and ");
@@ -193,7 +193,6 @@ ${hub.cards.map((card, index) => renderCardEntry({
   index,
   // The first sentence keeps the list scannable; the full note is one tap away in the lightbox.
   text: firstSentence(card.whyItBelongs),
-  pricesAsOf,
   // Tapping a card opens the lightbox, which tracks card_opened with interaction_source set_page.
   linkAttributes: () => dataAttributes({ "card-id": getCardIdentity(card), "lightbox-source": "set_page" }),
 })).join("\n")}
@@ -203,6 +202,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="${assetUrl("../../", "prices.js")}"></script>
     <script src="${assetUrl("../../", "app.js")}"></script>
   </body>
 </html>

@@ -64,6 +64,7 @@ const state = {
 };
 
 const elements = {};
+const PRICE_WAIT_MS = 3000;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -71,11 +72,17 @@ async function init() {
   cacheElements();
   applyInitialSearch();
   bindEvents();
+  // Prices come from prices.js, loaded just before this script. They're a side detail, so a slow prices.json
+  // never holds the cards back for long: after PRICE_WAIT_MS the cards render, and prices follow when they arrive.
+  const pricesReady = window.sleepyPrices?.ready || Promise.resolve(new Map());
   [state.cards, state.guideMemberships, state.setPages] = await Promise.all([
     loadPublishedCards(),
     loadGuideMemberships(),
     loadSetPages(),
   ]);
+  const prices = await Promise.race([pricesReady, new Promise((resolve) => setTimeout(resolve, PRICE_WAIT_MS))]);
+  if (prices) applyPrices(prices);
+  else pricesReady.then((late) => { applyPrices(late); render(); });
   state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
   if (elements.cardGrid) {
     Object.assign(state.filters, readUrlFilters());
@@ -620,6 +627,13 @@ function showSuggestionSuccess() {
   elements.suggestionDoneButton.focus();
 }
 
+function applyPrices(prices) {
+  state.cards.forEach((card) => {
+    const entry = prices.get(card.catalogIdentity);
+    card.price = Number.isFinite(entry?.market) ? entry : null;
+  });
+}
+
 async function loadPublishedCards() {
   try {
     const guidePath = document.body.dataset.guidePath || "published-cards.json";
@@ -688,10 +702,6 @@ function normalizeCard(card) {
     artist: card.artist || "",
     imageSmall: card.imageSmall || card.imageLarge || "",
     imageLarge: card.imageLarge || card.imageSmall || "",
-    priceMarket: numericOrNull(card.priceMarket),
-    priceType: card.priceType || "",
-    priceSource: card.priceSource || "",
-    priceUpdatedAt: card.priceUpdatedAt || "",
     setReleaseDate: card.setReleaseDate || "",
     whyItBelongs: card.whyItBelongs || card.curation?.whyItBelongs || "",
     createdAt: card.createdAt || "",
@@ -1195,8 +1205,6 @@ function getCardDiscoverySource(tile) {
 }
 
 function openCardDetail(card, interactionSource = "unknown") {
-  const price = getDisplayPrice(card);
-  const priceText = price ? formatCurrency(price) : "No price";
   const image = card.imageLarge || card.imageSmall;
   elements.detailEyebrow.textContent = "Caught napping";
   elements.detailTitle.textContent = card.name;
@@ -1204,9 +1212,7 @@ function openCardDetail(card, interactionSource = "unknown") {
   elements.detailImageFrame.innerHTML = image
     ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
     : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
-  elements.detailPriceRow.innerHTML = price
-    ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(getPriceCredit(card))}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
-    : `<span class="detail-no-price">${escapeHtml(getNoPriceLabel(card))}</span>`;
+  elements.detailPriceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
   const { whyItBelongs } = card;
   elements.detailCurationNote.innerHTML = whyItBelongs
     ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
@@ -1355,15 +1361,6 @@ function handleFilterHistoryNavigation() {
   if (elements.searchFilter) elements.searchFilter.value = search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = search;
   render();
-}
-
-function formatShortDate(value) {
-  const match = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
-  const date = match
-    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
-    : new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 function slugify(value) {
@@ -1560,7 +1557,6 @@ function getCardAnalyticsParams(card) {
     card_number: card.number,
     card_rarity: card.rarity,
     card_language: card.language,
-    price_market: getDisplayPrice(card) || undefined,
   };
 }
 
@@ -1590,19 +1586,8 @@ function derivePokemonName(name) {
     .split(" ")[0];
 }
 
-// Same rules as noPriceLabel and priceCredit in scripts/build-helpers.mjs, which build the static pages.
-function getNoPriceLabel(card) {
-  const match = String(card.setReleaseDate || "").match(/^(\d{4})[/-](\d{2})[/-](\d{2})/);
-  const daysSinceRelease = match ? (Date.now() - Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))) / 86400000 : -1;
-  return daysSinceRelease >= 0 && daysSinceRelease <= 90 ? "New set, price coming soon" : "No current market price";
-}
-
-function getPriceCredit(card) {
-  return card.priceSource === "TCGplayer" ? "TCGplayer via TCGCSV" : card.priceSource || "TCGplayer";
-}
-
 function getDisplayPrice(card) {
-  return numericOrNull(card.priceMarket) || 0;
+  return card.price?.market || 0;
 }
 
 function numericOrNull(value) {

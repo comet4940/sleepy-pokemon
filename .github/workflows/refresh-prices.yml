@@ -38,7 +38,7 @@ jobs:
         run: |
           # All of docs/, like the generated-pages check in checks.yml, so new generated page types are never left out.
           if [ -z "$(git status --porcelain -- docs)" ]; then
-            echo "No price, SEO or guide page changes to commit."
+            echo "No price changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
