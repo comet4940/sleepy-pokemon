@@ -59,14 +59,6 @@ export function fetchPrices(groupId) {
   return results(`/tcgplayer/${POKEMON_CATEGORY}/${groupId}/prices`);
 }
 
-// The price we show for one printing: TCGplayer's market price, or its mid or low price when there is none.
-export function pickPrice(row) {
-  for (const value of [row?.marketPrice, row?.midPrice, row?.lowPrice]) {
-    if (value !== null && value !== undefined && Number.isFinite(Number(value))) return Number(value);
-  }
-  return null;
-}
-
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

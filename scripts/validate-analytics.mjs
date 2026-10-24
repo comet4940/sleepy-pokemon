@@ -150,6 +150,12 @@ function checkCardMoods() {
     if (/^(Light|Dark|Shining|Alolan|Galarian|Hisuian|Paldean)$/.test(card.pokemon)) {
       errors.push(`${label} has pokemon "${card.pokemon}", which is a prefix of the name, not the Pokémon`);
     }
+    for (const field of ["tcgplayerProductId", "tcgplayerGroupId"]) {
+      if (field in card && !(Number.isInteger(card[field]) && card[field] > 0)) errors.push(`${label} has ${field} ${card[field]}, which is not a TCGplayer ID`);
+    }
+    if (("tcgplayerProductId" in card) !== ("tcgplayerGroupId" in card)) errors.push(`${label} needs both tcgplayerProductId and tcgplayerGroupId`);
+    if (card.priceSource && !["TCGplayer", "Manual"].includes(card.priceSource)) errors.push(`${label} has priceSource "${card.priceSource}" (use TCGplayer or Manual)`);
+    if (card.tcgplayerProductId && !card.priceType) errors.push(`${label} has a TCGplayer product but no priceType (printing) to price`);
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
     for (const image of new Set([card.imageSmall, card.imageLarge])) {

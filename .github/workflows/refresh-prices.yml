@@ -2,7 +2,8 @@ name: Refresh card prices
 
 on:
   schedule:
-    - cron: "17 11 * * *"
+    # TCGCSV rebuilds its files once a day around 20:00 UTC; run after that.
+    - cron: "33 21 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,9 +31,8 @@ jobs:
           node-version: "20"
 
       - name: Refresh prices
+        id: refresh
         run: node scripts/refresh-prices.mjs
-        env:
-          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
 
       - name: Commit price updates
         run: |
@@ -58,3 +58,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      # After committing whatever did refresh: a red run (and GitHub's email) when TCGCSV was unreachable
+      # or too many cards failed. The run summary says what went wrong.
+      - name: Report refresh problems
+        if: steps.refresh.outputs.problem == 'true'
+        run: |
+          echo "::error::The price refresh had problems. See the run summary."
+          exit 1

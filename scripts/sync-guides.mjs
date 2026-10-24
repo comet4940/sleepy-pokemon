@@ -39,7 +39,7 @@ const guides = guideDefs
 const setHubs = getSetHubs(cardsWithSlugs, await loadSetDefs());
 
 await writeGuidePages(guides);
-await writeSetPages(setHubs);
+await writeSetPages(setHubs, guideData.priceRefreshedAt);
 await mkdir(ABOUT_DIR, { recursive: true });
 await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
 // The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
@@ -260,6 +260,7 @@ function renderGuideCard(entry, index, guideSlug) {
     index,
     text: entry.reason || entry.card.whyItBelongs,
     linkAttributes: (part) => guideCardLinkAttributes(entry.card, guideSlug, `guide_card_${part}`),
+    pricesAsOf: guideData.priceRefreshedAt,
   });
 }
 

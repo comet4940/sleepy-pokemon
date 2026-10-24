@@ -7,7 +7,7 @@
 // Review the report before writing: it flags guesses (no clear printing, big price changes, no match).
 import { readFile, writeFile } from "node:fs/promises";
 import { CARDS_PATH } from "./build-helpers.mjs";
-import { fetchGroups, fetchPrices, fetchProducts, pickPrice } from "./tcgcsv.mjs";
+import { fetchGroups, fetchPrices, fetchProducts } from "./tcgcsv.mjs";
 
 const WRITE = process.argv.includes("--write");
 const ALL = process.argv.includes("--all");
@@ -18,6 +18,7 @@ const SET_ALIASES = {
   "Scarlet & Violet": ["SV01: Scarlet & Violet Base Set"],
   "Sword & Shield": ["SWSH01: Sword & Shield Base Set"],
   "Expedition Base Set": ["Expedition"],
+  "Poké Card Creator Pack": ["Kids WB Promos"],
   "HS—Triumphant": ["Triumphant"],
   "HS—Undaunted": ["Undaunted"],
   "Legendary Treasures": ["Legendary Treasures", "Legendary Treasures: Radiant Collection"],
@@ -103,7 +104,7 @@ async function matchCard(card) {
     if (named.length > 1) flags.push(`also: ${named.filter((other) => other !== product).map((other) => other.name).join(", ")}`);
 
     const rowsForProduct = prices.filter((price) => price.productId === product.productId);
-    const available = rowsForProduct.filter((price) => pickPrice(price) !== null).map((price) => price.subTypeName);
+    const available = rowsForProduct.map((price) => price.subTypeName);
     const wanted = PRINTING_NAMES[card.priceType] || [];
     let printing = wanted.find((name) => available.includes(name));
     if (!printing && card.priceType && wanted.length === 0 && available.includes(card.priceType)) printing = card.priceType;
@@ -111,8 +112,10 @@ async function matchCard(card) {
       printing = DEFAULT_PRINTINGS.find((name) => available.includes(name)) || available[0] || "";
       if (available.length > 1) flags.push(`printing guessed from ${available.join(", ")}`);
     }
-    const price = pickPrice(rowsForProduct.find((row) => row.subTypeName === printing));
-    if (!available.length) flags.push("no TCGplayer price yet");
+    // Only TCGplayer's market price (from recent sales) counts; a lone listing's asking price doesn't.
+    const price = rowsForProduct.find((row) => row.subTypeName === printing)?.marketPrice ?? null;
+    if (!available.length) flags.push("not on TCGplayer's price list yet");
+    else if (price === null) flags.push("no market price yet");
     const current = card.priceMarket ?? null;
     if (current !== null && price !== null && Math.max(current, price) / Math.max(0.01, Math.min(current, price)) >= 2) {
       flags.push("price differs 2× or more");

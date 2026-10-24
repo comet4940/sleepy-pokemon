@@ -72,7 +72,9 @@ sleepy-pokemon/
 ├── scripts/                     # Node / Deno automation scripts
 │   ├── sync-seo-index.mjs       # Generates docs/cards/ pages & crawls indexes
 │   ├── sync-guides.mjs          # Generates docs/guides/ pages & updates homepage
-│   ├── refresh-prices.mjs       # Updates live card prices from Pokémon TCG APIs
+│   ├── refresh-prices.mjs       # Daily TCGplayer market prices from TCGCSV
+│   ├── match-tcgplayer.mjs      # Links cards to their TCGplayer product (run when adding a card)
+│   ├── tcgcsv.mjs               # Polite TCGCSV client shared by the two scripts above
 │   ├── validate-analytics.mjs   # Verifies GA4 telemetry across all 156+ static pages
 │   ├── card-identity.mjs        # Shared card ID used by guide pages and validation
 │   ├── site-header.mjs          # Shared topbar header template
@@ -134,9 +136,11 @@ node scripts/validate-analytics.mjs
 ```
 
 ### 4. Refresh Market Prices
-Polls the Pokémon TCG API for recent market pricing updates (TCGPlayer / Cardmarket):
+Reads TCGplayer market prices from [TCGCSV](https://tcgcsv.com), a free daily mirror of TCGplayer's price data, for every card with a `tcgplayerProductId`. `refresh-prices.yml` runs it every day at 21:33 UTC, after TCGCSV updates, and posts a summary on the run page; the run turns red if TCGCSV can't be reached or more than 20% of cards fail. See "Prices come from the refresh" in [DATA-MODEL.md](DATA-MODEL.md).
 ```bash
-node scripts/refresh-prices.mjs
+node scripts/refresh-prices.mjs            # skips the run if TCGCSV hasn't changed
+node scripts/refresh-prices.mjs --force    # refresh anyway
+node scripts/refresh-prices.mjs --dry-run  # report only
 ```
 
 ---
