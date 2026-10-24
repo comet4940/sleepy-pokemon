@@ -22,11 +22,10 @@ const SET_ALIASES = {
   "HS—Triumphant": ["Triumphant"],
   "HS—Undaunted": ["Undaunted"],
   "Legendary Treasures": ["Legendary Treasures", "Legendary Treasures: Radiant Collection"],
-  "Scarlet & Violet Black Star Promos": ["SV: Scarlet & Violet Promo Cards"],
-  "SWSH Black Star Promos": ["SWSH: Sword & Shield Promo Cards"],
+  "Scarlet & Violet Promos": ["SV: Scarlet & Violet Promo Cards"],
+  "Sword & Shield Promos": ["SWSH: Sword & Shield Promo Cards"],
   "Sun & Moon Promos": ["SM Promos"],
-  "XY Black Star Promos": ["XY Promos"],
-  "Wizards Black Star Promos": ["WoTC Promo"],
+  "Wizards Promos": ["WoTC Promo"],
 };
 
 // The printing we used before (pokemontcg.io's names) -> TCGplayer's, most likely first.
