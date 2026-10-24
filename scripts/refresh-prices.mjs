@@ -1,4 +1,6 @@
-// Daily price refresh: TCGplayer market prices from TCGCSV for every card with a tcgplayerProductId.
+// Daily price refresh: TCGplayer market prices from TCGCSV for every card with a tcgplayerProductId,
+// written to docs/prices.json. Pages read prices from that file in the browser (docs/prices.js), so a
+// refresh changes one file and regenerates nothing.
 //
 //   node scripts/refresh-prices.mjs             refresh if TCGCSV has new data since the last run
 //   node scripts/refresh-prices.mjs --force     refresh even if TCGCSV hasn't changed
@@ -6,21 +8,22 @@
 //
 // A card keeps its last price when TCGCSV can't be reached or has no market price for it; a price that
 // hasn't been confirmed for STALE_AFTER_DAYS is removed, so the site never shows a misleading number.
-import { appendFile, readFile, writeFile } from "node:fs/promises";
-import { spawnSync } from "node:child_process";
-import { CARDS_PATH } from "./build-helpers.mjs";
+// Prices with source "Manual" are the curator's and are left alone.
+import { appendFile, writeFile } from "node:fs/promises";
+import { PRICES_PATH, loadCardData, loadPrices } from "./build-helpers.mjs";
+import { getCardIdentity } from "./card-identity.mjs";
 import { fetchLastUpdated, fetchPrices } from "./tcgcsv.mjs";
 
-const SYNC_SCRIPTS = ["scripts/sync-seo-index.mjs", "scripts/sync-guides.mjs"];
 const STALE_AFTER_DAYS = 30;
 // More failed cards than this turns the workflow run red, so a broken refresh can't go unnoticed.
 const MAX_FAILED_SHARE = 0.2;
 const DRY_RUN = process.argv.includes("--dry-run");
 const FORCE = process.argv.includes("--force");
 
-const raw = await readFile(CARDS_PATH, "utf8");
-const payload = JSON.parse(raw);
-const cards = payload.cards.filter((card) => card.tcgplayerProductId && card.priceSource !== "Manual");
+const { cards: allCards } = await loadCardData();
+const payload = await loadPrices();
+const previous = payload.prices;
+const cards = allCards.filter((card) => card.tcgplayerProductId && previous[getCardIdentity(card)]?.source !== "Manual");
 
 let dataUpdatedAt;
 try {
@@ -28,7 +31,7 @@ try {
 } catch (error) {
   await finish({ problem: `Couldn't reach TCGCSV: ${error.message}. Prices were left as they were.` });
 }
-if (!FORCE && payload.priceDataUpdatedAt === dataUpdatedAt) {
+if (!FORCE && payload.dataUpdatedAt === dataUpdatedAt) {
   await finish({ note: `TCGCSV hasn't changed since the last refresh (${dataUpdatedAt}). Nothing to do.` });
 }
 const priceDate = dataUpdatedAt.slice(0, 10).replaceAll("-", "/");
@@ -44,37 +47,38 @@ for (const groupId of new Set(cards.map((card) => card.tcgplayerGroupId))) {
   }
 }
 
+// Rebuilt in catalog order, so the daily diff only shows prices that changed. Entries for cards that left
+// the catalog drop out; the curator's Manual prices carry over as they are.
+const next = {};
 const results = { changed: [], unchanged: [], noMarketPrice: [], failed: [], hidden: [] };
-for (const card of cards) {
+for (const card of allCards) {
+  const id = getCardIdentity(card);
+  const entry = previous[id];
+  if (!cards.includes(card)) {
+    if (entry) next[id] = entry;
+    continue;
+  }
   const label = `${card.name} (${card.setName} ${card.number})`;
   const prices = pricesByGroup.get(card.tcgplayerGroupId);
   const row = prices?.find((price) => price.productId === card.tcgplayerProductId && price.subTypeName === card.priceType);
   const market = Number.isFinite(row?.marketPrice) ? row.marketPrice : null;
   if (market !== null) {
-    results[card.priceMarket === market ? "unchanged" : "changed"].push(label);
-    card.priceMarket = market;
-    card.priceSource = "TCGplayer";
-    card.priceUpdatedAt = priceDate;
+    results[entry?.market === market ? "unchanged" : "changed"].push(label);
+    next[id] = { market, source: "TCGplayer", updatedAt: priceDate };
     continue;
   }
   results[prices ? "noMarketPrice" : "failed"].push(label);
-  if (card.priceMarket !== undefined && daysBetween(card.priceUpdatedAt, priceDate) > STALE_AFTER_DAYS) {
-    delete card.priceMarket;
-    results.hidden.push(label);
-  }
+  if (!entry) continue;
+  if (daysBetween(entry.updatedAt, priceDate) > STALE_AFTER_DAYS) results.hidden.push(label);
+  else next[id] = entry;
 }
 
-payload.priceRefreshedAt = new Date().toISOString();
+payload.refreshedAt = new Date().toISOString();
 // Only remember TCGCSV's timestamp after a clean run, so a re-run retries the sets that failed.
-if (!failedGroups.length) payload.priceDataUpdatedAt = dataUpdatedAt;
+if (!failedGroups.length) payload.dataUpdatedAt = dataUpdatedAt;
+payload.prices = next;
 
-if (!DRY_RUN) {
-  await writeFile(CARDS_PATH, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
-  for (const script of SYNC_SCRIPTS) {
-    const sync = spawnSync(process.execPath, [script], { stdio: "inherit" });
-    if (sync.status !== 0) throw new Error(`${script} failed.`);
-  }
-}
+if (!DRY_RUN) await writeFile(PRICES_PATH, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 
 const failedShare = cards.length ? results.failed.length / cards.length : 0;
 await finish({

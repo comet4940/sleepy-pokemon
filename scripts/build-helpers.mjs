@@ -1,22 +1,25 @@
 // Shared helpers for the page generators (sync-seo-index.mjs, sync-guides.mjs, about-page.mjs).
 // Card page URLs come from slugify() and assignSlugs(), so every generator must use these copies.
 import { readFile } from "node:fs/promises";
+import { getCardIdentity } from "./card-identity.mjs";
 
 export const SITE_URL = "https://www.sleepypokemon.com";
 export const CARDS_PATH = "docs/published-cards.json";
 export const GUIDES_PATH = "docs/guides.json";
+export const PRICES_PATH = "docs/prices.json";
 
 // Cache-busting versions for every CSS and JS file. Bump a number here and run the generators;
 // generated pages and the hand-written homepage and collection page all pick it up.
 export const ASSET_VERSIONS = {
-  "styles.css": 5,
+  "styles.css": 6,
   "home-v3.css": 20,
   "filter-drawer.css": 1,
   "card-detail-v3.css": 6,
   "guides.css": 3,
   "about.css": 2,
-  "analytics.js": 4,
-  "app.js": 45,
+  "analytics.js": 5,
+  "prices.js": 1,
+  "app.js": 46,
 };
 
 export function assetUrl(root, file) {
@@ -37,6 +40,16 @@ export async function loadCardData() {
   const cards = Array.isArray(payload) ? payload : payload.cards;
   if (!Array.isArray(cards)) throw new Error(`${CARDS_PATH} does not contain a cards array.`);
   return { payload, cards: assignSlugs(cards) };
+}
+
+// Market prices by card identity, written by scripts/refresh-prices.mjs (see DATA-MODEL.md).
+export async function loadPrices() {
+  try {
+    return JSON.parse(await readFile(PRICES_PATH, "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return { prices: {} };
+    throw error;
+  }
 }
 
 export async function loadGuideDefs() {
@@ -128,12 +141,9 @@ export function renderHead({
 }
 
 // One card in a guide or set page list. `linkAttributes(source)` returns the data-* attributes for the
-// image and title links (lightbox card ID plus analytics); `text` is the note shown under the card;
-// `pricesAsOf` is the catalog's priceRefreshedAt (see noPriceLabel).
-export function renderCardEntry({ card, index, text, linkAttributes, pricesAsOf }) {
+// image and title links (lightbox card ID plus analytics); `text` is the note shown under the card.
+export function renderCardEntry({ card, index, text, linkAttributes }) {
   const image = card.imageSmall || card.imageLarge;
-  const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? noPriceLabel(card, pricesAsOf) : formatCurrency(price);
   const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
   const cardUrl = `../../cards/${card.slug}/`;
   return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
@@ -144,25 +154,16 @@ export function renderCardEntry({ card, index, text, linkAttributes, pricesAsOf 
               <p class="eyebrow">#${index + 1} / ${escapeHtml(details || "Sleepy Pokemon card")}</p>
               <h2><a href="${escapeAttribute(cardUrl)}" ${linkAttributes("title")}>${escapeHtml(card.name)}</a></h2>
               <p class="card-subtitle">${escapeHtml([card.pokemon, card.language, card.artist || "Unknown artist"].filter(Boolean).join(" / "))}</p>
-              <div class="price-pill guide-card-price">${escapeHtml(priceLabel)}</div>
+              ${renderPriceSlot(card, "pill", "price-pill guide-card-price")}
               <p>${escapeHtml(text)}</p>
             </div>
           </article>`;
 }
 
-// What to show instead of a price. Cards from a recent set usually have no TCGplayer sales yet. `asOf` is the
-// catalog's priceRefreshedAt rather than today, so the generated pages only change when the data does.
-// docs/app.js has the same rule for the lightbox.
-export function noPriceLabel(card, asOf) {
-  const released = new Date(normalizeDate(card.setReleaseDate));
-  const daysSinceRelease = (new Date(asOf) - released) / 86400000;
-  return daysSinceRelease >= 0 && daysSinceRelease <= NEW_SET_DAYS ? "New set, price coming soon" : "No current market price";
-}
-const NEW_SET_DAYS = 90;
-
-// Where a price came from, for the "market · ... · as of" line.
-export function priceCredit(card) {
-  return card.priceSource === "TCGplayer" ? "TCGplayer via TCGCSV" : card.priceSource || "TCGplayer";
+// An empty slot that docs/prices.js fills from prices.json in the browser: "row" for the card page's
+// price line, "pill" for guide and set page cards. Pages that use one must load prices.js.
+export function renderPriceSlot(card, style, className) {
+  return `<div class="${className}" ${dataAttributes({ "price-for": getCardIdentity(card), "price-style": style, "set-release": card.setReleaseDate || "" })}></div>`;
 }
 
 // Data attributes from a { name: value } map, escaped: data-name="value" ...

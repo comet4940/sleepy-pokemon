@@ -39,7 +39,7 @@ const guides = guideDefs
 const setHubs = getSetHubs(cardsWithSlugs, await loadSetDefs());
 
 await writeGuidePages(guides);
-await writeSetPages(setHubs, guideData.priceRefreshedAt);
+await writeSetPages(setHubs);
 await mkdir(ABOUT_DIR, { recursive: true });
 await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
 // The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
@@ -105,7 +105,6 @@ ${guideItems}
 // The only sitemap writer: it lists every generated page.
 async function writeSitemap(cardList, guideList, hubs) {
   const homepageLastmod = getNewestDate([
-    guideData.priceRefreshedAt,
     guideData.exportedAt,
     ...cardList.map((card) => getCardLastmod(card, guideData.exportedAt)),
   ]);
@@ -247,6 +246,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="${assetUrl("../../", "prices.js")}"></script>
     <script src="${assetUrl("../../", "app.js")}"></script>
   </body>
 </html>
@@ -260,7 +260,6 @@ function renderGuideCard(entry, index, guideSlug) {
     index,
     text: entry.reason || entry.card.whyItBelongs,
     linkAttributes: (part) => guideCardLinkAttributes(entry.card, guideSlug, `guide_card_${part}`),
-    pricesAsOf: guideData.priceRefreshedAt,
   });
 }
 
@@ -277,7 +276,6 @@ function guideCardLinkAttributes(card, guideSlug, source) {
     "analytics-card-number": card.number || "",
     "analytics-card-rarity": card.rarity || "",
     "analytics-card-language": card.language || "",
-    "analytics-price-market": card.priceMarket ?? "",
   };
   return dataAttributes(attributes);
 }

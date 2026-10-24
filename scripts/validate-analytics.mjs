@@ -4,7 +4,7 @@ import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { MOODS } from "./moods.mjs";
-import { slugify } from "./build-helpers.mjs";
+import { ASSET_VERSIONS, slugify } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -15,6 +15,7 @@ const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
 checkCardMoods();
 await checkSetIntros();
 await checkCardFields();
+await checkPrices();
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -52,7 +53,11 @@ for (const path of htmlFiles) {
   const pageType = html.match(/data-page-type="([^"]+)"/)?.[1];
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
-  if (!/analytics\.js\?v=4/.test(html)) errors.push(`${label}: analytics script is not versioned at v4`);
+  if (!html.includes(`analytics.js?v=${ASSET_VERSIONS["analytics.js"]}`)) errors.push(`${label}: analytics script is not versioned at v${ASSET_VERSIONS["analytics.js"]}`);
+  // Price slots stay empty unless prices.js fills them, and each must name a published card.
+  const priceSlots = [...html.matchAll(/data-price-for="([^"]*)"/g)].map(([, id]) => id.replaceAll("&amp;", "&").replaceAll("&#39;", "'").replaceAll("&quot;", '"'));
+  if (priceSlots.length && !html.includes("prices.js?v=")) errors.push(`${label}: has price slots but doesn't load prices.js`);
+  for (const id of priceSlots) if (!catalogIdentities.has(id)) errors.push(`${label}: price slot for unknown card ${id}`);
   if (!/data-analytics-event="navigation_clicked"[^>]+data-analytics-source="global_header"/.test(html)) {
     errors.push(`${label}: shared header navigation tracking is missing`);
   }
@@ -135,7 +140,7 @@ async function loadPublishedCards() {
 
 // Moods come from the fixed list in scripts/moods.mjs; retired curation fields stay retired.
 function checkCardMoods() {
-  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue", "priceLow", "priceMid", "priceHigh"];
+  const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue", "priceLow", "priceMid", "priceHigh", "priceMarket", "priceSource", "priceUpdatedAt"];
   for (const card of publishedCards) {
     const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
     if (!Array.isArray(card.moods)) {
@@ -154,13 +159,30 @@ function checkCardMoods() {
       if (field in card && !(Number.isInteger(card[field]) && card[field] > 0)) errors.push(`${label} has ${field} ${card[field]}, which is not a TCGplayer ID`);
     }
     if (("tcgplayerProductId" in card) !== ("tcgplayerGroupId" in card)) errors.push(`${label} needs both tcgplayerProductId and tcgplayerGroupId`);
-    if (card.priceSource && !["TCGplayer", "Manual"].includes(card.priceSource)) errors.push(`${label} has priceSource "${card.priceSource}" (use TCGplayer or Manual)`);
     if (card.tcgplayerProductId && !card.priceType) errors.push(`${label} has a TCGplayer product but no priceType (printing) to price`);
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
     }
+  }
+}
+
+// docs/prices.json holds one entry per priced card, keyed by card identity (see DATA-MODEL.md).
+async function checkPrices() {
+  let payload;
+  try {
+    payload = JSON.parse(await readFile(join(DOCS_DIR, "prices.json"), "utf8"));
+  } catch (error) {
+    errors.push(`docs/prices.json: ${error.message}`);
+    return;
+  }
+  for (const [id, entry] of Object.entries(payload.prices || {})) {
+    const label = `docs/prices.json: ${id}`;
+    if (!catalogIdentities.has(id)) errors.push(`${label} matches no published card (renamed? move its price to the new identity)`);
+    if (!(Number.isFinite(entry.market) && entry.market >= 0)) errors.push(`${label} has market ${entry.market}, which is not a price`);
+    if (!["TCGplayer", "Manual"].includes(entry.source)) errors.push(`${label} has source "${entry.source}" (use TCGplayer or Manual)`);
+    if (!/^\d{4}\/\d{2}\/\d{2}$/.test(entry.updatedAt || "")) errors.push(`${label} has updatedAt "${entry.updatedAt}" (use YYYY/MM/DD)`);
   }
 }
 

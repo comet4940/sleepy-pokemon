@@ -10,8 +10,6 @@ Every card on the site comes from one file: `docs/published-cards.json`. The gen
 {
   "version": 1,
   "exportedAt": "2026-10-22T17:19:29.763Z",
-  "priceRefreshedAt": "2026-10-24T21:35:10.612Z",
-  "priceDataUpdatedAt": "2026-10-24T20:06:07.000Z",
   "cards": [ { ...card }, ... ]
 }
 ```
@@ -20,8 +18,6 @@ Every card on the site comes from one file: `docs/published-cards.json`. The gen
 | --- | --- |
 | `version` | File format version. Currently `1` |
 | `exportedAt` | When the card list was last exported. Informational |
-| `priceRefreshedAt` | Set by `scripts/refresh-prices.mjs` after each price refresh. Also the reference date for "New set, price coming soon" on generated pages |
-| `priceDataUpdatedAt` | TCGCSV's `last-updated.txt` timestamp from the last clean refresh. The refresh skips the day when it hasn't changed |
 | `cards` | The card list. New cards go at the top |
 
 The file is written with 2-space indentation, unescaped Unicode and a trailing newline. Keep that formatting so diffs stay small.
@@ -52,13 +48,10 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `apiId` | No | pokemontcg.io card ID. Part of the card's identity (`scripts/card-identity.mjs`); no longer used for prices | `smp-SM41` |
 | `tcgdexId` | No | TCGdex card ID, for cards pokemontcg.io doesn't have | `sv09-120` |
 | `scrydexId` | No | Scrydex card ID, for cards only Scrydex lists | `me55-131` |
-| `tcgplayerProductId` | No | TCGplayer product ID, found once with `scripts/match-tcgplayer.mjs`. Links the card to the price refresh | `690478` |
+| `tcgplayerProductId` | No | TCGplayer product ID, found once with `scripts/match-tcgplayer.mjs`. Links the card to the price refresh (see [Prices](#prices)) | `690478` |
 | `tcgplayerGroupId` | No | TCGplayer set (group) ID of that product. The refresh downloads one price file per group | `24722` |
 | `slug` | No | Pinned card page URL segment. Leave it out for new cards; set it when renaming (see [Rules](#rules)) | `komala-sun-and-moon-black-star-promos-sm41` |
-| `priceMarket` | No | TCGplayer's market price in USD (based on recent sales; a lone listing's asking price never counts). Written by the price refresh, never by hand (except `priceSource: Manual`). Removed when it hasn't been confirmed for 30 days. The only price shown and used for price filters and sorting | `80.68` |
-| `priceType` | No | Which printing we track, in TCGplayer's words. Set by the matcher; change it if you own a different printing | `Normal`, `Holofoil`, `Reverse Holofoil`, `1st Edition`, `Unlimited` |
-| `priceSource` | No | Where the price came from | `TCGplayer`, `Manual` |
-| `priceUpdatedAt` | No | Date the price was last confirmed, `YYYY/MM/DD` | `2026/10/23` |
+| `priceType` | No | Which printing we price, in TCGplayer's words. Set by the matcher; change it if you own a different printing | `Normal`, `Holofoil`, `Reverse Holofoil`, `1st Edition`, `Unlimited` |
 | `createdAt` | Yes | When the card was added, ISO 8601. Drives "Freshly tucked in" on the homepage | `2026-10-23T18:00:00.000Z` |
 | `updatedAt` | Yes | When the card's data last changed, ISO 8601 | `2026-10-23T18:30:00.000Z` |
 
@@ -68,7 +61,8 @@ The validator rejects any card that still has these:
 
 - `sleepinessBasis`, `sleepLocation`, `sleepiness`: retired in #132; moods and `whyItBelongs` cover them.
 - `priority`: retired in #144. It only fed the Curated sort, which was removed in #140.
-- `priceLow`, `priceMid`, `priceHigh`: retired in #144. Never shown; `priceMarket` already falls back to mid or low.
+- `priceLow`, `priceMid`, `priceHigh`: retired in #144. Never shown.
+- `priceMarket`, `priceSource`, `priceUpdatedAt`: moved to `docs/prices.json` in #152 (see [Prices](#prices)), so the daily refresh changes one file instead of every page that shows a price.
 - `suggestionIssue`: retired in #144. Record the suggestion in `notes` instead (e.g. "Suggested in GitHub issue #49.").
 
 ## Rules
@@ -77,8 +71,36 @@ The validator rejects any card that still has these:
 - **One name per set.** A set has a single `setName` across all its cards: no colour or sheet suffixes like "(Blue)", and no two names for the same set. Duplicates show up as separate sets in the filter drawer.
 - **Vending Machine cards use their Pokédex number.** They don't print a set number, so `number` is the Pokédex number as PriceCharting lists it (Snorlax `143`, Abra `63`, Growlithe `58`).
 - **Images: hosted first.** Prefer a card API image (pokemontcg.io, TCGdex, Scrydex) or another stable host with `imageSource` credit. Store a file in `docs/assets/cards/` only when there's no hosted image or the local scan is clearly better. Name local files after the card, e.g. `growlithe-vending-machine-series-3-58.jpg`.
-- **Prices come from the refresh.** Once a day, `scripts/refresh-prices.mjs` (run by `refresh-prices.yml` at 21:33 UTC) reads TCGplayer market prices from [TCGCSV](https://tcgcsv.com) and updates `priceMarket`, `priceSource` and `priceUpdatedAt` for every card with a `tcgplayerProductId`, using the printing in `priceType`. It follows TCGCSV's [usage guidelines](https://tcgcsv.com/docs#usage-guidelines): it checks `last-updated.txt` first, makes one request per set, identifies itself and pauses between requests. When a set can't be fetched or a card has no market price, the card keeps its last price; after 30 days without confirmation the price is removed. Don't edit prices by hand: set `priceSource: Manual` on a card the refresh should leave alone. Cards without a `tcgplayerProductId` (non-English cards today) have no price.
+- **Prices come from the refresh**, into `docs/prices.json`. See [Prices](#prices).
 - **Moods are a fixed list.** Add a new mood to `scripts/moods.mjs` before using it. A mood is only tagged when it truly shows in the art.
+
+## Prices
+
+Market prices live in their own file, `docs/prices.json`, not in the cards or the pages:
+
+```json
+{
+  "refreshedAt": "2026-10-24T21:35:10.612Z",
+  "dataUpdatedAt": "2026-10-24T20:06:07.000Z",
+  "prices": {
+    "sm10-158::English::Unbroken Bonds::158/214::Snorlax": { "market": 83.33, "source": "TCGplayer", "updatedAt": "2026/10/24" }
+  }
+}
+```
+
+| Key | Meaning |
+| --- | --- |
+| `refreshedAt` | When the refresh last ran |
+| `dataUpdatedAt` | TCGCSV's `last-updated.txt` timestamp from the last clean refresh. The refresh skips the day when it hasn't changed |
+| `prices` | One entry per priced card, keyed by its card identity (`scripts/card-identity.mjs`: `apiId`, `tcgdexId`, language, set, number and name joined with `::`) |
+| `market` | Market price in USD. For `TCGplayer` it's TCGplayer's market price, based on recent sales; a lone listing's asking price never counts |
+| `source` | `TCGplayer` (written by the refresh) or `Manual` (the curator's estimate, for cards TCGplayer doesn't sell) |
+| `updatedAt` | When the price was last confirmed, `YYYY/MM/DD` |
+
+- **The refresh writes it.** Once a day, `scripts/refresh-prices.mjs` (run by `refresh-prices.yml` at 21:33 UTC) reads TCGplayer market prices from [TCGCSV](https://tcgcsv.com) for every card with a `tcgplayerProductId`, using the printing in `priceType`. It follows TCGCSV's [usage guidelines](https://tcgcsv.com/docs#usage-guidelines): it checks `last-updated.txt` first, makes one request per set, identifies itself and pauses between requests. When a set can't be fetched or a card has no market price, the card keeps its last price; after 30 days without confirmation the price is removed.
+- **Pages fill prices in the browser.** Card, guide and set pages carry an empty `data-price-for` slot that `docs/prices.js` fills; the lightbox, price filters and price sorting read the same file. A refresh regenerates no pages.
+- **Manual prices.** For a card TCGplayer doesn't sell, add an entry with `"source": "Manual"` and today's date. The refresh leaves it alone; re-check it every few months. The site shows it as the curator's estimate.
+- **Renaming a card changes its identity.** The refresh moves TCGplayer prices to the new key on its next run; move a `Manual` entry by hand (the validator flags entries that match no card).
 
 ## Adding a card
 

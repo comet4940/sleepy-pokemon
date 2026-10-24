@@ -112,7 +112,6 @@ function bindDeclarativeEvents() {
       card_number: target.dataset.analyticsCardNumber,
       card_rarity: target.dataset.analyticsCardRarity,
       card_language: target.dataset.analyticsCardLanguage,
-      price_market: target.dataset.analyticsPriceMarket,
       guide_slug: target.dataset.analyticsGuideSlug,
       guide_title: target.dataset.analyticsGuideTitle,
     });
