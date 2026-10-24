@@ -17,6 +17,7 @@ await checkSetIntros();
 await checkCardFields();
 await checkPrices();
 await checkFeatured();
+checkCardPageSlugs();
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -169,6 +170,17 @@ function checkCardMoods() {
   }
 }
 
+// The lightbox loads cards/<slug>/ and works the slug out in the browser (docs/app.js normalizeCard) as the pinned
+// slug or the name, set and number. A slug the generator had to de-duplicate ("-2") would be out of its reach,
+// so two cards that would share one must pin distinct slugs.
+function checkCardPageSlugs() {
+  assignSlugs(publishedCards).forEach((card, index) => {
+    const raw = publishedCards[index];
+    const expected = raw.slug || slugify([raw.name, raw.setName, raw.number].filter(Boolean).join(" "));
+    if (card.slug !== expected) errors.push(`docs/published-cards.json: ${raw.name} (${raw.setName} ${raw.number}) shares its page address with another card; give one of them a distinct slug`);
+  });
+}
+
 // docs/featured.json lists the curator's featured-sleeper batches by card slug (see DATA-MODEL.md).
 async function checkFeatured() {
   let featured;
@@ -301,6 +313,10 @@ function checkAppCardIdentity(appSource) {
   if (mismatches.length) {
     errors.push(`docs/app.js: card identity differs from scripts/card-identity.mjs for ${mismatches.length} card(s), e.g. ${getCardIdentity(mismatches[0])}`);
   }
+  // The lightbox loads cards/<slug>/, so app.js must land on the same page address as the generators.
+  const pages = assignSlugs(publishedCards);
+  const wrongPage = publishedCards.filter((card, index) => app.context.normalizeCard(card).slug !== pages[index].slug);
+  if (wrongPage.length) errors.push(`docs/app.js: works out a different card page address for ${wrongPage.length} card(s), e.g. ${pages[publishedCards.indexOf(wrongPage[0])].slug}`);
 }
 
 // Downloads each checklist scope through app.js and checks the CSV it writes,

@@ -48,9 +48,6 @@ export async function writeSetPages(hubs) {
   await rm(SETS_DIR, { recursive: true, force: true });
   await mkdir(SETS_DIR, { recursive: true });
   await writeFile(`${SETS_DIR}/index.html`, renderSetsIndex(hubs), "utf8");
-  // Lets the card lightbox on any page link a card to its set page ("It's one of N sleepy cards from ...").
-  const setPages = hubs.map((hub) => ({ name: hub.name, slug: hub.slug, count: hub.cards.length }));
-  await writeFile(`${SETS_DIR}/index.json`, `${JSON.stringify({ sets: setPages }, null, 2)}\n`, "utf8");
   await Promise.all(hubs.map(async (hub) => {
     const dir = `${SETS_DIR}/${hub.slug}`;
     await mkdir(dir, { recursive: true });
@@ -167,7 +164,7 @@ ${renderHead({
   stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css"],
 })}
   </head>
-  <body data-app-mode="set-page" data-guide-path="cards.json" data-guides-path="../../guides.json" data-site-root="../../">
+  <body data-app-mode="set-page" data-guide-path="cards.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
       ${renderSiteHeader("../../")}
 
