@@ -2,6 +2,11 @@
   "refreshedAt": "2026-10-24T14:47:22.426Z",
   "dataUpdatedAt": "2026-10-23T20:06:07.000Z",
   "prices": {
+    "Japanese::Vending Machine Series 3::58::Growlithe": {
+      "market": 137.5,
+      "source": "Manual",
+      "updatedAt": "2026/10/23"
+    },
     "sm10-158::English::Unbroken Bonds::158/214::Snorlax": {
       "market": 83.33,
       "source": "TCGplayer",
@@ -97,6 +102,16 @@
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
     },
+    "Japanese::Expansion Pack::043::Abra": {
+      "market": 1.19,
+      "source": "Manual",
+      "updatedAt": "2026/10/23"
+    },
+    "Japanese::Vending Machine Series 1::63::Abra": {
+      "market": 62.59,
+      "source": "Manual",
+      "updatedAt": "2026/10/23"
+    },
     "base5-49::English::Team Rocket::49/82::Abra": {
       "market": 0.82,
       "source": "TCGplayer",
@@ -105,6 +120,11 @@
     "gym2-93::English::Gym Challenge::93/132::Sabrina's Abra": {
       "market": 6.2,
       "source": "TCGplayer",
+      "updatedAt": "2026/10/23"
+    },
+    "Japanese::Challenge from the Darkness::63/98::Sabrina's Abra": {
+      "market": 1.21,
+      "source": "Manual",
       "updatedAt": "2026/10/23"
     },
     "neo4-84::English::Neo Destiny::84/105::Swinub": {
@@ -392,6 +412,11 @@
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
     },
+    "Simplified Chinese::Gem Pack Volume 2::06 15/15::Umbreon": {
+      "market": 184.82,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
+    },
     "neo4-26::English::Neo Destiny::26/105::Light Piloswine": {
       "market": 42.21,
       "source": "TCGplayer",
@@ -602,6 +627,11 @@
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
     },
+    "Simplified Chinese::Gem Pack Vol. 3::04 07/07::Cubone": {
+      "market": 203.55,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
+    },
     "me2-104::English::Phantasmal Flames::104/94::Togedemaru": {
       "market": 1.98,
       "source": "TCGplayer",
@@ -777,6 +807,11 @@
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
     },
+    "vs1_jp-018::Japanese::Pokémon VS::018/141::Whitney's Furret": {
+      "market": 65.63,
+      "source": "Manual",
+      "updatedAt": "2026/10/23"
+    },
     "me04-053::English::Chaos Rising::053/086::Stunky": {
       "market": 0.05,
       "source": "TCGplayer",
@@ -896,6 +931,11 @@
       "market": 0.11,
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
+    },
+    "151C2-171::Simplified Chinese::Collect 151: Hope::171/151::Pikachu": {
+      "market": 610.0,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
     },
     "me55-152::English::ME: 30th Celebration::152/128::Mew ex": {
       "market": 86.56,
