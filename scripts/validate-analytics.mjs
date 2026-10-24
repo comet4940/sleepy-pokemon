@@ -4,7 +4,7 @@ import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { MOODS } from "./moods.mjs";
-import { ASSET_VERSIONS, slugify } from "./build-helpers.mjs";
+import { ASSET_VERSIONS, assignSlugs, slugify } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -16,6 +16,7 @@ checkCardMoods();
 await checkSetIntros();
 await checkCardFields();
 await checkPrices();
+await checkFeatured();
 const legacyEvents = [
   "search_used",
   "header_search_submitted",
@@ -165,6 +166,31 @@ function checkCardMoods() {
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
     }
+  }
+}
+
+// docs/featured.json lists the curator's featured-sleeper batches by card slug (see DATA-MODEL.md).
+async function checkFeatured() {
+  let featured;
+  try {
+    featured = JSON.parse(await readFile(join(DOCS_DIR, "featured.json"), "utf8"));
+  } catch (error) {
+    errors.push(`docs/featured.json: ${error.message}`);
+    return;
+  }
+  const slugs = new Set(assignSlugs(publishedCards).map((card) => card.slug));
+  const check = (slug, where) => {
+    if (!slugs.has(slug)) errors.push(`docs/featured.json: ${where} "${slug}" is not a published card's slug`);
+  };
+  check(featured.showing, "showing");
+  for (const [name, batch] of [["current", featured.current], ["upcoming", featured.upcoming]]) {
+    if (!batch) continue;
+    if (!Array.isArray(batch.cards) || !batch.cards.length) errors.push(`docs/featured.json: ${name} needs a non-empty cards list`);
+    (batch.cards || []).forEach((slug, index) => check(slug, `${name} card ${index + 1}`));
+  }
+  const startsOn = featured.current?.startsOn || "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(startsOn) || new Date(`${startsOn}T00:00:00Z`).getUTCDay() !== 0) {
+    errors.push(`docs/featured.json: current.startsOn "${startsOn}" must be a Sunday (YYYY-MM-DD)`);
   }
 }
 

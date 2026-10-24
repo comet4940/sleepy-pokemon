@@ -17,8 +17,10 @@ import {
   syncAssetVersions,
 } from "./build-helpers.mjs";
 import { getSetHubs, loadSetDefs } from "./set-pages.mjs";
+import { getCardIdentity } from "./card-identity.mjs";
 
 const INDEX_PATH = "docs/index.html";
+const FEATURED_PATH = "docs/featured.json";
 const COLLECTION_PATH = "docs/collection/index.html";
 const CARDS_DIR = "docs/cards";
 const START = "<!-- SEO_CARD_INDEX_START -->";
@@ -60,10 +62,26 @@ async function syncHomepage() {
     `      <!-- SITE_HEADER_START -->\n${renderSiteHeader()}\n      <!-- SITE_HEADER_END -->`,
   );
   html = syncAssetVersions(syncSiteFooter(html));
+  html = html.replace(
+    /            <!-- FEATURED_START -->[\s\S]*?            <!-- FEATURED_END -->/,
+    `            <!-- FEATURED_START -->\n${await renderFeaturedCard()}\n            <!-- FEATURED_END -->`,
+  );
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`\\s*${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), "");
   }
   await writeFile(INDEX_PATH, html, "utf8");
+}
+
+// The homepage's "Featured sleeper": the card scripts/rotate-featured.mjs picked for this week. It links to the
+// card page and opens the lightbox on the homepage (card_opened, interaction_source homepage_featured).
+async function renderFeaturedCard() {
+  const { showing } = JSON.parse(await readFile(FEATURED_PATH, "utf8"));
+  const card = cardsWithSlugs.find((item) => item.slug === showing);
+  if (!card) throw new Error(`${FEATURED_PATH}: showing ${showing} is not a published card.`);
+  return `            <a class="hero-card" href="cards/${escapeAttribute(card.slug)}/" data-card-id="${escapeAttribute(getCardIdentity(card))}" data-lightbox-source="homepage_featured" aria-label="Open ${escapeAttribute(card.name)}, this week's featured sleeper">
+              <img src="${escapeAttribute(card.imageLarge || card.imageSmall)}" alt="${escapeAttribute(buildImageAlt(card))}" />
+              <div class="hero-card-meta"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml([card.setName, card.number].filter(Boolean).join(" · "))}</span></div>
+            </a>`;
 }
 
 async function syncCollectionIndex(cardList) {

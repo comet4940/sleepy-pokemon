@@ -1,0 +1,78 @@
+name: Rotate featured sleeper
+
+on:
+  schedule:
+    # Sunday night Pacific, so the week starts with a fresh card: 05:00 UTC Monday is 9 PM PST / 10 PM PDT.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  rotate-featured:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Pick this week's card
+        id: rotate
+        run: node scripts/rotate-featured.mjs
+
+      - name: Update the homepage
+        run: node scripts/sync-seo-index.mjs
+
+      - name: Commit the featured card
+        run: |
+          if [ -z "$(git status --porcelain -- docs)" ]; then
+            echo "Featured card unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git commit -m "Rotate featured sleeper"
+          git push
+
+      # One open reminder at a time: skipped while an earlier one is still open.
+      - name: Ask for the next batch
+        if: steps.rotate.outputs.needs_batch == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LAST_WEEK: ${{ steps.rotate.outputs.last_week }}
+        run: |
+          if [ -n "$(gh issue list --state open --search 'in:title "Featured sleepers: next batch"' --json number --jq '.[].number')" ]; then
+            echo "A reminder is already open."
+            exit 0
+          fi
+          gh issue create \
+            --title "Featured sleepers: next batch needed (current batch ends the week of $LAST_WEEK)" \
+            --body "The current batch of featured sleepers runs out the week of $LAST_WEEK. Reply with the next batch (about 12 cards, by name and set, in order) and they'll go into \`upcoming\` in \`docs/featured.json\`; they start the Sunday after the current batch ends. If nothing is queued, the homepage loops back to the first card of the current batch. See \"Featured sleeper\" in DATA-MODEL.md."
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "docs"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
