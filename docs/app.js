@@ -286,8 +286,14 @@ function bindEvents() {
   bind(elements.cardDetailDialog, "close", () => {
     if (window.history.state?.cardDetail) window.history.back();
   });
+  // Back closes the lightbox; Forward onto its entry reopens the card it showed.
   window.addEventListener("popstate", () => {
-    if (elements.cardDetailDialog?.open && !window.history.state?.cardDetail) elements.cardDetailDialog.close();
+    const cardId = window.history.state?.cardDetail;
+    if (elements.cardDetailDialog?.open && !cardId) elements.cardDetailDialog.close();
+    if (!elements.cardDetailDialog?.open && cardId) {
+      const card = findCardByIdentity(cardId);
+      if (card) openCardDetail(card, "browser_forward", { fromHistory: true });
+    }
   });
   // Coming back to a page that was reloaded rather than restored: its lightbox entry has nothing to close.
   if (window.history.state?.cardDetail && !elements.cardDetailDialog?.open) {
@@ -1226,7 +1232,8 @@ function getCardDiscoverySource(tile) {
   return elements.latestGrid?.contains(tile) ? "freshly_tucked_in" : "collection_grid";
 }
 
-function openCardDetail(card, interactionSource = "unknown") {
+// fromHistory: reopened by Forward onto the lightbox's own history entry, so there's no entry to add.
+function openCardDetail(card, interactionSource = "unknown", { fromHistory = false } = {}) {
   const image = card.imageLarge || card.imageSmall;
   elements.detailEyebrow.textContent = "Caught napping";
   elements.detailTitle.textContent = card.name;
@@ -1256,7 +1263,8 @@ function openCardDetail(card, interactionSource = "unknown") {
   if (!elements.cardDetailDialog.open) {
     elements.cardDetailDialog.showModal();
     // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
-    window.history.pushState({ ...window.history.state, cardDetail: true }, "");
+    // The card's identity lets Forward reopen it.
+    if (!fromHistory) window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
   }
   trackEvent("card_opened", {
     ...getCardAnalyticsParams(card),
