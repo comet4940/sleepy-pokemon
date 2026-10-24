@@ -51,7 +51,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `tcgplayerProductId` | No | TCGplayer product ID, found once with `scripts/match-tcgplayer.mjs`. Links the card to the price refresh (see [Prices](#prices)) | `690478` |
 | `tcgplayerGroupId` | No | TCGplayer set (group) ID of that product. The refresh downloads one price file per group | `24722` |
 | `slug` | No | Pinned card page URL segment. Leave it out for new cards; set it when renaming (see [Rules](#rules)) | `komala-sun-and-moon-black-star-promos-sm41` |
-| `priceType` | No | Which printing we price, in TCGplayer's words. Set by the matcher; change it if you own a different printing | `Normal`, `Holofoil`, `Reverse Holofoil`, `1st Edition`, `Unlimited` |
+| `priceType` | No | Which printing we price, in TCGplayer's words. Set by the matcher; see the printing rule in [Rules](#rules) | `Normal`, `Holofoil`, `Reverse Holofoil`, `1st Edition`, `Unlimited` |
 | `createdAt` | Yes | When the card was added, ISO 8601. Drives "Freshly tucked in" on the homepage | `2026-10-23T18:00:00.000Z` |
 | `updatedAt` | Yes | When the card's data last changed, ISO 8601 | `2026-10-23T18:30:00.000Z` |
 
@@ -69,6 +69,7 @@ The validator rejects any card that still has these:
 
 - **Card page URLs never change.** A card's page lives at `cards/<slug>/`, where the slug is built from name, set name and number. When a set name or number changes, set `slug` to the card's current URL segment so the page stays where it is (e.g. the Vending Abra in #141, Komala in #143).
 - **One name per set.** A set has a single `setName` across all its cards: no colour or sheet suffixes like "(Blue)", and no two names for the same set. Duplicates show up as separate sets in the filter drawer.
+- **Price the most accessible printing.** The site is a master list, not one binder, so `priceType` is the printing a collector can most easily find: the regular print (`Normal` or `Holofoil`), `Unlimited` over `1st Edition`, never a reverse holo, stamped or pattern variant unless that variant is the card.
 - **Vending Machine cards use their Pokédex number.** They don't print a set number, so `number` is the Pokédex number as PriceCharting lists it (Snorlax `143`, Abra `63`, Growlithe `58`).
 - **Images: hosted first.** Prefer a card API image (pokemontcg.io, TCGdex, Scrydex) or another stable host with `imageSource` credit. Store a file in `docs/assets/cards/` only when there's no hosted image or the local scan is clearly better. Name local files after the card, e.g. `growlithe-vending-machine-series-3-58.jpg`.
 - **Prices come from the refresh**, into `docs/prices.json`. See [Prices](#prices).
