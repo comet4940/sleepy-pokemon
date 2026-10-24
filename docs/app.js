@@ -1270,13 +1270,15 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
     card.artist ? metaLinkItem("Artist", card.artist, renderArtistHref(card.artist), "card_modal") : metaItem("Artist", "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
-  if (elements.detailScroll) elements.detailScroll.scrollTop = 0;
   if (!elements.cardDetailDialog.open) {
     elements.cardDetailDialog.showModal();
     // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
     // The card's identity lets Forward reopen it.
     if (!fromHistory) window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
   }
+  // Start each card at the top. Only once the lightbox is showing: Safari keeps a hidden element's scroll position
+  // and ignores a reset made while it's closed.
+  if (elements.detailScroll) elements.detailScroll.scrollTop = 0;
   trackEvent("card_opened", {
     ...getCardAnalyticsParams(card),
     interaction_source: interactionSource,
