@@ -16,7 +16,7 @@ export const ASSET_VERSIONS = {
   "guides.css": 3,
   "about.css": 2,
   "analytics.js": 4,
-  "app.js": 43,
+  "app.js": 44,
 };
 
 export function assetUrl(root, file) {

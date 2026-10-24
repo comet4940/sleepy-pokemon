@@ -48,6 +48,9 @@ export async function writeSetPages(hubs) {
   await rm(SETS_DIR, { recursive: true, force: true });
   await mkdir(SETS_DIR, { recursive: true });
   await writeFile(`${SETS_DIR}/index.html`, renderSetsIndex(hubs), "utf8");
+  // Lets the card lightbox on any page link a card to its set page ("It's one of N sleepy cards from ...").
+  const setPages = hubs.map((hub) => ({ name: hub.name, slug: hub.slug, count: hub.cards.length }));
+  await writeFile(`${SETS_DIR}/index.json`, `${JSON.stringify({ sets: setPages }, null, 2)}\n`, "utf8");
   await Promise.all(hubs.map(async (hub) => {
     const dir = `${SETS_DIR}/${hub.slug}`;
     await mkdir(dir, { recursive: true });
@@ -55,6 +58,10 @@ export async function writeSetPages(hubs) {
     // The lightbox only needs this set's cards, so the page loads this subset instead of the full catalog.
     await writeFile(`${dir}/cards.json`, `${JSON.stringify({ cards: hub.cards }, null, 2)}\n`, "utf8");
   }));
+}
+
+function firstSentence(text) {
+  return String(text || "").match(/^.*?[.!?](?=\s|$)/)?.[0] || String(text || "");
 }
 
 function describeHub(hub) {
@@ -171,9 +178,6 @@ ${renderHead({
             <p class="eyebrow">${escapeHtml(describeHub(hub))}</p>
             <h1 id="setTitle">Sleepy cards from ${escapeHtml(hub.name)}</h1>
             ${hub.intro ? `<p>${escapeHtml(hub.intro)}</p>` : ""}
-            <div class="guide-actions">
-              <a class="button subtle" href="../../collection/?set=${escapeAttribute(hub.slug)}" ${navigationAttributes("set_page", "collection")}>Explore ${escapeHtml(hub.name)} in the collection <span aria-hidden="true">→</span></a>
-            </div>
           </div>
           <div class="guide-hero-stack" aria-hidden="true">
 ${hub.cards.slice(0, 3).map((card, index) => {
@@ -187,7 +191,8 @@ ${hub.cards.slice(0, 3).map((card, index) => {
 ${hub.cards.map((card, index) => renderCardEntry({
   card,
   index,
-  text: card.whyItBelongs,
+  // The first sentence keeps the list scannable; the full note is one tap away in the lightbox.
+  text: firstSentence(card.whyItBelongs),
   // Tapping a card opens the lightbox, which tracks card_opened with interaction_source set_page.
   linkAttributes: () => dataAttributes({ "card-id": getCardIdentity(card), "lightbox-source": "set_page" }),
 })).join("\n")}

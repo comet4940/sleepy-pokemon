@@ -34,7 +34,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`), About page links (`about_page`), and set navigation: `sets_index` → `set_page`, `set_page` → `sets` (All sets) or `collection` (Explore in the collection), and `card_page` → `set_page` (the card page's field notes) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
+| `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`), About page links (`about_page`), and set navigation: `sets_index` → `set_page`, `set_page` → `sets` (All sets), and `card_page` / `card_modal` → `set_page` (the field notes on a card page or in the lightbox) | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills only) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) and set page cards (`set_page`) | card parameters, `interaction_source` |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |

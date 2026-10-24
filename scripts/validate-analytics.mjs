@@ -145,6 +145,11 @@ function checkCardMoods() {
     const unknown = card.moods.filter((mood) => !MOODS.includes(mood));
     if (unknown.length) errors.push(`${label} has unknown moods: ${unknown.join(", ")}`);
     if (new Set(card.moods).size !== card.moods.length) errors.push(`${label} lists a mood twice`);
+    // A form prefix ("Light", "Alolan") on its own is never the Pokémon. Owner names can't be checked this way:
+    // trainer cards like Bianca's Devotion rightly list the trainer.
+    if (/^(Light|Dark|Shining|Alolan|Galarian|Hisuian|Paldean)$/.test(card.pokemon)) {
+      errors.push(`${label} has pokemon "${card.pokemon}", which is a prefix of the name, not the Pokémon`);
+    }
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
