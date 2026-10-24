@@ -14,10 +14,10 @@
       "artist": "Kagemaru Himeno",
       "imageSmall": "https://images.pokemontcg.io/ecard3/89.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/89_hires.png",
-      "priceMarket": null,
-      "priceType": "",
-      "priceSource": "",
-      "priceUpdatedAt": "",
+      "priceMarket": 13.28,
+      "priceType": "normal",
+      "priceSource": "TCGPlayer",
+      "priceUpdatedAt": "2026/10/15",
       "setReleaseDate": "2003/05/12",
       "notes": "A pair of Raticate rest side by side in a softly lit, grassy hideaway.",
       "moods": [
@@ -26,7 +26,7 @@
       ],
       "whyItBelongs": "Two Raticate have curled up together in the grass, both with eyes closed as the warm light filters around them. Kagemaru Himeno makes this feel like a quiet family nap tucked away from the world.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-24T14:31:01.804Z",
       "slug": "raticate-skyridge-89-144"
     },
     {
