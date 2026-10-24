@@ -23,10 +23,12 @@
       "whyItBelongs": "Group nap tucked into a pastel canopy bed. Pikachu and Eevee fast asleep under a floral quilt while Munna watches over their dreams make this budget common an absolute masterpiece of cozy cameos.",
       "createdAt": "2026-09-20T00:00:00.000Z",
       "updatedAt": "2026-10-15T15:38:46.981Z",
-      "priceMarket": 3.59,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceMarket": 3.43,
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
+      "tcgplayerProductId": 195020,
+      "tcgplayerGroupId": 2464,
       "slug": "munna-unified-minds-88-236"
     },
     {
@@ -43,10 +45,10 @@
       "artist": "Misa Tsutsui",
       "imageSmall": "https://images.pokemontcg.io/sm11/89.png",
       "imageLarge": "https://images.pokemontcg.io/sm11/89_hires.png",
-      "priceMarket": 0.27,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceMarket": 0.29,
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
       "setReleaseDate": "2019/08/02",
       "notes": "Musharna is curled up asleep among small flowers in a peaceful meadow.",
       "moods": [
@@ -55,6 +57,8 @@
       "whyItBelongs": "Musharna has tucked itself into a snug ball beneath its looping dream mist, surrounded by a few tiny flowers. Misa Tsutsui gives this meadow nap a wonderfully quiet, sheltered feeling.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:55.926Z",
+      "tcgplayerProductId": 195021,
+      "tcgplayerGroupId": 2464,
       "slug": "musharna-unified-minds-89-236"
     },
     {
@@ -79,10 +83,12 @@
       "whyItBelongs": "Dragonite is floating on its back high above a huge swirl of ocean and cloud, belly up, arms folded loosely and eyes shut with a small, peaceful smile. A green island sits far below, and little sparkles drift through the air around it. It looks like a Pokémon that has found the best spot in the sky, with nothing to do and nowhere to be, and is content to just drift.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:50.533Z",
-      "priceMarket": 8.33,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceMarket": 8.42,
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
+      "tcgplayerProductId": 195146,
+      "tcgplayerGroupId": 2464,
       "slug": "dragonite-unified-minds-151-236"
     },
     {
@@ -99,10 +105,10 @@
       "artist": "tetsuya koizumi",
       "imageSmall": "https://images.pokemontcg.io/sm11/168.png",
       "imageLarge": "https://images.pokemontcg.io/sm11/168_hires.png",
-      "priceMarket": 0.29,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceMarket": 0.3,
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
       "setReleaseDate": "2019/08/02",
       "notes": "Slakoth from Unified Minds 168/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by tetsuya koizumi, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-05T21:24:40.053Z",
@@ -112,6 +118,8 @@
         "Treetop Naps"
       ],
       "whyItBelongs": "Cozy nap in the woodland brush. The epitome of slacker energy, comfortably parked in the mossy shade between yawns.",
+      "tcgplayerProductId": 195168,
+      "tcgplayerGroupId": 2464,
       "slug": "slakoth-unified-minds-168-236"
     },
     {
@@ -128,10 +136,10 @@
       "artist": "Miki Tanaka",
       "imageSmall": "https://images.pokemontcg.io/sm11/185.png",
       "imageLarge": "https://images.pokemontcg.io/sm11/185_hires.png",
-      "priceMarket": 0.25,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceMarket": 0.23,
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
       "setReleaseDate": "2019/08/02",
       "notes": "Komala from Unified Minds 185/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-04T23:06:06.111Z",
@@ -141,6 +149,8 @@
         "Hug Buddy"
       ],
       "whyItBelongs": "Out cold in felt and clay. Miki Tanaka’s tactile style gives the perpetually comatose koala a delightfully sleepy meadow portrait.",
+      "tcgplayerProductId": 195215,
+      "tcgplayerGroupId": 2464,
       "slug": "komala-unified-minds-185-236"
     },
     {
@@ -158,9 +168,9 @@
       "imageSmall": "https://images.pokemontcg.io/sm11/207.png",
       "imageLarge": "https://images.pokemontcg.io/sm11/207_hires.png",
       "priceMarket": 0.37,
-      "priceType": "normal",
-      "priceSource": "TCGPlayer",
-      "priceUpdatedAt": "2026/10/15",
+      "priceType": "Normal",
+      "priceSource": "TCGplayer",
+      "priceUpdatedAt": "2026/10/23",
       "setReleaseDate": "2019/08/02",
       "notes": "Slumbering Forest from Unified Minds 207/236 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Ryo Ueda, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
       "createdAt": "2026-05-06T21:35:33.435Z",
@@ -170,6 +180,8 @@
         "Moonlit Naps"
       ],
       "whyItBelongs": "Cozy nap ambiance in a bioluminescent mushroom grove. The definitive sleep-themed stadium card to visually anchor and explain any snoozing collection.",
+      "tcgplayerProductId": 195264,
+      "tcgplayerGroupId": 2464,
       "slug": "slumbering-forest-unified-minds-207-236"
     }
   ]

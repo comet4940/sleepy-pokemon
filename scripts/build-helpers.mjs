@@ -16,7 +16,7 @@ export const ASSET_VERSIONS = {
   "guides.css": 3,
   "about.css": 2,
   "analytics.js": 4,
-  "app.js": 44,
+  "app.js": 45,
 };
 
 export function assetUrl(root, file) {
@@ -128,11 +128,12 @@ export function renderHead({
 }
 
 // One card in a guide or set page list. `linkAttributes(source)` returns the data-* attributes for the
-// image and title links (lightbox card ID plus analytics); `text` is the note shown under the card.
-export function renderCardEntry({ card, index, text, linkAttributes }) {
+// image and title links (lightbox card ID plus analytics); `text` is the note shown under the card;
+// `pricesAsOf` is the catalog's priceRefreshedAt (see noPriceLabel).
+export function renderCardEntry({ card, index, text, linkAttributes, pricesAsOf }) {
   const image = card.imageSmall || card.imageLarge;
   const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
+  const priceLabel = price === null ? noPriceLabel(card, pricesAsOf) : formatCurrency(price);
   const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
   const cardUrl = `../../cards/${card.slug}/`;
   return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
@@ -149,6 +150,21 @@ export function renderCardEntry({ card, index, text, linkAttributes }) {
           </article>`;
 }
 
+// What to show instead of a price. Cards from a recent set usually have no TCGplayer sales yet. `asOf` is the
+// catalog's priceRefreshedAt rather than today, so the generated pages only change when the data does.
+// docs/app.js has the same rule for the lightbox.
+export function noPriceLabel(card, asOf) {
+  const released = new Date(normalizeDate(card.setReleaseDate));
+  const daysSinceRelease = (new Date(asOf) - released) / 86400000;
+  return daysSinceRelease >= 0 && daysSinceRelease <= NEW_SET_DAYS ? "New set, price coming soon" : "No current market price";
+}
+const NEW_SET_DAYS = 90;
+
+// Where a price came from, for the "market · ... · as of" line.
+export function priceCredit(card) {
+  return card.priceSource === "TCGplayer" ? "TCGplayer via TCGCSV" : card.priceSource || "TCGplayer";
+}
+
 // Data attributes from a { name: value } map, escaped: data-name="value" ...
 export function dataAttributes(attributes) {
   return Object.entries(attributes).map(([name, value]) => `data-${name}="${escapeAttribute(value ?? "")}"`).join(" ");
@@ -160,9 +176,10 @@ export function buildImageAlt(card) {
   return `${cardName} sleepy Pokemon card${setPart}`.replace(/\s+/g, " ").trim();
 }
 
-// Sitemap lastmod for a card: its newest change, falling back to when the card list was exported.
+// Sitemap lastmod for a card: its newest curation change, falling back to when the card list was exported.
+// Daily price updates don't count; prices aren't what the pages are about.
 export function getCardLastmod(card, exportedAt) {
-  return getNewestDate([card.updatedAt, card.priceUpdatedAt, card.createdAt, exportedAt]);
+  return getNewestDate([card.updatedAt, card.createdAt, exportedAt]);
 }
 
 export function getNewestDate(values) {

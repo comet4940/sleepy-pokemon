@@ -9,6 +9,8 @@ import {
   escapeRegExp,
   formatCurrency,
   loadCardData,
+  noPriceLabel,
+  priceCredit,
   loadGuideDefs,
   normalizeDate,
   numericOrNull,
@@ -24,7 +26,7 @@ const CARDS_DIR = "docs/cards";
 const START = "<!-- SEO_CARD_INDEX_START -->";
 const END = "<!-- SEO_CARD_INDEX_END -->";
 
-const { cards: cardsWithSlugs } = await loadCardData();
+const { payload: cardData, cards: cardsWithSlugs } = await loadCardData();
 const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
 const setHubByName = new Map(getSetHubs(cardsWithSlugs, await loadSetDefs()).map((hub) => [hub.name, hub]));
@@ -112,7 +114,7 @@ function renderCardPage(card, memberships) {
   const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
   const image = card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
   const price = numericOrNull(card.priceMarket);
-  const priceLabel = price === null ? "No current market price" : formatCurrency(price);
+  const priceLabel = price === null ? noPriceLabel(card, cardData.priceRefreshedAt) : formatCurrency(price);
   const release = formatDate(card.setReleaseDate) || "Unknown";
   const jsonLd = {
     "@context": "https://schema.org",
@@ -172,8 +174,8 @@ ${renderHead({
             <p class="card-subtitle">${escapeHtml([card.setName, card.number, card.rarity].filter(Boolean).join(" · "))}</p>
             <div class="detail-price-row">
               ${price === null
-                ? `<span class="detail-no-price">No current market price</span>`
-                : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
+                ? `<span class="detail-no-price">${escapeHtml(priceLabel)}</span>`
+                : `<strong>${escapeHtml(priceLabel)}</strong><span>market · ${escapeHtml(priceCredit(card))}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`}
             </div>
             <div class="curation-note">
               <strong>Why it belongs.</strong>${renderCurationNoteBody(card.whyItBelongs || "A curator's note is coming soon.")}

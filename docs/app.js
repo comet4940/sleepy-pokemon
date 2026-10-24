@@ -1205,8 +1205,8 @@ function openCardDetail(card, interactionSource = "unknown") {
     ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
     : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
   elements.detailPriceRow.innerHTML = price
-    ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(card.priceSource || "TCGPlayer")}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
-    : `<span class="detail-no-price">No current market price</span>`;
+    ? `<strong>${escapeHtml(priceText)}</strong><span>market · ${escapeHtml(getPriceCredit(card))}${card.priceUpdatedAt ? ` · as of ${escapeHtml(formatShortDate(card.priceUpdatedAt))}` : ""}</span>`
+    : `<span class="detail-no-price">${escapeHtml(getNoPriceLabel(card))}</span>`;
   const { whyItBelongs } = card;
   elements.detailCurationNote.innerHTML = whyItBelongs
     ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
@@ -1588,6 +1588,17 @@ function derivePokemonName(name) {
     .replace(/\s+/g, " ")
     .trim()
     .split(" ")[0];
+}
+
+// Same rules as noPriceLabel and priceCredit in scripts/build-helpers.mjs, which build the static pages.
+function getNoPriceLabel(card) {
+  const match = String(card.setReleaseDate || "").match(/^(\d{4})[/-](\d{2})[/-](\d{2})/);
+  const daysSinceRelease = match ? (Date.now() - Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))) / 86400000 : -1;
+  return daysSinceRelease >= 0 && daysSinceRelease <= 90 ? "New set, price coming soon" : "No current market price";
+}
+
+function getPriceCredit(card) {
+  return card.priceSource === "TCGplayer" ? "TCGplayer via TCGCSV" : card.priceSource || "TCGplayer";
 }
 
 function getDisplayPrice(card) {
