@@ -178,7 +178,7 @@ ${renderMoods(card)}
               ${metaItem("Set", card.setName)}
               ${metaItem("Number", card.number)}
               ${metaItem("Rarity", card.rarity)}
-              ${metaItem("Artist", card.artist || "Unknown")}
+              ${card.artist ? metaItem("Artist", card.artist, artistLink(card.artist)) : metaItem("Artist", "Unknown")}
               ${metaItem("Release", release)}
               ${metaItem("Language", card.language || "English")}
             </div>
@@ -221,11 +221,17 @@ function renderFieldNotes(card, memberships) {
   return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p>${lines.join("")}</div>\n`;
 }
 
-function metaItem(label, value) {
+function metaItem(label, value, href = "") {
+  const text = escapeHtml(value || "-");
   return `              <div class="meta-item">
                 <span>${escapeHtml(label)}</span>
-                <strong>${escapeHtml(value || "-")}</strong>
+                <strong>${href ? `<a class="meta-link" href="${escapeAttribute(href)}" data-analytics-event="navigation_clicked" data-analytics-source="card_page" data-analytics-destination="artist" data-analytics-filter-value="${escapeAttribute(slugify(value))}">${text}</a>` : text}</strong>
               </div>`;
+}
+
+// Every sleepy card by this artist. The collection matches on the slug, so case and punctuation don't matter.
+function artistLink(artist) {
+  return `../../collection/?artist=${slugify(artist)}`;
 }
 
 function renderMoods(card) {

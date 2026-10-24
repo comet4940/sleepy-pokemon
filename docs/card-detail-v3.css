@@ -314,6 +314,19 @@
   font: 500 .84rem/1.25 var(--detail-ui);
 }
 
+/* The artist links to all of their sleepy cards. */
+.card-detail-v3 .meta-link {
+  color: var(--detail-mint);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.card-detail-v3 .meta-link:hover,
+.card-detail-v3 .meta-link:focus-visible {
+  color: var(--detail-cream);
+}
+
 .card-page-shell {
   --soft-mint: var(--detail-mint);
   --lavender: var(--detail-lavender);
