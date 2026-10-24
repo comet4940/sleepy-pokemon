@@ -64,6 +64,7 @@ const state = {
 };
 
 const elements = {};
+const PRICE_WAIT_MS = 3000;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -71,18 +72,17 @@ async function init() {
   cacheElements();
   applyInitialSearch();
   bindEvents();
-  let prices;
-  [state.cards, state.guideMemberships, state.setPages, prices] = await Promise.all([
+  // Prices come from prices.js, loaded just before this script. They're a side detail, so a slow prices.json
+  // never holds the cards back for long: after PRICE_WAIT_MS the cards render, and prices follow when they arrive.
+  const pricesReady = window.sleepyPrices?.ready || Promise.resolve(new Map());
+  [state.cards, state.guideMemberships, state.setPages] = await Promise.all([
     loadPublishedCards(),
     loadGuideMemberships(),
     loadSetPages(),
-    // From prices.js, loaded just before this script. Without it cards simply have no price.
-    window.sleepyPrices?.ready || new Map(),
   ]);
-  state.cards.forEach((card) => {
-    const entry = prices.get(card.catalogIdentity);
-    card.price = Number.isFinite(entry?.market) ? entry : null;
-  });
+  const prices = await Promise.race([pricesReady, new Promise((resolve) => setTimeout(resolve, PRICE_WAIT_MS))]);
+  if (prices) applyPrices(prices);
+  else pricesReady.then((late) => { applyPrices(late); render(); });
   state.guideSelection = isGuidePage() ? getGuideCardSelection() : null;
   if (elements.cardGrid) {
     Object.assign(state.filters, readUrlFilters());
@@ -625,6 +625,13 @@ function showSuggestionSuccess() {
   elements.suggestionForm.classList.add("is-success");
   elements.suggestionSuccess.hidden = false;
   elements.suggestionDoneButton.focus();
+}
+
+function applyPrices(prices) {
+  state.cards.forEach((card) => {
+    const entry = prices.get(card.catalogIdentity);
+    card.price = Number.isFinite(entry?.market) ? entry : null;
+  });
 }
 
 async function loadPublishedCards() {

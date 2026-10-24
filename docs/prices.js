@@ -20,17 +20,23 @@
     return entry && Number.isFinite(entry.market) ? entry : null;
   }
 
-  // The price row on card pages and in the lightbox. Cards from a recent set usually have no sales yet.
+  // The price row on card pages and in the lightbox. Cards from a recent set usually have no sales yet. A
+  // Manual price is the curator's estimate for a card TCGplayer doesn't sell, so it never says "market".
   function renderRow(entry, setReleaseDate) {
     if (!entry) return `<span class="detail-no-price">${escapeHtml(noPriceLabel(setReleaseDate))}</span>`;
-    const credit = entry.source === "TCGplayer" ? "TCGplayer via TCGCSV" : entry.source === "Manual" ? "curator's estimate" : entry.source || "TCGplayer";
+    const label = isEstimate(entry) ? "curator's estimate" : `market · ${entry.source === "TCGplayer" ? "TCGplayer via TCGCSV" : entry.source || "TCGplayer"}`;
     const asOf = entry.updatedAt ? ` · as of ${escapeHtml(formatDate(entry.updatedAt))}` : "";
-    return `<strong>${escapeHtml(formatCurrency(entry.market))}</strong><span>market · ${escapeHtml(credit)}${asOf}</span>`;
+    return `<strong>${escapeHtml(formatCurrency(entry.market))}</strong><span>${escapeHtml(label)}${asOf}</span>`;
   }
 
   // The short price pill on guide and set page cards.
   function renderPill(entry, setReleaseDate) {
-    return escapeHtml(entry ? formatCurrency(entry.market) : noPriceLabel(setReleaseDate));
+    if (!entry) return escapeHtml(noPriceLabel(setReleaseDate));
+    return escapeHtml(`${formatCurrency(entry.market)}${isEstimate(entry) ? " (est.)" : ""}`);
+  }
+
+  function isEstimate(entry) {
+    return entry.source === "Manual";
   }
 
   function noPriceLabel(setReleaseDate) {
