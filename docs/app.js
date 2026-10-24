@@ -48,6 +48,7 @@ const state = {
     set: "all",
     rarity: "all",
     language: "all",
+    artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
   },
@@ -320,6 +321,7 @@ function handleHeaderSearchSubmit(event) {
     set: "all",
     rarity: "all",
     language: "all",
+    artist: "all",
     maxPrice: "",
   };
   state.showAllCards = true;
@@ -948,6 +950,7 @@ function filterCards(filters) {
       if (filters.set !== "all" && card.setName !== filters.set) return false;
       if (filters.rarity !== "all" && getRarityGroup(card.rarity).id !== filters.rarity) return false;
       if (filters.language !== "all" && card.language !== filters.language) return false;
+      if (filters.artist !== "all" && slugify(card.artist) !== filters.artist) return false;
       if (maxPrice !== null && !(getDisplayPrice(card) > 0 && getDisplayPrice(card) <= maxPrice)) return false;
       return true;
     });
@@ -960,6 +963,7 @@ function hasActiveFilters() {
     || state.filters.set !== "all"
     || state.filters.rarity !== "all"
     || state.filters.language !== "all"
+    || state.filters.artist !== "all"
     || state.filters.maxPrice,
   );
 }
@@ -971,6 +975,7 @@ function countActiveFilters() {
     state.filters.set !== "all",
     state.filters.rarity !== "all",
     state.filters.language !== "all",
+    state.filters.artist !== "all",
     Boolean(state.filters.maxPrice),
   ].filter(Boolean).length;
 }
@@ -992,7 +997,8 @@ function renderActiveFilterControls() {
     }
   }
   if (elements.activeAdvancedFilters) {
-    const advancedFilters = ["set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
+    // Artist has no drawer section (over a hundred artists); it's set from an artist link and cleared here.
+    const advancedFilters = ["artist", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
     // The "under $5" chip already shows that price, so only other prices get a removable chip.
     if (state.filters.maxPrice && state.filters.maxPrice !== elements.priceChip?.dataset.maxPrice) advancedFilters.push("maxPrice");
     // A mood opened from a card pill may have no mood chip of its own, so show it as a removable chip.
@@ -1030,6 +1036,7 @@ function getFilterLabel(key, value) {
   if (key === "mood") return getMoodLabel(value) || value;
   if (key === "rarity") return RARITY_GROUPS.find((group) => group.id === value)?.label || getRarityGroup(value).label;
   if (key === "maxPrice") return `under $${value}`;
+  if (key === "artist") return `Art by ${getArtistName(value)}`;
   return value;
 }
 
@@ -1227,7 +1234,7 @@ function openCardDetail(card, interactionSource = "unknown") {
     metaItem("Set", card.setName),
     metaItem("Number", card.number),
     metaItem("Rarity", card.rarity),
-    metaItem("Artist", card.artist || "Unknown"),
+    card.artist ? metaLinkItem("Artist", card.artist, renderArtistHref(card.artist), "card_modal") : metaItem("Artist", "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
   elements.cardDetailDialog.showModal();
@@ -1275,6 +1282,28 @@ function metaItem(label, value) {
   `;
 }
 
+// The artist links to every card by that artist. Matching uses the slug, so spellings that differ only in
+// case or punctuation ("HYOGONOSUKE" / "Hyogonosuke", "Shibuzoh." / "Shibuzoh") land on the same cards.
+function renderArtistHref(artist) {
+  return `${document.body.dataset.siteRoot || ""}collection/?artist=${slugify(artist)}`;
+}
+
+function metaLinkItem(label, value, href, source) {
+  return `
+    <div class="meta-item">
+      <span>${escapeHtml(label)}</span>
+      <strong><a class="meta-link" href="${escapeAttribute(href)}" data-analytics-event="navigation_clicked" data-analytics-source="${escapeAttribute(source)}" data-analytics-destination="artist" data-analytics-filter-value="${escapeAttribute(slugify(value))}">${escapeHtml(value)}</a></strong>
+    </div>
+  `;
+}
+
+// The artist's name as printed on most of their cards, for the "Art by" chip.
+function getArtistName(artistSlug) {
+  const names = state.cards.map((card) => card.artist).filter((name) => name && slugify(name) === artistSlug);
+  const counts = names.reduce((map, name) => map.set(name, (map.get(name) || 0) + 1), new Map());
+  return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+}
+
 // Mood pills link to the collection filtered to that mood, from every page.
 function renderMoodLink(mood) {
   const root = document.body.dataset.siteRoot || "";
@@ -1292,8 +1321,8 @@ function getMoodLabel(moodSlug) {
 
 // Keep ?mood= in the collection URL matching the active mood, so a reload or shared link shows the same cards.
 // The collection URL carries every active filter, so shared links, reloads and back/forward show the same view.
-// e.g. /collection/?q=pikachu&mood=belly-up&rarity=promo&set=neo-destiny&language=japanese&maxPrice=10&sort=price-low
-const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "maxPrice", "sort"];
+// e.g. /collection/?q=pikachu&mood=belly-up&rarity=promo&set=neo-destiny&language=japanese&artist=sui&maxPrice=10&sort=price-low
+const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "artist", "maxPrice", "sort"];
 
 function getFilterUrlParams(filters) {
   const params = [];
@@ -1302,6 +1331,7 @@ function getFilterUrlParams(filters) {
   if (filters.rarity !== "all") params.push(["rarity", filters.rarity]);
   if (filters.set !== "all") params.push(["set", slugify(filters.set)]);
   if (filters.language !== "all") params.push(["language", slugify(filters.language)]);
+  if (filters.artist !== "all") params.push(["artist", filters.artist]);
   if (filters.maxPrice) params.push(["maxPrice", filters.maxPrice]);
   if (filters.sort !== PUBLIC_DEFAULT_SORT) params.push(["sort", filters.sort]);
   return params;
@@ -1331,7 +1361,7 @@ function markHistoryStep() {
 // Reads filters from the URL once cards are loaded; unknown values fall back to "all".
 function readUrlFilters() {
   const params = new URLSearchParams(window.location.search);
-  const filters = { mood: "all", rarity: "all", set: "all", language: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT };
+  const filters = { mood: "all", rarity: "all", set: "all", language: "all", artist: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT };
   const mood = slugify(params.get("mood"));
   // Old links used ?mood=under-5 for what is now the Price filter.
   if (mood === "under-5") filters.maxPrice = "5";
@@ -1341,6 +1371,8 @@ function readUrlFilters() {
   const findByName = (value, names) => names.find((name) => slugify(name) === slugify(value)) || "all";
   if (params.get("set")) filters.set = findByName(params.get("set"), [...new Set(state.cards.map((card) => card.setName))]);
   if (params.get("language")) filters.language = findByName(params.get("language"), [...new Set(state.cards.map((card) => card.language))]);
+  const artist = slugify(params.get("artist"));
+  if (artist && getArtistName(artist)) filters.artist = artist;
   const maxPrice = params.get("maxPrice");
   if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
   const sort = params.get("sort");
@@ -1531,6 +1563,7 @@ function clearFilters(interactionSource) {
     set: "all",
     rarity: "all",
     language: "all",
+    artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
   };

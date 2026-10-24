@@ -14,12 +14,12 @@ export const ASSET_VERSIONS = {
   "styles.css": 6,
   "home-v3.css": 20,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 6,
+  "card-detail-v3.css": 7,
   "guides.css": 3,
   "about.css": 2,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 47,
+  "app.js": 48,
 };
 
 export function assetUrl(root, file) {
