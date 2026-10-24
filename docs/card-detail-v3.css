@@ -564,6 +564,55 @@
   }
 }
 
+/* The lightbox: the frame stays still and only .detail-scroll scrolls, so the close button is always in reach
+   and scrolling never carries on into the page behind. dvh keeps the sheet clear of mobile browser toolbars. */
+.card-detail-dialog {
+  max-height: min(920px, calc(100dvh - 24px));
+}
+
+.card-detail-dialog .card-detail-v3 {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-detail-dialog .detail-scroll {
+  display: grid;
+  grid-template-columns: minmax(270px, .84fr) minmax(330px, 1.16fr);
+  gap: clamp(24px, 4vw, 58px);
+  min-height: 0;
+  padding: clamp(20px, 4vw, 46px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Belt and braces for browsers that still scroll the page under an open modal. */
+html:has(.card-detail-dialog[open]) {
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  /* A full-width bottom sheet: the browser's default dialog max-width left a strip on the right. */
+  .card-detail-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 10px);
+  }
+
+  .card-detail-dialog .card-detail-v3 {
+    max-height: inherit;
+    padding: 0;
+  }
+
+  .card-detail-dialog .detail-scroll {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 18px 16px max(22px, env(safe-area-inset-bottom));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-detail-v3,
   .card-detail-v3 * {

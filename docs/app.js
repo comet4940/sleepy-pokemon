@@ -146,6 +146,7 @@ function cacheElements() {
   elements.clearFiltersButton = document.querySelector("#clearFiltersButton");
   elements.toast = document.querySelector("#toast");
   elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
+  elements.detailScroll = document.querySelector("#detailScroll");
   elements.closeCardDetailButton = document.querySelector("#closeCardDetailButton");
   elements.detailImageFrame = document.querySelector("#detailImageFrame");
   elements.detailEyebrow = document.querySelector("#detailEyebrow");
@@ -281,6 +282,18 @@ function bindEvents() {
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
+  // However the lightbox closes (×, backdrop, Escape), drop its history entry so Back doesn't reopen nothing.
+  bind(elements.cardDetailDialog, "close", () => {
+    if (window.history.state?.cardDetail) window.history.back();
+  });
+  window.addEventListener("popstate", () => {
+    if (elements.cardDetailDialog?.open && !window.history.state?.cardDetail) elements.cardDetailDialog.close();
+  });
+  // Coming back to a page that was reloaded rather than restored: its lightbox entry has nothing to close.
+  if (window.history.state?.cardDetail && !elements.cardDetailDialog?.open) {
+    const { cardDetail, ...state } = window.history.state;
+    window.history.replaceState(Object.keys(state).length ? state : null, "");
+  }
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
@@ -1239,7 +1252,12 @@ function openCardDetail(card, interactionSource = "unknown") {
     card.artist ? metaLinkItem("Artist", card.artist, renderArtistHref(card.artist), "card_modal") : metaItem("Artist", "Unknown"),
     metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
   ].join("");
-  elements.cardDetailDialog.showModal();
+  if (elements.detailScroll) elements.detailScroll.scrollTop = 0;
+  if (!elements.cardDetailDialog.open) {
+    elements.cardDetailDialog.showModal();
+    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
+    window.history.pushState({ ...window.history.state, cardDetail: true }, "");
+  }
   trackEvent("card_opened", {
     ...getCardAnalyticsParams(card),
     interaction_source: interactionSource,
