@@ -2,6 +2,11 @@
   "refreshedAt": "2026-10-24T14:47:22.426Z",
   "dataUpdatedAt": "2026-10-23T20:06:07.000Z",
   "prices": {
+    "Japanese::Vending Machine Series 3::58::Growlithe": {
+      "market": 137.5,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
+    },
     "sm10-158::English::Unbroken Bonds::158/214::Snorlax": {
       "market": 83.33,
       "source": "TCGplayer",
@@ -97,6 +102,16 @@
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
     },
+    "Japanese::Expansion Pack::043::Abra": {
+      "market": 1.19,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
+    },
+    "Japanese::Vending Machine Series 1::63::Abra": {
+      "market": 62.59,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
+    },
     "base5-49::English::Team Rocket::49/82::Abra": {
       "market": 0.82,
       "source": "TCGplayer",
@@ -106,6 +121,11 @@
       "market": 6.2,
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
+    },
+    "Japanese::Challenge from the Darkness::63/98::Sabrina's Abra": {
+      "market": 1.21,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
     },
     "neo4-84::English::Neo Destiny::84/105::Swinub": {
       "market": 2.8,
@@ -786,6 +806,11 @@
       "market": 86.1,
       "source": "TCGplayer",
       "updatedAt": "2026/10/23"
+    },
+    "vs1_jp-018::Japanese::Pokémon VS::018/141::Whitney's Furret": {
+      "market": 65.63,
+      "source": "Manual",
+      "updatedAt": "2026/10/24"
     },
     "me04-053::English::Chaos Rising::053/086::Stunky": {
       "market": 0.05,
