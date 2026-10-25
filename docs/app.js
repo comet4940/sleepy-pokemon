@@ -1310,6 +1310,12 @@ async function navigateCardDeck(step, interactionSource) {
   state.cardNavigating = true;
   const card = findCardByIdentity(state.cardDeck[state.cardDeckIndex + step]);
   await slideDetails(area, `translateX(${step * -100}%)`, 160, "ease-in");
+  // Closed (×, Escape, Back) while the details slid out: the lightbox's history entry may be gone, so stop.
+  if (!elements.cardDetailDialog.open || !window.history.state?.cardDetail) {
+    slideDetails(area, "", 0);
+    state.cardNavigating = false;
+    return;
+  }
   state.cardDeckIndex += step;
   window.history.replaceState({ ...window.history.state, cardDetail: card.catalogIdentity }, "", getCardPageUrl(card));
   showCardDetail(card);
