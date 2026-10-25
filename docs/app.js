@@ -1225,7 +1225,7 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
 }
 
 // What the lightbox shows until the card page's details arrive, or if they can't load: the image and name from
-// the catalog, with a link to the card page.
+// the catalog.
 function renderCardDetailPlaceholder(card) {
   const image = card.imageLarge || card.imageSmall;
   elements.detailScroll.innerHTML = `
@@ -1238,16 +1238,11 @@ function renderCardDetailPlaceholder(card) {
       <p class="detail-kicker">Caught napping</p>
       <h2 id="detailTitle">${escapeHtml(card.name)}</h2>
       <p class="card-subtitle">${escapeHtml([card.setName, card.number, card.rarity].filter(Boolean).join(" · "))}</p>
-      ${renderCardPageLink(getCardPageUrl(card))}
     </div>`;
 }
 
 function getCardPageUrl(card) {
   return new URL(`${document.body.dataset.siteRoot || ""}cards/${card.slug}/`, window.location.href).href;
-}
-
-function renderCardPageLink(url) {
-  return `<a class="detail-full-link" href="${escapeAttribute(url)}" data-analytics-event="navigation_clicked" data-analytics-source="card_modal" data-analytics-destination="card_page">Open the card page <span aria-hidden="true">→</span></a>`;
 }
 
 // A card page's details (art column and copy), ready for the lightbox, cached per page. Resolves to null if the
@@ -1286,9 +1281,8 @@ function adaptCardPageDetails(html, url) {
     title.append(...heading.childNodes);
     heading.replaceWith(title);
   }
-  // "Back to the sleepy stack" makes no sense in the lightbox; a quiet link to the card page closes the details.
+  // "Back to the sleepy stack" makes no sense in the lightbox.
   article.querySelector(".detail-full-link")?.remove();
-  article.querySelector(".detail-copy")?.insertAdjacentHTML("beforeend", renderCardPageLink(url));
   const details = document.createDocumentFragment();
   details.append(...article.children);
   return details;
