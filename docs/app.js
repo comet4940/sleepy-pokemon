@@ -70,6 +70,9 @@ const state = {
 
 const elements = {};
 const PRICE_WAIT_MS = 3000;
+// The page's own address. While the lightbox is open the address bar shows the card's page instead, so relative
+// paths are resolved against this.
+const PAGE_URL = window.location.href;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -1227,19 +1230,21 @@ function restoreCardDetailFromHistory() {
 function openCardDetail(card, interactionSource = "unknown", { fromHistory = false, deck = [] } = {}) {
   state.cardDeck = deck.includes(card.catalogIdentity) ? deck : [card.catalogIdentity];
   state.cardDeckIndex = state.cardDeck.indexOf(card.catalogIdentity);
-  if (!elements.cardDetailDialog.open) {
-    elements.cardDetailDialog.showModal();
-    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
-    // The card's identity (and the deck) let Forward and a reload reopen it.
-    if (!fromHistory) {
-      window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity, cardDeck: state.cardDeck }, "");
-    }
-  }
-  showCardDetail(card);
+  // Tracked before the address changes, so the event's page is the one the card was opened from.
   trackEvent("card_opened", {
     ...getCardAnalyticsParams(card),
     interaction_source: interactionSource,
   });
+  if (!elements.cardDetailDialog.open) {
+    elements.cardDetailDialog.showModal();
+    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
+    // It shows the card's own page address, so it can be copied and shared, and a reload opens that page. The
+    // card's identity (and the deck) let Forward reopen the lightbox.
+    if (!fromHistory) {
+      window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity, cardDeck: state.cardDeck }, "", getCardPageUrl(card));
+    }
+  }
+  showCardDetail(card);
 }
 
 // Shows a card in the open lightbox, for opening it or stepping to it.
@@ -1306,7 +1311,7 @@ async function navigateCardDeck(step, interactionSource) {
   const card = findCardByIdentity(state.cardDeck[state.cardDeckIndex + step]);
   await slideDetails(area, `translateX(${step * -100}%)`, 160, "ease-in");
   state.cardDeckIndex += step;
-  window.history.replaceState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
+  window.history.replaceState({ ...window.history.state, cardDetail: card.catalogIdentity }, "", getCardPageUrl(card));
   showCardDetail(card);
   await slideDetails(area, `translateX(${step * 100}%)`, 0);
   await slideDetails(area, "", 240);
@@ -1400,7 +1405,7 @@ function renderCardDetailLoadError(card) {
 }
 
 function getCardPageUrl(card) {
-  return new URL(`${document.body.dataset.siteRoot || ""}cards/${card.slug}/`, window.location.href).href;
+  return new URL(`${document.body.dataset.siteRoot || ""}cards/${card.slug}/`, PAGE_URL).href;
 }
 
 // A card page's details (art column and copy), ready for the lightbox, cached per page. Resolves to null if the
@@ -1498,7 +1503,8 @@ function getFilterUrlParams(filters) {
 }
 
 function syncFilterUrl() {
-  if (!elements.cardGrid) return;
+  // While the lightbox is open the address is the card's page; closing it returns to the collection's.
+  if (!elements.cardGrid || window.history.state?.cardDetail) return;
   const url = new URL(window.location.href);
   URL_FILTER_KEYS.forEach((key) => url.searchParams.delete(key));
   getFilterUrlParams(state.filters).forEach(([key, value]) => url.searchParams.append(key, value));
@@ -1541,7 +1547,8 @@ function readUrlFilters() {
 }
 
 function handleFilterHistoryNavigation() {
-  if (!elements.cardGrid || !state.cards.length) return;
+  // The lightbox's entry has the card page's address, not the collection's filters.
+  if (!elements.cardGrid || !state.cards.length || window.history.state?.cardDetail) return;
   const search = new URLSearchParams(window.location.search).get("q")?.trim() || "";
   const next = { ...state.filters, ...readUrlFilters(), search };
   // Back always closes an open drawer, even when the entry it lands on has the same filters

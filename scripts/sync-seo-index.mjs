@@ -210,6 +210,16 @@ ${renderMoods(card)}
 ${renderSiteFooter()}
     </div>
     <script src="${assetUrl("../../", "prices.js")}"></script>
+    <script>
+      // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then
+      // land on the earlier page's history entry without loading it; load it.
+      (() => {
+        const path = location.pathname;
+        addEventListener("popstate", () => {
+          if (location.pathname !== path) location.reload();
+        });
+      })();
+    </script>
   </body>
 </html>
 `;
