@@ -22,7 +22,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemPage","name":"Lycanroc Sleepy Pokemon Card - Journey Together 166/159","url":"https://www.sleepypokemon.com/cards/lycanroc-journey-together-166-159/","description":"Lycanroc from Journey Together is a sleepy Pokemon card illustrated by GIDORA. View set, number, rarity, release date, and collector details.","image":"https://images.pokemontcg.io/sv9/166_hires.png","about":{"@type":"Thing","name":"Lycanroc","description":"Lycanroc from Journey Together is a sleepy Pokemon card illustrated by GIDORA. View set, number, rarity, release date, and collector details."}}</script>
     <script defer src="../../analytics.js?v=5" data-page-type="card" data-card-name="Lycanroc" data-card-pokemon="Lycanroc" data-card-set="Journey Together" data-card-number="166/159" data-card-rarity="Illustration Rare" data-card-language="English"></script>
     <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=8" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=9" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -125,5 +125,15 @@
       <!-- SITE_FOOTER_END -->
     </div>
     <script src="../../prices.js?v=2"></script>
+    <script>
+      // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then
+      // land on the earlier page's history entry without loading it; load it.
+      (() => {
+        const path = location.pathname;
+        addEventListener("popstate", () => {
+          if (location.pathname !== path) location.reload();
+        });
+      })();
+    </script>
   </body>
 </html>

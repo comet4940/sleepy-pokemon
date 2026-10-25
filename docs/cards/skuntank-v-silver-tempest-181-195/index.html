@@ -22,7 +22,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemPage","name":"Skuntank V Sleepy Pokemon Card - Silver Tempest 181/195","url":"https://www.sleepypokemon.com/cards/skuntank-v-silver-tempest-181-195/","description":"Skuntank V from Silver Tempest is a sleepy Pokemon card illustrated by Jiro Sasumo. View set, number, rarity, release date, and collector details.","image":"https://images.pokemontcg.io/swsh12/181_hires.png","about":{"@type":"Thing","name":"Skuntank V","description":"Skuntank V from Silver Tempest is a sleepy Pokemon card illustrated by Jiro Sasumo. View set, number, rarity, release date, and collector details."}}</script>
     <script defer src="../../analytics.js?v=5" data-page-type="card" data-card-name="Skuntank V" data-card-pokemon="Skuntank" data-card-set="Silver Tempest" data-card-number="181/195" data-card-rarity="Ultra Rare" data-card-language="English"></script>
     <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=8" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=9" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -124,5 +124,15 @@
       <!-- SITE_FOOTER_END -->
     </div>
     <script src="../../prices.js?v=2"></script>
+    <script>
+      // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then
+      // land on the earlier page's history entry without loading it; load it.
+      (() => {
+        const path = location.pathname;
+        addEventListener("popstate", () => {
+          if (location.pathname !== path) location.reload();
+        });
+      })();
+    </script>
   </body>
 </html>

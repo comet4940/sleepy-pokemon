@@ -613,6 +613,107 @@ html:has(.card-detail-dialog[open]) {
   }
 }
 
+/* Stepping through cards: "4 of 48" top left, mirroring the close button, and arrows on the frame's sides on
+   desktop. Touch screens swipe instead (app.js), so the arrows stay off there; touch-action leaves vertical
+   scrolling and pinch zoom to the browser and sideways drags to the swipe. */
+.detail-position {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 247, 232, .22);
+  border-radius: 999px;
+  background: rgba(17, 17, 26, .78);
+  color: var(--detail-muted);
+  font: 600 .8rem/1.2 var(--detail-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.detail-nav {
+  position: absolute;
+  /* Centred with top rather than a transform, which the shared icon-button hover lift would replace. */
+  top: calc(50% - 21px);
+  z-index: 4;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 247, 232, .22);
+  border-radius: 50%;
+  background: rgba(17, 17, 26, .78);
+  color: var(--detail-cream);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.detail-nav-prev {
+  left: 6px;
+}
+
+.detail-nav-next {
+  right: 6px;
+}
+
+.detail-nav:hover:not(:disabled) {
+  border-color: var(--detail-pink);
+  background: var(--detail-pink);
+  color: #17121b;
+}
+
+/* After the arrow keys, the last arrow clicked keeps keyboard focus: a ring, not the hover pink, so it doesn't
+   look selected. */
+.detail-nav:focus-visible {
+  outline: 2px solid var(--detail-pink);
+  outline-offset: 2px;
+}
+
+.detail-nav:disabled {
+  transform: none;
+}
+
+.detail-nav:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+/* Room for "4 of 48" above the card art on desktop; on phones it sits over the art, like the close button. */
+@media (min-width: 761px) {
+  .card-detail-v3:has(.detail-position:not([hidden])) .detail-scroll {
+    padding-top: 72px;
+  }
+}
+
+/* And room beside the art and details for the arrows, where they show and the two columns still fit (from about
+   806px wide; narrower desktop windows keep the tighter padding). */
+@media (min-width: 820px) and (hover: hover) and (pointer: fine) {
+  .card-detail-v3:has(.detail-nav:not([hidden])) .detail-scroll {
+    padding-right: 72px;
+    padding-left: 72px;
+  }
+}
+
+.detail-position[hidden],
+.detail-nav[hidden] {
+  display: none;
+}
+
+.card-detail-dialog .detail-scroll {
+  touch-action: pan-y pinch-zoom;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .detail-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .detail-position {
+    top: 12px;
+    left: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-detail-v3,
   .card-detail-v3 * {

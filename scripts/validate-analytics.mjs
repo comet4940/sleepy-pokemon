@@ -36,6 +36,7 @@ const requiredAppEvents = [
   "sort_changed",
   "filters_cleared",
   "card_opened",
+  "card_navigated",
   "random_sleeper_clicked",
   "suggestion_opened",
   "suggestion_lookup_completed",
@@ -282,7 +283,7 @@ function loadApp(appSource, bodyDataset = {}) {
       querySelectorAll: () => [],
       createElement: () => ({ style: {}, click() {}, remove() {} }),
     },
-    window: { setTimeout() {} },
+    window: { setTimeout() {}, location: { href: "https://www.sleepypokemon.com/collection/" } },
     URL: { createObjectURL: () => "blob:checklist", revokeObjectURL() {} },
     Blob: class {
       constructor(parts) {

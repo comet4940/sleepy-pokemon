@@ -22,7 +22,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemPage","name":"Komala Sleepy Pokemon Card - Sun & Moon Promos SM41","url":"https://www.sleepypokemon.com/cards/komala-sun-and-moon-black-star-promos-sm41/","description":"Komala from Sun & Moon Promos is a sleepy Pokemon card illustrated by nagimiso. View set, number, rarity, release date, and collector details.","image":"https://images.pokemontcg.io/smp/SM41_hires.png","about":{"@type":"Thing","name":"Komala","description":"Komala from Sun & Moon Promos is a sleepy Pokemon card illustrated by nagimiso. View set, number, rarity, release date, and collector details."}}</script>
     <script defer src="../../analytics.js?v=5" data-page-type="card" data-card-name="Komala" data-card-pokemon="Komala" data-card-set="Sun &amp; Moon Promos" data-card-number="SM41" data-card-rarity="Promo" data-card-language="English"></script>
     <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=8" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=9" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -124,5 +124,15 @@
       <!-- SITE_FOOTER_END -->
     </div>
     <script src="../../prices.js?v=2"></script>
+    <script>
+      // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then
+      // land on the earlier page's history entry without loading it; load it.
+      (() => {
+        const path = location.pathname;
+        addEventListener("popstate", () => {
+          if (location.pathname !== path) location.reload();
+        });
+      })();
+    </script>
   </body>
 </html>

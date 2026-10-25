@@ -22,7 +22,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemPage","name":"Sabrina's Abra Sleepy Pokemon Card - Challenge from the Darkness 63/98","url":"https://www.sleepypokemon.com/cards/sabrina-s-abra-challenge-from-the-darkness-63-98/","description":"Sabrina's Abra from Challenge from the Darkness is a sleepy Pokemon card illustrated by Ken Sugimori. View set, number, rarity, release date, and collector details.","image":"/assets/cards/sabrinas-abra-jp-gym2.jpg","about":{"@type":"Thing","name":"Sabrina's Abra","description":"Sabrina's Abra from Challenge from the Darkness is a sleepy Pokemon card illustrated by Ken Sugimori. View set, number, rarity, release date, and collector details."}}</script>
     <script defer src="../../analytics.js?v=5" data-page-type="card" data-card-name="Sabrina&#39;s Abra" data-card-pokemon="Abra" data-card-set="Challenge from the Darkness" data-card-number="63/98" data-card-rarity="Common" data-card-language="Japanese"></script>
     <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=8" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=9" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -124,5 +124,15 @@
       <!-- SITE_FOOTER_END -->
     </div>
     <script src="../../prices.js?v=2"></script>
+    <script>
+      // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then
+      // land on the earlier page's history entry without loading it; load it.
+      (() => {
+        const path = location.pathname;
+        addEventListener("popstate", () => {
+          if (location.pathname !== path) location.reload();
+        });
+      })();
+    </script>
   </body>
 </html>
