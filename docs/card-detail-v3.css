@@ -683,8 +683,9 @@ html:has(.card-detail-dialog[open]) {
   }
 }
 
-/* And room beside the art and details for the arrows, where they show. */
-@media (min-width: 761px) and (hover: hover) and (pointer: fine) {
+/* And room beside the art and details for the arrows, where they show and the two columns still fit (from about
+   806px wide; narrower desktop windows keep the tighter padding). */
+@media (min-width: 820px) and (hover: hover) and (pointer: fine) {
   .card-detail-v3:has(.detail-nav:not([hidden])) .detail-scroll {
     padding-right: 72px;
     padding-left: 72px;
