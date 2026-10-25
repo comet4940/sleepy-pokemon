@@ -42,7 +42,7 @@
     <script defer src="analytics.js?v=5" data-page-type="home"></script>
     <link rel="stylesheet" href="styles.css?v=6" />
     <link rel="stylesheet" href="home-v3.css?v=21" />
-    <link rel="stylesheet" href="card-detail-v3.css?v=8" />
+    <link rel="stylesheet" href="card-detail-v3.css?v=9" />
   </head>
   <body data-app-mode="home" data-site-root="">
     <div class="app-shell">
@@ -182,6 +182,9 @@
     <dialog id="cardDetailDialog" class="card-detail-dialog" aria-labelledby="detailTitle">
       <div class="card-detail-frame card-detail-v3">
         <button class="icon-button detail-close" id="closeCardDetailButton" type="button" aria-label="Close card preview">×</button>
+        <p class="detail-position" id="detailPosition" aria-live="polite" hidden></p>
+        <button class="icon-button detail-nav detail-nav-prev" id="detailPrevButton" type="button" aria-label="Previous card" hidden>‹</button>
+        <button class="icon-button detail-nav detail-nav-next" id="detailNextButton" type="button" aria-label="Next card" hidden>›</button>
         <div class="detail-scroll" id="detailScroll"></div>
       </div>
     </dialog>
@@ -189,7 +192,7 @@
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
     <script src="prices.js?v=2"></script>
-    <script src="app.js?v=54"></script>
+    <script src="app.js?v=55"></script>
 
   </body>
 </html>

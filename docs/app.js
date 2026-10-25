@@ -40,6 +40,10 @@ const CHECKLIST_LABELS = {
 const state = {
   cards: [],
   cardDetailToken: 0,
+  // The cards the lightbox steps through (catalog identities, in page order) and where it is in them.
+  cardDeck: [],
+  cardDeckIndex: 0,
+  cardNavigating: false,
   guideSelection: null,
   randomOrder: new Map(),
   filters: {
@@ -145,6 +149,9 @@ function cacheElements() {
   elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
   elements.detailScroll = document.querySelector("#detailScroll");
   elements.closeCardDetailButton = document.querySelector("#closeCardDetailButton");
+  elements.detailPrevButton = document.querySelector("#detailPrevButton");
+  elements.detailNextButton = document.querySelector("#detailNextButton");
+  elements.detailPosition = document.querySelector("#detailPosition");
   elements.suggestionDialog = document.querySelector("#suggestionDialog");
   elements.suggestionForm = document.querySelector("#suggestionForm");
   elements.closeSuggestionButton = document.querySelector("#closeSuggestionButton");
@@ -270,6 +277,15 @@ function bindEvents() {
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
+  bind(elements.detailPrevButton, "click", () => navigateCardDeck(-1, "arrow_button"));
+  bind(elements.detailNextButton, "click", () => navigateCardDeck(1, "arrow_button"));
+  bind(elements.cardDetailDialog, "keydown", (event) => {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      navigateCardDeck(event.key === "ArrowRight" ? 1 : -1, "keyboard");
+    }
+  });
+  bindCardSwipe();
   document.addEventListener("pointerdown", prefetchCardPage, { passive: true });
   // However the lightbox closes (×, backdrop, Escape), drop its history entry so Back doesn't reopen nothing.
   bind(elements.cardDetailDialog, "close", () => {
@@ -281,7 +297,7 @@ function bindEvents() {
     if (elements.cardDetailDialog?.open && !cardId) elements.cardDetailDialog.close();
     if (!elements.cardDetailDialog?.open && cardId) {
       const card = findCardByIdentity(cardId);
-      if (card) openCardDetail(card, "browser_forward", { fromHistory: true });
+      if (card) openCardDetail(card, "browser_forward", { fromHistory: true, deck: window.history.state.cardDeck });
     }
   });
   bind(elements.cardDetailDialog, "click", (event) => {
@@ -1152,14 +1168,21 @@ function handleCardGridKeydown(event) {
   if (!tile) return;
   event.preventDefault();
   const card = findCardByIdentity(tile.dataset.cardId);
-  if (card) openCardDetail(card, getCardDiscoverySource(tile));
+  if (card) openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
 }
 
 function handleCardGridClick(event) {
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
   const card = findCardByIdentity(tile.dataset.cardId);
-  if (card) openCardDetail(card, getCardDiscoverySource(tile));
+  if (card) openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
+}
+
+// The collection steps through the filtered, sorted results (all of them, even before the grid has finished
+// drawing); "Freshly tucked in" through its own row.
+function getGridDeck(tile) {
+  if (elements.cardGrid?.contains(tile)) return getFilteredCards().map((card) => card.catalogIdentity);
+  return [...tile.parentElement.querySelectorAll(".card-tile[data-card-id]")].map((item) => item.dataset.cardId);
 }
 
 function handleGuideCardClick(event) {
@@ -1170,7 +1193,10 @@ function handleGuideCardClick(event) {
   const card = findCardByIdentity(link.dataset.cardId);
   if (!card) return;
   event.preventDefault();
-  openCardDetail(card, link.dataset.lightboxSource || "guide_page");
+  // A guide, set or About page steps through its own cards, in page order. The homepage's featured card is alone.
+  const list = link.closest(".guide-card-list, .about-main");
+  const deck = list ? [...new Set([...list.querySelectorAll("a[data-card-id]")].map((item) => item.dataset.cardId))] : [];
+  openCardDetail(card, link.dataset.lightboxSource || "guide_page", { deck });
 }
 
 function findCardByIdentity(cardId) {
@@ -1189,15 +1215,35 @@ function restoreCardDetailFromHistory() {
   if (!cardId || elements.cardDetailDialog?.open) return;
   const card = findCardByIdentity(cardId);
   if (card) {
-    openCardDetail(card, "browser_restore", { fromHistory: true });
+    openCardDetail(card, "browser_restore", { fromHistory: true, deck: window.history.state.cardDeck });
     return;
   }
-  const { cardDetail, ...state } = window.history.state;
+  const { cardDetail, cardDeck, ...state } = window.history.state;
   window.history.replaceState(Object.keys(state).length ? state : null, "");
 }
 
 // fromHistory: reopened by Forward onto the lightbox's own history entry, so there's no entry to add.
-function openCardDetail(card, interactionSource = "unknown", { fromHistory = false } = {}) {
+// deck: the cards the lightbox can step through from here (see navigateCardDeck); without one, just this card.
+function openCardDetail(card, interactionSource = "unknown", { fromHistory = false, deck = [] } = {}) {
+  state.cardDeck = deck.includes(card.catalogIdentity) ? deck : [card.catalogIdentity];
+  state.cardDeckIndex = state.cardDeck.indexOf(card.catalogIdentity);
+  if (!elements.cardDetailDialog.open) {
+    elements.cardDetailDialog.showModal();
+    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
+    // The card's identity (and the deck) let Forward and a reload reopen it.
+    if (!fromHistory) {
+      window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity, cardDeck: state.cardDeck }, "");
+    }
+  }
+  showCardDetail(card);
+  trackEvent("card_opened", {
+    ...getCardAnalyticsParams(card),
+    interaction_source: interactionSource,
+  });
+}
+
+// Shows a card in the open lightbox, for opening it or stepping to it.
+function showCardDetail(card) {
   // The lightbox shows the card page's own details (see loadCardPage), so features live in one place: the card
   // page generator. Until that arrives (usually instantly, as tapping a card starts loading it) or if it can't
   // load, show the essentials from the catalog.
@@ -1213,19 +1259,120 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
     const priceRow = elements.detailScroll.querySelector(".detail-price-row");
     if (priceRow) priceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
   });
-  if (!elements.cardDetailDialog.open) {
-    elements.cardDetailDialog.showModal();
-    // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
-    // The card's identity lets Forward reopen it.
-    if (!fromHistory) window.history.pushState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
-  }
   // Start each card at the top. Only once the lightbox is showing: Safari keeps a hidden element's scroll position
   // and ignores a reset made while it's closed.
   if (elements.detailScroll) elements.detailScroll.scrollTop = 0;
-  trackEvent("card_opened", {
+  updateCardDeckControls();
+  // Get the neighbours ready, so stepping to them shows the whole card straight away.
+  [-1, 1].forEach((step) => {
+    const neighbour = findCardByIdentity(state.cardDeck[state.cardDeckIndex + step]);
+    if (!neighbour) return;
+    loadCardPage(neighbour);
+    const image = neighbour.imageLarge || neighbour.imageSmall;
+    if (image) new Image().src = image;
+  });
+}
+
+// "4 of 48" and the desktop arrows; both stay hidden for a single card. The arrows stop at the ends.
+function updateCardDeckControls() {
+  const { length } = state.cardDeck;
+  if (elements.detailPosition) {
+    elements.detailPosition.hidden = length < 2;
+    elements.detailPosition.textContent = `${state.cardDeckIndex + 1} of ${length}`;
+  }
+  if (elements.detailPrevButton) {
+    elements.detailPrevButton.hidden = length < 2;
+    elements.detailPrevButton.disabled = state.cardDeckIndex === 0;
+  }
+  if (elements.detailNextButton) {
+    elements.detailNextButton.hidden = length < 2;
+    elements.detailNextButton.disabled = state.cardDeckIndex >= length - 1;
+  }
+}
+
+function hasCardDeckStep(step) {
+  return Boolean(findCardByIdentity(state.cardDeck[state.cardDeckIndex + step]));
+}
+
+// Steps to the previous (-1) or next (1) card. The details slide out one way and the next card slides in from the
+// other; a swipe has already moved them part of the way. Nothing happens at either end.
+async function navigateCardDeck(step, interactionSource) {
+  const area = elements.detailScroll;
+  if (!elements.cardDetailDialog?.open || state.cardNavigating || !hasCardDeckStep(step)) {
+    if (area?.style.transform) slideDetails(area, "", 220);
+    return;
+  }
+  state.cardNavigating = true;
+  const card = findCardByIdentity(state.cardDeck[state.cardDeckIndex + step]);
+  await slideDetails(area, `translateX(${step * -100}%)`, 160, "ease-in");
+  state.cardDeckIndex += step;
+  window.history.replaceState({ ...window.history.state, cardDetail: card.catalogIdentity }, "");
+  showCardDetail(card);
+  await slideDetails(area, `translateX(${step * 100}%)`, 0);
+  await slideDetails(area, "", 240);
+  state.cardNavigating = false;
+  trackEvent("card_navigated", {
     ...getCardAnalyticsParams(card),
     interaction_source: interactionSource,
+    direction: step > 0 ? "next" : "previous",
   });
+}
+
+// Moves the details to `transform` over `duration` ms, resolving when they get there. Skipped with reduced motion.
+function slideDetails(area, transform, duration, easing = "cubic-bezier(.2, .8, .2, 1)") {
+  const animate = duration > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  area.style.transition = animate ? `transform ${duration}ms ${easing}` : "none";
+  area.style.transform = transform;
+  if (!animate) {
+    void area.offsetWidth;
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => window.setTimeout(resolve, duration));
+}
+
+// Swiping the details sideways steps through the cards on touch screens. Only a mostly sideways drag counts, so
+// scrolling the details still works, and touches at the screen's edges are left to the browser's own back swipe.
+// At either end the details stretch a little and spring back.
+function bindCardSwipe() {
+  const area = elements.detailScroll;
+  if (!area) return;
+  const EDGE = 24;
+  let swipe = null;
+  area.addEventListener("pointerdown", (event) => {
+    swipe = null;
+    if (event.pointerType !== "touch" || state.cardDeck.length < 2 || state.cardNavigating) return;
+    if (event.clientX < EDGE || event.clientX > window.innerWidth - EDGE) return;
+    swipe = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp, dx: 0, sideways: false };
+  });
+  area.addEventListener("pointermove", (event) => {
+    if (!swipe || event.pointerId !== swipe.id) return;
+    const dx = event.clientX - swipe.x;
+    const dy = event.clientY - swipe.y;
+    if (!swipe.sideways) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dy) >= Math.abs(dx)) {
+        swipe = null;
+        return;
+      }
+      swipe.sideways = true;
+      area.setPointerCapture?.(event.pointerId);
+    }
+    swipe.dx = hasCardDeckStep(dx < 0 ? 1 : -1) ? dx : dx * 0.25;
+    area.style.transition = "none";
+    area.style.transform = `translateX(${swipe.dx}px)`;
+  });
+  const finish = (event) => {
+    if (!swipe || event.pointerId !== swipe.id) return;
+    const { dx, sideways, time } = swipe;
+    swipe = null;
+    if (!sideways) return;
+    const fast = Math.abs(dx) / Math.max(1, event.timeStamp - time) > 0.5;
+    const far = Math.abs(dx) > area.clientWidth * 0.25;
+    if (event.type === "pointerup" && (far || (fast && Math.abs(dx) > 30))) navigateCardDeck(dx < 0 ? 1 : -1, "swipe");
+    else slideDetails(area, "", 220);
+  };
+  area.addEventListener("pointerup", finish);
+  area.addEventListener("pointercancel", finish);
 }
 
 // What the lightbox shows until the card page's details arrive, or if they can't load: the image and name from

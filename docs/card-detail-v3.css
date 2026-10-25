@@ -613,6 +613,81 @@ html:has(.card-detail-dialog[open]) {
   }
 }
 
+/* Stepping through cards: "4 of 48" top left, mirroring the close button, and arrows on the frame's sides on
+   desktop. Touch screens swipe instead (app.js), so the arrows stay off there; touch-action leaves vertical
+   scrolling and pinch zoom to the browser and sideways drags to the swipe. */
+.detail-position {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 247, 232, .22);
+  border-radius: 999px;
+  background: rgba(17, 17, 26, .78);
+  color: var(--detail-muted);
+  font: 600 .8rem/1.2 var(--detail-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.detail-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 247, 232, .22);
+  border-radius: 50%;
+  background: rgba(17, 17, 26, .78);
+  color: var(--detail-cream);
+  font-size: 1.6rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.detail-nav-prev {
+  left: 6px;
+}
+
+.detail-nav-next {
+  right: 6px;
+}
+
+.detail-nav:hover:not(:disabled),
+.detail-nav:focus-visible {
+  border-color: var(--detail-pink);
+  background: var(--detail-pink);
+  color: #17121b;
+}
+
+.detail-nav:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.detail-position[hidden],
+.detail-nav[hidden] {
+  display: none;
+}
+
+.card-detail-dialog .detail-scroll {
+  touch-action: pan-y pinch-zoom;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .detail-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .detail-position {
+    top: 12px;
+    left: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-detail-v3,
   .card-detail-v3 * {

@@ -37,6 +37,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `navigation_clicked` | A measured site navigation link is selected, including a card's mood pill (`interaction_source: card_mood_pill`), About page links (`about_page`), and set navigation: `sets_index` → `set_page`, `set_page` → `sets` (All sets), `card_page` / `card_modal` → `set_page` (the field notes on a card page or in the lightbox), and `card_page` / `card_modal` → `artist` (the artist's name, which opens the collection filtered to that artist), and `card_modal` → `card_page` (*Open the card page*, shown only when the lightbox can't load the card's details). The lightbox shows the card page's own details, so its links carry the card page's events with `card_page` sources rewritten to `card_modal` | `interaction_source`, `destination`, `destination_path`, `filter_value` (mood pills and artist links: the mood or artist slug) |
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) set page cards (`set_page`), the homepage's weekly featured card (`homepage_featured`), Forward reopening a lightbox that Back closed (`browser_forward`), and a reload reopening the card that was open (`browser_restore`) | card parameters, `interaction_source` |
+| `card_navigated` | The lightbox steps to the previous or next card (`interaction_source`: `swipe` on touch screens, `arrow_button` or `keyboard` on desktop). It steps through the cards of the page it was opened from: the collection's filtered, sorted results, *Freshly tucked in*, or a guide, set or About page's cards; it stops at either end. Stepping isn't counted as `card_opened`, so `card_opened` still means a visitor picked a card | card parameters, `interaction_source`, `direction` (`next` or `previous`) |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
 | `card_page_view` | A crawlable card page loads | card parameters |
 | `guide_opened` | A guide link is selected | `guide_slug`, `guide_title`, `interaction_source`, `destination_path` |
@@ -160,6 +161,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `filter_action`
 - `changes_count`
 - `close_method`
+- `direction`
 - `had_active_filters`
 - `lookup_type`
 - `lookup_outcome`

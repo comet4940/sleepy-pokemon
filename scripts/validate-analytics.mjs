@@ -36,6 +36,7 @@ const requiredAppEvents = [
   "sort_changed",
   "filters_cleared",
   "card_opened",
+  "card_navigated",
   "random_sleeper_clicked",
   "suggestion_opened",
   "suggestion_lookup_completed",
