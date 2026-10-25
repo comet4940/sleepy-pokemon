@@ -12,9 +12,9 @@ export const PRICES_PATH = "docs/prices.json";
 // generated pages and the hand-written homepage and collection page all pick it up.
 export const ASSET_VERSIONS = {
   "styles.css": 6,
-  "home-v3.css": 21,
+  "home-v3.css": 22,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 9,
+  "card-detail-v3.css": 10,
   "guides.css": 3,
   "about.css": 2,
   "analytics.js": 5,

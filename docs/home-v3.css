@@ -289,6 +289,28 @@ a { color: inherit; }
   .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
+/* Cards fade up as the grid draws them (on load and after every filter change), a little apart for the first
+   row or two. "backwards" so the hover lift still works once they've landed. */
+#cardGrid > .card-tile,
+#latestGrid > .card-tile {
+  animation: tile-in 280ms ease-out backwards;
+}
+
+#cardGrid > .card-tile:nth-child(2), #latestGrid > .card-tile:nth-child(2) { animation-delay: 30ms; }
+#cardGrid > .card-tile:nth-child(3), #latestGrid > .card-tile:nth-child(3) { animation-delay: 60ms; }
+#cardGrid > .card-tile:nth-child(4), #latestGrid > .card-tile:nth-child(4) { animation-delay: 90ms; }
+#cardGrid > .card-tile:nth-child(5) { animation-delay: 120ms; }
+#cardGrid > .card-tile:nth-child(6) { animation-delay: 150ms; }
+#cardGrid > .card-tile:nth-child(7) { animation-delay: 180ms; }
+#cardGrid > .card-tile:nth-child(n + 8) { animation-delay: 210ms; }
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
