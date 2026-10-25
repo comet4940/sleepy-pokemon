@@ -633,7 +633,8 @@ html:has(.card-detail-dialog[open]) {
 
 .detail-nav {
   position: absolute;
-  top: 50%;
+  /* Centred with top rather than a transform, which the shared icon-button hover lift would replace. */
+  top: calc(50% - 21px);
   z-index: 4;
   width: 42px;
   height: 42px;
@@ -643,7 +644,6 @@ html:has(.card-detail-dialog[open]) {
   color: var(--detail-cream);
   font-size: 1.6rem;
   line-height: 1;
-  transform: translateY(-50%);
 }
 
 .detail-nav-prev {
@@ -654,16 +654,33 @@ html:has(.card-detail-dialog[open]) {
   right: 6px;
 }
 
-.detail-nav:hover:not(:disabled),
-.detail-nav:focus-visible {
+.detail-nav:hover:not(:disabled) {
   border-color: var(--detail-pink);
   background: var(--detail-pink);
   color: #17121b;
 }
 
+/* After the arrow keys, the last arrow clicked keeps keyboard focus: a ring, not the hover pink, so it doesn't
+   look selected. */
+.detail-nav:focus-visible {
+  outline: 2px solid var(--detail-pink);
+  outline-offset: 2px;
+}
+
+.detail-nav:disabled {
+  transform: none;
+}
+
 .detail-nav:disabled {
   opacity: .3;
   cursor: default;
+}
+
+/* Room for "4 of 48" above the card art on desktop; on phones it sits over the art, like the close button. */
+@media (min-width: 761px) {
+  .card-detail-v3:has(.detail-position:not([hidden])) .detail-scroll {
+    padding-top: 72px;
+  }
 }
 
 .detail-position[hidden],
