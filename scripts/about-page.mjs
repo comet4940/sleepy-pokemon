@@ -52,7 +52,7 @@ ${renderHead({
   stylesheets: ["styles.css", "home-v3.css", "card-detail-v3.css", "about.css"],
 })}
   </head>
-  <body data-app-mode="about" data-guide-path="cards.json" data-guides-path="../guides.json" data-site-root="../">
+  <body data-app-mode="about" data-guide-path="cards.json" data-site-root="../">
     <div class="app-shell about-shell">
       ${renderSiteHeader("../")}
       <main class="about-main">

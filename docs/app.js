@@ -39,7 +39,7 @@ const CHECKLIST_LABELS = {
 
 const state = {
   cards: [],
-  guideMemberships: new Map(),
+  cardDetailToken: 0,
   guideSelection: null,
   randomOrder: new Map(),
   filters: {
@@ -76,11 +76,7 @@ async function init() {
   // Prices come from prices.js, loaded just before this script. They're a side detail, so a slow prices.json
   // never holds the cards back for long: after PRICE_WAIT_MS the cards render, and prices follow when they arrive.
   const pricesReady = window.sleepyPrices?.ready || Promise.resolve(new Map());
-  [state.cards, state.guideMemberships, state.setPages] = await Promise.all([
-    loadPublishedCards(),
-    loadGuideMemberships(),
-    loadSetPages(),
-  ]);
+  state.cards = await loadPublishedCards();
   const prices = await Promise.race([pricesReady, new Promise((resolve) => setTimeout(resolve, PRICE_WAIT_MS))]);
   if (prices) applyPrices(prices);
   else pricesReady.then((late) => { applyPrices(late); render(); });
@@ -149,15 +145,6 @@ function cacheElements() {
   elements.cardDetailDialog = document.querySelector("#cardDetailDialog");
   elements.detailScroll = document.querySelector("#detailScroll");
   elements.closeCardDetailButton = document.querySelector("#closeCardDetailButton");
-  elements.detailImageFrame = document.querySelector("#detailImageFrame");
-  elements.detailEyebrow = document.querySelector("#detailEyebrow");
-  elements.detailTitle = document.querySelector("#detailTitle");
-  elements.detailSubtitle = document.querySelector("#detailSubtitle");
-  elements.detailPriceRow = document.querySelector("#detailPriceRow");
-  elements.detailCurationNote = document.querySelector("#detailCurationNote");
-  elements.detailGuideLinks = document.querySelector("#detailGuideLinks");
-  elements.detailMoods = document.querySelector("#detailMoods");
-  elements.detailMetaGrid = document.querySelector("#detailMetaGrid");
   elements.suggestionDialog = document.querySelector("#suggestionDialog");
   elements.suggestionForm = document.querySelector("#suggestionForm");
   elements.closeSuggestionButton = document.querySelector("#closeSuggestionButton");
@@ -283,6 +270,7 @@ function bindEvents() {
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
   bind(elements.closeCardDetailButton, "click", closeCardDetail);
+  document.addEventListener("pointerdown", prefetchCardPage, { passive: true });
   // However the lightbox closes (×, backdrop, Escape), drop its history entry so Back doesn't reopen nothing.
   bind(elements.cardDetailDialog, "close", () => {
     if (window.history.state?.cardDetail) window.history.back();
@@ -667,41 +655,6 @@ async function loadPublishedCards() {
     state.catalogLoadFailed = true;
     showToast("Could not load the card guide.");
     return [];
-  }
-}
-
-// Sets with their own page (generated sets/index.json), by set name.
-async function loadSetPages() {
-  try {
-    const response = await fetch(`${document.body.dataset.siteRoot || ""}sets/index.json`);
-    if (!response.ok) return new Map();
-    const { sets } = await response.json();
-    return new Map((sets || []).map((set) => [set.name, set]));
-  } catch {
-    return new Map();
-  }
-}
-
-async function loadGuideMemberships() {
-  try {
-    const guidesPath = document.body.dataset.guidesPath || "guides.json";
-    const response = await fetch(guidesPath, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Guide definitions failed with ${response.status}`);
-    const payload = await response.json();
-    const guides = Array.isArray(payload) ? payload : payload.guides;
-    if (!Array.isArray(guides)) return new Map();
-    const memberships = new Map();
-    guides.forEach((guide) => {
-      (guide.cards || []).forEach((entry) => {
-        const existing = memberships.get(entry.slug) || [];
-        existing.push({ slug: guide.slug, title: guide.title });
-        memberships.set(entry.slug, existing);
-      });
-    });
-    return memberships;
-  } catch (error) {
-    console.error(error);
-    return new Map();
   }
 }
 
@@ -1245,31 +1198,21 @@ function restoreCardDetailFromHistory() {
 
 // fromHistory: reopened by Forward onto the lightbox's own history entry, so there's no entry to add.
 function openCardDetail(card, interactionSource = "unknown", { fromHistory = false } = {}) {
-  const image = card.imageLarge || card.imageSmall;
-  elements.detailEyebrow.textContent = "Caught napping";
-  elements.detailTitle.textContent = card.name;
-  elements.detailSubtitle.textContent = [card.setName, card.number, card.rarity].filter(Boolean).join(" · ");
-  elements.detailImageFrame.innerHTML = image
-    ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
-    : `<div class="image-fallback">${escapeHtml(card.name)}</div>`;
-  elements.detailPriceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
-  const { whyItBelongs } = card;
-  elements.detailCurationNote.innerHTML = whyItBelongs
-    ? `<strong>Why it belongs.</strong>${renderCurationNoteBody(whyItBelongs)}`
-    : `<strong>Why it belongs.</strong> <span class="detail-pending">A curator's note is coming soon.</span>`;
-  if (elements.detailGuideLinks) {
-    elements.detailGuideLinks.innerHTML = renderGuideMemberships(card);
-  }
-  elements.detailMoods.innerHTML = card.moods?.length
-    ? card.moods.map((mood) => renderMoodLink(mood)).join("")
-    : "";
-  elements.detailMetaGrid.innerHTML = [
-    metaItem("Set", card.setName),
-    metaItem("Number", card.number),
-    metaItem("Rarity", card.rarity),
-    card.artist ? metaLinkItem("Artist", card.artist, renderArtistHref(card.artist), "card_modal") : metaItem("Artist", "Unknown"),
-    metaItem("Release", formatDate(card.setReleaseDate) || "Unknown"),
-  ].join("");
+  // The lightbox shows the card page's own details (see loadCardPage), so features live in one place: the card
+  // page generator. Until that arrives (usually instantly, as tapping a card starts loading it) or if it can't
+  // load, show the essentials from the catalog.
+  renderCardDetailPlaceholder(card);
+  const token = ++state.cardDetailToken;
+  loadCardPage(card).then((details) => {
+    if (token !== state.cardDetailToken) return;
+    if (!details) {
+      renderCardDetailLoadError(card);
+      return;
+    }
+    elements.detailScroll.replaceChildren(details.cloneNode(true));
+    const priceRow = elements.detailScroll.querySelector(".detail-price-row");
+    if (priceRow) priceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
+  });
   if (!elements.cardDetailDialog.open) {
     elements.cardDetailDialog.showModal();
     // One history entry per visit to the lightbox, so the phone's Back button closes it instead of leaving the page.
@@ -1285,23 +1228,82 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
   });
 }
 
-function renderGuideMemberships(card) {
-  const guides = state.guideMemberships.get(card.slug) || [];
-  const setPage = state.setPages?.get(card.setName);
-  if (!guides.length && !setPage) return "";
-  const root = document.body.dataset.siteRoot || "";
-  const setLine = setPage
-    ? `<p>It's one of ${setPage.count} sleepy cards from <a href="${escapeAttribute(`${root}sets/${setPage.slug}/`)}" data-analytics-event="navigation_clicked" data-analytics-source="card_modal" data-analytics-destination="set_page">${escapeHtml(setPage.name)}</a>.</p>`
-    : "";
-  if (!guides.length) return `<p class="detail-guide-kicker">In the field notes</p>${setLine}`;
-  const links = guides.map((guide) => {
-    const href = `${root}guides/${guide.slug}/`;
-    return `<a href="${escapeAttribute(href)}" data-analytics-event="guide_opened" data-analytics-source="card_modal" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)}</a>`;
+// What the lightbox shows until the card page's details arrive, or if they can't load: the image and name from
+// the catalog.
+function renderCardDetailPlaceholder(card) {
+  const image = card.imageLarge || card.imageSmall;
+  elements.detailScroll.innerHTML = `
+    <div class="detail-art-column">
+      <div class="detail-image-frame">${image
+        ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${card.name} card`)}" />`
+        : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}</div>
+    </div>
+    <div class="detail-copy">
+      <p class="detail-kicker">Caught napping</p>
+      <h2 id="detailTitle">${escapeHtml(card.name)}</h2>
+      <p class="card-subtitle">${escapeHtml([card.setName, card.number, card.rarity].filter(Boolean).join(" · "))}</p>
+    </div>`;
+}
+
+// If the card page can't load (offline, a network blip), say so and link to the page so a reload can try again.
+function renderCardDetailLoadError(card) {
+  elements.detailScroll.querySelector(".detail-copy")?.insertAdjacentHTML("beforeend", `
+    <p class="card-subtitle">Couldn't load this card's details.</p>
+    <a class="detail-full-link" href="${escapeAttribute(getCardPageUrl(card))}" data-analytics-event="navigation_clicked" data-analytics-source="card_modal" data-analytics-destination="card_page">Open the card page <span aria-hidden="true">→</span></a>`);
+}
+
+function getCardPageUrl(card) {
+  return new URL(`${document.body.dataset.siteRoot || ""}cards/${card.slug}/`, window.location.href).href;
+}
+
+// A card page's details (art column and copy), ready for the lightbox, cached per page. Resolves to null if the
+// page can't load, so the lightbox keeps the placeholder (see renderCardDetailLoadError).
+const cardPageDetails = new Map();
+
+function loadCardPage(card) {
+  const url = getCardPageUrl(card);
+  if (!cardPageDetails.has(url)) {
+    cardPageDetails.set(url, fetch(url)
+      .then((response) => (response.ok ? response.text() : Promise.reject(new Error(`${url} returned ${response.status}`))))
+      .then((html) => adaptCardPageDetails(html, url))
+      .catch((error) => {
+        console.error(error);
+        cardPageDetails.delete(url);
+        return null;
+      }));
+  }
+  return cardPageDetails.get(url);
+}
+
+function adaptCardPageDetails(html, url) {
+  const article = new DOMParser().parseFromString(html, "text/html").querySelector(".card-page-detail");
+  if (!article) throw new Error(`${url} has no card details`);
+  // Links and images are written relative to the card page; resolve them so they work from this page too.
+  article.querySelectorAll("[href]").forEach((element) => element.setAttribute("href", new URL(element.getAttribute("href"), url).href));
+  article.querySelectorAll("[src]").forEach((element) => element.setAttribute("src", new URL(element.getAttribute("src"), url).href));
+  article.querySelectorAll('[data-analytics-source="card_page"]').forEach((element) => {
+    element.dataset.analyticsSource = "card_modal";
   });
-  const linkedTitles = links.length === 1
-    ? links[0]
-    : `${links.slice(0, -1).join(", ")}${links.length > 2 ? "," : ""} and ${links.at(-1)}`;
-  return `<p class="detail-guide-kicker">In the field notes</p><p>This card can be found in ${linkedTitles}.</p>${setLine}`;
+  // The page's heading becomes the lightbox's title.
+  const heading = article.querySelector(".detail-copy h1");
+  if (heading) {
+    const title = document.createElement("h2");
+    title.id = "detailTitle";
+    title.append(...heading.childNodes);
+    heading.replaceWith(title);
+  }
+  // "Back to the sleepy stack" makes no sense in the lightbox.
+  article.querySelector(".detail-full-link")?.remove();
+  const details = document.createDocumentFragment();
+  details.append(...article.children);
+  return details;
+}
+
+// Tapping a card starts loading its page before the click lands, so the lightbox usually opens complete.
+function prefetchCardPage(event) {
+  const cardId = event.target.closest?.("[data-card-id]")?.dataset.cardId;
+  const card = cardId && findCardByIdentity(cardId);
+  if (card) loadCardPage(card);
 }
 
 function closeCardDetail() {
@@ -1314,41 +1316,11 @@ function getCardIdentity(card) {
     .join("::");
 }
 
-function metaItem(label, value) {
-  return `
-    <div class="meta-item">
-      <span>${escapeHtml(label)}</span>
-      <strong>${escapeHtml(value || "-")}</strong>
-    </div>
-  `;
-}
-
-// The artist links to every card by that artist. Matching uses the slug, so spellings that differ only in
-// case or punctuation ("HYOGONOSUKE" / "Hyogonosuke", "Shibuzoh." / "Shibuzoh") land on the same cards.
-function renderArtistHref(artist) {
-  return `${document.body.dataset.siteRoot || ""}collection/?artist=${slugify(artist)}`;
-}
-
-function metaLinkItem(label, value, href, source) {
-  return `
-    <div class="meta-item">
-      <span>${escapeHtml(label)}</span>
-      <strong><a class="meta-link" href="${escapeAttribute(href)}" data-analytics-event="navigation_clicked" data-analytics-source="${escapeAttribute(source)}" data-analytics-destination="artist" data-analytics-filter-value="${escapeAttribute(slugify(value))}">${escapeHtml(value)}</a></strong>
-    </div>
-  `;
-}
-
 // The artist's name as printed on most of their cards, for the "Art by" chip.
 function getArtistName(artistSlug) {
   const names = state.cards.map((card) => card.artist).filter((name) => name && slugify(name) === artistSlug);
   const counts = names.reduce((map, name) => map.set(name, (map.get(name) || 0) + 1), new Map());
   return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
-}
-
-// Mood pills link to the collection filtered to that mood, from every page.
-function renderMoodLink(mood) {
-  const root = document.body.dataset.siteRoot || "";
-  return `<a class="mood-tag" href="${escapeAttribute(root)}collection/?mood=${escapeAttribute(slugify(mood))}" data-analytics-event="navigation_clicked" data-analytics-source="card_mood_pill" data-analytics-destination="collection" data-analytics-filter-value="${escapeAttribute(slugify(mood))}">${escapeHtml(mood)}</a>`;
 }
 
 function getMoodLabel(moodSlug) {
@@ -1676,20 +1648,6 @@ function compareDates(a, b) {
   return left - right;
 }
 
-function formatDate(value) {
-  if (!value) return "";
-  const match = String(value).match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
-  const date = match
-    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
-    : new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
 function formatCurrency(value) {
   const number = numericOrNull(value) || 0;
   return new Intl.NumberFormat("en-US", {
@@ -1716,14 +1674,6 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-}
-
-function renderCurationNoteBody(value) {
-  const paragraphs = String(value).split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean);
-  if (paragraphs.length < 2) {
-    return ` ${escapeHtml(paragraphs[0] || "")}`;
-  }
-  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
 }
 
 function escapeAttribute(value) {

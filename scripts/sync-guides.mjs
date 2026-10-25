@@ -215,7 +215,7 @@ ${renderHead({
   stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css"],
 })}
   </head>
-  <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-guides-path="../../guides.json" data-site-root="../../">
+  <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
       ${renderSiteHeader("../../")}
 
