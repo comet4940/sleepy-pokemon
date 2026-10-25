@@ -683,6 +683,14 @@ html:has(.card-detail-dialog[open]) {
   }
 }
 
+/* And room beside the art and details for the arrows, where they show. */
+@media (min-width: 761px) and (hover: hover) and (pointer: fine) {
+  .card-detail-v3:has(.detail-nav:not([hidden])) .detail-scroll {
+    padding-right: 72px;
+    padding-left: 72px;
+  }
+}
+
 .detail-position[hidden],
 .detail-nav[hidden] {
   display: none;
