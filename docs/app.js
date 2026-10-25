@@ -1204,7 +1204,11 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
   renderCardDetailPlaceholder(card);
   const token = ++state.cardDetailToken;
   loadCardPage(card).then((details) => {
-    if (!details || token !== state.cardDetailToken) return;
+    if (token !== state.cardDetailToken) return;
+    if (!details) {
+      renderCardDetailLoadError(card);
+      return;
+    }
     elements.detailScroll.replaceChildren(details.cloneNode(true));
     const priceRow = elements.detailScroll.querySelector(".detail-price-row");
     if (priceRow) priceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
@@ -1241,12 +1245,19 @@ function renderCardDetailPlaceholder(card) {
     </div>`;
 }
 
+// If the card page can't load (offline, a network blip), say so and link to the page so a reload can try again.
+function renderCardDetailLoadError(card) {
+  elements.detailScroll.querySelector(".detail-copy")?.insertAdjacentHTML("beforeend", `
+    <p class="card-subtitle">Couldn't load this card's details.</p>
+    <a class="detail-full-link" href="${escapeAttribute(getCardPageUrl(card))}" data-analytics-event="navigation_clicked" data-analytics-source="card_modal" data-analytics-destination="card_page">Open the card page <span aria-hidden="true">→</span></a>`);
+}
+
 function getCardPageUrl(card) {
   return new URL(`${document.body.dataset.siteRoot || ""}cards/${card.slug}/`, window.location.href).href;
 }
 
 // A card page's details (art column and copy), ready for the lightbox, cached per page. Resolves to null if the
-// page can't load, so the placeholder stays.
+// page can't load, so the lightbox keeps the placeholder (see renderCardDetailLoadError).
 const cardPageDetails = new Map();
 
 function loadCardPage(card) {
