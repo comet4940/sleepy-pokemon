@@ -1,6 +1,6 @@
 {
-  "refreshedAt": "2026-10-24T14:47:22.426Z",
-  "dataUpdatedAt": "2026-10-23T20:06:07.000Z",
+  "refreshedAt": "2026-10-24T23:31:45.826Z",
+  "dataUpdatedAt": "2026-10-24T20:05:44.000Z",
   "prices": {
     "Japanese::Vending Machine Series 3::58::Growlithe": {
       "market": 137.5,
@@ -10,97 +10,97 @@
     "sm10-158::English::Unbroken Bonds::158/214::Snorlax": {
       "market": 83.33,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv6-26::English::Twilight Masquerade::026/167::Vulpix": {
       "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me2pt5-226::English::Ascended Heroes::226/217::Psyduck": {
-      "market": 43.33,
+      "market": 43.04,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-17::English::Unbroken Bonds::17/214::Tangrowth": {
       "market": 0.38,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo4-48::English::Neo Destiny::48/105::Light Jolteon": {
       "market": 84.84,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5-52::English::Crown Zenith::052/159::Zeraora": {
       "market": 0.22,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-84::English::Aquapolis::84/147::Horsea": {
       "market": 9.61,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-117::English::Scarlet & Violet::117/198::Krookodile": {
       "market": 0.1,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex7-76::English::EX Team Rocket Returns::76/109::Slowpoke": {
       "market": 8.54,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "base5-67::English::Team Rocket::67/82::Slowpoke": {
       "market": 5.1,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex16-42::English::EX Power Keepers::42/108::Aron": {
       "market": 1.79,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-151::English::Unified Minds::151/236::Dragonite": {
       "market": 8.42,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "gym1-33::English::Gym Heroes::33/132::Rocket's Snorlax": {
-      "market": 57.42,
+      "market": 57.35,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard3-100::English::Skyridge::100/144::Snorlax": {
       "market": 180.99,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy0-26::English::Kalos Starter Set::26/39::Snorlax": {
       "market": 64.88,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "g1-58::English::Generations::58/83::Snorlax": {
-      "market": 7.92,
+      "market": 7.91,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm115-50::English::Hidden Fates::50/68::Snorlax": {
       "market": 1.33,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy10-77::English::Fates Collide::77/124::Snorlax": {
       "market": 10.32,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swshp-SWSH032::English::Sword & Shield Promos::SWSH032::Snorlax": {
       "market": 33.04,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "Japanese::Expansion Pack::043::Abra": {
       "market": 1.19,
@@ -113,14 +113,14 @@
       "updatedAt": "2026/10/23"
     },
     "base5-49::English::Team Rocket::49/82::Abra": {
-      "market": 0.82,
+      "market": 0.84,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "gym2-93::English::Gym Challenge::93/132::Sabrina's Abra": {
       "market": 6.2,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "Japanese::Challenge from the Darkness::63/98::Sabrina's Abra": {
       "market": 1.21,
@@ -130,287 +130,287 @@
     "neo4-84::English::Neo Destiny::84/105::Swinub": {
       "market": 2.8,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp7-77::English::Stormfront::77/100::Swinub": {
       "market": 0.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw8-26::English::Plasma Storm::26/135::Swinub": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy8-81::English::BREAKthrough::81/162::Piloswine": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo4-68::English::Neo Destiny::68/105::Growlithe": {
       "market": 20.5,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv8-199::English::Surging Sparks::199/191::Spheal": {
-      "market": 9.91,
+      "market": 9.61,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "zsv10pt5-103::English::Black Bolt::103/86::Tympole": {
-      "market": 8.66,
+      "market": 8.61,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5gg-GG15::English::Crown Zenith Galarian Gallery::GG15/GG70::Solrock": {
-      "market": 6.32,
+      "market": 6.61,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv9-165::English::Journey Together::165/159::Swinub": {
-      "market": 3.17,
+      "market": 2.85,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv9-166::English::Journey Together::166/159::Lycanroc": {
-      "market": 2.1,
+      "market": 2.42,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me1-151::English::Mega Evolution::151/132::Spearow": {
-      "market": 3.45,
+      "market": 3.39,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "svp-173::English::Scarlet & Violet Promos::173/150::Eevee": {
-      "market": 9.4,
+      "market": 9.45,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex3-55::English::EX Dragon::55/97::Geodude": {
       "market": 1.35,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-135::English::Unbroken Bonds::135/214::Wigglytuff": {
       "market": 5.75,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp3-55::English::Secret Wonders::55/132::Miltank": {
       "market": 1.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy0-27::English::Kalos Starter Set::27/39::Miltank": {
       "market": 12.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm4-78::English::Crimson Invasion::78/111::Miltank": {
-      "market": 0.43,
+      "market": 0.46,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "hgss4-36::English::HS—Triumphant::36/102::Kangaskhan": {
       "market": 0.9,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "hgss3-27::English::HS—Undaunted::27/90::Gloom": {
       "market": 1.12,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xyp-XY56::English::XY Promos::XY56/XY211::Blissey": {
       "market": 8.67,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-207::English::Unified Minds::207/236::Slumbering Forest": {
       "market": 0.37,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh11-151::English::Lost Origin::151/196::Greedent": {
-      "market": 0.18,
+      "market": 0.17,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm9-22::English::Team Up::22/181::Squirtle": {
-      "market": 3.1,
+      "market": 2.96,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3pt5-86::English::151::86/165::Seel": {
       "market": 0.2,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "cel25-14::English::Celebrations::14/25::Cosmoem": {
-      "market": 0.24,
+      "market": 0.25,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm2-26::English::Guardians Rising::26/145::Delibird": {
       "market": 0.2,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm4-88::English::Crimson Invasion::88/111::Diggersby": {
       "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm9-36::English::Team Up::36/181::Alolan Graveler": {
       "market": 0.22,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy10-71::English::Fates Collide::71/124::Whimsicott": {
       "market": 0.52,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo4-22::English::Neo Destiny::22/105::Light Dragonair": {
-      "market": 90.45,
+      "market": 91.24,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh1-147::English::Sword & Shield::147/202::Cinccino": {
       "market": 0.45,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw11-11::English::Legendary Treasures::11/113::Swadloon": {
       "market": 1.03,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw11-RC16::English::Legendary Treasures::RC16/RC113::Ursaring": {
       "market": 8.96,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-108::English::Aquapolis::108/147::Slowpoke": {
       "market": 36.3,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12-32::English::Silver Tempest::32/195::Incineroar": {
-      "market": 0.22,
+      "market": 0.21,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw11-RC4::English::Legendary Treasures Radiant Collection::RC4/RC25::Growlithe": {
       "market": 26.66,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy7-55::English::Ancient Origins::55/98::Cottonee": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy10-57::English::Fates Collide::57/124::Vullaby": {
       "market": 0.17,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw11-55::English::Legendary Treasures::55/113::Natu": {
       "market": 0.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-137::English::Unbroken Bonds::137/214::Togetic": {
-      "market": 1.01,
+      "market": 1.02,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv10-194::English::Destined Rivals::194/182::Misty's Lapras": {
-      "market": 19.97,
+      "market": 19.47,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me1-136::English::Mega Evolution::136/132::Shuckle": {
-      "market": 7.18,
+      "market": 7.07,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm12-31::English::Cosmic Eclipse::31/236::Tepig": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-226::English::Paldea Evolved::226/193::Maushold": {
       "market": 83.51,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv4-215::English::Paradox Rift::215/182::Cyclizar": {
-      "market": 6.64,
+      "market": 6.59,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3-204::English::Obsidian Flames::204/197::Houndour": {
-      "market": 10.85,
+      "market": 11.07,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv4-184::English::Paradox Rift::184/182::Dottler": {
-      "market": 5.11,
+      "market": 5.03,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh9tg-TG12::English::Brilliant Stars Trainer Gallery::TG12/TG30::Oranguru": {
-      "market": 2.59,
+      "market": 2.53,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-221::English::Scarlet & Violet::221/198::Starly": {
-      "market": 15.34,
+      "market": 15.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh7-192::English::Evolving Skies::192/203::Dragonite V": {
       "market": 460.22,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me3-95::English::Perfect Order::95/88::Espurr": {
-      "market": 4.16,
+      "market": 3.89,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard1-94::English::Expedition Base Set::94/165::Bulbasaur": {
       "market": 43.07,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swshp-SWSH260::English::Sword & Shield Promos::SWSH260/SWSH307::Charizard V": {
-      "market": 44.93,
+      "market": 44.38,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm12-3::English::Cosmic Eclipse::3/236::Gloom": {
       "market": 0.28,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "zsv10pt5-101::English::Black Bolt::101/86::Panpour": {
-      "market": 11.05,
+      "market": 11.06,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "rsv10pt5-89::English::White Flare::89/86::Leavanny": {
-      "market": 36.45,
+      "market": 36.43,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-221::English::Paldea Evolved::221/193::Paldean Wooper": {
       "market": 16.88,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "Simplified Chinese::Gem Pack Volume 2::06 15/15::Umbreon": {
       "market": 184.82,
@@ -420,212 +420,212 @@
     "neo4-26::English::Neo Destiny::26/105::Light Piloswine": {
       "market": 42.21,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "gym2-40::English::Gym Challenge::40/132::Erika's Clefairy": {
       "market": 21.88,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv4-196::English::Paradox Rift::196/182::Joltik": {
       "market": 22.83,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy8-18::English::BREAKthrough::18/162::Cyndaquil": {
-      "market": 1.39,
+      "market": 1.3,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv8pt5-1::English::Prismatic Evolutions::1/131::Exeggcute": {
-      "market": 0.07,
+      "market": 0.1,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm12-211::English::Cosmic Eclipse::211/236::Vileplume-GX": {
       "market": 141.31,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3-19::English::Obsidian Flames::19/197::Smoliv": {
       "market": 0.06,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12-39::English::Silver Tempest::39/195::Feebas": {
-      "market": 0.12,
+      "market": 0.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "pgo-51::English::Pokémon GO::51/78::Chansey": {
-      "market": 0.17,
+      "market": 0.18,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv6-187::English::Twilight Masquerade::187/167::Chansey": {
-      "market": 42.61,
+      "market": 42.02,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "pgo-13::English::Pokémon GO::13/78::Numel": {
-      "market": 0.23,
+      "market": 0.24,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex8-73::English::Deoxys::73/107::Slakoth": {
       "market": 1.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-168::English::Unified Minds::168/236::Slakoth": {
       "market": 0.3,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-160::English::Paldea Evolved::160/193::Slakoth": {
       "market": 0.14,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv8-212::English::Surging Sparks::212/191::Slakoth": {
-      "market": 9.83,
+      "market": 9.79,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy10-66::English::Fates Collide::66/124::Wigglytuff": {
       "market": 1.42,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex6-60::English::FireRed & LeafGreen::60/112::Cubone": {
       "market": 15.97,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex6-53::English::FireRed & LeafGreen::53/112::Bellsprout": {
-      "market": 4.01,
+      "market": 3.97,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-74::English::Aquapolis::74/147::Drowzee": {
       "market": 6.46,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard1-102::English::Expedition Base Set::102/165::Corsola": {
       "market": 3.83,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo4-91::English::Neo Destiny::91/105::Vulpix": {
-      "market": 20.65,
+      "market": 21.34,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo4-76::English::Neo Destiny::76/105::Phanpy": {
       "market": 5.06,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex13-75::English::Holon Phantoms::75/110::Phanpy": {
       "market": 1.1,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "gym2-94::English::Gym Challenge::94/132::Sabrina's Abra": {
       "market": 13.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3pt5-63::English::151::63/165::Abra": {
-      "market": 0.18,
+      "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5gg-GG42::English::Crown Zenith Galarian Gallery::GG42/GG70::Zeraora VMAX": {
-      "market": 27.88,
+      "market": 27.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm8-75::English::Lost Thunder::75/214::Mareep": {
       "market": 1.13,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "g1-RC10::English::Generations Radiant Collection::RC10/RC32::Dedenne": {
       "market": 22.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh4-77::English::Vivid Voltage::77/185::Dedenne": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh8-206::English::Fusion Strike::206/264::Snorlax": {
-      "market": 0.52,
+      "market": 0.51,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh4-131::English::Vivid Voltage::131/185::Snorlax": {
-      "market": 3.76,
+      "market": 3.73,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "pgo-55::English::Pokémon GO::55/78::Snorlax": {
-      "market": 1.53,
+      "market": 1.71,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh11-143::English::Lost Origin::143/196::Snorlax": {
-      "market": 2.84,
+      "market": 2.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5-109::English::Crown Zenith::109/159::Snorlax": {
-      "market": 2.86,
+      "market": 2.89,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-7::English::Unbroken Bonds::7/214::Gloom": {
       "market": 0.49,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3-227::English::Obsidian Flames::227/197::Poppy": {
-      "market": 2.7,
+      "market": 2.61,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-250::English::Scarlet & Violet::250/198::Jacq": {
-      "market": 4.37,
+      "market": 4.43,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv5-209::English::Temporal Forces::209/162::Bianca's Devotion": {
-      "market": 27.35,
+      "market": 27.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh9-162::English::Brilliant Stars::162/172::Honchkrow V": {
-      "market": 11.91,
+      "market": 11.73,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv6pt5-77::English::Shrouded Fable::77/64::Fraxure": {
-      "market": 16.53,
+      "market": 16.39,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "rsv10pt5-92::English::White Flare::92/86::Sawsbuck": {
-      "market": 33.39,
+      "market": 33.08,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "rsv10pt5-91::English::White Flare::91/86::Deerling": {
       "market": 19.07,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "Simplified Chinese::Gem Pack Vol. 3::04 07/07::Cubone": {
       "market": 203.55,
@@ -633,179 +633,179 @@
       "updatedAt": "2026/10/24"
     },
     "me2-104::English::Phantasmal Flames::104/94::Togedemaru": {
-      "market": 1.98,
+      "market": 1.99,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-210::English::Scarlet & Violet::210/198::Drowzee": {
-      "market": 46.7,
+      "market": 46.42,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv8-196::English::Surging Sparks::196/191::Larvesta": {
-      "market": 2.31,
+      "market": 2.51,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh8-270::English::Fusion Strike::270/264::Espeon VMAX": {
       "market": 340.99,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh5-155::English::Battle Styles::155/163::Tyranitar V": {
       "market": 225.14,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv6pt5-75::English::Shrouded Fable::75/64::Zorua": {
       "market": 21.87,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv5-167::English::Temporal Forces::167/162::Litten": {
-      "market": 37.91,
+      "market": 37.79,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv9-168::English::Journey Together::168/159::Furret": {
-      "market": 6.13,
+      "market": 6.22,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-147::English::Unbroken Bonds::147/214::Meowth": {
-      "market": 2.76,
+      "market": 2.85,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv10-203::English::Destined Rivals::203/182::Team Rocket's Meowth": {
-      "market": 17.25,
+      "market": 16.47,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12tg-TG09::English::Silver Tempest Trainer Gallery::TG09/TG30::Druddigon": {
-      "market": 4.36,
+      "market": 4.27,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5gg-GG01::English::Crown Zenith Galarian Gallery::GG01/GG70::Hisuian Voltorb": {
-      "market": 3.12,
+      "market": 3,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "svp-14::English::Scarlet & Violet Promos::14/215::Koraidon": {
-      "market": 4.98,
+      "market": 4.88,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3-209::English::Obsidian Flames::209/197::Lechonk": {
-      "market": 11.51,
+      "market": 11.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv4pt5-226::English::Paldean Fates::226/91::Pawmi": {
-      "market": 2.83,
+      "market": 2.91,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-209::English::Scarlet & Violet::209/198::Pawmot": {
-      "market": 8.63,
+      "market": 8.66,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv8-204::English::Surging Sparks::204/191::Mesprit": {
-      "market": 12.91,
+      "market": 13.05,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12tg-TG07::English::Silver Tempest Trainer Gallery::TG07/TG30::Rockruff": {
-      "market": 5.28,
+      "market": 5.34,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv1-222::English::Scarlet & Violet::222/198::Skwovet": {
-      "market": 8.81,
+      "market": 8.71,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh11tg-TG05::English::Lost Origin Trainer Gallery::TG05/TG30::Pikachu": {
-      "market": 40.7,
+      "market": 40.52,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-227::English::Paldea Evolved::227/193::Flamigo": {
-      "market": 11.76,
+      "market": 11.87,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "rsv10pt5-105::English::White Flare::105/86::Oshawott": {
-      "market": 73.94,
+      "market": 72.5,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-211::English::Paldea Evolved::211/193::Raichu": {
-      "market": 92.83,
+      "market": 92.95,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv5-52::English::Temporal Forces::52/162::Raichu": {
-      "market": 0.27,
+      "market": 0.26,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "zsv10pt5-117::English::Black Bolt::117/86::Musharna": {
-      "market": 9.15,
+      "market": 9.13,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "svp-51::English::Scarlet & Violet Promos::51/215::Snorlax": {
-      "market": 16.57,
+      "market": 16.64,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3pt5-166::English::151::166/165::Bulbasaur": {
-      "market": 55.28,
+      "market": 54.52,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv7-143::English::Stellar Crown::143/142::Bulbasaur": {
-      "market": 86.71,
+      "market": 86.86,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-196::English::Paldea Evolved::196/193::Sprigatito": {
       "market": 53.96,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5gg-GG10::English::Crown Zenith Galarian Gallery::GG10/GG70::Mew": {
-      "market": 65.59,
+      "market": 64.56,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5gg-GG23::English::Crown Zenith Galarian Gallery::GG23/GG70::Dunsparce": {
-      "market": 3.81,
+      "market": 3.59,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm2-114::English::Guardians Rising::114/145::Komala": {
       "market": 0.15,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-185::English::Unified Minds::185/236::Komala": {
       "market": 0.23,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "basep-49::English::Wizards Promos::49::Snorlax": {
       "market": 419.55,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xyp-XY148::English::XY Promos::XY148/XY211::Shaymin-EX": {
-      "market": 86.1,
+      "market": 85.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "vs1_jp-018::Japanese::Pokémon VS::018/141::Whitney's Furret": {
       "market": 65.63,
@@ -813,124 +813,124 @@
       "updatedAt": "2026/10/23"
     },
     "me04-053::English::Chaos Rising::053/086::Stunky": {
-      "market": 0.05,
+      "market": 0.06,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me3-90::English::Perfect Order::090/088::Rowlet": {
-      "market": 3.64,
+      "market": 3.71,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me2pt5-165::English::Ascended Heroes::165/217::Skitty": {
-      "market": 0.14,
+      "market": 0.17,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-49::English::Aquapolis::49/147::Gloom": {
       "market": 42.28,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me1-4::English::Mega Evolution::4/132::Exeggcute": {
       "market": 0.14,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me2pt5-175::English::Ascended Heroes::175/217::Larry's Komala": {
-      "market": 0.07,
+      "market": 0.09,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "smp-SM41::English::Sun & Moon Promos::SM41::Komala": {
       "market": 1.23,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh11-149::English::Lost Origin::149/196::Komala": {
-      "market": 0.14,
-      "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
-    },
-    "sv9-129::English::Journey Together::129/159::Komala": {
-      "market": 0.16,
-      "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
-    },
-    "me30-001::English::ME: 30th Celebration::001/128::Exeggcute": {
       "market": 0.13,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
+    },
+    "sv9-129::English::Journey Together::129/159::Komala": {
+      "market": 0.15,
+      "source": "TCGplayer",
+      "updatedAt": "2026/10/24"
+    },
+    "me30-001::English::ME: 30th Celebration::001/128::Exeggcute": {
+      "market": 0.15,
+      "source": "TCGplayer",
+      "updatedAt": "2026/10/24"
     },
     "me30-027::English::ME: 30th Celebration::027/128::Pikachu": {
-      "market": 0.86,
+      "market": 1.06,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me30-043::English::ME: 30th Celebration::043/128::Pikachu": {
-      "market": 0.79,
+      "market": 0.87,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me30-091::English::ME: 30th Celebration::091/128::Umbreon": {
-      "market": 0.24,
+      "market": 0.31,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me30-113::English::ME: 30th Celebration::113/128::Meowth": {
-      "market": 0.2,
+      "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me30-119::English::ME: 30th Celebration::119/128::Snorlax": {
       "market": 0.24,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me55-131::English::ME: 30th Celebration::131/128::Lapras": {
-      "market": 5.36,
+      "market": 5.33,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "me55-144::English::ME: 30th Celebration::144/128::Meowth": {
-      "market": 8.21,
+      "market": 8.18,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-88::sm11-88::English::Unified Minds::88/236::Munna": {
-      "market": 3.43,
+      "market": 3.44,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv09-120::sv09-120::English::Journey Together::120/159::Dunsparce": {
-      "market": 2.06,
+      "market": 1.87,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12-181::swsh12-181::English::Silver Tempest::181/195::Skuntank V": {
-      "market": 10.85,
+      "market": 10.84,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv6-188::sv6-188::English::Twilight Masquerade::188/167::Eevee": {
-      "market": 69.45,
+      "market": 69.58,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "zsv10pt5-116::zsv10pt5-116::English::Black Bolt::116/086::Munna": {
       "market": 16.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv2-112::sv2-112::English::Paldea Evolved::112/193::Makuhita": {
       "market": 0.13,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "zsv10pt5-37::zsv10pt5-37::English::Black Bolt::037/086::Solosis": {
       "market": 0.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "151C2-171::Simplified Chinese::Collect 151: Hope::171/151::Pikachu": {
       "market": 610,
@@ -938,239 +938,239 @@
       "updatedAt": "2026/10/24"
     },
     "me55-152::English::ME: 30th Celebration::152/128::Mew ex": {
-      "market": 86.56,
+      "market": 86.37,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw4-59::English::Next Destinies::59/99::Musharna": {
       "market": 1.8,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh8-122::English::Fusion Strike::122/264::Musharna": {
       "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh1-88::English::Sword & Shield::088/202::Musharna": {
       "market": 0.27,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy4-40::English::Phantom Forces::40/119::Musharna": {
-      "market": 0.39,
+      "market": 0.4,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm11-89::English::Unified Minds::89/236::Musharna": {
       "market": 0.29,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw1-49::English::Black & White::49/114::Musharna": {
-      "market": 0.59,
+      "market": 0.57,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw10-40::English::Plasma Blast::40/101::Musharna": {
       "market": 0.35,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw7-69::English::Boundaries Crossed::69/149::Musharna": {
       "market": 0.75,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh8-252::English::Fusion Strike::252/264::Sandaconda V": {
       "market": 4.83,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex3-51::English::EX Dragon::51/97::Barboach": {
       "market": 2.46,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12-101::English::Silver Tempest::101/195::Stonjourner": {
       "market": 0.05,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-66::English::Aquapolis::66/147::Wooper": {
       "market": 95.49,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex6-19::English::FireRed & LeafGreen::19/112::Chansey": {
       "market": 8.46,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh8-65::English::Fusion Strike::065/264::Clamperl": {
       "market": 0.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm7-41::English::Celestial Storm::41/168::Clamperl": {
-      "market": 0.32,
+      "market": 0.33,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex12-51::English::Legend Maker::51/92::Clamperl": {
       "market": 0.79,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy5-49::English::Primal Clash::49/160::Clamperl": {
       "market": 0.23,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ex5-58::English::Hidden Legends::58/101::Clamperl": {
       "market": 0.5,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp4-64::English::Great Encounters::64/106::Clamperl": {
       "market": 0.68,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh10-120::English::Astral Radiance::120/189::Hoothoot": {
       "market": 0.12,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "bw11-107::English::Legendary Treasures::107/113::Bouffalant": {
-      "market": 3.71,
+      "market": 3.76,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy8-124::English::BREAKthrough::124/162::Swablu": {
       "market": 0.4,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp2-102::English::Mysterious Treasures::102/123::Spheal": {
       "market": 1.2,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm12-226::English::Cosmic Eclipse::226/236::Mega Lopunny & Jigglypuff-GX": {
       "market": 286.14,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo1-100::English::Neo Genesis::100/111::Double Gust": {
       "market": 3.56,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "pop2-15::English::POP Series 2::15/17::Phanpy": {
       "market": 19.27,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm10-79::English::Unbroken Bonds::79/214::Espurr": {
       "market": 0.42,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard2-109::English::Aquapolis::109/147::Smeargle": {
       "market": 13.49,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard3-89::English::Skyridge::89/144::Raticate": {
       "market": 13.28,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard3-95::English::Skyridge::95/144::Seel": {
       "market": 25.39,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard3-96::English::Skyridge::96/144::Shuckle": {
       "market": 30.7,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv10-29::English::Destined Rivals::029/182::Ponyta": {
       "market": 0.18,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv10-54::English::Destined Rivals::054/182::Clamperl": {
       "market": 0.11,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swshp-SWSH304::English::Sword & Shield Promos::SWSH304::Arcanine": {
       "market": 56.63,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm6-45::English::Forbidden Light::45/131::Meowstic": {
       "market": 0.96,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp4-82::English::Great Encounters::82/106::Slowpoke": {
-      "market": 8.87,
+      "market": 8.88,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "neo1-36::English::Neo Genesis::36/111::Gloom": {
-      "market": 6.06,
+      "market": 6.1,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sv3pt5-44::English::151::044/165::Gloom": {
-      "market": 0.2,
+      "market": 0.22,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "xy8-80::English::BREAKthrough::80/162::Swinub": {
       "market": 0.35,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "ecard3-108::English::Skyridge::108/144::Swinub": {
       "market": 18.39,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm4-19::English::Crimson Invasion::19/111::Swinub": {
       "market": 0.31,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp6-123::English::Legends Awakened::123/146::Swinub": {
       "market": 0.54,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "dp2-18::English::Mysterious Treasures::18/123::Uxie": {
       "market": 29.08,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "sm12-123::English::Cosmic Eclipse::123/236::Rockruff": {
       "market": 0.41,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "swsh12pt5-41::English::Crown Zenith::041/159::Luxio": {
-      "market": 0.21,
+      "market": 0.19,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     },
     "pop2-12::English::POP Series 2::12/17::Bulbasaur": {
       "market": 49.55,
       "source": "TCGplayer",
-      "updatedAt": "2026/10/23"
+      "updatedAt": "2026/10/24"
     }
   }
 }
