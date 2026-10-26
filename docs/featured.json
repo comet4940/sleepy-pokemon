@@ -1,5 +1,5 @@
 {
-  "showing": "dedenne-generations-radiant-collection-rc10-rc32",
+  "showing": "meowth-me-30th-celebration-144-128",
   "current": {
     "startsOn": "2026-10-25",
     "cards": [
@@ -18,5 +18,10 @@
     ]
   },
   "upcoming": null,
-  "history": []
+  "history": [
+    {
+      "week": "2026-10-25",
+      "card": "meowth-me-30th-celebration-144-128"
+    }
+  ]
 }
