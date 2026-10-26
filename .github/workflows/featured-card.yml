@@ -2,8 +2,12 @@ name: Rotate featured sleeper
 
 on:
   schedule:
-    # Sunday night Pacific, so the week starts with a fresh card: 05:00 UTC Monday is 9 PM PST / 10 PM PDT.
-    - cron: "0 5 * * 1"
+    # Sunday night Pacific, so the week starts with a fresh card: 05:17 UTC Monday is 9:17 PM PST / 10:17 PM PDT.
+    # Off the hour, because GitHub delays or drops scheduled runs at :00 (the first one, Oct 26, never ran). The
+    # second run, 4 hours later (still the same week in Pacific time), catches a dropped first one; when the first
+    # did run it finds the same card and commits nothing.
+    - cron: "17 5 * * 1"
+    - cron: "17 9 * * 1"
   workflow_dispatch:
 
 permissions:
