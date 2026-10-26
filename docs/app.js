@@ -59,6 +59,8 @@ const state = {
   renderToken: 0,
   showAllCards: false,
   suggestionLookupUsed: false,
+  // Where the open suggestion form was opened from, so a submission says which entry point it came through.
+  suggestionSource: "unknown",
   catalogLoadFailed: false,
   modalFilterChanges: 0,
   drawerCloseMethod: "escape",
@@ -225,8 +227,7 @@ function bindEvents() {
         event.preventDefault();
         openSuggestionDialog();
       }
-      trackEvent("suggestion_opened", {
-        interaction_source: link.dataset.suggestionSource || "unknown",
+      trackSuggestionOpened(link.dataset.suggestionSource || "unknown", {
         has_active_search: Boolean(state.filters.search),
         result_count: getFilteredCards().length,
       });
@@ -239,7 +240,7 @@ function bindEvents() {
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     openSuggestionDialog();
-    trackEvent("suggestion_opened", { interaction_source: "global_header" });
+    trackSuggestionOpened("global_header");
   });
   bind(elements.closeSuggestionButton, "click", closeSuggestionDialog);
   bind(elements.suggestionDialog, "click", (event) => {
@@ -308,13 +309,18 @@ function bindEvents() {
   });
 }
 
+function trackSuggestionOpened(interactionSource, params = {}) {
+  state.suggestionSource = interactionSource;
+  trackEvent("suggestion_opened", { interaction_source: interactionSource, ...params });
+}
+
 function applyInitialSearch() {
   const params = new URLSearchParams(window.location.search);
   const suggest = params.get("suggest");
   if (suggest && elements.suggestionDialog) {
     openSuggestionDialog();
     // Each form open is tracked once, here: ?suggest=header comes from the header pill, anything else is a shared or bookmarked link.
-    trackEvent("suggestion_opened", { interaction_source: suggest === "header" ? "global_header" : "suggest_link" });
+    trackSuggestionOpened(suggest === "header" ? "global_header" : "suggest_link");
     const url = new URL(window.location.href);
     url.searchParams.delete("suggest");
     window.history.replaceState(window.history.state, "", url);
@@ -624,6 +630,7 @@ async function handleSuggestionSubmit(event) {
     selection_method: elements.suggestionSelected.hidden ? "manual" : "catalog_lookup",
     lookup_used: state.suggestionLookupUsed,
     has_notes: Boolean(elements.suggestionNotes.value.trim()),
+    interaction_source: state.suggestionSource,
   };
   const endpoint = elements.suggestionForm.dataset.emailEndpoint;
   if (!endpoint || endpoint === "EMAIL_FORM_ENDPOINT_PLACEHOLDER") {

@@ -21,7 +21,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 
 | Page type | Surface |
 | --- | --- |
-| `home` | Homepage, featured sleeper, recently added cards, and homepage suggestion prompt |
+| `home` | Homepage, featured sleeper, and recently added cards |
 | `collection` | Search results, browse grid, filters, sorting, and collection suggestion prompt |
 | `guides-index` | Collector guides directory |
 | `guide` | Individual editorial guide |
@@ -78,12 +78,12 @@ Search text is intentionally excluded. `query_length` is the only query-level pa
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `suggestion_opened` | The suggestion dialog opens. The header Suggest pill opens it in place on the homepage and collection, and elsewhere links to `collection/?suggest=header`; both are tracked when the dialog opens as `interaction_source: global_header`. Any other `?suggest=` link (shared or bookmarked) is tracked as `suggest_link` | `interaction_source`, `has_active_search` and `result_count` (in-page suggestion links only) |
+| `suggestion_opened` | The suggestion dialog opens. The header Suggest pill opens it in place on the homepage and collection, and elsewhere links to `collection/?suggest=header`; both are tracked when the dialog opens as `interaction_source: global_header`. Any other `?suggest=` link (shared or bookmarked) is tracked as `suggest_link`. On the collection, the prompt shown under search results ("Not seeing your snoozer?") is `collection_search`. The homepage's "Community nap watch" block (`homepage`) was removed on 2026-10-26 in favour of the header pill | `interaction_source`, `has_active_search` and `result_count` (in-page suggestion links only) |
 | `suggestion_lookup_completed` | An external card lookup returns or fails | `lookup_type`, `lookup_outcome`, `result_count` |
 | `suggestion_card_selected` | A lookup result is selected | card parameters |
 | `suggestion_card_removed` | A selected lookup result is removed | none beyond shared parameters |
-| `suggestion_submitted` | Formspree accepts the suggestion | `selection_method`, `lookup_used`, `has_notes` |
-| `suggestion_submit_failed` | Submission cannot be delivered | `selection_method`, `lookup_used`, `has_notes`, `error_type` |
+| `suggestion_submitted` | Formspree accepts the suggestion | `selection_method`, `lookup_used`, `has_notes`, `interaction_source` (where the form was opened from, as on `suggestion_opened`) |
+| `suggestion_submit_failed` | Submission cannot be delivered | `selection_method`, `lookup_used`, `has_notes`, `interaction_source`, `error_type` |
 
 Allowed values:
 
@@ -182,7 +182,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | Is the filter drawer used? | Adoption: users with `filters_opened` ÷ collection page-view users. Success: `filters_modal_applied` ÷ (`filters_modal_applied` + `filters_modal_bounced`), with `close_method = show_results` as the clearest signal. Drawer vs chip row: `filter_changed` by `interaction_source`. Segment by device |
 | How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
-| Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics |
+| Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions |
 | Do creator links earn attention? | `coffee_clicked` and `studio_link_clicked` by page type |
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
