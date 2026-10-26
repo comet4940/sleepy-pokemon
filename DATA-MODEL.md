@@ -123,7 +123,7 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 | `showing` | The card on the homepage now. Written by the rotation, not by hand |
 | `history` | Every week's featured card (`week` is the Sunday it went up), newest last. A record to look back on |
 
-- **The rotation runs itself.** `featured-card.yml` runs `scripts/rotate-featured.mjs` every Sunday night (05:00 UTC Monday), regenerates the homepage and deploys. When `current` runs out it switches to `upcoming`; with nothing upcoming it loops back to the first card.
+- **The rotation runs itself.** `featured-card.yml` runs `scripts/rotate-featured.mjs` every Sunday night (05:17 UTC Monday, with a second try at 09:17 UTC in case GitHub drops the first), regenerates the homepage and deploys. When `current` runs out it switches to `upcoming`; with nothing upcoming it loops back to the first card.
 - **A reminder comes in time.** With three weeks left in the batch and nothing upcoming, the workflow opens a GitHub issue asking for the next batch.
 - **Adding the next batch:** put the card slugs (the `cards/<slug>/` part of a card page URL) in `upcoming.cards`. To replace the list early instead, set `current` to the new cards with `startsOn` set to the coming Sunday.
 - The validator checks every slug is a published card and `startsOn` is a Sunday.
