@@ -3,6 +3,33 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "swsh6-189",
+      "tcgdexId": "",
+      "name": "Caitlin",
+      "pokemon": "Caitlin",
+      "setName": "Chilling Reign",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh6",
+      "number": "189/198",
+      "rarity": "Rare Ultra",
+      "language": "English",
+      "artist": "En Morikura",
+      "imageSmall": "https://images.pokemontcg.io/swsh6/189.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh6/189_hires.png",
+      "setReleaseDate": "2021/06/18",
+      "notes": "User-provided card image; details confirmed against the Pokemon TCG API card swsh6-189.",
+      "moods": [
+        "Sleepy Trainers",
+        "Couch & Cushion"
+      ],
+      "whyItBelongs": "Caitlin reclines on soft cushions, one eye squeezed shut and a hand raised over her mouth in a yawn. The pink-and-lilac illustration feels like a quiet pause between battles. She’s a Trainer rather than a sleeping Pokémon, but this unmistakably drowsy moment earns her a spot in the sleepy-trainer corner of the collection.",
+      "createdAt": "2026-10-27T00:00:00.000Z",
+      "updatedAt": "2026-10-27T00:00:00.000Z",
+      "tcgplayerProductId": 241821,
+      "tcgplayerGroupId": 2807,
+      "priceType": "Holofoil"
+    },
+    {
       "apiId": "",
       "tcgdexId": "",
       "name": "Growlithe",
