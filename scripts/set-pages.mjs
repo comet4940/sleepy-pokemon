@@ -116,7 +116,7 @@ ${hub.cards.slice(0, 3).map((card, cardIndex) => {
             <div class="guide-directory-copy">
               <p class="eyebrow">${escapeHtml(describeHub(hub))}</p>
               <h2><a href="${escapeAttribute(hub.slug)}/" ${link}>${escapeHtml(hub.name)}</a></h2>
-              ${hub.intro ? `<p>${escapeHtml(hub.intro)}</p>` : ""}
+${hub.intro ? `              <p>${escapeHtml(hub.intro)}</p>` : ""}
               <a class="guide-read-link" href="${escapeAttribute(hub.slug)}/" ${link}>See the sleepers <span aria-hidden="true">→</span></a>
             </div>
           </article>`;
