@@ -71,12 +71,10 @@
       "setReleaseDate": "2013/11/06",
       "notes": "User-provided card image; details confirmed against the Pokemon TCG API card bw11-94.",
       "priceType": "Normal",
-      "moods": [
-        "Cameo Sleepers"
-      ],
+      "moods": [],
       "whyItBelongs": "In a cave full of flustered, squabbling Gible, one sneaky little guy at the top center has quietly slipped away for a nap. Everyone else is sweating and sputtering below, and he’s still getting his rest.",
       "createdAt": "2026-10-27T21:59:45.000Z",
-      "updatedAt": "2026-10-27T21:59:45.000Z",
+      "updatedAt": "2026-10-27T22:07:04.000Z",
       "tcgplayerProductId": 85704,
       "tcgplayerGroupId": 1409,
       "slug": "gible-legendary-treasures-94-113"
