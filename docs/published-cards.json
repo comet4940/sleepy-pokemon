@@ -3,6 +3,34 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "swsh8-257",
+      "tcgdexId": "",
+      "name": "Greedent V",
+      "pokemon": "Greedent",
+      "setName": "Fusion Strike",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh8",
+      "number": "257/264",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "Saya Tsuruta",
+      "imageSmall": "https://images.pokemontcg.io/swsh8/257.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh8/257_hires.png",
+      "setReleaseDate": "2021/11/12",
+      "notes": "User-provided card image; details confirmed against the Pokemon TCG API card swsh8-257.",
+      "moods": [
+        "Nap Watch",
+        "Cameo Sleepers",
+        "Food Coma"
+      ],
+      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
+      "createdAt": "2026-10-27T22:43:34.000Z",
+      "updatedAt": "2026-10-27T22:43:34.000Z",
+      "tcgplayerProductId": 253157,
+      "tcgplayerGroupId": 2906,
+      "priceType": "Holofoil"
+    },
+    {
       "apiId": "sv5-171",
       "tcgdexId": "",
       "name": "Reuniclus",
