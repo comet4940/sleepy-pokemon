@@ -384,14 +384,14 @@
   gap: 22px;
 }
 
-.card-page-shell .topbar-actions > a:not(.header-cta) {
+.card-page-shell .site-menu > a:not(.header-cta) {
   color: var(--detail-muted);
   font-size: .92rem;
   text-decoration: none;
 }
 
-.card-page-shell .topbar-actions > a:not(.header-cta):hover,
-.card-page-shell .topbar-actions > a:not(.header-cta):focus-visible {
+.card-page-shell .site-menu > a:not(.header-cta):hover,
+.card-page-shell .site-menu > a:not(.header-cta):focus-visible {
   color: var(--detail-cream);
 }
 
@@ -425,6 +425,39 @@
   color: var(--detail-yellow);
 }
 
+/* Wider screens: the menu's links sit in the header and ☰ is hidden (site-header.js; phones below). */
+.card-page-shell .site-menu {
+  display: contents;
+}
+
+.card-page-shell .site-menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  place-content: center;
+  gap: 5px;
+  padding: 0;
+  border: 1px solid rgba(255, 247, 232, .22);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--detail-cream);
+  cursor: pointer;
+}
+
+.card-page-shell .site-menu-toggle > span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.card-page-shell .site-menu-toggle:hover,
+.card-page-shell .site-menu-toggle:focus-visible,
+.card-page-shell .site-menu-toggle[aria-expanded="true"] {
+  border-color: var(--detail-pink);
+}
+
 .card-page-shell .header-cta:hover,
 .card-page-shell .header-cta:focus-visible {
   border-color: var(--detail-pink);
@@ -452,20 +485,16 @@
 }
 
 @media (max-width: 760px) {
+  /* Phones: logo and ☰ on top, full-width search below; ☰ opens a menu with Browse, Guides, About and Suggest
+     (matches home-v3.css). */
   .card-page-shell .topbar {
-    padding: 16px 18px;
-  }
-
-  .card-page-shell .topbar-actions > a:not(.header-cta) {
-    display: inline-flex;
-  }
-
-  /* Phones: logo + Suggest on top, full-width search next, then the quiet nav links (matches home-v3.css). */
-  .card-page-shell .topbar {
+    position: relative;
+    z-index: 20;
     display: grid;
-    grid-template-columns: auto auto auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 14px 18px;
+    gap: 14px 12px;
+    padding: 16px 18px;
   }
 
   .card-page-shell .topbar-actions {
@@ -473,7 +502,7 @@
   }
 
   .card-page-shell .brand-lockup {
-    grid-column: 1 / 4;
+    grid-column: 1;
     grid-row: 1;
     min-width: 0;
     gap: 10px;
@@ -490,10 +519,10 @@
     height: 44px;
   }
 
-  .card-page-shell .header-cta {
-    grid-column: 4;
+  .card-page-shell .site-menu-toggle {
+    display: grid;
+    grid-column: 2;
     grid-row: 1;
-    justify-self: end;
   }
 
   .card-page-shell .header-search {
@@ -503,16 +532,45 @@
     min-width: 0;
   }
 
-  .card-page-shell .topbar-actions > a:not(.header-cta) {
-    grid-row: 3;
-    align-items: center;
-    min-height: 44px;
+  .card-page-shell .site-menu {
+    position: absolute;
+    top: 68px;
+    right: 14px;
+    z-index: 30;
+    display: none;
+    min-width: 220px;
+    padding: 8px;
+    border: 1px solid var(--detail-line);
+    border-radius: 16px;
+    background: var(--detail-panel);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .6);
   }
 
-  .card-page-shell .header-cta {
-    min-height: 44px;
-    padding: 9px 13px;
-    font-size: .78rem;
+  .card-page-shell .site-menu-toggle[aria-expanded="true"] + .site-menu {
+    display: grid;
+  }
+
+  .card-page-shell .site-menu > a:not(.header-cta) {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 10px;
+    color: var(--detail-cream);
+    font-size: 1.02rem;
+  }
+
+  .card-page-shell .site-menu > .header-cta {
+    margin-top: 6px;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 10px;
+    box-shadow: none;
+    font-size: 1.02rem;
+  }
+
+  .card-page-shell .site-menu > .header-cta::after {
+    display: none;
   }
 
   .card-detail-dialog {

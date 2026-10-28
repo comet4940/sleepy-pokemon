@@ -1,3 +1,7 @@
+import { assetUrl } from "./build-helpers.mjs";
+
+// The header on every page. Wider screens show Browse, Guides, About and Suggest in the header; phones put them
+// behind the ☰ button (site-header.js opens it; the CSS for each layout is in home-v3.css and card-detail-v3.css).
 export function renderSiteHeader(basePath = "") {
   return `
       <header class="topbar">
@@ -29,11 +33,17 @@ export function renderSiteHeader(basePath = "") {
               </button>
             </label>
           </form>
-          <a href="${basePath}collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
-          <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
-          <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
-          <a class="header-cta" href="${basePath}collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
+          <button class="site-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="siteMenu">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
+          <div class="site-menu" id="siteMenu">
+            <a href="${basePath}collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
+            <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
+            <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
+            <a class="header-cta" href="${basePath}collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
+          </div>
         </nav>
       </header>
+      <script defer src="${assetUrl(basePath, "site-header.js")}"></script>
 `.trim();
 }
