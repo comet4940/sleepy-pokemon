@@ -100,8 +100,8 @@ a { color: inherit; }
 .collection-page-main .collection-panel { padding-top: clamp(20px, 2vw, 28px); }
 .collection-page-main .active-filter-chip[hidden],
 .collection-page-main .clear-filters-link[hidden] { display: none !important; }
-.collection-page-main #downloadChecklistButton { display: inline-flex; flex: 0 0 auto; width: auto; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--pink); color: #17121b; font-family: inherit; font-size: .88rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background 160ms ease; }
-.collection-page-main #downloadChecklistButton:hover:not(:disabled), .collection-page-main #downloadChecklistButton:focus-visible:not(:disabled) { background: #ff82ac; color: #17121b; }
+.collection-page-main #downloadChecklistButton { display: inline-flex; flex: 0 0 auto; width: auto; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--cream); color: #17121b; font-family: inherit; font-size: .88rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background 160ms ease; }
+.collection-page-main #downloadChecklistButton:hover:not(:disabled), .collection-page-main #downloadChecklistButton:focus-visible:not(:disabled) { background: #ffffff; color: #17121b; }
 .collection-page-main #downloadChecklistButton:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
 .collection-controls { display: grid; gap: 0; min-width: 0; max-width: 100%; margin-bottom: 4px; padding: 0; border: 0; }
 /* The count and the checklist button sit in one slim line above the grid (no title row; the h1 is for screen readers). */
