@@ -47,6 +47,8 @@ const requiredAppEvents = [
   "checklist_downloaded",
 ];
 
+await checkChromeStyles();
+
 const htmlFiles = (await walk(DOCS_DIR)).filter((path) => path.endsWith(".html"));
 const pageTypeCounts = new Map();
 
@@ -59,6 +61,8 @@ for (const path of htmlFiles) {
   if (!html.includes(`analytics.js?v=${ASSET_VERSIONS["analytics.js"]}`)) errors.push(`${label}: analytics script is not versioned at v${ASSET_VERSIONS["analytics.js"]}`);
   // The header's phone menu (☰) only opens with site-header.js.
   if (!html.includes(`site-header.js?v=${ASSET_VERSIONS["site-header.js"]}`)) errors.push(`${label}: header menu script is missing or not versioned at v${ASSET_VERSIONS["site-header.js"]}`);
+  // The header and footer are styled by site-chrome.css alone (checkChromeStyles), loaded on every page.
+  if (!html.includes(`site-chrome.css?v=${ASSET_VERSIONS["site-chrome.css"]}`)) errors.push(`${label}: site-chrome.css is missing or not versioned at v${ASSET_VERSIONS["site-chrome.css"]}`);
   // Price slots stay empty unless prices.js fills them, and each must name a published card.
   const priceSlots = [...html.matchAll(/data-price-for="([^"]*)"/g)].map(([, id]) => id.replaceAll("&amp;", "&").replaceAll("&#39;", "'").replaceAll("&quot;", '"'));
   if (priceSlots.length && !html.includes("prices.js?v=")) errors.push(`${label}: has price slots but doesn't load prices.js`);
@@ -451,4 +455,17 @@ function decodeHtmlAttribute(value) {
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&");
+}
+
+// Only site-chrome.css may style the site header and footer, so they look the same on every page type.
+async function checkChromeStyles() {
+  const chromeSelector = /\.(topbar|site-footer|footer-[a-z-]+|brand-lockup|brand-byline|sparkle-mark|header-search|header-cta|site-menu)\b/;
+  for (const file of (await readdir(DOCS_DIR)).filter((name) => name.endsWith(".css") && name !== "site-chrome.css")) {
+    const css = (await readFile(join(DOCS_DIR, file), "utf8")).replace(/\/\*[\s\S]*?\*\//g, "");
+    for (const [, selector] of css.matchAll(/([^{}]+)\{/g)) {
+      if (!selector.trim().startsWith("@") && chromeSelector.test(selector)) {
+        errors.push(`docs/${file}: styles the header or footer (${selector.trim().split("\n")[0]}); those rules belong in site-chrome.css`);
+      }
+    }
+  }
 }

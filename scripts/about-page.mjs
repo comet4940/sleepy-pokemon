@@ -49,7 +49,7 @@ ${renderHead({
   image,
   jsonLd,
   pageType: "about",
-  stylesheets: ["styles.css", "home-v3.css", "card-detail-v3.css", "about.css"],
+  stylesheets: ["styles.css", "home-v3.css", "card-detail-v3.css", "about.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="about" data-guide-path="cards.json" data-site-root="../">

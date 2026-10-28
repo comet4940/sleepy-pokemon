@@ -11,12 +11,13 @@ export const PRICES_PATH = "docs/prices.json";
 // Cache-busting versions for every CSS and JS file. Bump a number here and run the generators;
 // generated pages and the hand-written homepage and collection page all pick it up.
 export const ASSET_VERSIONS = {
-  "styles.css": 6,
-  "home-v3.css": 25,
+  "styles.css": 7,
+  "site-chrome.css": 1,
+  "home-v3.css": 26,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 11,
-  "guides.css": 4,
-  "about.css": 3,
+  "card-detail-v3.css": 13,
+  "guides.css": 5,
+  "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
   "app.js": 57,

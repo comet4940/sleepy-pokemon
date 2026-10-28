@@ -159,8 +159,6 @@ ${renderHead({
   image,
   ogType: "article",
   twitter: true,
-  // Card pages don't load the site fonts yet (to-do: shared header/footer styling).
-  fonts: false,
   jsonLd,
   pageType: "card",
   analyticsData: {
@@ -171,7 +169,7 @@ ${renderHead({
     "card-rarity": card.rarity || "",
     "card-language": card.language || "",
   },
-  stylesheets: ["styles.css", "card-detail-v3.css"],
+  stylesheets: ["styles.css", "card-detail-v3.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="card-page">
