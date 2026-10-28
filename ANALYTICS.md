@@ -68,7 +68,7 @@ Filter `interaction_source` values say where the change was made:
 | --- | --- |
 | `filter_changed`, `filter_facet_*` | `mood_chip` (chip row), `price_chip` (the *under $5* chip), `filter_drawer` (a drawer pill), `active_filter_chip` (the × on an active filter chip) |
 | `sort_changed` | `filter_drawer` |
-| `filters_cleared` | `filter_drawer_reset` (drawer Reset), `filter_drawer_no_matches` (the drawer's "No matches · Reset filters" button), `collection_clear_all` (Clear all, beside the result count), `collection_empty_state` (the empty results button) |
+| `filters_cleared` | `filter_drawer_reset` (drawer Reset), `filter_drawer_no_matches` (the drawer's "No matches · Reset filters" button), `collection_clear_all` (Show all, beside the result count), `collection_empty_state` (the empty results button) |
 
 `close_method` says how the drawer was closed: `show_results` (the "Show N sleepers" button), `close_button` (×), `backdrop`, `escape`, or `browser_back` (the browser's Back button while the drawer is open).
 
