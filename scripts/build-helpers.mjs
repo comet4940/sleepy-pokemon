@@ -20,7 +20,7 @@ export const ASSET_VERSIONS = {
   "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 57,
+  "app.js": 58,
   "site-header.js": 1,
 };
 

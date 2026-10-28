@@ -669,7 +669,9 @@ function applyPrices(prices) {
 async function loadPublishedCards() {
   try {
     const guidePath = document.body.dataset.guidePath || "published-cards.json";
-    const response = await fetch(guidePath, { cache: "no-store" });
+    // no-cache rather than no-store: the browser still checks for a newer file on every visit, but an unchanged one
+    // comes back as "not modified" instead of downloading again.
+    const response = await fetch(guidePath, { cache: "no-cache" });
     if (!response.ok) throw new Error(`Guide load failed with ${response.status}`);
     const payload = await response.json();
     const cards = Array.isArray(payload) ? payload : payload.cards;

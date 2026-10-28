@@ -71,6 +71,8 @@ async function writeGuidePages(guideList) {
     const dir = `${GUIDES_DIR}/${guide.slug}`;
     await mkdir(dir, { recursive: true });
     await writeFile(`${dir}/index.html`, renderGuidePage(guide), "utf8");
+    // The lightbox and checklist only need this guide's cards, so the page loads this subset instead of the full catalog.
+    await writeFile(`${dir}/cards.json`, `${JSON.stringify({ cards: guide.cards.map(({ card }) => card) }, null, 2)}\n`, "utf8");
   }));
 }
 
@@ -215,7 +217,7 @@ ${renderHead({
   stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css", "site-chrome.css"],
 })}
   </head>
-  <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-site-root="../../">
+  <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="cards.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
       ${renderSiteHeader("../../")}
 
