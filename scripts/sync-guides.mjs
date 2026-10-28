@@ -138,7 +138,7 @@ ${renderHead({
   canonicalUrl: `${SITE_URL}/guides/`,
   image: guideList[0]?.cards[0]?.card.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`,
   pageType: "guides-index",
-  stylesheets: ["styles.css", "home-v3.css", "guides.css"],
+  stylesheets: ["styles.css", "home-v3.css", "guides.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="guides-index">
@@ -212,7 +212,7 @@ ${renderHead({
   twitter: true,
   jsonLd,
   pageType: "guide",
-  stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css"],
+  stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="guide-page" data-guide-slug="${escapeAttribute(guide.slug || "")}" data-guide-title="${escapeAttribute(title)}" data-guide-path="../../published-cards.json" data-site-root="../../">

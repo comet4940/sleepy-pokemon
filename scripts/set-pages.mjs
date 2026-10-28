@@ -81,7 +81,7 @@ ${renderHead({
   canonicalUrl: `${SITE_URL}/sets/`,
   image: hubs[0]?.cards[0]?.imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`,
   pageType: "sets-index",
-  stylesheets: ["styles.css", "home-v3.css", "guides.css"],
+  stylesheets: ["styles.css", "home-v3.css", "guides.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="sets-index">
@@ -161,7 +161,7 @@ ${renderHead({
   twitter: true,
   jsonLd,
   pageType: "set",
-  stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css"],
+  stylesheets: ["styles.css", "home-v3.css", "guides.css", "card-detail-v3.css", "site-chrome.css"],
 })}
   </head>
   <body data-app-mode="set-page" data-guide-path="cards.json" data-site-root="../../">

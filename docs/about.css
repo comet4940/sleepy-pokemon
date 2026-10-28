@@ -3,14 +3,6 @@
   background: var(--night);
 }
 
-.about-shell .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: rgba(17, 17, 26, .96);
-  backdrop-filter: blur(14px);
-}
-
 .about-main {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
@@ -355,8 +347,4 @@
 }
 
 /* Phones: the header scrolls away with the page; its ☰ menu holds the links (home-v3.css). */
-@media (max-width: 800px) {
-  .about-shell .topbar {
-    position: relative;
-  }
-}
+
