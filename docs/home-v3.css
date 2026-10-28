@@ -76,8 +76,9 @@ a { color: inherit; }
 .mood-chips { display: flex; flex-wrap: wrap; gap: 12px; }
 .mood-chip { position: relative; min-height: 46px; padding: 0 18px; border: 1px solid rgba(169,147,255,.28); border-radius: 24px; background: #191827; color: var(--cream); font-size: .9rem; }
 .mood-chip:hover, .mood-chip:focus-visible { border-color: var(--pink); background: #211e35; color: var(--cream); }
-.mood-chip.is-active { border-color: var(--pink); background: #191827; color: var(--cream); box-shadow: 0 4px 0 rgba(243, 107, 155, .16); }
-.mood-chip.is-active::after { content: ""; position: absolute; inset: -5px -7px; border: 3px solid var(--pink); border-radius: 48% 52% 51% 49%; transform: rotate(-4deg); pointer-events: none; }
+/* A chosen chip is filled pink like the other active filters (.active-filter-chip); the hand-drawn ring is Suggest's. */
+.mood-chip.is-active { border-color: var(--pink); background: rgba(243,107,155,.88); color: #321624; }
+.mood-chip.is-active:hover, .mood-chip.is-active:focus-visible { background: var(--pink); color: #321624; }
 .more-chip { border-style: dashed; }
 /* Chips in the collection row never shrink or wrap their text; the row scrolls instead. */
 .collection-page-main .mood-chips > .mood-chip, .collection-page-main .active-filter-chip { flex: none; white-space: nowrap; }
@@ -97,20 +98,20 @@ a { color: inherit; }
 .collection-panel { padding-top: 44px; }
 .collection-page-main { min-height: calc(100vh - 101px); background: var(--night); }
 .collection-page-shell .topbar { position: sticky; top: 0; z-index: 20; background: rgba(17, 17, 26, .96); backdrop-filter: blur(14px); }
-.collection-page-main .collection-panel { padding-top: clamp(24px, 4vw, 48px); }
-.collection-page-heading h1 { display: inline; margin: 4px 14px 0 0; color: var(--cream); font-family: var(--display); font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 500; line-height: 1; }
-.collection-page-heading .collection-meta { display: inline; color: var(--muted-cream); font-size: 1rem; }
-.collection-page-heading > div { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0; }
-.collection-page-heading > div > .eyebrow { flex-basis: 100%; }
-.collection-page-heading .collection-description { display: none; }
+.collection-page-main .collection-panel { padding-top: clamp(20px, 2vw, 28px); }
 .collection-page-main .active-filter-chip[hidden],
 .collection-page-main .clear-filters-link[hidden] { display: none !important; }
-.collection-panel .library-header { margin-bottom: 30px; }
-.collection-page-main .library-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
-.collection-page-main #downloadChecklistButton { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 16px; border: 1px solid rgba(169,147,255,.28); border-radius: 21px; background: #191827; color: var(--cream); font-family: inherit; font-size: .88rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: border-color 160ms ease, background 160ms ease, color 160ms ease; }
-.collection-page-main #downloadChecklistButton:hover:not(:disabled), .collection-page-main #downloadChecklistButton:focus-visible:not(:disabled) { border-color: var(--pink); background: #211e35; color: var(--cream); }
+.collection-page-main #downloadChecklistButton { display: inline-flex; flex: 0 0 auto; width: auto; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--cream); color: #17121b; font-family: inherit; font-size: .88rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background 160ms ease; }
+.collection-page-main #downloadChecklistButton:hover:not(:disabled), .collection-page-main #downloadChecklistButton:focus-visible:not(:disabled) { background: #ffffff; color: #17121b; }
 .collection-page-main #downloadChecklistButton:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
-.collection-controls { display: grid; gap: 0; min-width: 0; max-width: 100%; margin-bottom: 34px; padding: 0; border: 0; }
+.collection-controls { display: grid; gap: 0; min-width: 0; max-width: 100%; margin-bottom: 4px; padding: 0; border: 0; }
+/* The count and the checklist button sit in one slim line above the grid (no title row; the h1 is for screen readers). */
+.collection-results-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0 18px; padding-top: 12px; border-top: 1px solid var(--hairline); }
+.collection-summary { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.collection-summary .clear-filters-link { flex: none; }
+.collection-results-bar .collection-meta { min-width: 0; overflow: hidden; color: var(--muted-cream); font-size: .95rem; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 760px) { .collection-results-bar .collection-meta { font-size: .84rem; } .collection-meta-names { display: none; } .collection-page-main #downloadChecklistButton { padding: 0 14px; } }
+.collection-page-main #downloadChecklistButton::before { content: "↓"; content: "↓" / ""; margin-right: 6px; }
 .collection-search-row { display: grid; grid-template-columns: minmax(190px, .42fr) minmax(320px, 1fr); align-items: end; gap: 34px; }
 .collection-control-copy h2 { margin: 0; color: var(--cream); font-family: var(--display); font-size: 1.45rem; font-weight: 500; }
 .collection-control-copy p { margin: 6px 0 0; color: var(--muted-cream); font-size: .9rem; }
