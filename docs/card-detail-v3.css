@@ -391,6 +391,12 @@
     padding: 24px 0 44px;
   }
 
+  /* A card page scrolls as a whole; the height cap and square bottom corners above are for the lightbox sheet. */
+  .card-page-detail {
+    max-height: none;
+    border-radius: 22px;
+  }
+
 }
 
 @media (max-width: 430px) {
