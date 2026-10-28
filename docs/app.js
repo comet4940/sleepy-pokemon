@@ -115,7 +115,6 @@ async function init() {
 
 function cacheElements() {
   elements.resultCount = document.querySelector("#resultCount");
-  elements.priceStatus = document.querySelector("#priceStatus");
   elements.cardGrid = document.querySelector("#cardGrid");
   elements.latestGrid = document.querySelector("#latestGrid");
   elements.collectionTitle = document.querySelector("#collectionTitle");
@@ -1087,13 +1086,14 @@ function updateChecklistButton(filteredCards) {
   if (!button) return;
   if (state.catalogLoadFailed || !state.cards.length) {
     button.disabled = true;
-    button.textContent = "Download checklist";
+    button.textContent = button.dataset.shortLabel || "Download checklist";
     return;
   }
   const checklist = getChecklistContext(filteredCards);
   const { text, ariaLabel } = describeChecklistButton(checklist);
   button.disabled = !checklist.complete || !checklist.cards.length;
-  button.textContent = text;
+  // The collection's button sits beside the card count, so it can be shorter; the aria-label still says what it holds.
+  button.textContent = button.dataset.shortLabel || text;
   button.setAttribute("aria-label", ariaLabel);
 }
 

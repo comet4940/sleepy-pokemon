@@ -36,7 +36,7 @@
     </script>
     <script defer src="../analytics.js?v=5" data-page-type="collection"></script>
     <link rel="stylesheet" href="../styles.css?v=6" />
-    <link rel="stylesheet" href="../home-v3.css?v=23" />
+    <link rel="stylesheet" href="../home-v3.css?v=24" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=10" />
     <link rel="stylesheet" href="../filter-drawer.css?v=1" />
   </head>
@@ -82,19 +82,7 @@
 
       <main class="collection-page-main">
         <section class="library-panel collection-panel" id="collection" aria-labelledby="collectionTitle">
-          <div class="library-header">
-            <div class="section-heading collection-page-heading">
-              <div>
-                <h1 id="collectionTitle">All sleepy Pokemon</h1>
-                <span class="collection-meta" id="collectionMeta">244 cards · zero alarm clocks</span>
-                <span class="sr-only" id="resultCount" aria-live="polite" aria-atomic="true">0 cards</span>
-              </div>
-            </div>
-            <div class="library-actions">
-              <div class="price-status" id="priceStatus" aria-live="polite"></div>
-              <button class="button subtle" id="downloadChecklistButton" type="button" disabled>Download checklist</button>
-            </div>
-          </div>
+          <h1 class="sr-only" id="collectionTitle">All sleepy Pokemon</h1>
 
           <div class="collection-controls" aria-label="Collection filters">
             <div class="collection-filter-row">
@@ -111,6 +99,12 @@
                 <button class="clear-filters-link" id="clearFiltersLink" type="button" hidden>Clear all</button>
               </div>
             </div>
+          </div>
+
+          <div class="collection-results-bar">
+            <span class="collection-meta" id="collectionMeta">244 cards · zero alarm clocks</span>
+            <span class="sr-only" id="resultCount" aria-live="polite" aria-atomic="true">0 cards</span>
+            <button class="button subtle" id="downloadChecklistButton" data-short-label="Checklist" type="button" disabled>Download checklist</button>
           </div>
 
           <div class="card-grid" id="cardGrid"></div>
@@ -473,6 +467,6 @@
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
     <script src="../prices.js?v=2"></script>
-    <script src="../app.js?v=56"></script>
+    <script src="../app.js?v=57"></script>
   </body>
 </html>
