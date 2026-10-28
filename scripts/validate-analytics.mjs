@@ -14,6 +14,7 @@ const sourceCards = await loadSourceCards();
 const catalogIdentities = new Set(sourceCards.map(getCardIdentity));
 // What browsers get: the generated copy in docs/, with only PUBLIC_CARD_FIELDS.
 const browserCards = assignSlugs(sourceCards).map(toPublicCard);
+const browserCardJson = new Map(browserCards.map((card) => [getCardIdentity(card), JSON.stringify(card)]));
 await checkPublishedCopy();
 checkCardMoods();
 await checkSetIntros();
@@ -115,6 +116,9 @@ async function checkPageCardData(path, html, label) {
     return;
   }
   const loaded = new Set(cards.map(getCardIdentity));
+  // Each copy must match published-cards.json card for card: no stale values, no fields beyond PUBLIC_CARD_FIELDS.
+  const stale = cards.filter((card) => JSON.stringify(card) !== browserCardJson.get(getCardIdentity(card)));
+  if (stale.length) errors.push(`${label}: ${dataPath} doesn't match ${CARDS_PATH} for ${stale.length} card(s), e.g. ${stale[0].name}; run scripts/sync-seo-index.mjs`);
   const missing = [...new Set([...html.matchAll(/data-card-id="([^"]*)"/g)].map(([, id]) => decodeHtmlAttribute(id)))].filter((id) => !loaded.has(id));
   if (missing.length) errors.push(`${label}: ${dataPath} is missing ${missing.length} card(s) the page links to, e.g. ${missing[0]}`);
 }
