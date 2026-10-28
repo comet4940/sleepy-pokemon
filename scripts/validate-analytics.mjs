@@ -92,9 +92,28 @@ for (const path of htmlFiles) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
   if (pageType === "guide" || pageType === "set") checkGuideCards(html, label);
+  await checkPageCardData(path, html, label);
   for (const [, mood] of html.matchAll(/class="mood-chip"[^>]*data-mood="([^"]+)"/g)) {
     if (!MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
   }
+}
+
+// Pages that load a card subset (data-guide-path) must find every card they link to in it, or the lightbox and
+// checklist come up short.
+async function checkPageCardData(path, html, label) {
+  if (!html.includes("app.js?v=")) return;
+  const dataPath = html.match(/data-guide-path="([^"]+)"/)?.[1] || "published-cards.json";
+  let cards;
+  try {
+    const payload = JSON.parse(await readFile(join(path, "..", dataPath), "utf8"));
+    cards = Array.isArray(payload) ? payload : payload.cards;
+  } catch (error) {
+    errors.push(`${label}: can't read its card data ${dataPath} (${error.message})`);
+    return;
+  }
+  const loaded = new Set(cards.map(getCardIdentity));
+  const missing = [...new Set([...html.matchAll(/data-card-id="([^"]*)"/g)].map(([, id]) => decodeHtmlAttribute(id)))].filter((id) => !loaded.has(id));
+  if (missing.length) errors.push(`${label}: ${dataPath} is missing ${missing.length} card(s) the page links to, e.g. ${missing[0]}`);
 }
 
 const appSource = await readFile(join(DOCS_DIR, "app.js"), "utf8");
