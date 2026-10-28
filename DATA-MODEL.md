@@ -1,6 +1,8 @@
 # Card Data Model
 
-Every card on the site comes from one file: `docs/published-cards.json`. The generators (`scripts/sync-seo-index.mjs`, `scripts/sync-guides.mjs`) build card pages, guides, the About page and the sitemap from it, and `docs/app.js` loads it in the browser for the collection, homepage and lightbox.
+Every card on the site comes from one file: `data/cards.json`. It's the only card file to edit, and it isn't published. The generators (`scripts/sync-seo-index.mjs`, `scripts/sync-guides.mjs`) build card pages, guides, set pages, the About page and the sitemap from it.
+
+They also write the card data browsers load: `docs/published-cards.json` (the homepage and collection) and a `cards.json` next to each guide, set and About page (just that page's cards). These copies carry only the fields `docs/app.js` reads, listed in `PUBLIC_CARD_FIELDS` in `scripts/build-helpers.mjs`. Everything else, such as `notes`, the TCGplayer IDs and image sources, stays in the repo. A new field stays out of the browser until it's added to that list; the validator fails if the list and what `app.js` reads ever differ, or if `docs/published-cards.json` was edited by hand.
 
 `node scripts/validate-analytics.mjs` checks the file against this document: a card may only use the fields listed under [Card fields](#card-fields), and fields marked **Required** must be non-empty. To add a field, document it here first.
 
@@ -43,7 +45,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `imageSourceUrl` | No | Page the hosted image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
 | `whyItBelongs` | Yes | The curator's short note on what's happening in the art. Shown as "Why it belongs" | `Dinner is still on the table, and Growlithe...` |
-| `notes` | No | Internal provenance and sources: where the card came from, which suggestion or issue it was, where the details were checked. Not shown, searched or used on the site, but the file is public, so keep anything private out | `Community submission via the Suggest a card form.` |
+| `notes` | No | Internal provenance and sources: where the card came from, which suggestion or issue it was, where the details were checked. Not shown, searched or sent to browsers, but the repo is public, so keep anything private out | `Community submission via the Suggest a card form.` |
 | `setReleaseDate` | No | Release date of the set, `YYYY/MM/DD`. Drives "Newest sets" sorting; cards without it sort last | `1998/11/24` |
 | `apiId` | No | pokemontcg.io card ID. Part of the card's identity (`scripts/card-identity.mjs`); no longer used for prices | `smp-SM41` |
 | `tcgdexId` | No | TCGdex card ID, for cards pokemontcg.io doesn't have | `sv09-120` |
@@ -130,10 +132,10 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 
 ## Adding a card
 
-1. **Check it isn't already listed**: search `published-cards.json` for the Pokémon, set and number.
+1. **Check it isn't already listed**: search `data/cards.json` for the Pokémon, set and number.
 2. **Collect the details** from the card itself and a source like pokemontcg.io, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, image.
 3. **Write the curation**: pick moods, write `whyItBelongs`, and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
-4. **Add the entry** at the top of `cards`, with `createdAt` and `updatedAt` set to now.
+4. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
 5. **Link it to TCGplayer** (English cards): run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
 6. **Regenerate and check**:
    ```bash

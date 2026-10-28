@@ -15,18 +15,14 @@
       "imageSmall": "https://images.pokemontcg.io/zsv10pt5/116.png",
       "imageLarge": "https://images.pokemontcg.io/zsv10pt5/116_hires.png",
       "setReleaseDate": "2025/08/01",
-      "notes": "Suggested by the Sleepy Pokemon community. Two Pidove are tucked into the ledge beneath Munna's dreamy pink twilight.",
-      "moods": [
-        "Cameo Sleepers",
-        "Moonlit Naps"
-      ],
       "whyItBelongs": "Munna floats through a dreamy pink twilight under a crescent moon, radiating sweet dreams with its 'Rest' attack. Down in the foreground, two little Pidoves are cuddled together on the ledge, sound asleep with eyes softly shut. A quiet, poetic Unova bedtime scene.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-10-19T17:29:23.449Z",
-      "priceType": "Holofoil",
-      "tcgplayerProductId": 642570,
-      "tcgplayerGroupId": 24325,
-      "slug": "munna-black-bolt-116-086"
+      "slug": "munna-black-bolt-116-086",
+      "moods": [
+        "Cameo Sleepers",
+        "Moonlit Naps"
+      ]
     },
     {
       "apiId": "sm11-88",
@@ -43,18 +39,14 @@
       "imageSmall": "https://images.pokemontcg.io/sm11/88.png",
       "imageLarge": "https://images.pokemontcg.io/sm11/88_hires.png",
       "setReleaseDate": "2019/08/02",
-      "notes": "Added from curator-provided metadata. Munna is tucked into a pastel canopy bed with Pikachu and Eevee asleep nearby.",
-      "moods": [
-        "Cameo Sleepers",
-        "Bedtime"
-      ],
       "whyItBelongs": "Group nap tucked into a pastel canopy bed. Pikachu and Eevee fast asleep under a floral quilt while Munna watches over their dreams make this budget common an absolute masterpiece of cozy cameos.",
       "createdAt": "2026-09-20T00:00:00.000Z",
       "updatedAt": "2026-10-15T15:38:46.981Z",
-      "priceType": "Normal",
-      "tcgplayerProductId": 195020,
-      "tcgplayerGroupId": 2464,
-      "slug": "munna-unified-minds-88-236"
+      "slug": "munna-unified-minds-88-236",
+      "moods": [
+        "Cameo Sleepers",
+        "Bedtime"
+      ]
     },
     {
       "apiId": "me55-131",
@@ -70,22 +62,15 @@
       "artist": "Amelicart",
       "imageSmall": "https://images.scrydex.com/pokemon/me55-131/small",
       "imageLarge": "https://images.scrydex.com/pokemon/me55-131/large",
-      "imageSource": "Scrydex",
-      "imageSourceUrl": "https://scrydex.com/pokemon/cards/lapras/me55-131?variant=holofoil",
-      "scrydexId": "me55-131",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Lapras from ME: 30th Celebration 131/128 is included because a cozy nap next to Lapras is a very persuasive argument. We do not discriminate here, and this is exactly the sort of gentle scene that earns its binder spot. Suggested by GitHub issue #48.",
+      "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends.",
       "createdAt": "2026-09-18T18:36:00.000Z",
       "updatedAt": "2026-09-18T18:36:00.000Z",
+      "slug": "lapras-me-30th-celebration-131-128",
       "moods": [
         "Cameo Sleepers",
         "Water Naps"
-      ],
-      "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends.",
-      "tcgplayerProductId": 696683,
-      "tcgplayerGroupId": 24722,
-      "slug": "lapras-me-30th-celebration-131-128"
+      ]
     },
     {
       "apiId": "basep-49",
@@ -101,20 +86,16 @@
       "artist": "Craig Turvey",
       "imageSmall": "https://images.pokemontcg.io/basep/49.png",
       "imageLarge": "https://images.pokemontcg.io/basep/49_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "1999/07/01",
-      "notes": "Snorlax from Wizards Black Star Promos 49 is included in this guide because the artwork gives us the deeply sleepy Snorlax-and-Eevee moment, complete with the giant Zzz energy that belongs in a sleepy Pokemon binder. Suggested by GitHub issue #15.",
+      "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon.",
       "createdAt": "2026-09-16T01:07:10.520Z",
       "updatedAt": "2026-10-16T15:22:04.658Z",
+      "slug": "snorlax-wizards-black-star-promos-49",
       "moods": [
         "Cameo Sleepers",
         "Belly Up",
         "Moonlit Naps"
-      ],
-      "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon.",
-      "tcgplayerProductId": 89385,
-      "tcgplayerGroupId": 1418,
-      "slug": "snorlax-wizards-black-star-promos-49"
+      ]
     },
     {
       "apiId": "bw11-RC16",
@@ -130,21 +111,17 @@
       "artist": "Sanosuke Sakuma",
       "imageSmall": "https://images.pokemontcg.io/bw11/RC16.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/RC16_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2013/11/06",
-      "notes": "Ursaring from Legendary Treasures RC16/RC113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
+      "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub.",
       "createdAt": "2026-05-06T21:28:00.721Z",
       "updatedAt": "2026-10-16T15:21:34.307Z",
+      "slug": "ursaring-legendary-treasures-rc16-rc113",
       "moods": [
         "Cameo Sleepers",
         "Pokémon Pillow",
         "Flower Beds",
         "Sunbeam Naps"
-      ],
-      "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub.",
-      "tcgplayerProductId": 90257,
-      "tcgplayerGroupId": 1465,
-      "slug": "ursaring-legendary-treasures-rc16-rc113"
+      ]
     },
     {
       "apiId": "sv4-196",
@@ -160,20 +137,16 @@
       "artist": "Atsushi Furusawa",
       "imageSmall": "https://images.pokemontcg.io/sv4/196.png",
       "imageLarge": "https://images.pokemontcg.io/sv4/196_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/11/03",
-      "notes": "Joltik from Paradox Rift 196/182 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Atsushi Furusawa, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Joltik is wide awake on Yamper’s head, while the big dog has nodded off below. The real sleepy cameo is the one you might miss at first glance.",
       "createdAt": "2026-05-05T21:35:16.635Z",
       "updatedAt": "2026-10-20T15:38:15.315Z",
+      "slug": "joltik-paradox-rift-196-182",
       "moods": [
         "Cameo Sleepers",
         "Face-Plant",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Joltik is wide awake on Yamper’s head, while the big dog has nodded off below. The real sleepy cameo is the one you might miss at first glance.",
-      "tcgplayerProductId": 523877,
-      "tcgplayerGroupId": 23286,
-      "slug": "joltik-paradox-rift-196-182"
+      ]
     },
     {
       "apiId": "rsv10pt5-89",
@@ -189,20 +162,16 @@
       "artist": "mashu",
       "imageSmall": "https://images.pokemontcg.io/rsv10pt5/89.png",
       "imageLarge": "https://images.pokemontcg.io/rsv10pt5/89_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2025/07/18",
-      "notes": "Leavanny from White Flare 89/86 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by mashu, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Cozy nap wrapped in motherly leaves. Leavanny cradling a sound asleep Sewaddle swaddled in custom foliage is pure tenderness.",
       "createdAt": "2026-05-06T01:54:11.901Z",
       "updatedAt": "2026-10-18T14:33:39.956Z",
+      "slug": "leavanny-white-flare-89-86",
       "moods": [
         "Cameo Sleepers",
         "Pokémon Pillow",
         "Flower Beds"
-      ],
-      "whyItBelongs": "Cozy nap wrapped in motherly leaves. Leavanny cradling a sound asleep Sewaddle swaddled in custom foliage is pure tenderness.",
-      "tcgplayerProductId": 642204,
-      "tcgplayerGroupId": 24326,
-      "slug": "leavanny-white-flare-89-86"
+      ]
     },
     {
       "apiId": "swsh12pt5gg-GG42",
@@ -218,19 +187,15 @@
       "artist": "aoki",
       "imageSmall": "https://images.pokemontcg.io/swsh12pt5gg/GG42.png",
       "imageLarge": "https://images.pokemontcg.io/swsh12pt5gg/GG42_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/01/20",
-      "notes": "Zeraora VMAX from Crown Zenith Galarian Gallery GG42/GG70 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Holo VMAX, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by aoki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
+      "whyItBelongs": "Cozy nap nestled between giant thunder ears. Look closely atop Zeraora’s forehead to spot a tiny Pachirisu fast asleep amidst raging electricity.",
       "createdAt": "2026-05-05T21:17:44.284Z",
       "updatedAt": "2026-10-15T15:37:32.348Z",
+      "slug": "zeraora-vmax-crown-zenith-galarian-gallery-gg42-gg70",
       "moods": [
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Cozy nap nestled between giant thunder ears. Look closely atop Zeraora’s forehead to spot a tiny Pachirisu fast asleep amidst raging electricity.",
-      "tcgplayerProductId": 477062,
-      "tcgplayerGroupId": 17689,
-      "slug": "zeraora-vmax-crown-zenith-galarian-gallery-gg42-gg70"
+      ]
     },
     {
       "apiId": "151C2-171",
@@ -247,14 +212,13 @@
       "imageSmall": "https://img.simplifiedtcg.com/cards/zh/13078.webp",
       "imageLarge": "https://img.simplifiedtcg.com/cards/zh/13078.webp",
       "setReleaseDate": "2025/04/18",
-      "notes": "Added from curator-provided metadata. Pikachu looks on as Psyduck naps beside the water, with Dragonite and Jigglypuff sharing the wider meadow scene.",
-      "moods": [
-        "Cameo Sleepers"
-      ],
       "whyItBelongs": "Psyduck has curled up for a peaceful nap beside the water while Pikachu stands amused nearby. With Dragonite flying overhead and Jigglypuff peeking across the meadow, the scene feels like a gentle pause in the middle of a larger adventure. Pikachu may be the star of the card, but the deeply snoozing Psyduck earns it a place in the sleepy collection.",
       "createdAt": "2026-09-23T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:54:59.748Z",
-      "slug": "pikachu-collect-151-hope-171-151"
+      "slug": "pikachu-collect-151-hope-171-151",
+      "moods": [
+        "Cameo Sleepers"
+      ]
     },
     {
       "apiId": "sv6-187",
@@ -270,18 +234,14 @@
       "artist": "Toshinao Aoki",
       "imageSmall": "https://images.pokemontcg.io/sv6/187.png",
       "imageLarge": "https://images.pokemontcg.io/sv6/187_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2024/05/24",
-      "notes": "Chansey from Twilight Masquerade 187/167 is an Illustration Rare with a quiet, cozy sleeper cameo.",
+      "whyItBelongs": "Chansey bustles through the bright Pokemon Center while Snorlax has simply nodded off on the tiled floor. The room carries on around it, making that unbothered floor nap the perfect cozy sleeper cameo.",
       "createdAt": "2026-10-13T18:21:39.000Z",
       "updatedAt": "2026-10-15T15:36:47.071Z",
+      "slug": "chansey-twilight-masquerade-187-167",
       "moods": [
         "Cameo Sleepers"
-      ],
-      "whyItBelongs": "Chansey bustles through the bright Pokemon Center while Snorlax has simply nodded off on the tiled floor. The room carries on around it, making that unbothered floor nap the perfect cozy sleeper cameo.",
-      "tcgplayerProductId": 550231,
-      "tcgplayerGroupId": 23473,
-      "slug": "chansey-twilight-masquerade-187-167"
+      ]
     },
     {
       "apiId": "sm10-135",
@@ -297,20 +257,16 @@
       "artist": "miki kudo",
       "imageSmall": "https://images.pokemontcg.io/sm10/135.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/135_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Wigglytuff from Unbroken Bonds 135/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by miki kudo, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
+      "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow.",
       "createdAt": "2026-05-06T21:38:00.868Z",
       "updatedAt": "2026-10-17T14:10:47.725Z",
+      "slug": "wigglytuff-unbroken-bonds-135-214",
       "moods": [
         "Group Naps",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow.",
-      "tcgplayerProductId": 189233,
-      "tcgplayerGroupId": 2420,
-      "slug": "wigglytuff-unbroken-bonds-135-214"
+      ]
     },
     {
       "apiId": "neo4-48",
@@ -327,19 +283,15 @@
       "imageSmall": "https://images.pokemontcg.io/neo4/48.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/48_hires.png",
       "setReleaseDate": "2002/02/28",
-      "notes": "Cameo sleeper: the Abra beside Jolteon is the one snoozing.",
+      "whyItBelongs": "This one is a bit different from the others, because the sleepers are the little ones. Jolteon lies calmly in a bed of autumn leaves beneath a starry night sky, eyes open and expression soft. Tucked up against its chest is Togepi, fast asleep in its shell, and a Rattata is curled up just behind them. Jolteon isn’t napping so much as keeping watch over everyone who is. It’s the quietest, gentlest bedtime scene in the whole stack.\n\nThe card’s identity is built around that kindness. Its Japanese name, やさしいサンダース, translates to “Gentle Thunders.” The gameplay matches: Pulse Guard prevents any damage of 30 or more done to Light Jolteon during the opponent’s next turn. A guardian who can’t be easily hurt is exactly who you want standing over a pile of sleepers. It’s also a piece of Pokémon TCG history: Neo Destiny introduced Light Pokémon, and it was the final English expansion with the 1st Edition symbol.",
+      "createdAt": "2026-10-20T18:50:46.000Z",
+      "updatedAt": "2026-10-20T18:50:46.000Z",
+      "slug": "light-jolteon-neo-destiny-48-105",
       "moods": [
         "Nap Watch",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "This one is a bit different from the others, because the sleepers are the little ones. Jolteon lies calmly in a bed of autumn leaves beneath a starry night sky, eyes open and expression soft. Tucked up against its chest is Togepi, fast asleep in its shell, and a Rattata is curled up just behind them. Jolteon isn’t napping so much as keeping watch over everyone who is. It’s the quietest, gentlest bedtime scene in the whole stack.\n\nThe card’s identity is built around that kindness. Its Japanese name, やさしいサンダース, translates to “Gentle Thunders.” The gameplay matches: Pulse Guard prevents any damage of 30 or more done to Light Jolteon during the opponent’s next turn. A guardian who can’t be easily hurt is exactly who you want standing over a pile of sleepers. It’s also a piece of Pokémon TCG history: Neo Destiny introduced Light Pokémon, and it was the final English expansion with the 1st Edition symbol.",
-      "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z",
-      "tcgplayerProductId": 86741,
-      "tcgplayerGroupId": 1444,
-      "priceType": "Unlimited",
-      "slug": "light-jolteon-neo-destiny-48-105"
+      ]
     }
   ]
 }

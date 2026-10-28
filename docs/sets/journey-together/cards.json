@@ -14,19 +14,15 @@
       "artist": "Asako Ito",
       "imageSmall": "https://assets.tcgdex.net/en/sv/sv09/120/low.webp",
       "imageLarge": "https://assets.tcgdex.net/en/sv/sv09/120/high.webp",
-      "priceType": "Normal",
       "setReleaseDate": "2025/03/28",
-      "notes": "Suggested in GitHub issue #49. The submitter spotted Dunsparce laying down asleep.",
-      "moods": [
-        "Face-Plant",
-        "Handmade"
-      ],
       "whyItBelongs": "Out cold on the ground. Dunsparce is completely stretched out and asleep, making this a quietly convincing addition to the sleepy stack.",
       "createdAt": "2026-09-20T15:55:21.016Z",
       "updatedAt": "2026-09-20T15:55:21.016Z",
-      "tcgplayerProductId": 623547,
-      "tcgplayerGroupId": 24073,
-      "slug": "dunsparce-journey-together-120-159"
+      "slug": "dunsparce-journey-together-120-159",
+      "moods": [
+        "Face-Plant",
+        "Handmade"
+      ]
     },
     {
       "apiId": "sv9-129",
@@ -42,19 +38,15 @@
       "artist": "Natsumi Yoshida",
       "imageSmall": "https://images.pokemontcg.io/sv9/129.png",
       "imageLarge": "https://images.pokemontcg.io/sv9/129_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2025/03/28",
-      "notes": "Komala from Journey Together 129/159 is included in this guide because Komala is, very reliably, happily asleep. Suggested by GitHub issue #3.",
+      "whyItBelongs": "Out cold beside the river path. Natsumi Yoshida’s charming linework gives Komala another delightfully cozy, unbothered nap.",
       "createdAt": "2026-09-16T01:07:10.520Z",
       "updatedAt": "2026-10-13T18:16:44.172Z",
+      "slug": "komala-journey-together-129-159",
       "moods": [
         "Hug Buddy",
         "Flower Beds"
-      ],
-      "whyItBelongs": "Out cold beside the river path. Natsumi Yoshida’s charming linework gives Komala another delightfully cozy, unbothered nap.",
-      "tcgplayerProductId": 623556,
-      "tcgplayerGroupId": 24073,
-      "slug": "komala-journey-together-129-159"
+      ]
     },
     {
       "apiId": "sv9-165",
@@ -70,18 +62,14 @@
       "artist": "Nakamura Ippan",
       "imageSmall": "https://images.pokemontcg.io/sv9/165.png",
       "imageLarge": "https://images.pokemontcg.io/sv9/165_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2025/03/28",
-      "notes": "Swinub from Journey Together 165/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Nakamura Ippan, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Cozy nap tucked into mossy tree roots. Swinub snuggled deep in an autumn hollow brings irresistible storybook warmth at an approachable price.",
       "createdAt": "2026-05-07T18:00:26.872Z",
       "updatedAt": "2026-10-16T15:21:28.978Z",
+      "slug": "swinub-journey-together-165-159",
       "moods": [
         "Snow Naps"
-      ],
-      "whyItBelongs": "Cozy nap tucked into mossy tree roots. Swinub snuggled deep in an autumn hollow brings irresistible storybook warmth at an approachable price.",
-      "tcgplayerProductId": 623592,
-      "tcgplayerGroupId": 24073,
-      "slug": "swinub-journey-together-165-159"
+      ]
     },
     {
       "apiId": "sv9-166",
@@ -97,18 +85,14 @@
       "artist": "GIDORA",
       "imageSmall": "https://images.pokemontcg.io/sv9/166.png",
       "imageLarge": "https://images.pokemontcg.io/sv9/166_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2025/03/28",
-      "notes": "Lycanroc from Journey Together 166/159 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by GIDORA, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Out cold in the dirt after roughhousing. Seeing a fierce wolf completely collapse with limp paws in the field is pure relatable exhaustion.",
       "createdAt": "2026-05-07T17:59:34.756Z",
       "updatedAt": "2026-10-15T15:34:51.504Z",
+      "slug": "lycanroc-journey-together-166-159",
       "moods": [
         "Nap Watch"
-      ],
-      "whyItBelongs": "Out cold in the dirt after roughhousing. Seeing a fierce wolf completely collapse with limp paws in the field is pure relatable exhaustion.",
-      "tcgplayerProductId": 623593,
-      "tcgplayerGroupId": 24073,
-      "slug": "lycanroc-journey-together-166-159"
+      ]
     },
     {
       "apiId": "sv9-168",
@@ -124,16 +108,12 @@
       "artist": "REND",
       "imageSmall": "https://images.pokemontcg.io/sv9/168.png",
       "imageLarge": "https://images.pokemontcg.io/sv9/168_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2025/03/28",
-      "notes": "Furret from Journey Together 168/159 is included for its half-awake, just-woke-up-or-might-fall-back-asleep expression and warm, cozy REND illustration.",
+      "whyItBelongs": "Furret is awake… technically. One glossy eye remains open while the other is squeezed shut, a paw resting against its cheek in a very familiar just-woke-up-or-might-fall-back-asleep pose. REND’s warm golden glow completes the picture: maximum cozy, minimum urgency.",
       "createdAt": "2026-05-05T00:54:50.453Z",
       "updatedAt": "2026-10-15T15:37:37.737Z",
-      "moods": [],
-      "whyItBelongs": "Furret is awake… technically. One glossy eye remains open while the other is squeezed shut, a paw resting against its cheek in a very familiar just-woke-up-or-might-fall-back-asleep pose. REND’s warm golden glow completes the picture: maximum cozy, minimum urgency.",
-      "tcgplayerProductId": 623595,
-      "tcgplayerGroupId": 24073,
-      "slug": "furret-journey-together-168-159"
+      "slug": "furret-journey-together-168-159",
+      "moods": []
     }
   ]
 }

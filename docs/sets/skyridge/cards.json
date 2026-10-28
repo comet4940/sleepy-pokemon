@@ -14,19 +14,15 @@
       "artist": "Kagemaru Himeno",
       "imageSmall": "https://images.pokemontcg.io/ecard3/89.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/89_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/05/12",
-      "notes": "A pair of Raticate rest side by side in a softly lit, grassy hideaway.",
-      "moods": [
-        "Nap Watch",
-        "Pokémon Pillow"
-      ],
       "whyItBelongs": "Two Raticate have curled up together in the grass, both with eyes closed as the warm light filters around them. Kagemaru Himeno makes this feel like a quiet family nap tucked away from the world.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-20T00:00:00.000Z",
-      "tcgplayerProductId": 88602,
-      "tcgplayerGroupId": 1372,
-      "slug": "raticate-skyridge-89-144"
+      "slug": "raticate-skyridge-89-144",
+      "moods": [
+        "Nap Watch",
+        "Pokémon Pillow"
+      ]
     },
     {
       "apiId": "ecard3-95",
@@ -42,18 +38,14 @@
       "artist": "Yukiko Baba",
       "imageSmall": "https://images.pokemontcg.io/ecard3/95.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/95_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/05/12",
-      "notes": "One Seel naps on a warm rock while its companion lounges in the water nearby.",
-      "moods": [
-        "Nap Watch"
-      ],
       "whyItBelongs": "The foreground Seel looks ready for anything, but its companion behind it has already fallen asleep on a sunny rock. Yukiko Baba's playful coastal scene gives the nap a relaxed, social feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:32.875Z",
-      "tcgplayerProductId": 89051,
-      "tcgplayerGroupId": 1372,
-      "slug": "seel-skyridge-95-144"
+      "slug": "seel-skyridge-95-144",
+      "moods": [
+        "Nap Watch"
+      ]
     },
     {
       "apiId": "ecard3-96",
@@ -69,18 +61,14 @@
       "artist": "Sumiyoshi Kizuki",
       "imageSmall": "https://images.pokemontcg.io/ecard3/96.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/96_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/05/12",
-      "notes": "Shuckle sleeps tucked away inside its shell on a warm, grassy slope.",
-      "moods": [
-        "Beach Naps"
-      ],
       "whyItBelongs": "Shuckle has tucked its head and limbs inside its shell and fallen asleep in the sun. Sumiyoshi Kizuki's warm, tactile illustration makes this tiny shell-bound nap feel safe and undisturbed.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:33.023Z",
-      "tcgplayerProductId": 89189,
-      "tcgplayerGroupId": 1372,
-      "slug": "shuckle-skyridge-96-144"
+      "slug": "shuckle-skyridge-96-144",
+      "moods": [
+        "Beach Naps"
+      ]
     },
     {
       "apiId": "ecard3-100",
@@ -97,17 +85,13 @@
       "imageSmall": "https://images.pokemontcg.io/ecard3/100.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/100_hires.png",
       "setReleaseDate": "2003/05/12",
-      "notes": "Snorlax is dozing on a warm rock beside a mountain stream.",
-      "moods": [
-        "Water Naps"
-      ],
       "whyItBelongs": "Snorlax is relaxing in a hot spring with only its big face above the surface, and steam curls up around it from the warm water. Far off in the distance, snowy mountains fade into the haze. Its eyes are shut in two flat lines, its small fangs show, and its expression says it has no plans to leave. The scenery is cool and quiet, but Snorlax is clearly the one who found the warmest spot around.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
-      "priceType": "Normal",
-      "tcgplayerProductId": 89387,
-      "tcgplayerGroupId": 1372,
-      "slug": "snorlax-skyridge-100-144"
+      "slug": "snorlax-skyridge-100-144",
+      "moods": [
+        "Water Naps"
+      ]
     },
     {
       "apiId": "ecard3-108",
@@ -123,16 +107,12 @@
       "artist": "Toshinao Aoki",
       "imageSmall": "https://images.pokemontcg.io/ecard3/108.png",
       "imageLarge": "https://images.pokemontcg.io/ecard3/108_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/05/12",
-      "notes": "Swinub from Skyridge 108/144 curls up for a quiet rest in its natural surroundings.",
-      "moods": [],
       "whyItBelongs": "This Skyridge Swinub has the compact, tucked-in posture of a creature fully settled for a nap. Its quiet natural setting makes a lovely vintage companion to the other sleepy Swinub prints.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
-      "tcgplayerProductId": 89701,
-      "tcgplayerGroupId": 1372,
-      "slug": "swinub-skyridge-108-144"
+      "slug": "swinub-skyridge-108-144",
+      "moods": []
     }
   ]
 }

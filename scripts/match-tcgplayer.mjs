@@ -2,7 +2,7 @@
 //
 //   node scripts/match-tcgplayer.mjs            report matches for cards without a tcgplayerProductId
 //   node scripts/match-tcgplayer.mjs --all      report for every English card, including matched ones
-//   node scripts/match-tcgplayer.mjs --write    also save the matches to docs/published-cards.json
+//   node scripts/match-tcgplayer.mjs --write    also save the matches to data/cards.json
 //
 // Review the report before writing: it flags guesses (no clear printing, big price changes, no match).
 import { readFile, writeFile } from "node:fs/promises";

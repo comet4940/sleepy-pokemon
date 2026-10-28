@@ -14,7 +14,9 @@ import {
   escapeRegExp,
   getCardLastmod,
   getNewestDate,
+  PUBLISHED_CARDS_PATH,
   loadCardData,
+  publicCardsJson,
   loadGuideDefs,
   renderCardEntry,
   renderHead,
@@ -43,7 +45,9 @@ await writeSetPages(setHubs);
 await mkdir(ABOUT_DIR, { recursive: true });
 await writeFile(`${ABOUT_DIR}/index.html`, renderAboutPage(cardBySlug), "utf8");
 // The About lightbox only needs its own cards, so it loads this small subset instead of the full catalog.
-await writeFile(`${ABOUT_DIR}/cards.json`, `${JSON.stringify({ cards: ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug)) }, null, 2)}\n`, "utf8");
+await writeFile(`${ABOUT_DIR}/cards.json`, publicCardsJson(ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug))), "utf8");
+// The full catalog for the homepage and collection, with only the fields browsers use (PUBLIC_CARD_FIELDS).
+await writeFile(PUBLISHED_CARDS_PATH, publicCardsJson(cardsWithSlugs), "utf8");
 await syncHomepageGuideIndex(guides);
 await writeSitemap(cardsWithSlugs, guides, setHubs);
 
@@ -72,7 +76,7 @@ async function writeGuidePages(guideList) {
     await mkdir(dir, { recursive: true });
     await writeFile(`${dir}/index.html`, renderGuidePage(guide), "utf8");
     // The lightbox and checklist only need this guide's cards, so the page loads this subset instead of the full catalog.
-    await writeFile(`${dir}/cards.json`, `${JSON.stringify({ cards: guide.cards.map(({ card }) => card) }, null, 2)}\n`, "utf8");
+    await writeFile(`${dir}/cards.json`, publicCardsJson(guide.cards.map(({ card }) => card)), "utf8");
   }));
 }
 

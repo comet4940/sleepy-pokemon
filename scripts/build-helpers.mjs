@@ -4,7 +4,9 @@ import { readFile } from "node:fs/promises";
 import { getCardIdentity } from "./card-identity.mjs";
 
 export const SITE_URL = "https://www.sleepypokemon.com";
-export const CARDS_PATH = "docs/published-cards.json";
+// The card data we edit. It isn't published: the generators write what browsers need (PUBLIC_CARD_FIELDS) into docs/.
+export const CARDS_PATH = "data/cards.json";
+export const PUBLISHED_CARDS_PATH = "docs/published-cards.json";
 export const GUIDES_PATH = "docs/guides.json";
 export const PRICES_PATH = "docs/prices.json";
 
@@ -35,6 +37,40 @@ export function syncAssetVersions(html) {
     (result, [file, version]) => result.replace(new RegExp(`${escapeRegExp(file)}\\?v=\\d+`, "g"), `${file}?v=${version}`),
     html,
   );
+}
+
+// The card fields browsers get, in docs/published-cards.json and each page's cards.json: exactly the ones
+// docs/app.js normalizeCard reads (validate-analytics.mjs checks). Everything else in data/cards.json, such as
+// notes, TCGplayer IDs and image sources, stays in the repo. A new field is private until it's added here.
+export const PUBLIC_CARD_FIELDS = [
+  "apiId",
+  "tcgdexId",
+  "name",
+  "pokemon",
+  "setName",
+  "setSeries",
+  "setId",
+  "number",
+  "rarity",
+  "language",
+  "artist",
+  "imageSmall",
+  "imageLarge",
+  "setReleaseDate",
+  "whyItBelongs",
+  "createdAt",
+  "updatedAt",
+  "slug",
+  "moods",
+];
+
+export function toPublicCard(card) {
+  return Object.fromEntries(PUBLIC_CARD_FIELDS.filter((field) => field in card).map((field) => [field, card[field]]));
+}
+
+// A card data file for the browser (docs/published-cards.json or a page's cards.json).
+export function publicCardsJson(cards) {
+  return `${JSON.stringify({ cards: cards.map(toPublicCard) }, null, 2)}\n`;
 }
 
 export async function loadCardData() {
