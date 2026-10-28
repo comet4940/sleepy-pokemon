@@ -57,6 +57,8 @@ for (const path of htmlFiles) {
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
   if (!html.includes(`analytics.js?v=${ASSET_VERSIONS["analytics.js"]}`)) errors.push(`${label}: analytics script is not versioned at v${ASSET_VERSIONS["analytics.js"]}`);
+  // The header's phone menu (☰) only opens with site-header.js.
+  if (!html.includes(`site-header.js?v=${ASSET_VERSIONS["site-header.js"]}`)) errors.push(`${label}: header menu script is missing or not versioned at v${ASSET_VERSIONS["site-header.js"]}`);
   // Price slots stay empty unless prices.js fills them, and each must name a published card.
   const priceSlots = [...html.matchAll(/data-price-for="([^"]*)"/g)].map(([, id]) => id.replaceAll("&amp;", "&").replaceAll("&#39;", "'").replaceAll("&quot;", '"'));
   if (priceSlots.length && !html.includes("prices.js?v=")) errors.push(`${label}: has price slots but doesn't load prices.js`);

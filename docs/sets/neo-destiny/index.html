@@ -25,9 +25,9 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Sleepy Pokemon Cards from Neo Destiny","url":"https://www.sleepypokemon.com/sets/neo-destiny/","description":"7 sleepy Pokemon cards from Neo Destiny (2002), including Dragonair, Piloswine and Jolteon, each with a note on why it belongs in a sleepy binder.","image":"https://images.pokemontcg.io/neo4/22_hires.png","mainEntity":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"name":"Light Dragonair Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/light-dragonair-neo-destiny-22-105/"},{"@type":"ListItem","position":2,"name":"Light Piloswine Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/light-piloswine-neo-destiny-26-105/"},{"@type":"ListItem","position":3,"name":"Light Jolteon Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/light-jolteon-neo-destiny-48-105/"},{"@type":"ListItem","position":4,"name":"Growlithe Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/growlithe-neo-destiny-68-105/"},{"@type":"ListItem","position":5,"name":"Phanpy Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/phanpy-neo-destiny-76-105/"},{"@type":"ListItem","position":6,"name":"Swinub Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/swinub-neo-destiny-84-105/"},{"@type":"ListItem","position":7,"name":"Vulpix Sleepy Pokemon Card","url":"https://www.sleepypokemon.com/cards/vulpix-neo-destiny-91-105/"}]}}</script>
     <script defer src="../../analytics.js?v=5" data-page-type="set"></script>
     <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../../home-v3.css?v=24" />
-    <link rel="stylesheet" href="../../guides.css?v=3" />
-    <link rel="stylesheet" href="../../card-detail-v3.css?v=10" />
+    <link rel="stylesheet" href="../../home-v3.css?v=25" />
+    <link rel="stylesheet" href="../../guides.css?v=4" />
+    <link rel="stylesheet" href="../../card-detail-v3.css?v=11" />
   </head>
   <body data-app-mode="set-page" data-guide-path="cards.json" data-site-root="../../">
     <div class="app-shell guide-page-shell">
@@ -60,12 +60,18 @@
               </button>
             </label>
           </form>
-          <a href="../../collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
-          <a href="../../guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
-          <a href="../../about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
-          <a class="header-cta" href="../../collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
+          <button class="site-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="siteMenu">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
+          <div class="site-menu" id="siteMenu">
+            <a href="../../collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
+            <a href="../../guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
+            <a href="../../about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
+            <a class="header-cta" href="../../collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
+          </div>
         </nav>
       </header>
+      <script defer src="../../site-header.js?v=1"></script>
 
       <main class="guide-page-main">
         <section class="guide-hero" aria-labelledby="setTitle">
