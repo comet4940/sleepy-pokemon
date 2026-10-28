@@ -15,7 +15,7 @@ export const ASSET_VERSIONS = {
   "site-chrome.css": 1,
   "home-v3.css": 26,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 12,
+  "card-detail-v3.css": 13,
   "guides.css": 5,
   "about.css": 4,
   "analytics.js": 5,

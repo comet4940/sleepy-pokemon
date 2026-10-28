@@ -335,10 +335,8 @@
   --pink: var(--detail-pink);
   width: 100%;
   max-width: none;
-  padding: 0 0 48px;
+  padding: 0;
 }
-
-/* Wider screens: the menu's links sit in the header and ☰ is hidden (site-header.js; phones below). */
 
 .card-page-main {
   width: min(1180px, calc(100% - 36px));
@@ -355,9 +353,6 @@
 }
 
 @media (max-width: 760px) {
-  /* Phones: logo and ☰ on top, full-width search below; ☰ opens a menu with Browse, Guides, About and Suggest
-     (matches home-v3.css). */
-
   .card-detail-dialog {
     width: 100%;
     max-height: calc(100vh - 10px);
