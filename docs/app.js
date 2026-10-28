@@ -1088,6 +1088,7 @@ function updateChecklistButton(filteredCards) {
   if (state.catalogLoadFailed || !state.cards.length) {
     button.disabled = true;
     button.textContent = button.dataset.shortLabel || "Download checklist";
+    button.setAttribute("aria-label", "Download checklist (unavailable)");
     return;
   }
   const checklist = getChecklistContext(filteredCards);
