@@ -1066,17 +1066,18 @@ function updateCollectionHeading(resultCount) {
   if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
-  } else if (search) {
-    elements.collectionTitle.textContent = `Matching “${search}”`;
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
   } else {
-    // Name what is filtered: up to two filter names, then "+N".
-    const labels = ["mood", "rarity", "set", "language", "maxPrice"]
+    // Name what is showing: the search, then the filters, up to two names and then "+N".
+    const labels = ["mood", "rarity", "set", "language", "artist", "maxPrice"]
       .filter((key) => (key === "maxPrice" ? Boolean(state.filters.maxPrice) : state.filters[key] !== "all"))
       .map((key) => getFilterLabel(key, state.filters[key]))
       .map((label) => label.charAt(0).toUpperCase() + label.slice(1));
-    elements.collectionTitle.textContent = labels.slice(0, 2).join(" · ") + (labels.length > 2 ? `\u00a0+${labels.length - 2}` : "");
-    elements.collectionMeta.textContent = `${resultCount} ${resultCount === 1 ? "card" : "cards"}`;
+    const names = [search && `“${search}”`, ...labels].filter(Boolean);
+    const showing = names.slice(0, 2).join(" · ") + (names.length > 2 ? `\u00a0+${names.length - 2}` : "");
+    elements.collectionTitle.textContent = search ? `Matching “${search}”` : showing;
+    // Phones hide the names: the active filter chips just above already show them.
+    const namesNode = Object.assign(document.createElement("span"), { className: "collection-meta-names", textContent: ` · ${showing}` });
+    elements.collectionMeta.replaceChildren(`${resultCount} of ${state.cards.length} cards`, namesNode);
   }
   if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = !active;
 }
