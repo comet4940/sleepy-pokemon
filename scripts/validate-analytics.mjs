@@ -4,14 +4,17 @@ import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { MOODS } from "./moods.mjs";
-import { ASSET_VERSIONS, assignSlugs, slugify } from "./build-helpers.mjs";
+import { ASSET_VERSIONS, CARDS_PATH, PUBLIC_CARD_FIELDS, PUBLISHED_CARDS_PATH, assignSlugs, publicCardsJson, slugify, toPublicCard } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
 const validPageTypes = new Set(["home", "collection", "guides-index", "guide", "sets-index", "set", "card", "about"]);
 const errors = [];
-const publishedCards = await loadPublishedCards();
-const catalogIdentities = new Set(publishedCards.map(getCardIdentity));
+const sourceCards = await loadSourceCards();
+const catalogIdentities = new Set(sourceCards.map(getCardIdentity));
+// What browsers get: the generated copy in docs/, with only PUBLIC_CARD_FIELDS.
+const browserCards = assignSlugs(sourceCards).map(toPublicCard);
+await checkPublishedCopy();
 checkCardMoods();
 await checkSetIntros();
 await checkCardFields();
@@ -154,14 +157,22 @@ async function walk(directory) {
   return paths.flat();
 }
 
-async function loadPublishedCards() {
+// docs/published-cards.json is generated from data/cards.json; an edit made there directly would be overwritten.
+async function checkPublishedCopy() {
+  const published = await readFile(join(ROOT, PUBLISHED_CARDS_PATH), "utf8").catch(() => "");
+  if (published !== publicCardsJson(assignSlugs(sourceCards))) {
+    errors.push(`${PUBLISHED_CARDS_PATH} doesn't match ${CARDS_PATH}: edit ${CARDS_PATH}, then run scripts/sync-seo-index.mjs`);
+  }
+}
+
+async function loadSourceCards() {
   try {
-    const payload = JSON.parse(await readFile(join(DOCS_DIR, "published-cards.json"), "utf8"));
+    const payload = JSON.parse(await readFile(join(ROOT, CARDS_PATH), "utf8"));
     const cards = Array.isArray(payload) ? payload : payload?.cards;
     if (!Array.isArray(cards)) throw new Error("expected an array of cards or an object with a cards array");
     return cards;
   } catch (error) {
-    errors.push(`docs/published-cards.json: ${error.message}`);
+    errors.push(`${CARDS_PATH}: ${error.message}`);
     return [];
   }
 }
@@ -169,8 +180,8 @@ async function loadPublishedCards() {
 // Moods come from the fixed list in scripts/moods.mjs; retired curation fields stay retired.
 function checkCardMoods() {
   const retired = ["sleepinessBasis", "sleepLocation", "sleepiness", "priority", "suggestionIssue", "priceLow", "priceMid", "priceHigh", "priceMarket", "priceSource", "priceUpdatedAt"];
-  for (const card of publishedCards) {
-    const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
+  for (const card of sourceCards) {
+    const label = `${CARDS_PATH}: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
     if (!Array.isArray(card.moods)) {
       errors.push(`${label} has no moods array (use [] for none)`);
       continue;
@@ -196,14 +207,13 @@ function checkCardMoods() {
   }
 }
 
-// The lightbox loads cards/<slug>/ and works the slug out in the browser (docs/app.js normalizeCard) as the pinned
-// slug or the name, set and number. A slug the generator had to de-duplicate ("-2") would be out of its reach,
-// so two cards that would share one must pin distinct slugs.
+// A slug the generator had to de-duplicate ("-2") depends on the order of the cards, so a later edit could move
+// that card's page. Two cards that would share one must pin distinct slugs.
 function checkCardPageSlugs() {
-  assignSlugs(publishedCards).forEach((card, index) => {
-    const raw = publishedCards[index];
+  assignSlugs(sourceCards).forEach((card, index) => {
+    const raw = sourceCards[index];
     const expected = raw.slug || slugify([raw.name, raw.setName, raw.number].filter(Boolean).join(" "));
-    if (card.slug !== expected) errors.push(`docs/published-cards.json: ${raw.name} (${raw.setName} ${raw.number}) shares its page address with another card; give one of them a distinct slug`);
+    if (card.slug !== expected) errors.push(`${CARDS_PATH}: ${raw.name} (${raw.setName} ${raw.number}) shares its page address with another card; give one of them a distinct slug`);
   });
 }
 
@@ -216,7 +226,7 @@ async function checkFeatured() {
     errors.push(`docs/featured.json: ${error.message}`);
     return;
   }
-  const slugs = new Set(assignSlugs(publishedCards).map((card) => card.slug));
+  const slugs = new Set(assignSlugs(sourceCards).map((card) => card.slug));
   const check = (slug, where) => {
     if (!slugs.has(slug)) errors.push(`docs/featured.json: ${where} "${slug}" is not a published card's slug`);
   };
@@ -254,9 +264,9 @@ async function checkPrices() {
 async function checkSetIntros() {
   const setDefs = JSON.parse(await readFile(join(DOCS_DIR, "sets.json"), "utf8"));
   if (!Number.isInteger(setDefs.minCards) || setDefs.minCards < 1) errors.push("docs/sets.json: minCards must be a positive whole number");
-  const setNames = new Set(publishedCards.map((card) => card.setName));
+  const setNames = new Set(sourceCards.map((card) => card.setName));
   for (const name of Object.keys(setDefs.intros || {})) {
-    if (!setNames.has(name)) errors.push(`docs/sets.json: intro for "${name}" matches no set in docs/published-cards.json`);
+    if (!setNames.has(name)) errors.push(`docs/sets.json: intro for "${name}" matches no set in ${CARDS_PATH}`);
   }
 }
 
@@ -270,8 +280,8 @@ async function checkCardFields() {
     errors.push("DATA-MODEL.md: no card field table found under \"## Card fields\"");
     return;
   }
-  for (const card of publishedCards) {
-    const label = `docs/published-cards.json: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
+  for (const card of sourceCards) {
+    const label = `${CARDS_PATH}: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")})`;
     const undocumented = Object.keys(card).filter((field) => !fields.has(field));
     if (undocumented.length) errors.push(`${label} has fields not documented in DATA-MODEL.md: ${undocumented.join(", ")}`);
     const missing = [...fields].filter(([field, required]) => required && (card[field] === undefined || card[field] === null || card[field] === ""));
@@ -329,27 +339,42 @@ function loadApp(appSource, bodyDataset = {}) {
 // Also covers cards with optional fields missing, which normalizeCard fills in.
 function checkAppCardIdentity(appSource) {
   const app = loadApp(appSource);
-  const sparseCards = publishedCards.slice(0, 1).flatMap((card) => [
+  const sparseCards = browserCards.slice(0, 1).flatMap((card) => [
     { ...card, language: undefined },
     { ...card, name: undefined },
     { ...card, apiId: undefined, tcgdexId: undefined },
   ]);
-  const mismatches = [...publishedCards, ...sparseCards]
+  const mismatches = [...browserCards, ...sparseCards]
     .filter((card) => app.context.normalizeCard(card).catalogIdentity !== getCardIdentity(card));
   if (mismatches.length) {
     errors.push(`docs/app.js: card identity differs from scripts/card-identity.mjs for ${mismatches.length} card(s), e.g. ${getCardIdentity(mismatches[0])}`);
   }
   // The lightbox loads cards/<slug>/, so app.js must land on the same page address as the generators.
-  const pages = assignSlugs(publishedCards);
-  const wrongPage = publishedCards.filter((card, index) => app.context.normalizeCard(card).slug !== pages[index].slug);
-  if (wrongPage.length) errors.push(`docs/app.js: works out a different card page address for ${wrongPage.length} card(s), e.g. ${pages[publishedCards.indexOf(wrongPage[0])].slug}`);
+  const pages = assignSlugs(sourceCards);
+  const wrongPage = browserCards.filter((card, index) => app.context.normalizeCard(card).slug !== pages[index].slug);
+  if (wrongPage.length) errors.push(`docs/app.js: works out a different card page address for ${wrongPage.length} card(s), e.g. ${pages[browserCards.indexOf(wrongPage[0])].slug}`);
+  checkPublicFields(app);
+}
+
+// PUBLIC_CARD_FIELDS must be exactly the card fields normalizeCard reads: one it reads but browsers don't get
+// would always be empty, and one browsers get but it never reads is downloaded for nothing.
+function checkPublicFields(app) {
+  const read = new Set();
+  for (const card of sourceCards) {
+    app.context.normalizeCard(new Proxy(card, { get: (target, key) => (read.add(key), target[key]) }));
+  }
+  const cardFields = new Set(sourceCards.flatMap(Object.keys));
+  const missing = [...read].filter((field) => cardFields.has(field) && !PUBLIC_CARD_FIELDS.includes(field));
+  if (missing.length) errors.push(`docs/app.js reads card fields browsers don't get; add them to PUBLIC_CARD_FIELDS: ${missing.join(", ")}`);
+  const unused = PUBLIC_CARD_FIELDS.filter((field) => !read.has(field));
+  if (unused.length) errors.push(`PUBLIC_CARD_FIELDS publishes fields docs/app.js never reads: ${unused.join(", ")}`);
 }
 
 // Downloads each checklist scope through app.js and checks the CSV it writes,
 // the toast it shows and the analytics event it sends.
 function checkChecklistDownloads(appSource) {
-  if (!publishedCards.length) return;
-  const sampleCard = publishedCards.find((card) => card.setName && card.pokemon) || publishedCards[0];
+  if (!sourceCards.length) return;
+  const sampleCard = sourceCards.find((card) => card.setName && card.pokemon) || sourceCards[0];
   const guideBody = { appMode: "guide-page", guideSlug: "test-guide", guideTitle: "Test Guide" };
   const collectionEvent = { download_surface: "collection", interaction_source: "collection_header" };
   // expectedCards gets the app's normalized cards; subset cases must export some but not all of them.
@@ -392,7 +417,7 @@ function checkChecklistDownloads(appSource) {
     const toasts = [];
     app.context.trackEvent = (name, params) => events.push({ name, params });
     app.context.showToast = (message) => toasts.push(message);
-    app.context.__cards = publishedCards;
+    app.context.__cards = browserCards;
     app.context.__filters = testCase.filters || {};
     app.run("state.cards = __cards.map(normalizeCard); Object.assign(state.filters, __filters);");
     if (testCase.guide) app.run("state.guideSelection = { cards: state.cards.slice(0, 2), complete: true };");

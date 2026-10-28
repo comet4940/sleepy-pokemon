@@ -14,19 +14,15 @@
       "artist": "Nelnal",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/716435_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/716435_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Exeggcute from ME: 30th Celebration 001/128 is included because some of these eggos are always sleepy, and the card even leans into that with Hypnosis. Suggested by GitHub issue #45.",
+      "whyItBelongs": "Group nap in sweet pastel fields. Nelnal’s energetic pop-art style turns the six snoozing eggs into vibrant visual candy.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-09-16T06:28:43.000Z",
+      "slug": "exeggcute-me-30th-celebration-001-128",
       "moods": [
         "Group Naps",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Group nap in sweet pastel fields. Nelnal’s energetic pop-art style turns the six snoozing eggs into vibrant visual candy.",
-      "tcgplayerProductId": 716435,
-      "tcgplayerGroupId": 24722,
-      "slug": "exeggcute-me-30th-celebration-001-128"
+      ]
     },
     {
       "apiId": "me30-027",
@@ -42,19 +38,15 @@
       "artist": "Asako Ito",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/716310_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/716310_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Pikachu from ME: 30th Celebration 027/128 is included because this little guy is fully asleep and looks like he is dreaming. A very cozy addition to the Pikachu rare group. Suggested by GitHub issue #40.",
+      "whyItBelongs": "Cozy nap handcrafted in yarn. Asako Ito’s crocheted Pikachu passed out on a felt hill is pure comforting nostalgia.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-09-16T06:28:43.000Z",
+      "slug": "pikachu-me-30th-celebration-027-128",
       "moods": [
         "Belly Up",
         "Handmade"
-      ],
-      "whyItBelongs": "Cozy nap handcrafted in yarn. Asako Ito’s crocheted Pikachu passed out on a felt hill is pure comforting nostalgia.",
-      "tcgplayerProductId": 716310,
-      "tcgplayerGroupId": 24722,
-      "slug": "pikachu-me-30th-celebration-027-128"
+      ]
     },
     {
       "apiId": "me30-043",
@@ -70,20 +62,16 @@
       "artist": "OOYAMA",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/712947_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/712947_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Pikachu from ME: 30th Celebration 043/128 is included because this dreamy beach scene feels like the perfect hammock-side companion to Oshawott from White Flare. Suggested by GitHub issue #41.",
+      "whyItBelongs": "Cozy nap after soaking in tropical vibes. OOYAMA’s delightfully goofy, round Pikachu has flopped onto its back in the warm sand, cheeks flushed and eyes shut, while a little sailboat drifts by. Look closely by the palm tree: a Weedle is peeking out at the sleeper. Even its attack, Tropical Vibes, puts it to sleep.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-10-24T03:20:00.000Z",
+      "slug": "pikachu-me-30th-celebration-043-128",
       "moods": [
         "Nap Watch",
         "Belly Up",
         "Beach Naps"
-      ],
-      "whyItBelongs": "Cozy nap after soaking in tropical vibes. OOYAMA’s delightfully goofy, round Pikachu has flopped onto its back in the warm sand, cheeks flushed and eyes shut, while a little sailboat drifts by. Look closely by the palm tree: a Weedle is peeking out at the sleeper. Even its attack, Tropical Vibes, puts it to sleep.",
-      "tcgplayerProductId": 712947,
-      "tcgplayerGroupId": 24722,
-      "slug": "pikachu-me-30th-celebration-043-128"
+      ]
     },
     {
       "apiId": "me30-091",
@@ -99,19 +87,15 @@
       "artist": "Iori Suzuki",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/696679_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/696679_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Umbreon from ME: 30th Celebration 091/128 is included because he is lying in bed looking like he could fall asleep any second. That absolutely counts as sleepy around here. Suggested by GitHub issue #43.",
+      "whyItBelongs": "Cozy nap glowing under the moonlight. Iori Suzuki crafts a peaceful, atmospheric moonlit rest for the dark evolution.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-09-16T06:28:43.000Z",
+      "slug": "umbreon-me-30th-celebration-091-128",
       "moods": [
         "Bedtime",
         "Moonlit Naps"
-      ],
-      "whyItBelongs": "Cozy nap glowing under the moonlight. Iori Suzuki crafts a peaceful, atmospheric moonlit rest for the dark evolution.",
-      "tcgplayerProductId": 696679,
-      "tcgplayerGroupId": 24722,
-      "slug": "umbreon-me-30th-celebration-091-128"
+      ]
     },
     {
       "apiId": "me30-113",
@@ -127,19 +111,15 @@
       "artist": "MINAMINAMI Take",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/714356_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/714356_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Meowth from ME: 30th Celebration 113/128 is included because this cat knows how to cat-nap. A charming little sleepy scene for the collection. Suggested by GitHub issue #44.",
+      "whyItBelongs": "Cozy nap curled on a sunny brick wall. MINAMINAMI Take paints classic cat behavior as Meowth basks atop a warm fence ledge.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-09-16T06:28:43.000Z",
+      "slug": "meowth-me-30th-celebration-113-128",
       "moods": [
         "Face-Plant",
         "Town Naps"
-      ],
-      "whyItBelongs": "Cozy nap curled on a sunny brick wall. MINAMINAMI Take paints classic cat behavior as Meowth basks atop a warm fence ledge.",
-      "tcgplayerProductId": 714356,
-      "tcgplayerGroupId": 24722,
-      "slug": "meowth-me-30th-celebration-113-128"
+      ]
     },
     {
       "apiId": "me30-119",
@@ -155,21 +135,17 @@
       "artist": "Aya Kusube",
       "imageSmall": "https://tcgplayer-cdn.tcgplayer.com/product/716508_in_1000x1000.jpg",
       "imageLarge": "https://tcgplayer-cdn.tcgplayer.com/product/716508_in_1000x1000.jpg",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Snorlax from ME: 30th Celebration 119/128 is included because classic Snorlax remains classic Snorlax. Good Sleep, a giant body, and absolutely no reason to get up. Suggested by GitHub issue #42.",
+      "whyItBelongs": "Food coma among wild forest berries and mushrooms. Aya Kusube’s richly textured fairytale style shows Snorlax completely knocked out digesting a woodland feast.",
       "createdAt": "2026-09-16T06:28:43.000Z",
       "updatedAt": "2026-09-16T06:28:43.000Z",
+      "slug": "snorlax-me-30th-celebration-119-128",
       "moods": [
         "Food Coma",
         "Belly Up",
         "Flower Beds",
         "Autumn Leaves"
-      ],
-      "whyItBelongs": "Food coma among wild forest berries and mushrooms. Aya Kusube’s richly textured fairytale style shows Snorlax completely knocked out digesting a woodland feast.",
-      "tcgplayerProductId": 716508,
-      "tcgplayerGroupId": 24722,
-      "slug": "snorlax-me-30th-celebration-119-128"
+      ]
     },
     {
       "apiId": "me55-131",
@@ -185,22 +161,15 @@
       "artist": "Amelicart",
       "imageSmall": "https://images.scrydex.com/pokemon/me55-131/small",
       "imageLarge": "https://images.scrydex.com/pokemon/me55-131/large",
-      "imageSource": "Scrydex",
-      "imageSourceUrl": "https://scrydex.com/pokemon/cards/lapras/me55-131?variant=holofoil",
-      "scrydexId": "me55-131",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Lapras from ME: 30th Celebration 131/128 is included because a cozy nap next to Lapras is a very persuasive argument. We do not discriminate here, and this is exactly the sort of gentle scene that earns its binder spot. Suggested by GitHub issue #48.",
+      "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends.",
       "createdAt": "2026-09-18T18:36:00.000Z",
       "updatedAt": "2026-09-18T18:36:00.000Z",
+      "slug": "lapras-me-30th-celebration-131-128",
       "moods": [
         "Cameo Sleepers",
         "Water Naps"
-      ],
-      "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends.",
-      "tcgplayerProductId": 696683,
-      "tcgplayerGroupId": 24722,
-      "slug": "lapras-me-30th-celebration-131-128"
+      ]
     },
     {
       "apiId": "me55-144",
@@ -216,22 +185,15 @@
       "artist": "OKUBO",
       "imageSmall": "https://images.scrydex.com/pokemon/me55-144/small",
       "imageLarge": "https://images.scrydex.com/pokemon/me55-144/large",
-      "imageSource": "Scrydex",
-      "imageSourceUrl": "https://scrydex.com/pokemon/cards/meowth/me55-144?variant=holofoil",
-      "scrydexId": "me55-144",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Meowth from ME: 30th Celebration 144/128 is included because this cat knows how to cat-nap, and frankly, the collection is willing to respect the craft. A charming little sleepy scene for the binder. Suggested by GitHub issue #47.",
+      "whyItBelongs": "Group nap draped over apartment railings. OKUBO's intricate architectural illustration shows Meowth and friends dangling in liquid cat sleep across urban balconies.",
       "createdAt": "2026-09-18T18:36:00.000Z",
       "updatedAt": "2026-09-18T18:36:00.000Z",
+      "slug": "meowth-me-30th-celebration-144-128",
       "moods": [
         "Group Naps",
         "Town Naps"
-      ],
-      "whyItBelongs": "Group nap draped over apartment railings. OKUBO's intricate architectural illustration shows Meowth and friends dangling in liquid cat sleep across urban balconies.",
-      "tcgplayerProductId": 714358,
-      "tcgplayerGroupId": 24722,
-      "slug": "meowth-me-30th-celebration-144-128"
+      ]
     },
     {
       "apiId": "me55-152",
@@ -247,19 +209,15 @@
       "artist": "Kuroimori",
       "imageSmall": "https://images.scrydex.com/pokemon/me55-152/small",
       "imageLarge": "https://images.scrydex.com/pokemon/me55-152/large",
-      "priceType": "Holofoil",
       "setReleaseDate": "2026/09/16",
-      "notes": "Mew ex from ME: 30th Celebration 152/128 is included for its dreamy moment between waking and sleep, with Kuroimori's forest-glade illustration.",
-      "moods": [
-        "Dream Sequence",
-        "Flower Beds"
-      ],
       "whyItBelongs": "Mew isn’t quite asleep; it hovers with heavy lidded eyes in a sunlit forest glade. Its loosely looping tail, the blossom covered branches, and the golden light make the moment feel suspended between waking and dreaming. As an iconic 30th Celebration centerpiece, it brings a sleepy binder something special: not a nap caught in progress, but that weightless drift just before sleep.",
       "createdAt": "2026-10-04T16:56:57.000Z",
       "updatedAt": "2026-10-06T17:10:53.918Z",
-      "tcgplayerProductId": 717605,
-      "tcgplayerGroupId": 24722,
-      "slug": "mew-ex-me-30th-celebration-152-128"
+      "slug": "mew-ex-me-30th-celebration-152-128",
+      "moods": [
+        "Dream Sequence",
+        "Flower Beds"
+      ]
     }
   ]
 }

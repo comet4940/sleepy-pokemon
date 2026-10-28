@@ -14,18 +14,14 @@
       "artist": "Atsuko Nishida",
       "imageSmall": "https://images.pokemontcg.io/neo4/22.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/22_hires.png",
-      "priceType": "1st Edition",
       "setReleaseDate": "2002/02/28",
-      "notes": "Light Dragonair from Neo Destiny 22/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Atsuko Nishida, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Cozy nap among twilight clouds. A serene, mystical vintage grail that brings majestic grace and nostalgia to any sleep collection.",
       "createdAt": "2026-05-06T21:30:29.398Z",
       "updatedAt": "2026-10-23T20:00:00.000Z",
+      "slug": "light-dragonair-neo-destiny-22-105",
       "moods": [
         "Dream Sequence"
-      ],
-      "whyItBelongs": "Cozy nap among twilight clouds. A serene, mystical vintage grail that brings majestic grace and nostalgia to any sleep collection.",
-      "tcgplayerProductId": 86737,
-      "tcgplayerGroupId": 1444,
-      "slug": "light-dragonair-neo-destiny-22-105"
+      ]
     },
     {
       "apiId": "neo4-26",
@@ -41,21 +37,17 @@
       "artist": "Yukiko Baba",
       "imageSmall": "https://images.pokemontcg.io/neo4/26.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/26_hires.png",
-      "priceType": "1st Edition",
       "setReleaseDate": "2002/02/28",
-      "notes": "Light Piloswine from Neo Destiny 26/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by Yukiko Baba, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Out cold in a silent snowfall. Yukiko Baba's distinctive folk-art linework turns this ancient swine nap into vintage poetry.",
       "createdAt": "2026-05-05T21:38:02.638Z",
       "updatedAt": "2026-10-23T20:00:00.000Z",
+      "slug": "light-piloswine-neo-destiny-26-105",
       "moods": [
         "Group Naps",
         "Cameo Sleepers",
         "Face-Plant",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Out cold in a silent snowfall. Yukiko Baba's distinctive folk-art linework turns this ancient swine nap into vintage poetry.",
-      "tcgplayerProductId": 86747,
-      "tcgplayerGroupId": 1444,
-      "slug": "light-piloswine-neo-destiny-26-105"
+      ]
     },
     {
       "apiId": "neo4-48",
@@ -72,19 +64,15 @@
       "imageSmall": "https://images.pokemontcg.io/neo4/48.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/48_hires.png",
       "setReleaseDate": "2002/02/28",
-      "notes": "Cameo sleeper: the Abra beside Jolteon is the one snoozing.",
+      "whyItBelongs": "This one is a bit different from the others, because the sleepers are the little ones. Jolteon lies calmly in a bed of autumn leaves beneath a starry night sky, eyes open and expression soft. Tucked up against its chest is Togepi, fast asleep in its shell, and a Rattata is curled up just behind them. Jolteon isn’t napping so much as keeping watch over everyone who is. It’s the quietest, gentlest bedtime scene in the whole stack.\n\nThe card’s identity is built around that kindness. Its Japanese name, やさしいサンダース, translates to “Gentle Thunders.” The gameplay matches: Pulse Guard prevents any damage of 30 or more done to Light Jolteon during the opponent’s next turn. A guardian who can’t be easily hurt is exactly who you want standing over a pile of sleepers. It’s also a piece of Pokémon TCG history: Neo Destiny introduced Light Pokémon, and it was the final English expansion with the 1st Edition symbol.",
+      "createdAt": "2026-10-20T18:50:46.000Z",
+      "updatedAt": "2026-10-20T18:50:46.000Z",
+      "slug": "light-jolteon-neo-destiny-48-105",
       "moods": [
         "Nap Watch",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "This one is a bit different from the others, because the sleepers are the little ones. Jolteon lies calmly in a bed of autumn leaves beneath a starry night sky, eyes open and expression soft. Tucked up against its chest is Togepi, fast asleep in its shell, and a Rattata is curled up just behind them. Jolteon isn’t napping so much as keeping watch over everyone who is. It’s the quietest, gentlest bedtime scene in the whole stack.\n\nThe card’s identity is built around that kindness. Its Japanese name, やさしいサンダース, translates to “Gentle Thunders.” The gameplay matches: Pulse Guard prevents any damage of 30 or more done to Light Jolteon during the opponent’s next turn. A guardian who can’t be easily hurt is exactly who you want standing over a pile of sleepers. It’s also a piece of Pokémon TCG history: Neo Destiny introduced Light Pokémon, and it was the final English expansion with the 1st Edition symbol.",
-      "createdAt": "2026-10-20T18:50:46.000Z",
-      "updatedAt": "2026-10-20T18:50:46.000Z",
-      "tcgplayerProductId": 86741,
-      "tcgplayerGroupId": 1444,
-      "priceType": "Unlimited",
-      "slug": "light-jolteon-neo-destiny-48-105"
+      ]
     },
     {
       "apiId": "neo4-68",
@@ -100,18 +88,14 @@
       "artist": "Atsuko Nishida",
       "imageSmall": "https://images.pokemontcg.io/neo4/68.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/68_hires.png",
-      "priceType": "1st Edition",
       "setReleaseDate": "2002/02/28",
-      "notes": "",
-      "moods": [
-        "Belly Up"
-      ],
       "whyItBelongs": "Out cold in the grass. The cheapest nap in the binder and a perfect first card.",
       "createdAt": "2026-07-08T12:26:28.292Z",
       "updatedAt": "2026-10-15T15:34:38.221Z",
-      "tcgplayerProductId": 85952,
-      "tcgplayerGroupId": 1444,
-      "slug": "growlithe-neo-destiny-68-105"
+      "slug": "growlithe-neo-destiny-68-105",
+      "moods": [
+        "Belly Up"
+      ]
     },
     {
       "apiId": "neo4-76",
@@ -127,18 +111,14 @@
       "artist": "Miki Tanaka",
       "imageSmall": "https://images.pokemontcg.io/neo4/76.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/76_hires.png",
-      "priceType": "1st Edition",
       "setReleaseDate": "2002/02/28",
-      "notes": "Phanpy from Neo Destiny 76/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Out cold in the fresh green lawn. Miki Tanaka renders this baby elephant as a soft clay model dozing in total contentment.",
       "createdAt": "2026-05-05T21:20:24.075Z",
       "updatedAt": "2026-10-15T15:37:28.009Z",
+      "slug": "phanpy-neo-destiny-76-105",
       "moods": [
         "Face-Plant"
-      ],
-      "whyItBelongs": "Out cold in the fresh green lawn. Miki Tanaka renders this baby elephant as a soft clay model dozing in total contentment.",
-      "tcgplayerProductId": 87997,
-      "tcgplayerGroupId": 1444,
-      "slug": "phanpy-neo-destiny-76-105"
+      ]
     },
     {
       "apiId": "neo4-84",
@@ -155,17 +135,13 @@
       "imageSmall": "https://images.pokemontcg.io/neo4/84.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/84_hires.png",
       "setReleaseDate": "2002/02/28",
-      "notes": "Two Swinub share a sleepy moment in the grass.",
-      "moods": [
-        "Group Naps"
-      ],
       "whyItBelongs": "Two Swinub are tucked into the grass together, making this feel like a tiny, perfectly synchronized group nap.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:53.607Z",
-      "priceType": "1st Edition",
-      "tcgplayerProductId": 89699,
-      "tcgplayerGroupId": 1444,
-      "slug": "swinub-neo-destiny-84-105"
+      "slug": "swinub-neo-destiny-84-105",
+      "moods": [
+        "Group Naps"
+      ]
     },
     {
       "apiId": "neo4-91",
@@ -181,16 +157,12 @@
       "artist": "Masako Yamashita",
       "imageSmall": "https://images.pokemontcg.io/neo4/91.png",
       "imageLarge": "https://images.pokemontcg.io/neo4/91_hires.png",
-      "priceType": "1st Edition",
       "setReleaseDate": "2002/02/28",
-      "notes": "Vulpix from Neo Destiny 91/105 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Masako Yamashita, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Cozy nap nestled in a hollow tree trunk. Curled into a neat ball with its six tails, this Neo Destiny common is vintage comfort defined.",
       "createdAt": "2026-05-05T21:21:24.402Z",
       "updatedAt": "2026-10-15T15:37:27.833Z",
-      "moods": [],
-      "whyItBelongs": "Cozy nap nestled in a hollow tree trunk. Curled into a neat ball with its six tails, this Neo Destiny common is vintage comfort defined.",
-      "tcgplayerProductId": 90433,
-      "tcgplayerGroupId": 1444,
-      "slug": "vulpix-neo-destiny-91-105"
+      "slug": "vulpix-neo-destiny-91-105",
+      "moods": []
     }
   ]
 }

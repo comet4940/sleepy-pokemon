@@ -15,18 +15,14 @@
       "imageSmall": "https://images.pokemontcg.io/sv2/112.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/112_hires.png",
       "setReleaseDate": "2023/06/09",
-      "notes": "Added from curator-provided metadata. Makuhita's accidental upright nap follows a determined round of slap-push drills.",
-      "moods": [
-        "Propped Up",
-        "Moonlit Naps"
-      ],
       "whyItBelongs": "Accidental nap propped against a fallen log in a moonlit glade. Look closely at the tree trunk behind it to spot the splintered impact craters Makuhita punched into the bark during slap-push drills. True to its Pokédex lore of relentlessly slamming into giant trees to toughen its body, this round sumo trainee completely knocked itself out upright under the full moon. Kurata So’s luminous palette and Makuhita’s soft snoring expression turn an intense workout recovery into pure cozy binder magic.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-10-19T17:29:23.655Z",
-      "priceType": "Normal",
-      "tcgplayerProductId": 497527,
-      "tcgplayerGroupId": 23120,
-      "slug": "makuhita-paldea-evolved-112-193"
+      "slug": "makuhita-paldea-evolved-112-193",
+      "moods": [
+        "Propped Up",
+        "Moonlit Naps"
+      ]
     },
     {
       "apiId": "sv2-160",
@@ -42,18 +38,14 @@
       "artist": "Shigenori Negishi",
       "imageSmall": "https://images.pokemontcg.io/sv2/160.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/160_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2023/06/09",
-      "notes": "Slakoth from Paldea Evolved 160/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Shigenori Negishi, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Cozy nap between daily yawns. Twenty hours of sleep a day captured in serene green woodland tones by Shigenori Negishi.",
       "createdAt": "2026-05-05T21:24:40.053Z",
       "updatedAt": "2026-10-18T14:33:49.856Z",
+      "slug": "slakoth-paldea-evolved-160-193",
       "moods": [
         "Propped Up"
-      ],
-      "whyItBelongs": "Cozy nap between daily yawns. Twenty hours of sleep a day captured in serene green woodland tones by Shigenori Negishi.",
-      "tcgplayerProductId": 497578,
-      "tcgplayerGroupId": 23120,
-      "slug": "slakoth-paldea-evolved-160-193"
+      ]
     },
     {
       "apiId": "sv2-196",
@@ -69,18 +61,14 @@
       "artist": "Kouki Saitou",
       "imageSmall": "https://images.pokemontcg.io/sv2/196.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/196_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/06/09",
-      "notes": "Sprigatito from Paldea Evolved 196/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Cozy nap on a flower trellis. Kouki Saitou’s lush purple wisteria canopy cradles the little grass cat in heavenly tranquility.",
       "createdAt": "2026-05-04T23:43:03.718Z",
       "updatedAt": "2026-10-15T15:37:47.412Z",
+      "slug": "sprigatito-paldea-evolved-196-193",
       "moods": [
         "Flower Beds"
-      ],
-      "whyItBelongs": "Cozy nap on a flower trellis. Kouki Saitou’s lush purple wisteria canopy cradles the little grass cat in heavenly tranquility.",
-      "tcgplayerProductId": 497599,
-      "tcgplayerGroupId": 23120,
-      "slug": "sprigatito-paldea-evolved-196-193"
+      ]
     },
     {
       "apiId": "sv2-211",
@@ -96,19 +84,15 @@
       "artist": "Toshinao Aoki",
       "imageSmall": "https://images.pokemontcg.io/sv2/211.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/211_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/06/09",
-      "notes": "Raichu from Paldea Evolved 211/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Toshinao Aoki, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Cozy nap curled on bedroom floorboards. Toshinao Aoki's clean storybook lines make this sleepy Raichu one of the most beloved modern SAR cards.",
       "createdAt": "2026-05-05T00:48:04.678Z",
       "updatedAt": "2026-10-15T15:37:42.272Z",
+      "slug": "raichu-paldea-evolved-211-193",
       "moods": [
         "Belly Up",
         "Bedtime"
-      ],
-      "whyItBelongs": "Cozy nap curled on bedroom floorboards. Toshinao Aoki's clean storybook lines make this sleepy Raichu one of the most beloved modern SAR cards.",
-      "tcgplayerProductId": 497614,
-      "tcgplayerGroupId": 23120,
-      "slug": "raichu-paldea-evolved-211-193"
+      ]
     },
     {
       "apiId": "sv2-221",
@@ -124,16 +108,12 @@
       "artist": "Miki Tanaka",
       "imageSmall": "https://images.pokemontcg.io/sv2/221.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/221_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/06/09",
-      "notes": "Paldean Wooper from Paldea Evolved 221/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Miki Tanaka, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Out cold floating in a mud puddle. Miki Tanaka's felt-model craft turns a muddy swamp doze into pure storybook folk art.",
       "createdAt": "2026-05-06T01:53:25.387Z",
       "updatedAt": "2026-10-24T09:00:00.000Z",
-      "moods": [],
-      "whyItBelongs": "Out cold floating in a mud puddle. Miki Tanaka's felt-model craft turns a muddy swamp doze into pure storybook folk art.",
-      "tcgplayerProductId": 497624,
-      "tcgplayerGroupId": 23120,
-      "slug": "paldean-wooper-paldea-evolved-221-193"
+      "slug": "paldean-wooper-paldea-evolved-221-193",
+      "moods": []
     },
     {
       "apiId": "sv2-226",
@@ -149,18 +129,14 @@
       "artist": "Mizue",
       "imageSmall": "https://images.pokemontcg.io/sv2/226.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/226_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/06/09",
-      "notes": "Maushold from Paldea Evolved 226/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Mizue, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its higher market price makes it feel like a centerpiece candidate rather than a casual binder filler. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Group nap in a hollow log nursery. The entire tandem mouse family snuggled together under giant forest mushrooms is maximum adorability.",
       "createdAt": "2026-05-06T21:02:50.619Z",
       "updatedAt": "2026-10-17T14:11:17.814Z",
+      "slug": "maushold-paldea-evolved-226-193",
       "moods": [
         "Flower Beds"
-      ],
-      "whyItBelongs": "Group nap in a hollow log nursery. The entire tandem mouse family snuggled together under giant forest mushrooms is maximum adorability.",
-      "tcgplayerProductId": 497629,
-      "tcgplayerGroupId": 23120,
-      "slug": "maushold-paldea-evolved-226-193"
+      ]
     },
     {
       "apiId": "sv2-227",
@@ -176,19 +152,15 @@
       "artist": "Shibuzoh.",
       "imageSmall": "https://images.pokemontcg.io/sv2/227.png",
       "imageLarge": "https://images.pokemontcg.io/sv2/227_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2023/06/09",
-      "notes": "Flamigo from Paldea Evolved 227/193 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Shibuzoh., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
+      "whyItBelongs": "Group nap in a tangle of pink feathers. Shibuzoh delivers hilarious coordinated flamingo resting in a tropical wetland.",
       "createdAt": "2026-05-05T00:49:49.840Z",
       "updatedAt": "2026-10-15T15:37:41.685Z",
+      "slug": "flamigo-paldea-evolved-227-193",
       "moods": [
         "Group Naps",
         "Water Naps"
-      ],
-      "whyItBelongs": "Group nap in a tangle of pink feathers. Shibuzoh delivers hilarious coordinated flamingo resting in a tropical wetland.",
-      "tcgplayerProductId": 497630,
-      "tcgplayerGroupId": 23120,
-      "slug": "flamigo-paldea-evolved-227-193"
+      ]
     }
   ]
 }

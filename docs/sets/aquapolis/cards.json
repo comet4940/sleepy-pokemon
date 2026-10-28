@@ -14,19 +14,15 @@
       "artist": "Kyoko Umemoto",
       "imageSmall": "https://images.pokemontcg.io/ecard2/49.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/49_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/01/15",
-      "notes": "Gloom from Aquapolis 49/147 is included in this guide because Gloom is asleep on a tree branch, adding a classic e-Card era sleepy scene to the list. Suggested by GitHub issue #8.",
+      "whyItBelongs": "Out cold drooling on a mossy branch. Kyoko Umemoto’s rich e-Series color palette makes Gloom’s jungle nap pop with vintage personality.",
       "createdAt": "2026-09-16T01:07:10.520Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
+      "slug": "gloom-aquapolis-49-147",
       "moods": [
         "Drool & Snore",
         "Treetop Naps"
-      ],
-      "whyItBelongs": "Out cold drooling on a mossy branch. Kyoko Umemoto’s rich e-Series color palette makes Gloom’s jungle nap pop with vintage personality.",
-      "tcgplayerProductId": 85780,
-      "tcgplayerGroupId": 1397,
-      "slug": "gloom-aquapolis-49-147"
+      ]
     },
     {
       "apiId": "ecard2-66",
@@ -42,18 +38,14 @@
       "artist": "Atsuko Nishida",
       "imageSmall": "https://images.pokemontcg.io/ecard2/66.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/66_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/01/15",
-      "notes": "Wooper is fast asleep on a bright red surface, tucked into a cozy indoor corner.",
-      "moods": [
-        "Belly Up"
-      ],
       "whyItBelongs": "Wooper has nodded off in the middle of an everyday indoor scene, its little arms slack and eyes peacefully shut. Atsuko Nishida's bright, lived-in setting gives this vintage e-Card a sweet, familiar nap-time feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:05.813Z",
-      "tcgplayerProductId": 90630,
-      "tcgplayerGroupId": 1397,
-      "slug": "wooper-aquapolis-66-147"
+      "slug": "wooper-aquapolis-66-147",
+      "moods": [
+        "Belly Up"
+      ]
     },
     {
       "apiId": "ecard2-74",
@@ -69,19 +61,15 @@
       "artist": "Hisao Nakamura",
       "imageSmall": "https://images.pokemontcg.io/ecard2/74.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/74_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/01/15",
-      "notes": "Drowzee from Aquapolis 74/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Hisao Nakamura, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Out cold in a flower patch. The dream eater itself taking a deep nap in classic vintage e-Series style by Hisao Nakamura.",
       "createdAt": "2026-05-05T21:22:14.204Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
+      "slug": "drowzee-aquapolis-74-147",
       "moods": [
         "Belly Up",
         "Town Naps"
-      ],
-      "whyItBelongs": "Out cold in a flower patch. The dream eater itself taking a deep nap in classic vintage e-Series style by Hisao Nakamura.",
-      "tcgplayerProductId": 84971,
-      "tcgplayerGroupId": 1397,
-      "slug": "drowzee-aquapolis-74-147"
+      ]
     },
     {
       "apiId": "ecard2-84",
@@ -98,18 +86,14 @@
       "imageSmall": "https://images.pokemontcg.io/ecard2/84.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/84_hires.png",
       "setReleaseDate": "2003/01/15",
-      "notes": "Horsea has dozed off among the rocks and sea plants.",
-      "moods": [
-        "Nap Watch",
-        "Water Naps"
-      ],
       "whyItBelongs": "Horsea is stretched out with its snout resting on top of a Shellder and its eyes shut tight, completely content. Shellder is much less thrilled. It’s glaring out from under its shell with its tongue sticking out and a sweat drop on its brow, clearly aware it has been turned into a pillow and clearly unable to do anything about it. Behind them are swaying seaweed, a few rocks and a bubble trail drifting up, so the whole scene feels like a calm, slightly comic corner of the seafloor.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
-      "priceType": "Normal",
-      "tcgplayerProductId": 86186,
-      "tcgplayerGroupId": 1397,
-      "slug": "horsea-aquapolis-84-147"
+      "slug": "horsea-aquapolis-84-147",
+      "moods": [
+        "Nap Watch",
+        "Water Naps"
+      ]
     },
     {
       "apiId": "ecard2-108",
@@ -125,18 +109,14 @@
       "artist": "Aya Kusube",
       "imageSmall": "https://images.pokemontcg.io/ecard2/108.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/108_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/01/15",
-      "notes": "Slowpoke from Aquapolis 108/147 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Aya Kusube, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It is more of a focused wishlist card than an impulse pickup, especially for collectors building a curated sleepy Pokemon page. It is also a good vintage-era contrast piece if you want a 3x3 page that mixes older sleepy cards with modern illustration rares.",
+      "whyItBelongs": "Cozy nap on a sunny sandbar. Slowpoke living up to its name in Aya Kusube's beloved textured e-Series style.",
       "createdAt": "2026-05-06T21:26:34.911Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
+      "slug": "slowpoke-aquapolis-108-147",
       "moods": [
         "Face-Plant"
-      ],
-      "whyItBelongs": "Cozy nap on a sunny sandbar. Slowpoke living up to its name in Aya Kusube's beloved textured e-Series style.",
-      "tcgplayerProductId": 89325,
-      "tcgplayerGroupId": 1397,
-      "slug": "slowpoke-aquapolis-108-147"
+      ]
     },
     {
       "apiId": "ecard2-109",
@@ -152,16 +132,12 @@
       "artist": "Miki Tanaka",
       "imageSmall": "https://images.pokemontcg.io/ecard2/109.png",
       "imageLarge": "https://images.pokemontcg.io/ecard2/109_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2003/01/15",
-      "notes": "Smeargle has fallen asleep beside its painting beneath a shady tree.",
-      "moods": [],
       "whyItBelongs": "Smeargle has dozed off beside its paint-covered easel, tail curled around the scene as a shady tree keeps watch. Miki Tanaka's sunny little clearing feels like the perfect place to rest after a long painting session.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.973Z",
-      "tcgplayerProductId": 89352,
-      "tcgplayerGroupId": 1397,
-      "slug": "smeargle-aquapolis-109-147"
+      "slug": "smeargle-aquapolis-109-147",
+      "moods": []
     }
   ]
 }

@@ -11,6 +11,7 @@ import {
   dataAttributes,
   escapeAttribute,
   escapeHtml,
+  publicCardsJson,
   renderCardEntry,
   renderHead,
   slugify,
@@ -53,7 +54,7 @@ export async function writeSetPages(hubs) {
     await mkdir(dir, { recursive: true });
     await writeFile(`${dir}/index.html`, renderSetPage(hub), "utf8");
     // The lightbox only needs this set's cards, so the page loads this subset instead of the full catalog.
-    await writeFile(`${dir}/cards.json`, `${JSON.stringify({ cards: hub.cards }, null, 2)}\n`, "utf8");
+    await writeFile(`${dir}/cards.json`, publicCardsJson(hub.cards), "utf8");
   }));
 }
 

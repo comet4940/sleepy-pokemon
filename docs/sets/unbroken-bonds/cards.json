@@ -14,18 +14,14 @@
       "artist": "Anesaki Dynamic",
       "imageSmall": "https://images.pokemontcg.io/sm10/7.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/7_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Gloom from Unbroken Bonds 7/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Anesaki Dynamic, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
+      "whyItBelongs": "Out cold drooling on a garden path. Anesaki Dynamic gives Gloom an unapologetically messy outdoor nap complete with drool puddles.",
       "createdAt": "2026-05-05T01:03:00.942Z",
       "updatedAt": "2026-10-16T15:21:49.374Z",
+      "slug": "gloom-unbroken-bonds-7-214",
       "moods": [
         "Drool & Snore"
-      ],
-      "whyItBelongs": "Out cold drooling on a garden path. Anesaki Dynamic gives Gloom an unapologetically messy outdoor nap complete with drool puddles.",
-      "tcgplayerProductId": 189045,
-      "tcgplayerGroupId": 2420,
-      "slug": "gloom-unbroken-bonds-7-214"
+      ]
     },
     {
       "apiId": "sm10-17",
@@ -42,17 +38,13 @@
       "imageSmall": "https://images.pokemontcg.io/sm10/17.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/17_hires.png",
       "setReleaseDate": "2019/05/03",
-      "notes": "Tangrowth rests quietly among the greenery.",
-      "moods": [
-        "Propped Up"
-      ],
       "whyItBelongs": "Tangrowth is settled at the base of a big tree with its eyes gently shut, one red hand tucked up near its face. Sunlight filters through the leaves behind it, ferns crowd in at the edges, and a tiny curled sprout pokes up in front like it’s keeping watch. There’s no battle pose and no drama here, just a very large, very tangled Pokémon getting some rest in the shade.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
-      "tcgplayerProductId": 189059,
-      "tcgplayerGroupId": 2420,
-      "priceType": "Normal",
-      "slug": "tangrowth-unbroken-bonds-17-214"
+      "slug": "tangrowth-unbroken-bonds-17-214",
+      "moods": [
+        "Propped Up"
+      ]
     },
     {
       "apiId": "sm10-79",
@@ -68,16 +60,12 @@
       "artist": "HYOGONOSUKE",
       "imageSmall": "https://images.pokemontcg.io/sm10/79.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/79_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Espurr has nodded off in the grass beneath a shady tree.",
-      "moods": [],
       "whyItBelongs": "Espurr is stretched out in the grass beneath a broad tree, eyes closed and mouth open in a tiny sleepy yawn. HYOGONOSUKE's sun-dappled scene makes this feel like a warm afternoon nap interrupted only by the light.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.841Z",
-      "tcgplayerProductId": 189179,
-      "tcgplayerGroupId": 2420,
-      "slug": "espurr-unbroken-bonds-79-214"
+      "slug": "espurr-unbroken-bonds-79-214",
+      "moods": []
     },
     {
       "apiId": "sm10-135",
@@ -93,20 +81,16 @@
       "artist": "miki kudo",
       "imageSmall": "https://images.pokemontcg.io/sm10/135.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/135_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Wigglytuff from Unbroken Bonds 135/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a rare card, it gives the sleepy Pokemon theme a little more collector weight without necessarily becoming the whole page. The card is illustrated by miki kudo, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its approachable market price makes it a strong budget pick for building out a sleepy Pokemon binder page. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
+      "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow.",
       "createdAt": "2026-05-06T21:38:00.868Z",
       "updatedAt": "2026-10-17T14:10:47.725Z",
+      "slug": "wigglytuff-unbroken-bonds-135-214",
       "moods": [
         "Group Naps",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow.",
-      "tcgplayerProductId": 189233,
-      "tcgplayerGroupId": 2420,
-      "slug": "wigglytuff-unbroken-bonds-135-214"
+      ]
     },
     {
       "apiId": "sm10-137",
@@ -122,19 +106,15 @@
       "artist": "sui",
       "imageSmall": "https://images.pokemontcg.io/sm10/137.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/137_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Togetic from Unbroken Bonds 137/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
+      "whyItBelongs": "Cozy nap drifting through sunset clouds. Soft pastel tones from sui make this feel like a floating airborne daydream.",
       "createdAt": "2026-05-06T21:04:59.224Z",
       "updatedAt": "2026-10-17T14:11:04.519Z",
+      "slug": "togetic-unbroken-bonds-137-214",
       "moods": [
         "Dream Sequence",
         "Flower Beds"
-      ],
-      "whyItBelongs": "Cozy nap drifting through sunset clouds. Soft pastel tones from sui make this feel like a floating airborne daydream.",
-      "tcgplayerProductId": 189235,
-      "tcgplayerGroupId": 2420,
-      "slug": "togetic-unbroken-bonds-137-214"
+      ]
     },
     {
       "apiId": "sm10-147",
@@ -150,19 +130,15 @@
       "artist": "Shibuzoh.",
       "imageSmall": "https://images.pokemontcg.io/sm10/147.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/147_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2019/05/03",
-      "notes": "Meowth from Unbroken Bonds 147/214 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Shibuzoh., which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It can help bridge older modern sets with newer illustration rares in a mixed-era sleepy Pokemon layout.",
+      "whyItBelongs": "Cozy nap on a plush bed. Shibuzoh’s round storybook style shows Meowth taking full advantage of 'Caturday' by the bedside lamp.",
       "createdAt": "2026-05-05T00:54:17.618Z",
       "updatedAt": "2026-10-19T17:28:01.459Z",
+      "slug": "meowth-unbroken-bonds-147-214",
       "moods": [
         "Hug Buddy",
         "Couch & Cushion"
-      ],
-      "whyItBelongs": "Cozy nap on a plush bed. Shibuzoh’s round storybook style shows Meowth taking full advantage of 'Caturday' by the bedside lamp.",
-      "tcgplayerProductId": 189247,
-      "tcgplayerGroupId": 2420,
-      "slug": "meowth-unbroken-bonds-147-214"
+      ]
     },
     {
       "apiId": "sm10-158",
@@ -179,18 +155,14 @@
       "imageSmall": "https://images.pokemontcg.io/sm10/158.png",
       "imageLarge": "https://images.pokemontcg.io/sm10/158_hires.png",
       "setReleaseDate": "2019/05/03",
-      "notes": "Community submission. Snorlax is dozing beneath a tree while Pikachu keep him company.",
-      "moods": [
-        "Nap Watch",
-        "Propped Up"
-      ],
       "whyItBelongs": "A full-on Snorlax nap under the trees, with two Pikachu nearby and a Torchic perched on his head. Nobody in this scene looks in a hurry to wake him.",
       "createdAt": "2026-10-15T16:48:00.000Z",
       "updatedAt": "2026-10-16T15:21:24.630Z",
-      "priceType": "Holofoil",
-      "tcgplayerProductId": 189260,
-      "tcgplayerGroupId": 2420,
-      "slug": "snorlax-unbroken-bonds-158-214"
+      "slug": "snorlax-unbroken-bonds-158-214",
+      "moods": [
+        "Nap Watch",
+        "Propped Up"
+      ]
     }
   ]
 }

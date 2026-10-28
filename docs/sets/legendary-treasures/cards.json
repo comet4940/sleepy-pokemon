@@ -14,18 +14,14 @@
       "artist": "sui",
       "imageSmall": "https://images.pokemontcg.io/bw11/11.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/11_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2013/11/06",
-      "notes": "Swadloon from Legendary Treasures 11/113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an uncommon card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by sui, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
+      "whyItBelongs": "Cozy nap bundled tight in a leafy blanket. Swadloon is the patron saint of staying under the covers on a cold rainy morning.",
       "createdAt": "2026-05-06T21:28:21.816Z",
       "updatedAt": "2026-10-15T15:35:42.304Z",
+      "slug": "swadloon-legendary-treasures-11-113",
       "moods": [
         "Pokémon Pillow"
-      ],
-      "whyItBelongs": "Cozy nap bundled tight in a leafy blanket. Swadloon is the patron saint of staying under the covers on a cold rainy morning.",
-      "tcgplayerProductId": 89669,
-      "tcgplayerGroupId": 1409,
-      "slug": "swadloon-legendary-treasures-11-113"
+      ]
     },
     {
       "apiId": "bw11-55",
@@ -41,18 +37,14 @@
       "artist": "Sanosuke Sakuma",
       "imageSmall": "https://images.pokemontcg.io/bw11/55.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/55_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2013/11/06",
-      "notes": "Natu from Legendary Treasures 55/113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
+      "whyItBelongs": "Cozy nap balancing on a branch. A tiny round bird catching shut-eye in Sanosuke Sakuma's delightful storybook style.",
       "createdAt": "2026-05-06T21:05:07.001Z",
       "updatedAt": "2026-10-15T15:36:04.800Z",
+      "slug": "natu-legendary-treasures-55-113",
       "moods": [
         "Snow Naps"
-      ],
-      "whyItBelongs": "Cozy nap balancing on a branch. A tiny round bird catching shut-eye in Sanosuke Sakuma's delightful storybook style.",
-      "tcgplayerProductId": 87688,
-      "tcgplayerGroupId": 1409,
-      "slug": "natu-legendary-treasures-55-113"
+      ]
     },
     {
       "apiId": "bw11-94",
@@ -69,15 +61,11 @@
       "imageSmall": "https://images.pokemontcg.io/bw11/94.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/94_hires.png",
       "setReleaseDate": "2013/11/06",
-      "notes": "User-provided card image; details confirmed against the Pokemon TCG API card bw11-94.",
-      "priceType": "Normal",
-      "moods": [],
       "whyItBelongs": "In a cave full of flustered, squabbling Gible, one sneaky little guy at the top center has quietly slipped away for a nap. Everyone else is sweating and sputtering below, and he’s still getting his rest.",
       "createdAt": "2026-10-27T21:59:45.000Z",
       "updatedAt": "2026-10-27T22:07:04.000Z",
-      "tcgplayerProductId": 85704,
-      "tcgplayerGroupId": 1409,
-      "slug": "gible-legendary-treasures-94-113"
+      "slug": "gible-legendary-treasures-94-113",
+      "moods": []
     },
     {
       "apiId": "bw11-107",
@@ -93,21 +81,17 @@
       "artist": "Sanosuke Sakuma",
       "imageSmall": "https://images.pokemontcg.io/bw11/107.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/107_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2013/11/06",
-      "notes": "Small Pokémon have nestled into Bouffalant's thick wool for a sheltered rest.",
+      "whyItBelongs": "A pair of tiny companions are tucked into Bouffalant's enormous woolly mane, looking perfectly content to rest there. Sanosuke Sakuma makes this feel like the coziest group nap on the prairie.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:01.096Z",
+      "slug": "bouffalant-legendary-treasures-107-113",
       "moods": [
         "Nap Watch",
         "Cameo Sleepers",
         "Pokémon Pillow",
         "Snow Naps"
-      ],
-      "whyItBelongs": "A pair of tiny companions are tucked into Bouffalant's enormous woolly mane, looking perfectly content to rest there. Sanosuke Sakuma makes this feel like the coziest group nap on the prairie.",
-      "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-21T15:57:01.096Z",
-      "tcgplayerProductId": 83945,
-      "tcgplayerGroupId": 1409,
-      "slug": "bouffalant-legendary-treasures-107-113"
+      ]
     },
     {
       "apiId": "bw11-RC16",
@@ -123,21 +107,17 @@
       "artist": "Sanosuke Sakuma",
       "imageSmall": "https://images.pokemontcg.io/bw11/RC16.png",
       "imageLarge": "https://images.pokemontcg.io/bw11/RC16_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2013/11/06",
-      "notes": "Ursaring from Legendary Treasures RC16/RC113 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Sanosuke Sakuma, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It gives a binder page a slightly older modern feel, which helps the sleepy Pokemon theme avoid looking too concentrated in recent sets.",
+      "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub.",
       "createdAt": "2026-05-06T21:28:00.721Z",
       "updatedAt": "2026-10-16T15:21:34.307Z",
+      "slug": "ursaring-legendary-treasures-rc16-rc113",
       "moods": [
         "Cameo Sleepers",
         "Pokémon Pillow",
         "Flower Beds",
         "Sunbeam Naps"
-      ],
-      "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub.",
-      "tcgplayerProductId": 90257,
-      "tcgplayerGroupId": 1465,
-      "slug": "ursaring-legendary-treasures-rc16-rc113"
+      ]
     }
   ]
 }

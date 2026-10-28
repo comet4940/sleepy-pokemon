@@ -14,18 +14,14 @@
       "artist": "Anesaki Dynamic",
       "imageSmall": "https://images.pokemontcg.io/swsh8/65.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/65_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2021/11/12",
-      "notes": "Clamperl sleeps safely inside its shell amid bubbles and glowing sea life.",
-      "moods": [
-        "Water Naps"
-      ],
       "whyItBelongs": "Clamperl is tucked into its shell with its eyes closed, surrounded by bubbles and the cool blue of the sea. The dark shell reads like a snug little bedroom under the waves.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:57.119Z",
-      "tcgplayerProductId": 253208,
-      "tcgplayerGroupId": 2906,
-      "slug": "clamperl-fusion-strike-065-264"
+      "slug": "clamperl-fusion-strike-065-264",
+      "moods": [
+        "Water Naps"
+      ]
     },
     {
       "apiId": "swsh8-122",
@@ -41,19 +37,15 @@
       "artist": "Tika Matsuno",
       "imageSmall": "https://images.pokemontcg.io/swsh8/122.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/122_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2021/11/12",
-      "notes": "This Fusion Strike Musharna is curled up in a bright, sparkling underwater dreamscape.",
-      "moods": [
-        "Dream Sequence",
-        "Moonlit Naps"
-      ],
       "whyItBelongs": "Musharna sleeps in a floating, starry dream world, its pink dream mist looping around its curled body. The luminous underwater colors make this one feel like a whole dream captured on a card.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-20T00:00:00.000Z",
-      "tcgplayerProductId": 253299,
-      "tcgplayerGroupId": 2906,
-      "slug": "musharna-fusion-strike-122-264"
+      "slug": "musharna-fusion-strike-122-264",
+      "moods": [
+        "Dream Sequence",
+        "Moonlit Naps"
+      ]
     },
     {
       "apiId": "swsh8-206",
@@ -69,19 +61,15 @@
       "artist": "Oswaldo KATO",
       "imageSmall": "https://images.pokemontcg.io/swsh8/206.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/206_hires.png",
-      "priceType": "Normal",
       "setReleaseDate": "2021/11/12",
-      "notes": "Snorlax from Fusion Strike 206/264 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Oswaldo KATO, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
+      "whyItBelongs": "Food coma flat on its back under an apple tree. Oswaldo KATO captures Snorlax completely dead to the world, surrounded by half-eaten apples with bite marks.",
       "createdAt": "2026-05-05T01:03:39.881Z",
       "updatedAt": "2026-10-15T15:37:33.100Z",
+      "slug": "snorlax-fusion-strike-206-264",
       "moods": [
         "Food Coma",
         "Belly Up"
-      ],
-      "whyItBelongs": "Food coma flat on its back under an apple tree. Oswaldo KATO captures Snorlax completely dead to the world, surrounded by half-eaten apples with bite marks.",
-      "tcgplayerProductId": 253301,
-      "tcgplayerGroupId": 2906,
-      "slug": "snorlax-fusion-strike-206-264"
+      ]
     },
     {
       "apiId": "swsh8-252",
@@ -97,18 +85,14 @@
       "artist": "Narumi Sato",
       "imageSmall": "https://images.pokemontcg.io/swsh8/252.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/252_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2021/11/12",
-      "notes": "Sandaconda V has curled up beside a radiator in a warmly lit room.",
-      "moods": [
-        "Nap Watch"
-      ],
       "whyItBelongs": "Sandaconda has claimed the warmest spot in the room, curled beside a radiator while its trainer relaxes nearby. Narumi Sato's homely scene makes a powerful V card feel wonderfully domestic and drowsy.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:26.449Z",
-      "tcgplayerProductId": 253149,
-      "tcgplayerGroupId": 2906,
-      "slug": "sandaconda-v-fusion-strike-252-264"
+      "slug": "sandaconda-v-fusion-strike-252-264",
+      "moods": [
+        "Nap Watch"
+      ]
     },
     {
       "apiId": "swsh8-257",
@@ -125,19 +109,15 @@
       "imageSmall": "https://images.pokemontcg.io/swsh8/257.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/257_hires.png",
       "setReleaseDate": "2021/11/12",
-      "notes": "User-provided card image; details confirmed against the Pokemon TCG API card swsh8-257.",
+      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
+      "createdAt": "2026-10-27T22:43:34.000Z",
+      "updatedAt": "2026-10-27T22:43:34.000Z",
+      "slug": "greedent-v-fusion-strike-257-264",
       "moods": [
         "Nap Watch",
         "Cameo Sleepers",
         "Food Coma"
-      ],
-      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
-      "createdAt": "2026-10-27T22:43:34.000Z",
-      "updatedAt": "2026-10-27T22:43:34.000Z",
-      "tcgplayerProductId": 253157,
-      "tcgplayerGroupId": 2906,
-      "priceType": "Holofoil",
-      "slug": "greedent-v-fusion-strike-257-264"
+      ]
     },
     {
       "apiId": "swsh8-270",
@@ -153,16 +133,12 @@
       "artist": "Kouki Saitou",
       "imageSmall": "https://images.pokemontcg.io/swsh8/270.png",
       "imageLarge": "https://images.pokemontcg.io/swsh8/270_hires.png",
-      "priceType": "Holofoil",
       "setReleaseDate": "2021/11/12",
-      "notes": "Espeon VMAX from Fusion Strike 270/264 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a Rare Rainbow, it is one of the showier entries in the sleepy Pokemon theme and can carry a page on its own. The card is illustrated by Kouki Saitou, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its high market price puts it firmly in grail territory for a sleepy Pokemon collection, so it is best treated as a long-term chase card. It works nicely in a Sword & Shield-era page, especially alongside Trainer Gallery and alternate-art sleepy cards.",
+      "whyItBelongs": "Dynamax or not, Espeon is still a cat. Kouki Saitou shows it draped lazily across a rooftop, eyes peacefully closed while Wingull circle through the bright sky nearby. The enormous scale makes the scene wonderfully absurd: one building has apparently become Espeon’s personal sun-warmed nap spot.",
       "createdAt": "2026-05-05T00:58:01.876Z",
       "updatedAt": "2026-10-16T15:21:54.631Z",
-      "moods": [],
-      "whyItBelongs": "Dynamax or not, Espeon is still a cat. Kouki Saitou shows it draped lazily across a rooftop, eyes peacefully closed while Wingull circle through the bright sky nearby. The enormous scale makes the scene wonderfully absurd: one building has apparently become Espeon’s personal sun-warmed nap spot.",
-      "tcgplayerProductId": 253265,
-      "tcgplayerGroupId": 2906,
-      "slug": "espeon-vmax-fusion-strike-270-264"
+      "slug": "espeon-vmax-fusion-strike-270-264",
+      "moods": []
     }
   ]
 }

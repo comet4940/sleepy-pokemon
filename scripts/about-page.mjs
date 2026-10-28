@@ -22,7 +22,7 @@ export const ABOUT_CARD_SLUGS = [...Object.values(FAVORITES), ...ORIGIN_CARDS, C
 export function renderAboutPage(cardBySlug) {
   const card = (slug) => {
     const found = cardBySlug.get(slug);
-    if (!found) throw new Error(`About page card "${slug}" is not in docs/published-cards.json.`);
+    if (!found) throw new Error(`About page card "${slug}" is not in data/cards.json.`);
     return found;
   };
   const chase = card(CURRENT_CHASE);
