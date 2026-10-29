@@ -65,6 +65,10 @@ a { color: inherit; }
 /* A chosen chip is filled pink like the other active filters (.active-filter-chip); the hand-drawn ring is Suggest's. */
 .mood-chip.is-active { border-color: var(--pink); background: rgba(243,107,155,.88); color: #321624; }
 .mood-chip.is-active:hover, .mood-chip.is-active:focus-visible { background: var(--pink); color: #321624; }
+/* Same × as the drawer's active-filter chips, so every active filter reads "tap to remove". The whole chip is the
+   button (aria-pressed), so the × is decoration and screen readers skip it. */
+.mood-chip.is-active { display: inline-flex; align-items: center; gap: 10px; padding-right: 14px; }
+.mood-chip.is-active::after { content: "×"; content: "×" / ""; font-size: 1.25rem; line-height: 1; }
 .more-chip { border-style: dashed; }
 /* Chips in the collection row never shrink or wrap their text; the row scrolls instead. */
 .collection-page-main .mood-chips > .mood-chip, .collection-page-main .active-filter-chip { flex: none; white-space: nowrap; }
