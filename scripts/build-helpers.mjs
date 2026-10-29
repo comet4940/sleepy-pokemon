@@ -15,14 +15,14 @@ export const PRICES_PATH = "docs/prices.json";
 export const ASSET_VERSIONS = {
   "styles.css": 7,
   "site-chrome.css": 1,
-  "home-v3.css": 26,
+  "home-v3.css": 27,
   "filter-drawer.css": 1,
   "card-detail-v3.css": 14,
   "guides.css": 5,
   "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 58,
+  "app.js": 59,
   "site-header.js": 1,
 };
 

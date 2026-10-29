@@ -718,8 +718,12 @@ function render() {
 function renderFilters() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
-  elements.moodChips.forEach((chip) => chip.classList.toggle("is-active", chip.dataset.mood === state.filters.mood));
-  elements.priceChip?.classList.toggle("is-active", elements.priceChip.dataset.maxPrice === state.filters.maxPrice);
+  // A chosen quick chip shows an × (CSS) and is announced as pressed; tapping it again removes the filter.
+  [...elements.moodChips, elements.priceChip].filter(Boolean).forEach((chip) => {
+    const isActive = chip.dataset.mood ? chip.dataset.mood === state.filters.mood : chip.dataset.maxPrice === state.filters.maxPrice;
+    chip.classList.toggle("is-active", isActive);
+    chip.setAttribute("aria-pressed", String(isActive));
+  });
   // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
   const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
