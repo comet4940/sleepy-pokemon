@@ -1,0 +1,36 @@
+name: Remind to check curator prices
+
+on:
+  schedule:
+    # The 1st of each month, 18:41 UTC (late morning Pacific). Off the hour, because GitHub delays or drops
+    # scheduled runs at :00.
+    - cron: "41 18 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # One open reminder at a time: a month is skipped while an earlier one is still open.
+      - name: Open this month's reminder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -n "$(gh issue list --state open --search 'in:title "Check curator prices"' --json number --jq '.[].number')" ]; then
+            echo "A curator price reminder is already open."
+            exit 0
+          fi
+          node scripts/manual-prices-report.mjs > report.md
+          gh issue create --title "$(head -n 1 report.md)" --body "$(tail -n +2 report.md)"

@@ -148,6 +148,10 @@ node scripts/refresh-prices.mjs            # skips the run if TCGCSV hasn't chan
 node scripts/refresh-prices.mjs --force    # refresh anyway
 node scripts/refresh-prices.mjs --dry-run  # report only
 ```
+Curator (`Manual`) prices aren't refreshed. On the 1st of each month `manual-prices-reminder.yml` opens an issue listing them for a re-check:
+```bash
+node scripts/manual-prices-report.mjs      # print this month's reminder
+```
 
 ---
 
