@@ -106,6 +106,13 @@ Market prices live in their own file, `docs/prices.json`, not in the cards or th
 - **Manual prices.** For a card TCGplayer doesn't sell, add an entry with `"source": "Manual"` and today's date. The refresh leaves it alone; re-check it every few months. The site shows it as the curator's estimate.
 - **Renaming a card changes its identity.** The refresh moves TCGplayer prices to the new key on its next run; move a `Manual` entry by hand (the validator flags entries that match no card).
 
+## Guides
+
+Guides live in `docs/guides.json`: each one has a `slug`, `title`, `eyebrow`, `description`, `metaDescription`, `updatedAt` and its `cards` (each a card `slug` and the curator's `reason`).
+
+- **Bump `updatedAt` whenever a guide changes**: cards added, removed or reordered, a reason rewritten, or its title or descriptions edited. Use an ISO 8601 timestamp, like a card's `updatedAt`.
+- Unlike the catalog, guides do lose cards, and nothing else records that. The sitemap dates a guide page by the newer of `updatedAt` and its cards' own changes, and the homepage and `/guides/` by the newest guide `updatedAt`. The validator checks every guide has one.
+
 ## Featured sleeper
 
 The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the curator's own picks in `docs/featured.json`:
