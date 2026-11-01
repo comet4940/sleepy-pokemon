@@ -57,7 +57,7 @@ The entire site is static and hosted on **GitHub Pages** directly from the [`doc
 ```text
 sleepy-pokemon/
 ├── docs/                        # Static website published to GitHub Pages
-│   ├── index.html               # Homepage (Hero, freshly tucked in, guide preview)
+│   ├── index.html               # Homepage (Hero, freshly added, guide preview)
 │   ├── collection/              # Full catalog browsing & filter interface
 │   ├── guides/                  # Themed collector guides directory & individual guide pages
 │   ├── cards/                   # Crawlable static pages for each curated card
