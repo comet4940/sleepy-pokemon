@@ -8,7 +8,10 @@ import {
   escapeHtml,
   escapeRegExp,
   assetUrl,
+  CARD_SLUGS_PATH,
   loadCardData,
+  loadPublishedSlugs,
+  publishedSlugsJson,
   loadGuideDefs,
   normalizeDate,
   renderHead,
@@ -41,12 +44,22 @@ const sortedCards = [...cardsWithSlugs].sort((a, b) => {
 });
 
 await writeCardPages(cardsWithSlugs);
+await recordPublishedSlugs(cardsWithSlugs);
 await syncHomepage();
 await syncCollectionIndex(sortedCards);
 
 console.log(`Synced ${cardsWithSlugs.length} card pages and the crawlable index.`);
 // sync-guides.mjs writes the guide, About and sitemap pages, so one run of this script rebuilds everything.
 await import("./sync-guides.mjs");
+
+// Adds new card page addresses to data/card-slugs.json. Never removes one: the validator fails if a recorded
+// address no longer has a card (pin the card's old slug instead, as DATA-MODEL.md describes).
+async function recordPublishedSlugs(cardList) {
+  const recorded = await loadPublishedSlugs();
+  const next = publishedSlugsJson([...recorded, ...cardList.map((card) => card.slug)]);
+  const current = await readFile(CARD_SLUGS_PATH, "utf8").catch(() => "");
+  if (next !== current) await writeFile(CARD_SLUGS_PATH, next, "utf8");
+}
 
 async function writeCardPages(cardList) {
   await rm(CARDS_DIR, { recursive: true, force: true });
@@ -82,7 +95,7 @@ async function renderFeaturedCard() {
   const { showing } = JSON.parse(await readFile(FEATURED_PATH, "utf8"));
   const card = cardsWithSlugs.find((item) => item.slug === showing);
   if (!card) throw new Error(`${FEATURED_PATH}: showing ${showing} is not a published card.`);
-  return `            <a class="hero-card" href="cards/${escapeAttribute(card.slug)}/" data-card-id="${escapeAttribute(getCardIdentity(card))}" data-lightbox-source="homepage_featured" aria-label="Open ${escapeAttribute(card.name)}, this week's featured sleeper">
+  return `            <a class="hero-card" href="cards/${escapeAttribute(card.slug)}/" data-card-id="${escapeAttribute(getCardIdentity(card))}" data-card-slug="${escapeAttribute(card.slug)}" data-lightbox-source="homepage_featured" aria-label="Open ${escapeAttribute(card.name)}, this week's featured sleeper">
               <img src="${escapeAttribute(card.imageLarge || card.imageSmall)}" alt="${escapeAttribute(buildImageAlt(card))}" />
               <div class="hero-card-meta"><strong>${escapeHtml(card.name)}</strong><span>${escapeHtml([card.setName, card.number].filter(Boolean).join(" · "))}</span></div>
             </a>`;
@@ -177,7 +190,7 @@ ${renderHead({
       ${renderSiteHeader("../../")}
 
       <main class="card-page-main">
-        <article class="card-detail-frame card-detail-v3 card-page-detail">
+        <article class="card-detail-frame card-detail-v3 card-page-detail" data-card-slug="${escapeAttribute(card.slug)}">
           <div class="detail-art-column">
             <div class="detail-image-frame">
             ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
@@ -207,6 +220,7 @@ ${renderMoods(card)}
       </main>
 ${renderSiteFooter()}
     </div>
+    <script src="${assetUrl("../../", "binder.js")}"></script>
     <script src="${assetUrl("../../", "prices.js")}"></script>
     <script>
       // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then

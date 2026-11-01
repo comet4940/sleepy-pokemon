@@ -9,6 +9,9 @@ export const CARDS_PATH = "data/cards.json";
 export const PUBLISHED_CARDS_PATH = "docs/published-cards.json";
 export const GUIDES_PATH = "docs/guides.json";
 export const PRICES_PATH = "docs/prices.json";
+// Every card page address ever published. Only ever grows: a card's page (and the binder marks saved against its
+// slug, docs/binder.js) must never disappear. scripts/sync-seo-index.mjs adds new slugs; the validator checks.
+export const CARD_SLUGS_PATH = "data/card-slugs.json";
 
 // Cache-busting versions for every CSS and JS file. Bump a number here and run the generators;
 // generated pages and the hand-written homepage and collection page all pick it up.
@@ -22,7 +25,8 @@ export const ASSET_VERSIONS = {
   "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 60,
+  "app.js": 61,
+  "binder.js": 1,
   "site-header.js": 1,
 };
 
@@ -88,6 +92,23 @@ export async function loadPrices() {
     if (error.code === "ENOENT") return { prices: {} };
     throw error;
   }
+}
+
+export async function loadPublishedSlugs() {
+  try {
+    const { slugs } = JSON.parse(await readFile(CARD_SLUGS_PATH, "utf8"));
+    return Array.isArray(slugs) ? slugs : [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+export function publishedSlugsJson(slugs) {
+  return `${JSON.stringify({
+    about: "Every card page address (cards/<slug>/) ever published. Never remove one: see \"Card page URLs never change\" in DATA-MODEL.md.",
+    slugs: [...new Set(slugs)].sort(),
+  }, null, 2)}\n`;
 }
 
 export async function loadGuideDefs() {
@@ -184,7 +205,7 @@ export function renderCardEntry({ card, index, text, linkAttributes }) {
   const image = card.imageSmall || card.imageLarge;
   const details = [card.setName, card.number, card.rarity].filter(Boolean).join(" / ");
   const cardUrl = `../../cards/${card.slug}/`;
-  return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}">
+  return `          <article class="guide-card" id="card-${escapeAttribute(card.slug)}" data-card-slug="${escapeAttribute(card.slug)}">
             <a class="guide-card-image" href="${escapeAttribute(cardUrl)}" aria-label="Preview ${escapeAttribute(card.name)} card details" ${linkAttributes("art")}>
               ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(buildImageAlt(card))}" loading="lazy" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </a>
