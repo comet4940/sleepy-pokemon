@@ -31,7 +31,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | Field | Required | Meaning | Example |
 | --- | --- | --- | --- |
 | `name` | Yes | Card name as printed, including owner prefixes | `Sabrina's Abra`, `Growlithe` |
-| `pokemon` | Yes | The Pokémon (or trainer) the card is about. Used for the Pokémon A–Z sort and "Freshly tucked in" variety | `Abra` |
+| `pokemon` | Yes | The Pokémon (or trainer) the card is about. Used for the Pokémon A–Z sort and "Freshly added" variety | `Abra` |
 | `setName` | Yes | Set name shown on the site and used by the set filter. One name per set (see [Rules](#rules)) | `Vending Machine Series 3` |
 | `setSeries` | Yes | Era or series the set belongs to | `Sun & Moon`, `Vending Machine` |
 | `setId` | No | Short set ID from the source API, or a made-up one for sets no API covers (`vending3-jp`) | `sm10`, `vending1-jp` |
@@ -54,7 +54,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `tcgplayerGroupId` | No | TCGplayer set (group) ID of that product. The refresh downloads one price file per group | `24722` |
 | `slug` | No | Pinned card page URL segment. Leave it out for new cards; set it when renaming (see [Rules](#rules)) | `komala-sun-and-moon-black-star-promos-sm41` |
 | `priceType` | No | Which printing we price, in TCGplayer's words. Set by the matcher; see the printing rule in [Rules](#rules) | `Normal`, `Holofoil`, `Reverse Holofoil`, `1st Edition`, `Unlimited` |
-| `createdAt` | Yes | When the card was added, ISO 8601. Drives "Freshly tucked in" on the homepage | `2026-10-23T18:00:00.000Z` |
+| `createdAt` | Yes | When the card was added, ISO 8601. Drives "Freshly added" on the homepage | `2026-10-23T18:00:00.000Z` |
 | `updatedAt` | Yes | When the card's data last changed, ISO 8601 | `2026-10-23T18:30:00.000Z` |
 
 ### Retired fields

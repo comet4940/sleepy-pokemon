@@ -1199,7 +1199,7 @@ function handleCardGridClick(event) {
 }
 
 // The collection steps through the filtered, sorted results (all of them, even before the grid has finished
-// drawing); "Freshly tucked in" through its own row.
+// drawing); "Freshly added" through its own row.
 function getGridDeck(tile) {
   if (elements.cardGrid?.contains(tile)) return getFilteredCards().map((card) => card.catalogIdentity);
   return [...tile.parentElement.querySelectorAll(".card-tile[data-card-id]")].map((item) => item.dataset.cardId);
