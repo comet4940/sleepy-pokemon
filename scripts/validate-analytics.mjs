@@ -4,7 +4,7 @@ import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { MOODS } from "./moods.mjs";
-import { ASSET_VERSIONS, CARDS_PATH, PUBLIC_CARD_FIELDS, PUBLISHED_CARDS_PATH, assignSlugs, publicCardsJson, slugify, toPublicCard } from "./build-helpers.mjs";
+import { ASSET_VERSIONS, CARDS_PATH, CARD_SLUGS_PATH, PUBLIC_CARD_FIELDS, PUBLISHED_CARDS_PATH, assignSlugs, loadPublishedSlugs, publicCardsJson, slugify, toPublicCard } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
@@ -15,6 +15,12 @@ const catalogIdentities = new Set(sourceCards.map(getCardIdentity));
 // What browsers get: the generated copy in docs/, with only PUBLIC_CARD_FIELDS.
 const browserCards = assignSlugs(sourceCards).map(toPublicCard);
 const browserCardJson = new Map(browserCards.map((card) => [getCardIdentity(card), JSON.stringify(card)]));
+// The binder (docs/binder.js) saves cards by slug, so every card display carries data-card-slug.
+const slugByIdentity = new Map(assignSlugs(sourceCards).map((card) => [getCardIdentity(card), card.slug]));
+const currentSlugs = new Set(slugByIdentity.values());
+// Elements that show a card and so carry its data-card-slug (see checkCardSlugs).
+const CARD_DISPLAY_CLASSES = ["card-tile", "hero-card", "about-favorite", "about-chase-art", "card-page-detail"];
+await checkPublishedSlugs();
 await checkPublishedCopy();
 checkCardMoods();
 await checkSetIntros();
@@ -97,6 +103,7 @@ for (const path of htmlFiles) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
   if (pageType === "guide" || pageType === "set") checkGuideCards(html, label);
+  checkCardSlugs(html, label, path);
   await checkPageCardData(path, html, label);
   for (const [, mood] of html.matchAll(/class="mood-chip"[^>]*data-mood="([^"]+)"/g)) {
     if (!MOODS.some((name) => slugify(name) === mood)) errors.push(`${label}: mood chip "${mood}" matches no mood in scripts/moods.mjs`);
@@ -139,6 +146,8 @@ if (!analyticsSource.includes('"search_submitted"')) errors.push("missing global
 checkAppCardIdentity(appSource);
 checkRarityGroups(appSource);
 checkChecklistDownloads(appSource);
+checkAppCardSlugs(appSource);
+checkBinder(await readFile(join(DOCS_DIR, "binder.js"), "utf8"));
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -317,8 +326,127 @@ function checkGuideCards(html, label) {
     else {
       const [cardId] = cardIds;
       if (!catalogIdentities.has(cardId)) errors.push(`${label}: ${position} ID is not a published card: ${cardId}`);
+      const slug = block.match(/^<article\b[^>]*\bdata-card-slug="([^"]*)"/)?.[1];
+      if (slug !== slugByIdentity.get(cardId)) errors.push(`${label}: ${position} has data-card-slug "${slug ?? ""}", expected "${slugByIdentity.get(cardId)}"`);
     }
   });
+}
+
+// data/card-slugs.json records every card page address ever published. A recorded address must still have its
+// card (a page, and the binder marks saved against it, must never disappear), and every card must be recorded.
+async function checkPublishedSlugs() {
+  const recorded = await loadPublishedSlugs();
+  if (!recorded.length) {
+    errors.push(`${CARD_SLUGS_PATH} is missing or empty; run scripts/sync-seo-index.mjs`);
+    return;
+  }
+  const gone = recorded.filter((slug) => !currentSlugs.has(slug));
+  if (gone.length) errors.push(`${CARD_SLUGS_PATH}: ${gone.length} published card page(s) no longer exist, e.g. cards/${gone[0]}/. Card page URLs never change: set the card's \`slug\` to its old address (DATA-MODEL.md)`);
+  const unrecorded = [...currentSlugs].filter((slug) => !recorded.includes(slug));
+  if (unrecorded.length) errors.push(`${CARD_SLUGS_PATH} doesn't record ${unrecorded.length} card page(s), e.g. ${unrecorded[0]}; run scripts/sync-seo-index.mjs`);
+  const malformed = [...currentSlugs].filter((slug) => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug));
+  if (malformed.length) errors.push(`${CARDS_PATH}: slug "${malformed[0]}" isn't lowercase words joined by hyphens, so the binder can't save it`);
+}
+
+// Card displays (tiles, guide and set cards, the featured card, About cards, card pages) carry the card's slug, and
+// any page that has them loads binder.js before app.js.
+function checkCardSlugs(html, label, path) {
+  const tags = [...html.matchAll(/<(?:a|article)\b[^>]*>/g)].map(([tag]) => tag);
+  for (const tag of tags) {
+    const classes = tag.match(/\bclass="([^"]*)"/)?.[1].split(/\s+/) || [];
+    if (!classes.some((name) => CARD_DISPLAY_CLASSES.includes(name))) continue;
+    const slug = tag.match(/\bdata-card-slug="([^"]*)"/)?.[1];
+    const id = tag.match(/\bdata-card-id="([^"]*)"/)?.[1];
+    const what = `${label}: a .${classes.find((name) => CARD_DISPLAY_CLASSES.includes(name))}`;
+    if (!slug) errors.push(`${what} has no data-card-slug`);
+    else if (!currentSlugs.has(slug)) errors.push(`${what} has data-card-slug "${slug}", which is no card's slug`);
+    else if (id && slugByIdentity.get(decodeHtmlAttribute(id)) !== slug) errors.push(`${what} has data-card-slug "${slug}" but data-card-id ${decodeHtmlAttribute(id)}`);
+  }
+  if (classesOnPage(html).has("card-page-detail")) {
+    const pageSlug = relative(join(DOCS_DIR, "cards"), path).split(/[\\/]/)[0];
+    if (!new RegExp(`card-page-detail"[^>]*data-card-slug="${pageSlug}"`).test(html)) errors.push(`${label}: the card page's data-card-slug isn't its own address (${pageSlug})`);
+  }
+  if (/data-card-slug="/.test(html)) {
+    const binderAt = html.indexOf(`binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
+    if (binderAt === -1) errors.push(`${label}: shows cards but doesn't load binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
+    else if (html.includes("app.js?v=") && html.indexOf("app.js?v=") < binderAt) errors.push(`${label}: loads app.js before binder.js`);
+  }
+}
+
+function classesOnPage(html) {
+  return new Set([...html.matchAll(/\bclass="([^"]*)"/g)].flatMap(([, value]) => value.split(/\s+/)));
+}
+
+// Collection and homepage tiles are drawn by app.js, so check its tile carries the slug too.
+function checkAppCardSlugs(appSource) {
+  const app = loadApp(appSource);
+  const card = app.context.normalizeCard(browserCards[0]);
+  const tile = app.context.renderCard(card);
+  if (!tile.includes(`data-card-slug="${slugByIdentity.get(getCardIdentity(browserCards[0]))}"`)) errors.push("docs/app.js: renderCard's .card-tile has no data-card-slug (the binder needs it)");
+  if (!/cardDetailDialog\.dataset\.cardSlug = card\.slug/.test(appSource)) errors.push("docs/app.js: the card lightbox no longer sets data-card-slug on #cardDetailDialog");
+}
+
+// Runs docs/binder.js against a fake browser and checks how it saves: the binder must never lose or corrupt
+// what a visitor saved, and must never break the page.
+function checkBinder(binderSource) {
+  const fail = (message) => errors.push(`docs/binder.js: ${message}`);
+  const load = ({ store = new Map(), broken = false } = {}) => {
+    const listeners = new Map();
+    const localStorage = {
+      getItem: (key) => { if (broken) throw new Error("blocked"); return store.has(key) ? store.get(key) : null; },
+      setItem: (key, value) => { if (broken) throw new Error("blocked"); store.set(key, String(value)); },
+    };
+    const window = {
+      localStorage,
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener: (type, fn) => listeners.set(type, (listeners.get(type) || []).filter((item) => item !== fn)),
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+    };
+    const context = vm.createContext({ window, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
+    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+    return { binder: context.window.sleepyBinder, store, window };
+  };
+  const saved = (store) => JSON.parse(store.get("sleepy_binder_v1") || "{}");
+  try {
+    // Adding, wishing, exclusivity.
+    let { binder, store } = load();
+    binder.add("wished", "pikachu-a");
+    if (!binder.has("wished", "pikachu-a")) fail("a wished card isn't saved");
+    const events = [];
+    binder.onChange((detail) => events.push(detail));
+    binder.add("owned", "pikachu-a");
+    if (!binder.has("owned", "pikachu-a") || binder.has("wished", "pikachu-a") || saved(store).wished["pikachu-a"]) fail("tucking in a wished card must move it from wished to owned");
+    if (!events.some((event) => event.wishCameTrue)) fail("tucking in a wished card doesn't announce wishCameTrue");
+    if (binder.add("wished", "pikachu-a")) fail("a card someone has can't also be wished for");
+    if (binder.add("owned", "Not A Slug")) fail("saves something that isn't a card slug");
+    if (binder.toggle("owned", "pikachu-a") !== false || binder.has("owned", "pikachu-a")) fail("toggle doesn't take a card out");
+    // Unknown slugs and unknown fields are kept, not dropped.
+    ({ binder, store } = load({ store: new Map([["sleepy_binder_v1", JSON.stringify({ version: 1, owned: { "card-from-the-future": "2030-01-01" }, wished: {}, hints: {}, later: { kept: true } })]]) }));
+    binder.add("owned", "snorlax-b");
+    if (!saved(store).owned["card-from-the-future"] || !saved(store).later?.kept) fail("drops saved cards or fields it doesn't know");
+    // Another tab's save is never overwritten: every write starts from what's saved now.
+    store.set("sleepy_binder_v1", JSON.stringify({ version: 1, owned: { "snorlax-b": "2026-11-01", "from-other-tab": "2026-11-01" }, wished: {}, hints: {} }));
+    binder.add("owned", "munna-c");
+    if (!saved(store).owned["from-other-tab"]) fail("overwrites a save made in another tab");
+    // Progress counts only the page's own cards.
+    if (binder.count("owned", ["munna-c", "not-owned"]) !== 1) fail("count() for a page's cards is wrong");
+    // Unreadable saved data doesn't break the page and isn't thrown away.
+    ({ binder, store } = load({ store: new Map([["sleepy_binder_v1", "{not json"]]) }));
+    if (binder.count("owned") !== 0) fail("unreadable saved data isn't treated as an empty binder");
+    binder.add("owned", "eevee-d");
+    if (store.get("sleepy_binder_v1_unreadable") !== "{not json") fail("unreadable saved data is lost instead of kept aside");
+    // Blocked storage: the binder works for the visit and says so.
+    ({ binder } = load({ broken: true }));
+    binder.add("owned", "eevee-d");
+    if (!binder.has("owned", "eevee-d")) fail("doesn't keep working for the visit when the browser can't save");
+    if (binder.isPersistent()) fail("doesn't report that the browser couldn't save");
+    // Hints are seen once.
+    ({ binder } = load());
+    binder.markHintSeen("collection_strip");
+    if (!binder.hintSeen("collection_strip") || binder.markHintSeen("collection_strip")) fail("a one-time hint isn't remembered");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
 }
 
 // Runs docs/app.js in a sandbox. Its only top-level side effect is registering

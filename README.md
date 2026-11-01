@@ -70,11 +70,13 @@ sleepy-pokemon/
 │   ├── published-cards.json     # Card data for browsers, generated from data/cards.json
 │   ├── prices.json              # Market prices by card, written by the daily refresh
 │   ├── prices.js                # Fills prices into pages from prices.json
+│   ├── binder.js                # My Binder storage (cards a visitor has or wants, this browser only; #119)
 │   ├── guides.json              # Guide definitions & card slug references
 │   ├── sets.json                # Set page threshold (minCards) & curator intros by set name
 │   └── sitemap.xml              # Search engine sitemap
 ├── data/
-│   └── cards.json               # Canonical card data (all fields incl. notes); not published
+│   ├── cards.json               # Canonical card data (all fields incl. notes); not published
+│   └── card-slugs.json          # Every card page address ever published; only grows
 ├── scripts/                     # Node / Deno automation scripts
 │   ├── sync-seo-index.mjs       # Generates docs/cards/ pages & crawls indexes
 │   ├── sync-guides.mjs          # Generates docs/guides/ pages & updates homepage

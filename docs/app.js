@@ -1168,7 +1168,7 @@ function compareCards(a, b) {
 
 function renderCard(card) {
   return `
-    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
+    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" data-card-slug="${escapeAttribute(card.slug)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
       <div class="card-image-frame">
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
@@ -1266,6 +1266,8 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
 
 // Shows a card in the open lightbox, for opening it or stepping to it.
 function showCardDetail(card) {
+  // The binder (binder.js) finds the open card by its slug, like every other card element.
+  elements.cardDetailDialog.dataset.cardSlug = card.slug;
   // The lightbox shows the card page's own details (see loadCardPage), so features live in one place: the card
   // page generator. Until that arrives (usually instantly, as tapping a card starts loading it) or if it can't
   // load, show the essentials from the catalog.

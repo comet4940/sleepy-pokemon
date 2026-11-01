@@ -112,7 +112,7 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
             <p class="about-eyebrow">The current chase</p>
             <h2 id="aboutChaseTitle">Most wanted sleepy card</h2>
             <p>${escapeHtml(chase.name)} from <em>${escapeHtml(chase.setName)}</em> is our current chase. The English version is out of reach at its current price, but we can’t wait to find a good copy of the art in another language.</p>
-            <a class="about-text-link" href="../cards/${escapeAttribute(chase.slug)}/" ${cardLinkAnalytics(chase, "about_current_chase")}>${escapeHtml([chase.name, chase.setName, chase.number].filter(Boolean).join(" · "))} <span aria-hidden="true">→</span></a>
+            <a class="about-text-link" href="../cards/${escapeAttribute(chase.slug)}/" ${cardLinkAnalytics(chase, "about_current_chase", { isCardDisplay: false })}>${escapeHtml([chase.name, chase.setName, chase.number].filter(Boolean).join(" · "))} <span aria-hidden="true">→</span></a>
           </div>
           <a class="about-chase-art" href="../cards/${escapeAttribute(chase.slug)}/" aria-label="${escapeAttribute(`${chase.name} card page`)}" ${cardLinkAnalytics(chase, "about_current_chase_art")}>
             ${renderCardImage(chase)}
@@ -128,6 +128,7 @@ ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+    <script src="${assetUrl("../", "binder.js")}"></script>
     <script src="${assetUrl("../", "prices.js")}"></script>
     <script src="${assetUrl("../", "app.js")}"></script>
   </body>
@@ -183,6 +184,8 @@ function renderCardImage(card) {
 }
 
 // app.js opens these links in the card lightbox and tracks card_opened with this source; the href stays for crawlers and new tabs.
-function cardLinkAnalytics(card, source) {
-  return `data-card-id="${escapeAttribute(getCardIdentity(card))}" data-lightbox-source="${source}"`;
+// Card displays (art, tiles) also carry data-card-slug for the binder (binder.js); plain text links don't.
+function cardLinkAnalytics(card, source, { isCardDisplay = true } = {}) {
+  const slug = isCardDisplay ? ` data-card-slug="${escapeAttribute(card.slug)}"` : "";
+  return `data-card-id="${escapeAttribute(getCardIdentity(card))}"${slug} data-lightbox-source="${source}"`;
 }
