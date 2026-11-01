@@ -114,7 +114,8 @@ ${guideItems}
 async function writeSitemap(cardList, guideList, hubs) {
   const { exportedAt } = guideData;
   const lastmodOf = (cards) => getNewestDate([exportedAt, ...cards.map((card) => getCardLastmod(card, exportedAt))]);
-  // Card counts and set/Pokemon tallies only change when a card is added.
+  // Card counts and set/Pokemon tallies only change when a card is added: cards are never removed
+  // from the catalog (see Rules in DATA-MODEL.md), so createdAt is enough to date them.
   const addedOf = (cards) => getNewestDate([exportedAt, ...cards.map((card) => card.createdAt)]);
 
   // Homepage and collection show every card's curation.

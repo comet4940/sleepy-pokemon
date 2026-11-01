@@ -69,6 +69,7 @@ The validator rejects any card that still has these:
 
 ## Rules
 
+- **Cards are never removed.** Once a card is in the catalog it stays. The sitemap relies on this: card counts on About, `/guides/` and `/sets/` are dated by when cards were added (`createdAt`), so a removal would change those pages without updating their dates.
 - **Card page URLs never change.** A card's page lives at `cards/<slug>/`, where the slug is built from name, set name and number. When a set name or number changes, set `slug` to the card's current URL segment so the page stays where it is (e.g. the Vending Abra in #141, Komala in #143).
 - **One name per set.** A set has a single `setName` across all its cards: no colour or sheet suffixes like "(Blue)", and no two names for the same set. Duplicates show up as separate sets in the filter drawer.
 - **Price the most accessible printing.** The site is a master list, not one binder, so `priceType` is the printing a collector can most easily find: the regular print (`Normal` or `Holofoil`), `Unlimited` over `1st Edition`, never a reverse holo, stamped or pattern variant unless that variant is the card.
