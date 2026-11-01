@@ -137,6 +137,7 @@ for (const eventName of requiredAppEvents) {
 }
 if (!analyticsSource.includes('"search_submitted"')) errors.push("missing global search submission event");
 checkAppCardIdentity(appSource);
+checkRarityGroups(appSource);
 checkChecklistDownloads(appSource);
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
@@ -348,6 +349,18 @@ function loadApp(appSource, bodyDataset = {}) {
     downloads,
     run: (code) => vm.runInContext(code, context),
   };
+}
+
+// A rarity outside RARITY_GROUPS gets a drawer pill of its own (one card's "Rare Ultra" did, #153), so every rarity must be grouped.
+function checkRarityGroups(appSource) {
+  const app = loadApp(appSource);
+  const grouped = new Set(app.run("RARITY_GROUPS").flatMap((group) => group.rarities));
+  const ungrouped = [...new Set(sourceCards.map((card) => card.rarity).filter((rarity) => rarity && !grouped.has(rarity)))];
+  if (ungrouped.length) errors.push(`docs/app.js: rarities not in any RARITY_GROUPS group (each would get its own drawer pill): ${ungrouped.join(", ")}`);
+  const groupIds = new Set(app.run("RARITY_GROUPS").map((group) => group.id));
+  Object.entries(app.run("RARITY_ALIASES")).forEach(([from, to]) => {
+    if (!groupIds.has(to)) errors.push(`docs/app.js: RARITY_ALIASES maps "${from}" to "${to}", which is not a rarity group`);
+  });
 }
 
 // The browser's catalogIdentity must equal the data-card-id the build scripts write.
