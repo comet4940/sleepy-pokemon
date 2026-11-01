@@ -36,7 +36,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `setSeries` | Yes | Era or series the set belongs to | `Sun & Moon`, `Vending Machine` |
 | `setId` | No | Short set ID from the source API, or a made-up one for sets no API covers (`vending3-jp`) | `sm10`, `vending1-jp` |
 | `number` | Yes | Card number as collectors list it | `158/214`, `SM41`, `58` |
-| `rarity` | Yes | Rarity as printed. The filter drawer groups rarities (`RARITY_GROUPS` in `docs/app.js`); a rarity not in a group gets its own pill, so add new rarities to the right group | `Illustration Rare` |
+| `rarity` | Yes | Rarity as printed. The filter drawer groups rarities (`RARITY_GROUPS` in `docs/app.js`); add new rarities to the right group (the validator fails on a rarity outside every group, which would otherwise get a pill of its own) | `Illustration Rare` |
 | `language` | Yes | Card language | `English`, `Japanese`, `Simplified Chinese` |
 | `artist` | Yes | Illustrator from the card's "Illus." line | `Tomokazu Komiya` |
 | `imageSmall` | Yes | Grid image. A full URL for hosted images, or a site path (`/assets/cards/...`) for local files | `https://images.pokemontcg.io/sm10/158.png` |

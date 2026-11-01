@@ -6,10 +6,12 @@ const RARITY_GROUPS = [
   { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
   { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
   { id: "illustration-rare", label: "Illustration Rare", rarities: ["Illustration Rare", "Special Illustration Rare", "Art Rare"] },
-  { id: "ultra-secret", label: "Ultra & Secret", rarities: ["Ultra Rare", "Secret Rare", "Rare Rainbow", "Triple Rare", "Rare Holo VMAX", "Pikachu Rare"] },
+  { id: "ultra-secret", label: "Ultra & Secret", rarities: ["Ultra Rare", "Rare Ultra", "Secret Rare", "Rare Rainbow", "Triple Rare", "Rare Holo VMAX", "Pikachu Rare"] },
   { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
   { id: "promo", label: "Promo", rarities: ["Promo"] },
 ];
+// Old ?rarity= values that are now part of a group, so links shared before the change still work.
+const RARITY_ALIASES = { "rare-ultra": "ultra-secret" };
 const PRICE_OPTIONS = [
   { value: "5", label: "Under $5" },
   { value: "10", label: "Under $10" },
@@ -1553,7 +1555,7 @@ function readUrlFilters() {
   // Old links used ?mood=under-5 for what is now the Price filter.
   if (mood === "under-5") filters.maxPrice = "5";
   else if (mood && getMoodLabel(mood)) filters.mood = mood;
-  const rarity = params.get("rarity");
+  const rarity = RARITY_ALIASES[params.get("rarity")] || params.get("rarity");
   if (rarity && getDrawerOptions("rarity").some((option) => option.value === rarity)) filters.rarity = rarity;
   const findByName = (value, names) => names.find((name) => slugify(name) === slugify(value)) || "all";
   if (params.get("set")) filters.set = findByName(params.get("set"), [...new Set(state.cards.map((card) => card.setName))]);
