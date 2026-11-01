@@ -18,6 +18,7 @@ const browserCardJson = new Map(browserCards.map((card) => [getCardIdentity(card
 await checkPublishedCopy();
 checkCardMoods();
 await checkSetIntros();
+await checkGuideDates();
 await checkCardFields();
 await checkPrices();
 await checkFeatured();
@@ -290,6 +291,16 @@ async function checkCardFields() {
     if (undocumented.length) errors.push(`${label} has fields not documented in DATA-MODEL.md: ${undocumented.join(", ")}`);
     const missing = [...fields].filter(([field, required]) => required && (card[field] === undefined || card[field] === null || card[field] === ""));
     if (missing.length) errors.push(`${label} is missing required fields: ${missing.map(([field]) => field).join(", ")}`);
+  }
+}
+
+// Guide pages are dated in the sitemap by the guide's own updatedAt, so every guide needs a valid one.
+async function checkGuideDates() {
+  const guides = JSON.parse(await readFile(join(ROOT, "docs", "guides.json"), "utf8"));
+  for (const guide of Array.isArray(guides) ? guides : guides.guides || []) {
+    if (!/^\d{4}-\d{2}-\d{2}T/.test(guide.updatedAt || "") || Number.isNaN(Date.parse(guide.updatedAt))) {
+      errors.push(`docs/guides.json: guide "${guide.slug}" needs updatedAt as an ISO 8601 date (when its cards, order or text last changed)`);
+    }
   }
 }
 

@@ -109,20 +109,34 @@ ${guideItems}
 }
 
 // The only sitemap writer: it lists every generated page.
+// Each page's lastmod is the newest change among the cards it actually shows, so editing one card
+// doesn't mark unrelated pages as updated. exportedAt is the floor for every page.
+// Guide membership, order and reasons live in docs/guides.json, so guide pages also use the guide's own updatedAt.
 async function writeSitemap(cardList, guideList, hubs) {
-  const homepageLastmod = getNewestDate([
-    guideData.exportedAt,
-    ...cardList.map((card) => getCardLastmod(card, guideData.exportedAt)),
-  ]);
+  const { exportedAt } = guideData;
+  const lastmodOf = (cards) => getNewestDate([exportedAt, ...cards.map((card) => getCardLastmod(card, exportedAt))]);
+  // Card counts and set/Pokemon tallies only change when a card is added: cards are never removed
+  // from the catalog (see Rules in DATA-MODEL.md), so createdAt is enough to date them.
+  const addedOf = (cards) => getNewestDate([exportedAt, ...cards.map((card) => card.createdAt)]);
+
+  // Collection shows every card's curation; the homepage also lists the guides.
+  const catalogLastmod = lastmodOf(cardList);
+  const guidesLastmod = getNewestDate(guideList.map((guide) => guide.updatedAt));
+  // Directory pages show counts plus the first three cards' art.
+  const directoryLastmod = (groups) => getNewestDate(groups.flatMap((cards) => [addedOf(cards), lastmodOf(cards.slice(0, 3))]));
+  const guideCards = (guide) => guide.cards.map(({ card }) => card);
+  const aboutCards = ABOUT_CARD_SLUGS.map((slug) => cardBySlug.get(slug)).filter(Boolean);
+
   const urls = [
-    sitemapUrl(`${SITE_URL}/`, homepageLastmod, "daily", "1.0"),
-    sitemapUrl(`${SITE_URL}/collection/`, homepageLastmod, "daily", "0.9"),
-    sitemapUrl(`${SITE_URL}/guides/`, homepageLastmod, "monthly", "0.9"),
-    sitemapUrl(`${SITE_URL}/about/`, homepageLastmod, "monthly", "0.6"),
-    ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, homepageLastmod, "monthly", "0.9")),
-    sitemapUrl(`${SITE_URL}/sets/`, homepageLastmod, "monthly", "0.8"),
-    ...hubs.map((hub) => sitemapUrl(`${SITE_URL}/sets/${hub.slug}/`, getNewestDate(hub.cards.map((card) => getCardLastmod(card, guideData.exportedAt))), "weekly", "0.8")),
-    ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card, guideData.exportedAt), "weekly", "0.8")),
+    sitemapUrl(`${SITE_URL}/`, getNewestDate([catalogLastmod, guidesLastmod]), "daily", "1.0"),
+    sitemapUrl(`${SITE_URL}/collection/`, catalogLastmod, "daily", "0.9"),
+    sitemapUrl(`${SITE_URL}/guides/`, getNewestDate([guidesLastmod, directoryLastmod(guideList.map(guideCards))]), "monthly", "0.9"),
+    // About shows catalog stats and a few featured cards.
+    sitemapUrl(`${SITE_URL}/about/`, getNewestDate([addedOf(cardList), lastmodOf(aboutCards)]), "monthly", "0.6"),
+    ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, getNewestDate([guide.updatedAt, lastmodOf(guideCards(guide))]), "monthly", "0.9")),
+    sitemapUrl(`${SITE_URL}/sets/`, directoryLastmod(hubs.map((hub) => hub.cards)), "monthly", "0.8"),
+    ...hubs.map((hub) => sitemapUrl(`${SITE_URL}/sets/${hub.slug}/`, lastmodOf(hub.cards), "weekly", "0.8")),
+    ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card, exportedAt), "weekly", "0.8")),
   ].join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
