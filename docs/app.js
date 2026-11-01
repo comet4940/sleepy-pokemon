@@ -37,6 +37,7 @@ const CHECKLIST_LABELS = {
   search_results: "Search results",
   filtered_collection: "Filtered",
   guide: "Guide",
+  wishlist: "Wishlist",
 };
 
 const state = {
@@ -57,6 +58,8 @@ const state = {
     artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
+    // The visitor's own wishlist (#119): only their wished cards. Saved in binder.js, so it's per browser.
+    wishlist: false,
   },
   renderToken: 0,
   showAllCards: false,
@@ -858,7 +861,7 @@ function trackFilterChange(key, interactionSource) {
   const value = state.filters[key];
   const params = {
     filter_value: getAnalyticsFilterValue(key, value),
-    filter_action: value === "all" || value === "" ? "removed" : "applied",
+    filter_action: value === "all" || value === "" || value === false ? "removed" : "applied",
     result_count: getFilteredCards().length,
     interaction_source: interactionSource,
   };
@@ -891,6 +894,7 @@ function renderCards() {
     return;
   }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
+  describeEmptyState();
   if (elements.searchSuggestionPrompt) {
     elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
   }
@@ -954,6 +958,7 @@ function filterCards(filters) {
       if (filters.language !== "all" && card.language !== filters.language) return false;
       if (filters.artist !== "all" && slugify(card.artist) !== filters.artist) return false;
       if (maxPrice !== null && !(getDisplayPrice(card) > 0 && getDisplayPrice(card) <= maxPrice)) return false;
+      if (filters.wishlist && !isWished(card.slug)) return false;
       return true;
     });
 }
@@ -966,7 +971,8 @@ function hasActiveFilters() {
     || state.filters.rarity !== "all"
     || state.filters.language !== "all"
     || state.filters.artist !== "all"
-    || state.filters.maxPrice,
+    || state.filters.maxPrice
+    || state.filters.wishlist,
   );
 }
 
@@ -979,6 +985,7 @@ function countActiveFilters() {
     state.filters.language !== "all",
     state.filters.artist !== "all",
     Boolean(state.filters.maxPrice),
+    state.filters.wishlist,
   ].filter(Boolean).length;
 }
 
@@ -998,6 +1005,7 @@ function renderActiveFilterControls() {
       }, { once: true });
     }
   }
+  renderWishlistChip();
   if (elements.activeAdvancedFilters) {
     // Artist has no drawer section (over a hundred artists); it's set from an artist link and cleared here.
     const advancedFilters = ["artist", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
@@ -1031,7 +1039,8 @@ function renderActiveFilterControls() {
       return chip;
     }));
   }
-  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0;
+  // In the wishlist view alone, its chip's × already does what "Show all" would.
+  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0 || (state.filters.wishlist && countActiveFilters() === 1);
 }
 
 function getFilterLabel(key, value) {
@@ -1070,7 +1079,9 @@ function updateCollectionHeading(resultCount) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     return;
   }
-  if (!active) {
+  if (state.filters.wishlist) {
+    describeWishlistView(resultCount);
+  } else if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
   } else {
@@ -1101,8 +1112,10 @@ function updateChecklistButton(filteredCards) {
   const checklist = getChecklistContext(filteredCards);
   const { text, ariaLabel } = describeChecklistButton(checklist);
   button.disabled = !checklist.complete || !checklist.cards.length;
+  button.classList.toggle("is-wishlist", checklist.scope === "wishlist");
+  button.hidden = checklist.scope === "wishlist" && !(wishlistStore()?.count("wished"));
   // The collection's button sits beside the card count, so it can be shorter; the aria-label still says what it holds.
-  button.textContent = button.dataset.shortLabel || text;
+  button.textContent = button.dataset.shortLabel ? (checklist.scope === "wishlist" ? "Wishlist" : button.dataset.shortLabel) : text;
   button.setAttribute("aria-label", ariaLabel);
 }
 
@@ -1117,6 +1130,10 @@ function describeChecklistButton(checklist) {
       text: `Download checklist (${count})`,
       ariaLabel: `Download checklist for all ${count} cards in this guide`,
     };
+  }
+  if (checklist.scope === "wishlist") {
+    if (!count) return { text: "Download wishlist (0)", ariaLabel: "No wishlist cards to download" };
+    return { text: `Download wishlist (${count})`, ariaLabel: `Download your wishlist: ${count} ${count === 1 ? "card" : "cards"}` };
   }
   if (!count) return { text: "Download checklist (0)", ariaLabel: "No cards match active filters to download" };
   if (checklist.scope === "full_collection") {
@@ -1310,6 +1327,7 @@ function bindWishlist() {
     toggleWish(button);
   }, true);
   store.onChange((change) => {
+    if (state.filters.wishlist && change.type !== "hint") render();
     syncWishlist();
     if (change.type === "unavailable") showToast("Your browser couldn't save your wishlist on this device.");
   });
@@ -1334,6 +1352,64 @@ function toggleWish(button) {
   }
   // Which card it was stays private: never send card details with wishlist events.
   trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_tile" });
+}
+
+// The wishlist view's chip, first in the filter row: "★ Wishlist ×". Tapping × leaves the view.
+function renderWishlistChip() {
+  const row = elements.openFiltersButton?.parentElement;
+  if (!row) return;
+  let chip = row.querySelector(".wishlist-chip");
+  if (!state.filters.wishlist) {
+    chip?.remove();
+    return;
+  }
+  if (chip) return;
+  chip = document.createElement("button");
+  chip.type = "button";
+  chip.className = "mood-chip wishlist-chip is-active";
+  chip.setAttribute("aria-label", "Leave your wishlist and show all cards");
+  chip.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg>Wishlist`;
+  chip.addEventListener("click", () => {
+    state.filters.wishlist = false;
+    state.showAllCards = hasActiveFilters();
+    markHistoryStep();
+    render();
+    trackFilterChange("wishlist", "active_filter_chip");
+  });
+  elements.openFiltersButton?.after(chip);
+}
+
+// "6 cards on your wishlist · about $85", and the other filters' names when some are on.
+function describeWishlistView(resultCount) {
+  const wishedCount = wishlistStore()?.count("wished") || 0;
+  const filtered = getFilteredCards();
+  const total = filtered.reduce((sum, card) => sum + (getDisplayPrice(card) || 0), 0);
+  elements.collectionTitle.textContent = "Your wishlist";
+  const others = hasActiveFilters() && countActiveFilters() > 1;
+  if (!wishedCount) {
+    elements.collectionMeta.textContent = "Your wishlist is empty";
+    return;
+  }
+  const count = others ? `${resultCount} of ${wishedCount} on your wishlist` : `${resultCount} on your wishlist`;
+  const price = total > 0 ? Object.assign(document.createElement("span"), { className: "collection-meta-names", textContent: ` · about ${total >= 10 ? `$${Math.round(total).toLocaleString("en-US")}` : formatCurrency(total)}` }) : "";
+  elements.collectionMeta.replaceChildren(count, price);
+}
+
+let defaultEmptyState = null;
+function describeEmptyState() {
+  if (!elements.emptyState) return;
+  const title = elements.emptyState.querySelector("h3");
+  const text = elements.emptyState.querySelector("p");
+  defaultEmptyState ||= { title: title.textContent, text: text.textContent, action: elements.clearCollectionButton?.textContent };
+  const noWishes = state.filters.wishlist && !(wishlistStore()?.count("wished"));
+  elements.emptyState.classList.toggle("is-wishlist-empty", noWishes);
+  title.textContent = noWishes ? "No wishes yet" : defaultEmptyState.title;
+  text.textContent = noWishes ? "See a sleepy card you love? Tap the star next to its name and it lands here, ready to download as a list. Your wishlist is saved on this device only." : defaultEmptyState.text;
+  if (elements.clearCollectionButton) {
+    elements.clearCollectionButton.textContent = noWishes ? `Browse all ${state.cards.length} sleepers` : defaultEmptyState.action;
+    if (noWishes) elements.clearCollectionButton.hidden = false;
+  }
+  if (noWishes && elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
 }
 
 function findCardByIdentity(cardId) {
@@ -1629,7 +1705,7 @@ function getMoodLabel(moodSlug) {
 // Keep ?mood= in the collection URL matching the active mood, so a reload or shared link shows the same cards.
 // The collection URL carries every active filter, so shared links, reloads and back/forward show the same view.
 // e.g. /collection/?q=pikachu&mood=belly-up&rarity=promo&set=neo-destiny&language=japanese&artist=sui&maxPrice=10&sort=price-low
-const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "artist", "maxPrice", "sort"];
+const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "artist", "maxPrice", "sort", "wishlist"];
 
 function getFilterUrlParams(filters) {
   const params = [];
@@ -1641,6 +1717,7 @@ function getFilterUrlParams(filters) {
   if (filters.artist !== "all") params.push(["artist", filters.artist]);
   if (filters.maxPrice) params.push(["maxPrice", filters.maxPrice]);
   if (filters.sort !== PUBLIC_DEFAULT_SORT) params.push(["sort", filters.sort]);
+  if (filters.wishlist) params.push(["wishlist", "1"]);
   return params;
 }
 
@@ -1669,7 +1746,7 @@ function markHistoryStep() {
 // Reads filters from the URL once cards are loaded; unknown values fall back to "all".
 function readUrlFilters() {
   const params = new URLSearchParams(window.location.search);
-  const filters = { mood: "all", rarity: "all", set: "all", language: "all", artist: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT };
+  const filters = { mood: "all", rarity: "all", set: "all", language: "all", artist: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT, wishlist: false };
   const mood = slugify(params.get("mood"));
   // Old links used ?mood=under-5 for what is now the Price filter.
   if (mood === "under-5") filters.maxPrice = "5";
@@ -1685,6 +1762,8 @@ function readUrlFilters() {
   if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
   const sort = params.get("sort");
   if (SORT_OPTIONS.some((option) => option.value === sort)) filters.sort = sort;
+  // The header's Wishlist link opens ?wishlist=1; any value (or none, ?wishlist) counts.
+  filters.wishlist = params.has("wishlist") && params.get("wishlist") !== "0" && Boolean(wishlistStore());
   return filters;
 }
 
@@ -1799,7 +1878,8 @@ function getChecklistContext(filteredCards) {
   }
   const isFiltered = hasActiveFilters();
   const hasSearch = Boolean(state.filters.search);
-  const scope = hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
+  // The wishlist view always downloads as the wishlist, whatever else is filtered.
+  const scope = state.filters.wishlist ? "wishlist" : hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
   return {
     cards: isFiltered ? filteredCards || getFilteredCards() : state.cards,
     complete: true,
@@ -1812,6 +1892,7 @@ function getChecklistContext(filteredCards) {
 }
 
 function getCollectionChecklistFilename() {
+  if (state.filters.wishlist) return "sleepy-pokemon-wishlist.csv";
   if (!hasActiveFilters()) return "sleepy-pokemon-checklist.csv";
 
   const search = state.filters.search.trim();
@@ -1875,6 +1956,7 @@ function clearFilters(interactionSource) {
     artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
+    wishlist: false,
   };
   state.showAllCards = false;
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
@@ -1910,6 +1992,7 @@ function getCatalogSurface() {
 
 function getAnalyticsFilterValue(key, value) {
   if (key === "maxPrice") return numericOrNull(value) ?? "none";
+  if (key === "wishlist") return value ? "wishlist" : "all";
   return value || "all";
 }
 

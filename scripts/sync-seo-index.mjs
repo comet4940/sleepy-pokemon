@@ -220,7 +220,6 @@ ${renderMoods(card)}
       </main>
 ${renderSiteFooter()}
     </div>
-    <script src="${assetUrl("../../", "binder.js")}"></script>
     <script src="${assetUrl("../../", "prices.js")}"></script>
     <script>
       // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then

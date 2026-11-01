@@ -26,7 +26,7 @@
     <script defer src="../../analytics.js?v=5" data-page-type="card" data-card-name="Snorlax" data-card-pokemon="Snorlax" data-card-set="Wizards Promos" data-card-number="49" data-card-rarity="Promo" data-card-language="English"></script>
     <link rel="stylesheet" href="../../styles.css?v=7" />
     <link rel="stylesheet" href="../../card-detail-v3.css?v=14" />
-    <link rel="stylesheet" href="../../site-chrome.css?v=1" />
+    <link rel="stylesheet" href="../../site-chrome.css?v=2" />
   </head>
   <body data-app-mode="card-page">
     <div class="app-shell card-page-shell">
@@ -59,6 +59,7 @@
               </button>
             </label>
           </form>
+          <a class="header-wishlist" href="../../collection/?wishlist=1" aria-label="Your wishlist" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="wishlist"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg><span class="wishlist-count" data-wishlist-count hidden></span></a>
           <button class="site-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="siteMenu">
             <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
           </button>
@@ -66,11 +67,13 @@
             <a href="../../collection/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="collection">Browse</a>
             <a href="../../guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
             <a href="../../about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
+            <a class="menu-wishlist" href="../../collection/?wishlist=1" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="wishlist"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg>Wishlist<span class="wishlist-count" data-wishlist-count hidden></span></a>
             <a class="header-cta" href="../../collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
           </div>
         </nav>
       </header>
-      <script defer src="../../site-header.js?v=1"></script>
+      <script src="../../binder.js?v=1"></script>
+      <script defer src="../../site-header.js?v=2"></script>
 
       <main class="card-page-main">
         <article class="card-detail-frame card-detail-v3 card-page-detail" data-card-slug="snorlax-wizards-black-star-promos-49">
@@ -134,7 +137,6 @@
       </footer>
       <!-- SITE_FOOTER_END -->
     </div>
-    <script src="../../binder.js?v=1"></script>
     <script src="../../prices.js?v=2"></script>
     <script>
       // The lightbox shows this page's address while it's open. Reloading there loads this page, and Back can then

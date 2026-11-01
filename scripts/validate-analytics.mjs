@@ -71,6 +71,9 @@ for (const path of htmlFiles) {
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
   if (!html.includes(`analytics.js?v=${ASSET_VERSIONS["analytics.js"]}`)) errors.push(`${label}: analytics script is not versioned at v${ASSET_VERSIONS["analytics.js"]}`);
+  // The header's wishlist entry (★ beside ☰ on phones, "Wishlist" in the menu) and the binder.js that feeds its count.
+  if ((html.match(/data-analytics-destination="wishlist"/g) || []).length !== 2 || (html.match(/data-wishlist-count/g) || []).length !== 2) errors.push(`${label}: header wishlist entry (phone ★ and menu link, each with a count) is missing`);
+  if (!html.includes(`binder.js?v=${ASSET_VERSIONS["binder.js"]}`)) errors.push(`${label}: doesn't load binder.js?v=${ASSET_VERSIONS["binder.js"]} (the header's wishlist count needs it)`);
   // The header's phone menu (☰) only opens with site-header.js.
   if (!html.includes(`site-header.js?v=${ASSET_VERSIONS["site-header.js"]}`)) errors.push(`${label}: header menu script is missing or not versioned at v${ASSET_VERSIONS["site-header.js"]}`);
   // The header and footer are styled by site-chrome.css alone (checkChromeStyles), loaded on every page.
@@ -611,6 +614,17 @@ function checkChecklistDownloads(appSource) {
       expect: { ...collectionEvent, checklist_scope: "filtered_collection" },
     },
     {
+      name: "wishlist",
+      label: "Wishlist",
+      // Two wished cards, plus a search that would match others: the wishlist view downloads only the wished ones.
+      wished: (cards) => [cards[0].slug, cards[2].slug],
+      filters: { wishlist: true },
+      subset: true,
+      expectedCards: (app) => app.context.getFilteredCards(),
+      expect: { ...collectionEvent, checklist_scope: "wishlist" },
+      filename: "sleepy-pokemon-wishlist.csv",
+    },
+    {
       name: "guide",
       label: "Guide",
       body: guideBody,
@@ -629,6 +643,10 @@ function checkChecklistDownloads(appSource) {
     app.context.__cards = browserCards;
     app.context.__filters = testCase.filters || {};
     app.run("state.cards = __cards.map(normalizeCard); Object.assign(state.filters, __filters);");
+    if (testCase.wished) {
+      const wished = new Set(testCase.wished(app.run("state.cards")));
+      app.context.window.sleepyBinder = { has: (list, slug) => list === "wished" && wished.has(slug), count: () => wished.size };
+    }
     if (testCase.guide) app.run("state.guideSelection = { cards: state.cards.slice(0, 2), complete: true };");
     const allCards = app.run("state.cards");
     const expectedNames = testCase.expectedCards(app, allCards).map((card) => card.name || card.pokemon || "");
@@ -657,6 +675,7 @@ function checkChecklistDownloads(appSource) {
       errors.push(`${label} showed ${JSON.stringify(toasts)}, expected "${testCase.label} checklist downloaded (${expectedNames.length} cards)."`);
     }
 
+    if (testCase.filename && app.context.getChecklistContext().filename !== testCase.filename) errors.push(`${label} names its file ${app.context.getChecklistContext().filename}, expected ${testCase.filename}`);
     const event = events.find(({ name }) => name === "checklist_downloaded");
     if (!event) {
       errors.push(`${label} sent no checklist_downloaded event`);

@@ -574,3 +574,90 @@
     display: none;
   }
 }
+
+/* Wishlist (#119): pink belongs to wishing. Wider screens show "★ Wishlist 6" with the other links; phones keep
+   a ★ with a count badge beside ☰, outside the menu, so it's always one tap away. */
+.menu-wishlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.menu-wishlist svg,
+.header-wishlist svg {
+  flex: 0 0 auto;
+  fill: var(--pink, #f36b9b);
+}
+
+.menu-wishlist svg {
+  width: 15px;
+  height: 15px;
+}
+
+.menu-wishlist .wishlist-count {
+  min-width: 20px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(243, 107, 155, .22);
+  color: var(--cream, #fff7e8);
+  font-size: .78em;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.header-wishlist {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .topbar,
+  .collection-page-shell .topbar,
+  .guides-shell .topbar,
+  .guide-page-shell .topbar,
+  .about-shell .topbar {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .site-menu-toggle {
+    grid-column: 3;
+  }
+
+  .header-wishlist {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 247, 232, .18);
+    border-radius: 14px;
+    background: rgba(10, 10, 20, .4);
+  }
+
+  .header-wishlist svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-wishlist .wishlist-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--pink, #f36b9b);
+    color: #17121b;
+    font: 700 .72rem/20px Inter, system-ui, sans-serif;
+    text-align: center;
+    box-shadow: 0 0 0 2px #10111a;
+  }
+
+  /* The ★ beside ☰ stands in for it on phones. */
+  .site-menu > a.menu-wishlist {
+    display: none;
+  }
+}
