@@ -329,6 +329,34 @@ a { color: inherit; }
   .wish-toggle svg { width: 17px; height: 17px; }
 }
 
+/* Wished cards twinkle: tiny stars and three sparkles in the frame's padding. Sizes follow the tile's width
+   (container units), so phones get smaller sparkles. Only wished cards animate. */
+.guide-card-image { position: relative; }
+.wish-sky { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 500ms ease; }
+.is-wished .wish-sky { opacity: 1; }
+.wish-sky i { position: absolute; width: var(--size); height: var(--size); margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); border-radius: 50%; background: var(--cream); box-shadow: 0 0 6px rgba(255,247,232,.9); }
+.wish-sparkle { position: absolute; display: block; width: var(--sparkle, clamp(11px, 7cqw, 18px)); height: var(--sparkle, clamp(11px, 7cqw, 18px)); filter: drop-shadow(0 0 6px var(--glow)); }
+.wish-sparkle svg { display: block; width: 100%; height: 100%; fill: var(--colour); }
+.wish-sparkle.is-cream { --colour: var(--cream); --glow: rgba(255,247,232,.95); top: clamp(1px, 1.2cqw, 3px); right: clamp(1px, 1.2cqw, 4px); }
+.wish-sparkle.is-pink { --colour: var(--pink); --glow: rgba(243,107,155,.95); --sparkle: clamp(8px, 5.2cqw, 14px); bottom: clamp(1px, 1.2cqw, 4px); left: clamp(1px, 1.2cqw, 4px); }
+.wish-sparkle.is-lavender { --colour: #c9bcff; --glow: rgba(169,147,255,.9); --sparkle: clamp(6px, 3.8cqw, 10px); bottom: 10%; right: clamp(2px, 1.6cqw, 6px); }
+.guide-card .wish-sparkle { --sparkle: 18px; } .guide-card .wish-sparkle.is-pink { --sparkle: 14px; } .guide-card .wish-sparkle.is-lavender { --sparkle: 10px; }
+.is-wished .wish-sky i { animation: wish-twinkle var(--length, 2.8s) ease-in-out var(--delay, 0s) infinite; }
+.is-wished .wish-sparkle { animation: wish-sparkle 3.2s ease-in-out .3s infinite; }
+.is-wished .wish-sparkle.is-pink { animation-duration: 3.6s; animation-delay: 1.4s; }
+.is-wished .wish-sparkle.is-lavender { animation-duration: 3s; animation-delay: 2.2s; }
+.card-tile.is-wished .card-image-frame { box-shadow: inset 0 0 0 1px rgba(169,147,255,.5), 0 0 26px rgba(169,147,255,.3), 0 0 46px rgba(243,107,155,.12); }
+@keyframes wish-twinkle { 0%, 100% { opacity: .25; transform: scale(.6); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes wish-sparkle { 0%, 100% { opacity: .55; transform: scale(.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1.1) rotate(20deg); } }
+
+/* The burst when a card is wished, and the star's little bounce. */
+.wish-burst { position: fixed; z-index: 200; width: 0; height: 0; pointer-events: none; }
+.wish-burst b { position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; animation: wish-burst 700ms cubic-bezier(.2,.7,.3,1) forwards; }
+.wish-burst svg { display: block; width: 100%; height: 100%; fill: var(--colour); filter: drop-shadow(0 0 5px var(--colour)); }
+.wish-toggle.is-popping { animation: wish-pop 380ms cubic-bezier(.3,1.6,.5,1); }
+@keyframes wish-burst { 0% { transform: translate(0, 0) scale(.3) rotate(0deg); opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(var(--x), var(--y)) scale(1) rotate(90deg); opacity: 0; } }
+@keyframes wish-pop { 0% { transform: scale(.8); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
 /* A toast's action button (Undo). */
 .toast-action { flex: 0 0 auto; margin-left: 4px; padding: 6px 12px; border: 1px solid rgba(255,247,232,.35); border-radius: 999px; background: transparent; color: var(--cream); font: inherit; font-weight: 600; cursor: pointer; }
 .toast-action:hover, .toast-action:focus-visible { background: var(--cream); color: #17121b; }

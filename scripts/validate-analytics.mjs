@@ -419,6 +419,7 @@ function checkWishlistStar(appSource, binderSource) {
     if (!app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star doesn't save the card");
     const tile = app.context.renderCard(card);
     if (!/class="card-tile is-wished"/.test(tile) || !/aria-pressed="true"/.test(tile)) fail("a wished card's tile isn't drawn wished (starry frame, pressed star)");
+    if (!/class="wish-sky"/.test(tile)) fail("a tile doesn't draw the twinkling sky its frame shows when wished");
     app.context.toggleWish(button);
     if (app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star again doesn't remove the card");
     const undo = toasts.at(-1)?.options?.onAction;

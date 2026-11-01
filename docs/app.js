@@ -1172,6 +1172,7 @@ function renderCard(card) {
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
           : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+        ${renderWishSky()}
       </div>
       <div class="card-body">
         <div class="card-title-row"><h3><button class="card-open" type="button" aria-label="Open ${escapeAttribute(card.name)} preview">${escapeHtml(card.name)}</button></h3>${renderWishButton(card.slug, card.name)}</div>
@@ -1215,6 +1216,43 @@ function handleGuideCardClick(event) {
 // the generators, get theirs added here. Any change, in this tab or another, updates every star on the page.
 const WISH_STAR_PATH = "M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z";
 const WISHABLE_CARDS = "article.card-tile[data-card-slug], .guide-card[data-card-slug]";
+// A wished card's frame twinkles: tiny stars and three sparkles, all in the frame's padding (never over the art).
+// They only animate on wished cards (CSS), and "reduce motion" stills them.
+const WISH_SPARKLE_PATH = "M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z";
+const WISH_SKY_STARS = [[8, 4, 2.4, 0], [26, 2.5, 1.6, 0.9], [50, 3, 2, 0.4], [74, 2.5, 1.8, 1.4], [93, 6, 2.2, 0.2], [3, 22, 1.8, 1.1], [97, 30, 2, 0.7], [2.5, 48, 2.2, 1.8], [97.5, 62, 1.6, 0.3], [3, 80, 2, 1.3], [96, 88, 2.4, 0.6], [18, 97, 2, 1.6], [44, 97.5, 1.6, 0.1], [70, 97, 2.2, 1], [88, 98, 1.8, 1.9]];
+const WISH_BURST_COLOURS = ["#f36b9b", "#fff7e8", "#c9bcff", "#ffd678", "#f36b9b", "#fff7e8", "#a7e8d4", "#f36b9b"];
+let wishSkyMarkup = "";
+
+function renderWishSky() {
+  if (!wishlistStore()) return "";
+  if (!wishSkyMarkup) {
+    const sparkle = `<svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg>`;
+    const stars = WISH_SKY_STARS.map(([x, y, size, delay]) => `<i style="left:${x}%;top:${y}%;--size:${size}px;--delay:${delay}s;--length:${(2.4 + (delay % 1.2)).toFixed(1)}s"></i>`).join("");
+    wishSkyMarkup = `<span class="wish-sky" aria-hidden="true">${stars}<b class="wish-sparkle is-cream">${sparkle}</b><b class="wish-sparkle is-pink">${sparkle}</b><b class="wish-sparkle is-lavender">${sparkle}</b></span>`;
+  }
+  return wishSkyMarkup;
+}
+
+// A little pop of sparkles from the star when a card is wished.
+function burstWish(button) {
+  if (typeof button.getBoundingClientRect !== "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  const box = button.getBoundingClientRect();
+  const burst = document.createElement("span");
+  burst.className = "wish-burst";
+  burst.setAttribute("aria-hidden", "true");
+  burst.style.left = `${box.left + box.width / 2}px`;
+  burst.style.top = `${box.top + box.height / 2}px`;
+  burst.innerHTML = WISH_BURST_COLOURS.map((colour, index) => {
+    const angle = (index / WISH_BURST_COLOURS.length) * Math.PI * 2 - Math.PI / 2;
+    const distance = 30 + (index % 3) * 9;
+    return `<b style="--colour:${colour};--x:${(Math.cos(angle) * distance).toFixed(1)}px;--y:${(Math.sin(angle) * distance).toFixed(1)}px;animation-delay:${(index % 2) * 40}ms"><svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg></b>`;
+  }).join("");
+  document.body.append(burst);
+  window.setTimeout(() => burst.remove(), 900);
+  button.classList.remove("is-popping");
+  void button.offsetWidth;
+  button.classList.add("is-popping");
+}
 
 function wishlistStore() {
   return window.sleepyBinder || null;
@@ -1245,6 +1283,8 @@ function syncWishlist(root = document) {
     const slug = card.dataset.cardSlug;
     const wished = isWished(slug);
     card.classList.toggle("is-wished", wished);
+    const frame = card.querySelector(".card-image-frame, .guide-card-image");
+    if (frame && !frame.querySelector(".wish-sky")) frame.insertAdjacentHTML("beforeend", renderWishSky());
     let button = card.querySelector(".wish-toggle");
     if (!button) {
       const title = card.querySelector(".guide-card-copy h2");
@@ -1289,6 +1329,7 @@ function toggleWish(button) {
   if (wasWished) {
     showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
   } else {
+    burstWish(button);
     showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
   }
   // Which card it was stays private: never send card details with wishlist events.
