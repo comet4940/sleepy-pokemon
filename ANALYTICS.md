@@ -12,8 +12,9 @@ This is the source of truth for the redesigned site's Google Analytics 4 instrum
 1. Track completed user actions and useful outcomes, not every click or keystroke.
 2. Use `interaction_source` to distinguish where an action began.
 3. Never send search text, suggestion text, notes, email addresses, or other user-authored content.
-4. Use stable identifiers such as guide slugs and card metadata when they help answer a product question.
-5. GA4 automatic events are context only. They do not replace the product events below.
+4. Never send which cards are on someone's wishlist: wishlist events carry only what happened, not the card.
+5. Use stable identifiers such as guide slugs and card metadata when they help answer a product question.
+6. GA4 automatic events are context only. They do not replace the product events below.
 
 Every product event includes `page_type` and `analytics_version` automatically.
 
@@ -39,6 +40,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) set page cards (`set_page`), the homepage's weekly featured card (`homepage_featured`), Forward reopening a lightbox that Back closed (`browser_forward`), and a reload reopening the card that was open (`browser_restore`) | card parameters, `interaction_source` |
 | `card_navigated` | The lightbox steps to the previous or next card (`interaction_source`: `swipe` on touch screens, `arrow_button` or `keyboard` on desktop). It steps through the cards of the page it was opened from: the collection's filtered, sorted results, *Freshly added*, or a guide, set or About page's cards; it stops at either end. Stepping isn't counted as `card_opened`, so `card_opened` still means a visitor picked a card. While the lightbox is open the address bar shows the card's own page (`/cards/<slug>/`), so lightbox events after `card_opened` (which is sent from the page it was opened on) carry that card page as `page_location`; `page_type` stays the page the lightbox opened on. GA4's "Page changes based on browser history events" is off (see [Automatic GA4 Events](#automatic-ga4-events)), so stepping records no `page_view`: count cards seen in the lightbox with `card_opened` and `card_navigated` | card parameters, `interaction_source`, `direction` (`next` or `previous`) |
+| `wishlist_toggled` | The wishlist star is tapped on a card tile (collection, homepage *Freshly added*, guide and set cards; #119). The wishlist itself is saved in the visitor's browser by `docs/binder.js` | `action` (`added` or `removed`), `interaction_source` (`card_tile`). **Never card parameters:** which cards someone wishes for stays private; the validator fails if any are added |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
 | `card_page_view` | A crawlable card page loads | card parameters |
 | `guide_opened` | A guide link is selected | `guide_slug`, `guide_title`, `interaction_source`, `destination_path` |

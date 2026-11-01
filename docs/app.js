@@ -273,11 +273,10 @@ function bindEvents() {
     }
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
+  bindWishlist();
   bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
   bind(elements.cardGrid, "click", handleCardGridClick);
-  bind(elements.cardGrid, "keydown", handleCardGridKeydown);
   bind(elements.latestGrid, "click", handleCardGridClick);
-  bind(elements.latestGrid, "keydown", handleCardGridKeydown);
   bind(elements.guideCardList, "click", handleGuideCardClick);
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
@@ -1168,27 +1167,18 @@ function compareCards(a, b) {
 
 function renderCard(card) {
   return `
-    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" data-card-slug="${escapeAttribute(card.slug)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
+    <article class="card-tile${isWished(card.slug) ? " is-wished" : ""}" data-card-id="${escapeAttribute(card.catalogIdentity)}" data-card-slug="${escapeAttribute(card.slug)}">
       <div class="card-image-frame">
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
           : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
       </div>
       <div class="card-body">
-        <div class="card-title-row"><h3>${escapeHtml(card.name)}</h3></div>
+        <div class="card-title-row"><h3><button class="card-open" type="button" aria-label="Open ${escapeAttribute(card.name)} preview">${escapeHtml(card.name)}</button></h3>${renderWishButton(card.slug, card.name)}</div>
         <p class="card-subtitle">${escapeHtml(card.setName)} · ${escapeHtml(card.number)} · ${escapeHtml(card.rarity)}</p>
       </div>
     </article>
   `;
-}
-
-function handleCardGridKeydown(event) {
-  if (event.key !== "Enter" && event.key !== " ") return;
-  const tile = event.target.closest(".card-tile[data-card-id]");
-  if (!tile) return;
-  event.preventDefault();
-  const card = findCardByIdentity(tile.dataset.cardId);
-  if (card) openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
 }
 
 function handleCardGridClick(event) {
@@ -1217,6 +1207,92 @@ function handleGuideCardClick(event) {
   const list = link.closest(".guide-card-list, .about-main");
   const deck = list ? [...new Set([...list.querySelectorAll("a[data-card-id]")].map((item) => item.dataset.cardId))] : [];
   openCardDetail(card, link.dataset.lightboxSource || "guide_page", { deck });
+}
+
+// ---- Wishlist (#119) -----------------------------------------------------------------------------------
+// binder.js stores the wishlist; this draws it. A wished card gets the starry frame (.is-wished) and a filled pink
+// star by its name. Collection and homepage tiles draw their star (renderCard); guide and set cards, written by
+// the generators, get theirs added here. Any change, in this tab or another, updates every star on the page.
+const WISH_STAR_PATH = "M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z";
+const WISHABLE_CARDS = "article.card-tile[data-card-slug], .guide-card[data-card-slug]";
+
+function wishlistStore() {
+  return window.sleepyBinder || null;
+}
+
+function isWished(slug) {
+  try {
+    return Boolean(wishlistStore()?.has("wished", slug));
+  } catch {
+    return false;
+  }
+}
+
+function wishLabel(name, wished) {
+  return wished ? `Remove ${name} from your wishlist` : `Add ${name} to your wishlist`;
+}
+
+function renderWishButton(slug, name) {
+  if (!wishlistStore()) return "";
+  const wished = isWished(slug);
+  return `<button class="wish-toggle" type="button" data-wish-slug="${escapeAttribute(slug)}" data-wish-name="${escapeAttribute(name)}" aria-pressed="${wished}" aria-label="${escapeAttribute(wishLabel(name, wished))}" title="${wished ? "Remove from wishlist" : "Add to wishlist"}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg></button>`;
+}
+
+// Adds the star to cards that don't have one yet and brings every card's state up to date.
+function syncWishlist(root = document) {
+  if (!wishlistStore()) return;
+  root.querySelectorAll(WISHABLE_CARDS).forEach((card) => {
+    const slug = card.dataset.cardSlug;
+    const wished = isWished(slug);
+    card.classList.toggle("is-wished", wished);
+    let button = card.querySelector(".wish-toggle");
+    if (!button) {
+      const title = card.querySelector(".guide-card-copy h2");
+      if (!title) return;
+      title.insertAdjacentHTML("beforeend", renderWishButton(slug, title.textContent.trim()));
+      return;
+    }
+    button.setAttribute("aria-pressed", String(wished));
+    button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
+    button.title = wished ? "Remove from wishlist" : "Add to wishlist";
+  });
+}
+
+function bindWishlist() {
+  const store = wishlistStore();
+  if (!store) return;
+  // Capture: handled before the tile's own click, which would open the card.
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest?.(".wish-toggle");
+    if (!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    toggleWish(button);
+  }, true);
+  store.onChange((change) => {
+    syncWishlist();
+    if (change.type === "unavailable") showToast("Your browser couldn't save your wishlist on this device.");
+  });
+  // Back, a restored tab or returning to the window can show a page saved before the latest change.
+  window.addEventListener("pageshow", () => syncWishlist());
+  window.addEventListener("focus", () => syncWishlist());
+  syncWishlist();
+}
+
+function toggleWish(button) {
+  const store = wishlistStore();
+  const slug = button.dataset.wishSlug;
+  const wasWished = store.has("wished", slug);
+  if (wasWished) store.remove("wished", slug);
+  else store.add("wished", slug);
+  const count = store.count("wished");
+  if (wasWished) {
+    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
+  } else {
+    showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+  }
+  // Which card it was stays private: never send card details with wishlist events.
+  trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_tile" });
 }
 
 function findCardByIdentity(cardId) {
@@ -1837,13 +1913,27 @@ function formatCurrency(value) {
   }).format(number);
 }
 
-function showToast(message) {
+// A short message at the bottom of the screen. With { actionLabel, onAction } it also offers a button (Undo) and
+// stays a little longer, so there's time to reach it.
+function showToast(message, { actionLabel, onAction } = {}) {
+  if (!elements.toast) return;
   elements.toast.textContent = message;
+  if (actionLabel && onAction) {
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "toast-action";
+    action.textContent = actionLabel;
+    action.addEventListener("click", () => {
+      elements.toast.classList.add("hidden");
+      onAction();
+    }, { once: true });
+    elements.toast.append(action);
+  }
   elements.toast.classList.remove("hidden");
   window.clearTimeout(showToast.timeout);
   showToast.timeout = window.setTimeout(() => {
     elements.toast.classList.add("hidden");
-  }, 3200);
+  }, actionLabel ? 6000 : 3200);
 }
 
 function escapeHtml(value) {

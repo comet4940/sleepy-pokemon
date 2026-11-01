@@ -56,6 +56,7 @@ const requiredAppEvents = [
   "suggestion_submitted",
   "suggestion_submit_failed",
   "checklist_downloaded",
+  "wishlist_toggled",
 ];
 
 await checkChromeStyles();
@@ -147,7 +148,9 @@ checkAppCardIdentity(appSource);
 checkRarityGroups(appSource);
 checkChecklistDownloads(appSource);
 checkAppCardSlugs(appSource);
-checkBinder(await readFile(join(DOCS_DIR, "binder.js"), "utf8"));
+const binderSource = await readFile(join(DOCS_DIR, "binder.js"), "utf8");
+checkBinder(binderSource);
+checkWishlistStar(appSource, binderSource);
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -384,6 +387,55 @@ function checkAppCardSlugs(appSource) {
   const tile = app.context.renderCard(card);
   if (!tile.includes(`data-card-slug="${slugByIdentity.get(getCardIdentity(browserCards[0]))}"`)) errors.push("docs/app.js: renderCard's .card-tile has no data-card-slug (the binder needs it)");
   if (!/cardDetailDialog\.dataset\.cardSlug = card\.slug/.test(appSource)) errors.push("docs/app.js: the card lightbox no longer sets data-card-slug on #cardDetailDialog");
+}
+
+// The wishlist star (#119), run through app.js with the real binder.js: tiles draw the star in the right state,
+// toggling saves and offers Undo on removal, and the analytics event never says which card it was.
+function checkWishlistStar(appSource, binderSource) {
+  const fail = (message) => errors.push(`docs/app.js (wishlist): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const store = new Map();
+    const listeners = new Map();
+    Object.assign(app.context.window, {
+      localStorage: { getItem: (key) => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+    });
+    app.context.CustomEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
+    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const toasts = [];
+    app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options })");
+    app.context.__toasts = toasts;
+    const card = app.context.normalizeCard(browserCards[0]);
+    const slug = slugByIdentity.get(getCardIdentity(browserCards[0]));
+    if (!/class="wish-toggle"[^>]*aria-pressed="false"/.test(app.context.renderCard(card))) fail("a tile doesn't draw an unpressed star");
+    if (/<article[^>]*role="button"/.test(app.context.renderCard(card))) fail("the tile is a button again, so the star would be a button inside a button");
+    const button = { dataset: { wishSlug: slug, wishName: card.name } };
+    app.context.toggleWish(button);
+    if (!app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star doesn't save the card");
+    const tile = app.context.renderCard(card);
+    if (!/class="card-tile is-wished"/.test(tile) || !/aria-pressed="true"/.test(tile)) fail("a wished card's tile isn't drawn wished (starry frame, pressed star)");
+    app.context.toggleWish(button);
+    if (app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star again doesn't remove the card");
+    const undo = toasts.at(-1)?.options?.onAction;
+    if (!undo) fail("removing a card doesn't offer Undo");
+    else {
+      undo();
+      if (!app.context.window.sleepyBinder.has("wished", slug)) fail("Undo doesn't put the card back");
+    }
+    const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
+    if (wishEvents.length !== 2) fail(`expected 2 wishlist_toggled events, got ${wishEvents.length}`);
+    for (const { params } of wishEvents) {
+      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
+      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+    }
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
 }
 
 // Runs docs/binder.js against a fake browser and checks how it saves: the binder must never lose or corrupt
