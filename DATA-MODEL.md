@@ -103,7 +103,7 @@ Market prices live in their own file, `docs/prices.json`, not in the cards or th
 
 - **The refresh writes it.** Once a day, `scripts/refresh-prices.mjs` (run by `refresh-prices.yml` at 21:33 UTC) reads TCGplayer market prices from [TCGCSV](https://tcgcsv.com) for every card with a `tcgplayerProductId`, using the printing in `priceType`. It follows TCGCSV's [usage guidelines](https://tcgcsv.com/docs#usage-guidelines): it checks `last-updated.txt` first, makes one request per set, identifies itself and pauses between requests. When a set can't be fetched or a card has no market price, the card keeps its last price; after 30 days without confirmation the price is removed.
 - **Pages fill prices in the browser.** Card, guide and set pages carry an empty `data-price-for` slot that `docs/prices.js` fills; the lightbox, price filters and price sorting read the same file. A refresh regenerates no pages.
-- **Manual prices.** For a card TCGplayer doesn't sell, add an entry with `"source": "Manual"` and today's date. The refresh leaves it alone; re-check it every few months. The site shows it as the curator's estimate.
+- **Manual prices.** For a card TCGplayer doesn't sell or has no sales for, and for every Japanese and Chinese card (they stay off the TCGplayer refresh by choice, see #163), add an entry with `"source": "Manual"` and today's date. The refresh leaves it alone; re-check it every few months. The site shows it as the curator's estimate.
 - **Renaming a card changes its identity.** The refresh moves TCGplayer prices to the new key on its next run; move a `Manual` entry by hand (the validator flags entries that match no card).
 
 ## Guides
@@ -144,7 +144,7 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 2. **Collect the details** from the card itself and a source like pokemontcg.io, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, image.
 3. **Write the curation**: pick moods, write `whyItBelongs`, and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
 4. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
-5. **Link it to TCGplayer** (English cards): run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
+5. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
 6. **Regenerate and check**:
    ```bash
    node scripts/sync-seo-index.mjs
