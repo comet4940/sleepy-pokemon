@@ -43,4 +43,4 @@ console.log(`The daily refresh never updates **Manual** prices in \`docs/prices.
 |---|---|---|---|---|---|
 ${table.join("\n")}
 
-**To update:** reply with a new price per card, or "unchanged". Either way the entry gets today's date, so "as of" stays current. Then close this issue. See "Prices → Manual prices" in DATA-MODEL.md.`);
+**To update:** look each card up on [PriceCharting](https://www.pricecharting.com) and reply with a new price per card, or "unchanged". Either way the entry gets today's date, so "as of" stays current. Then close this issue. See "Prices → Manual prices" in DATA-MODEL.md.`);
