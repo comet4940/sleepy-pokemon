@@ -75,6 +75,27 @@
       ]
     },
     {
+      "apiId": "svp-214",
+      "tcgdexId": "",
+      "name": "Pikachu",
+      "pokemon": "Pikachu",
+      "setName": "Scarlet & Violet Promos",
+      "setSeries": "Scarlet & Violet",
+      "setId": "svp",
+      "number": "214",
+      "rarity": "Promo",
+      "language": "English",
+      "artist": "Kazuki Minami",
+      "imageSmall": "https://images.scrydex.com/pokemon/svp-214/small",
+      "imageLarge": "https://images.scrydex.com/pokemon/svp-214/large",
+      "setReleaseDate": "2025/02/27",
+      "whyItBelongs": "Pikachu has stopped mid-stretch on a sun-warmed garden wall for an enormous, eyes-shut yawn: the moment right before a nap. Kazuki Minami’s painting won the Grand Prize in the 2024 Pokémon TCG Illustration Contest, and even its attack is in the mood: Unwind.",
+      "createdAt": "2026-11-02T21:00:00.000Z",
+      "updatedAt": "2026-11-02T21:00:00.000Z",
+      "slug": "pikachu-scarlet-and-violet-promos-214",
+      "moods": []
+    },
+    {
       "apiId": "svp-173",
       "tcgdexId": "",
       "name": "Eevee",
