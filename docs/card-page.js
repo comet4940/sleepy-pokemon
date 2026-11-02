@@ -32,7 +32,8 @@
   const BURST_COLOURS = ["#f36b9b", "#fff7e8", "#c9bcff", "#ffd678", "#f36b9b", "#fff7e8", "#a7e8d4", "#f36b9b"];
   function burst(button) {
     if (typeof button.getBoundingClientRect !== "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-    const box = button.getBoundingClientRect();
+    // From the star, like the tiles' star (not the middle of the label).
+    const box = (button.querySelector("svg") || button).getBoundingClientRect();
     const element = document.createElement("span");
     element.className = "wish-burst";
     element.setAttribute("aria-hidden", "true");

@@ -1252,20 +1252,30 @@ function renderWishSky() {
 }
 
 // A little pop of sparkles from the star when a card is wished.
+// The burst comes from the star itself (on the "Add to wishlist" buttons too, not the middle of the label). In the
+// lightbox it's added inside the dialog, since an open dialog sits above everything else on the page.
 function burstWish(button) {
   if (typeof button.getBoundingClientRect !== "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-  const box = button.getBoundingClientRect();
+  const box = (button.querySelector("svg") || button).getBoundingClientRect();
   const burst = document.createElement("span");
   burst.className = "wish-burst";
   burst.setAttribute("aria-hidden", "true");
-  burst.style.left = `${box.left + box.width / 2}px`;
-  burst.style.top = `${box.top + box.height / 2}px`;
+  const x = box.left + box.width / 2;
+  const y = box.top + box.height / 2;
+  burst.style.left = `${x}px`;
+  burst.style.top = `${y}px`;
   burst.innerHTML = WISH_BURST_COLOURS.map((colour, index) => {
     const angle = (index / WISH_BURST_COLOURS.length) * Math.PI * 2 - Math.PI / 2;
     const distance = 30 + (index % 3) * 9;
     return `<b style="--colour:${colour};--x:${(Math.cos(angle) * distance).toFixed(1)}px;--y:${(Math.sin(angle) * distance).toFixed(1)}px;animation-delay:${(index % 2) * 40}ms"><svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg></b>`;
   }).join("");
-  document.body.append(burst);
+  (button.closest("dialog[open]") || document.body).append(burst);
+  // Inside a dialog that's moved or scaled (its opening animation), "fixed" is measured from the dialog: correct it.
+  const placed = burst.getBoundingClientRect();
+  if (Math.abs(placed.left - x) > 1 || Math.abs(placed.top - y) > 1) {
+    burst.style.left = `${2 * x - placed.left}px`;
+    burst.style.top = `${2 * y - placed.top}px`;
+  }
   window.setTimeout(() => burst.remove(), 900);
   button.classList.remove("is-popping");
   void button.offsetWidth;
