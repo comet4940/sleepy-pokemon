@@ -30,11 +30,26 @@ export const ASSET_VERSIONS = {
   "card-page.js": 6,
   "contact.js": 1,
   "site-header.js": 2,
+  // Icons: bump when the artwork changes, so browsers stop showing a cached old icon.
+  "favicon.ico": 1,
+  "assets/favicon.svg": 2,
+  "assets/apple-touch-icon.png": 1,
 };
 
 export function assetUrl(root, file) {
   if (!(file in ASSET_VERSIONS)) throw new Error(`No version for ${file} in ASSET_VERSIONS`);
   return `${root}${file}?v=${ASSET_VERSIONS[file]}`;
+}
+
+// The site icon on every page: favicon.ico for older browsers and tools that only ask for /favicon.ico, the SVG
+// for modern browsers, and a square 180px icon for iOS home screens (rendered from the SVG). The 2912px banner,
+// assets/sleepy-pokemon.png, stays the default social preview image and is no longer used as an icon.
+export function renderIconLinks(root) {
+  return [
+    `<link rel="icon" href="${assetUrl(root, "favicon.ico")}" sizes="32x32" />`,
+    `<link rel="icon" href="${assetUrl(root, "assets/favicon.svg")}" type="image/svg+xml" />`,
+    `<link rel="apple-touch-icon" href="${assetUrl(root, "assets/apple-touch-icon.png")}" />`,
+  ];
 }
 
 // Rewrites every "<file>?v=<n>" in a hand-written page to the current version.
@@ -176,8 +191,7 @@ export function renderHead({
     `<meta name="description" content="${escapeAttribute(description)}" />`,
     `<meta name="robots" content="index, follow" />`,
     `<link rel="canonical" href="${escapeAttribute(canonicalUrl)}" />`,
-    `<link rel="icon" href="${root}assets/favicon.svg" type="image/svg+xml" />`,
-    `<link rel="apple-touch-icon" href="${root}assets/sleepy-pokemon.png" />`,
+    ...renderIconLinks(root),
     ...(fonts ? [
       `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
       `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
