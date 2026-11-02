@@ -3,6 +3,34 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "swsh10-42",
+      "tcgdexId": "",
+      "name": "Dewott",
+      "pokemon": "Dewott",
+      "setName": "Astral Radiance",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh10",
+      "number": "042/189",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Mina Nakai",
+      "imageSmall": "https://images.pokemontcg.io/swsh10/42.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh10/42_hires.png",
+      "setReleaseDate": "2022/05/27",
+      "notes": "Community submission via the Suggest a card form.",
+      "moods": [
+        "Belly Up",
+        "Water Naps",
+        "Autumn Leaves"
+      ],
+      "whyItBelongs": "Dewott has clocked out for the day and is floating belly-up in a leaf-strewn pond, eyes shut and grinning, without a care that a Tynamo is splashing right past. For a Water-type weak to Lightning, that’s a lot of trust. Mina Nakai catches a Pokémon known for its discipline completely off duty.",
+      "createdAt": "2026-11-02T20:00:00.000Z",
+      "updatedAt": "2026-11-02T20:00:00.000Z",
+      "tcgplayerProductId": 272242,
+      "tcgplayerGroupId": 3040,
+      "priceType": "Normal"
+    },
+    {
       "apiId": "swsh8-257",
       "tcgdexId": "",
       "name": "Greedent V",
