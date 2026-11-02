@@ -118,30 +118,6 @@
         "Cameo Sleepers",
         "Bedtime"
       ]
-    },
-    {
-      "apiId": "xy10-71",
-      "tcgdexId": "",
-      "name": "Whimsicott",
-      "pokemon": "Whimsicott",
-      "setName": "Fates Collide",
-      "setSeries": "XY",
-      "setId": "xy10",
-      "number": "71/124",
-      "rarity": "Uncommon",
-      "language": "English",
-      "artist": "sui",
-      "imageSmall": "https://images.pokemontcg.io/xy10/71.png",
-      "imageLarge": "https://images.pokemontcg.io/xy10/71_hires.png",
-      "setReleaseDate": "2016/05/02",
-      "whyItBelongs": "Cozy nap on a plush floor pillow. Whimsicott sinking into soft bedding is pure cloud-soft comfort that softens any page.",
-      "createdAt": "2026-05-06T21:31:43.111Z",
-      "updatedAt": "2026-10-18T14:33:11.832Z",
-      "slug": "whimsicott-fates-collide-71-124",
-      "moods": [
-        "Belly Up",
-        "Bedtime"
-      ]
     }
   ]
 }
