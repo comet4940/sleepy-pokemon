@@ -41,6 +41,8 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) set page cards (`set_page`), the homepage's weekly featured card (`homepage_featured`), Forward reopening a lightbox that Back closed (`browser_forward`), and a reload reopening the card that was open (`browser_restore`) | card parameters, `interaction_source` |
 | `card_navigated` | The lightbox steps to the previous or next card (`interaction_source`: `swipe` on touch screens, `arrow_button` or `keyboard` on desktop). It steps through the cards of the page it was opened from: the collection's filtered, sorted results, *Freshly added*, or a guide, set or About page's cards; it stops at either end. Stepping isn't counted as `card_opened`, so `card_opened` still means a visitor picked a card. While the lightbox is open the address bar shows the card's own page (`/cards/<slug>/`), so lightbox events after `card_opened` (which is sent from the page it was opened on) carry that card page as `page_location`; `page_type` stays the page the lightbox opened on. GA4's "Page changes based on browser history events" is off (see [Automatic GA4 Events](#automatic-ga4-events)), so stepping records no `page_view`: count cards seen in the lightbox with `card_opened` and `card_navigated` | card parameters, `interaction_source`, `direction` (`next` or `previous`) |
 | `wishlist_toggled` | A card is added to or removed from the wishlist (#119): the star on a card tile (collection, homepage *Freshly added*, guide and set cards), or the *Add to wishlist* button in the lightbox or on a card page (`docs/card-page.js`). The wishlist itself is saved in the visitor's browser by `docs/binder.js` | `action` (`added` or `removed`), `interaction_source` (`card_tile`, `card_modal` or `card_page`). **Never card parameters:** which cards someone wishes for stays private; the validator fails if any are added |
+| `wishlist_hint_shown` | The one-time wishlist strip appears above the collection grid (first visit, until dismissed or the first wish; remembered in `binder.js`) | `interaction_source` (`collection_strip`) |
+| `wishlist_hint_dismissed` | That strip goes: *Got it*, or the visitor's first wish | `interaction_source` (`collection_strip`), `dismiss_method` (`got_it` or `first_wish`) |
 | `random_sleeper_clicked` | “Show me a sleeper” selects a random card | card parameters |
 | `card_page_view` | A crawlable card page loads | card parameters |
 | `guide_opened` | A guide link is selected | `guide_slug`, `guide_title`, `interaction_source`, `destination_path` |
@@ -164,6 +166,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `filter_action`
 - `changes_count`
 - `close_method`
+- `dismiss_method`
 - `direction`
 - `had_active_filters`
 - `lookup_type`

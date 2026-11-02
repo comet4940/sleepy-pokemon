@@ -882,6 +882,7 @@ function renderCards() {
   updateCollectionHeading(filteredCards.length);
   updateChecklistButton(filteredCards);
   renderActiveFilterControls();
+  renderWishlistHint();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
   if (state.catalogLoadFailed) {
@@ -1366,11 +1367,58 @@ function toggleWish(button) {
     showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
   } else {
     burstWish(button);
-    showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+    dismissWishlistHint("first_wish", button);
+    if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
+      store.markHintSeen(WISHLIST_HINTS.firstWish);
+      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500 });
+    } else {
+      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+    }
   }
   // Which card it was stays private: never send card details with wishlist events.
   const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
   trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
+}
+
+// One-time onboarding (#119), remembered in binder.js: the collection's strip above the grid until it's dismissed
+// or the first wish is made, and a longer message for that first wish.
+const WISHLIST_HINTS = { strip: "wishlist_strip", firstWish: "wishlist_first_wish" };
+
+function renderWishlistHint() {
+  const store = wishlistStore();
+  const existing = document.querySelector(".wishlist-hint");
+  const show = Boolean(elements.cardGrid && store && !state.catalogLoadFailed && state.cards.length && !state.filters.wishlist && !store.hintSeen(WISHLIST_HINTS.strip));
+  if (!show) {
+    existing?.remove();
+    return;
+  }
+  if (existing) return;
+  const hint = document.createElement("aside");
+  hint.className = "wishlist-hint";
+  hint.setAttribute("aria-label", "About your wishlist");
+  hint.innerHTML = `<svg class="wishlist-hint-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg>
+    <p><strong>See a sleepy card you love?</strong> Tap the star to add it to your wishlist, then download it anytime. <span class="wishlist-hint-note">Saved on this device · <a href="../about/#wishlist" data-analytics-event="navigation_clicked" data-analytics-source="wishlist_hint" data-analytics-destination="about">How it works</a></span></p>
+    <button class="wishlist-hint-close" type="button">Got it</button>`;
+  hint.querySelector(".wishlist-hint-close").addEventListener("click", () => dismissWishlistHint("got_it"));
+  elements.cardGrid.before(hint);
+  trackEvent("wishlist_hint_shown", { interaction_source: "collection_strip" });
+}
+
+function dismissWishlistHint(method, keepInPlace) {
+  const store = wishlistStore();
+  if (!store || store.hintSeen(WISHLIST_HINTS.strip)) return;
+  store.markHintSeen(WISHLIST_HINTS.strip);
+  const hint = document.querySelector(".wishlist-hint");
+  if (!hint) return;
+  // The strip sits above the cards: when a wish removes it, keep the star just tapped where it was. Some browsers
+  // adjust the scroll for removed content themselves (scroll anchoring) and some don't, so measure, then correct.
+  const before = keepInPlace?.getBoundingClientRect?.().top;
+  hint.remove();
+  if (before !== undefined) {
+    const shift = keepInPlace.getBoundingClientRect().top - before;
+    if (Math.abs(shift) > 1) window.scrollBy(0, shift);
+  }
+  trackEvent("wishlist_hint_dismissed", { interaction_source: "collection_strip", dismiss_method: method });
 }
 
 // The wishlist view's chip, first in the filter row: "★ Wishlist ×". Tapping × leaves the view.
@@ -2059,7 +2107,7 @@ function formatCurrency(value) {
 
 // A short message at the bottom of the screen. With { actionLabel, onAction } it also offers a button (Undo) and
 // stays a little longer, so there's time to reach it.
-function showToast(message, { actionLabel, onAction } = {}) {
+function showToast(message, { actionLabel, onAction, duration } = {}) {
   if (!elements.toast) return;
   elements.toast.textContent = message;
   if (actionLabel && onAction) {
@@ -2077,7 +2125,7 @@ function showToast(message, { actionLabel, onAction } = {}) {
   window.clearTimeout(showToast.timeout);
   showToast.timeout = window.setTimeout(() => {
     elements.toast.classList.add("hidden");
-  }, actionLabel ? 6000 : 3200);
+  }, duration || (actionLabel ? 6000 : 3200));
 }
 
 function escapeHtml(value) {

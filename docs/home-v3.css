@@ -373,6 +373,18 @@ a { color: inherit; }
 .empty-state.is-wishlist-empty h3::before { content: "★"; display: block; margin-bottom: 10px; color: var(--pink); font-size: 2.6rem; line-height: 1; text-shadow: 0 0 14px rgba(243,107,155,.7); }
 .empty-state.is-wishlist-empty .empty-state-action { border-color: var(--pink); background: var(--pink); color: #17121b; }
 
+/* Wishlist onboarding: a one-time strip above the collection grid (never over a card). */
+.wishlist-hint { display: flex; align-items: center; gap: 14px; margin: 0 0 18px; padding: 14px 14px 14px 18px; border-radius: 18px; background: var(--cream); color: #17121b; box-shadow: 0 10px 26px rgba(0,0,0,.3); }
+.wishlist-hint p { flex: 1 1 auto; margin: 0; font-size: .92rem; line-height: 1.45; }
+.wishlist-hint strong { font-weight: 700; }
+.wishlist-hint-note { display: block; margin-top: 3px; color: #6b5d78; font-size: .8rem; }
+.wishlist-hint-note a { color: #6c4fd8; font-weight: 600; }
+.wishlist-hint-star { flex: 0 0 auto; width: 30px; height: 30px; padding: 6px; border-radius: 50%; background: #1d1d2b; fill: var(--pink); }
+.wishlist-hint-close { flex: 0 0 auto; min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: #1d1d2b; color: var(--cream); font: inherit; font-weight: 600; cursor: pointer; }
+.wishlist-hint-close:hover, .wishlist-hint-close:focus-visible { background: #2c2a45; }
+.wishlist-hint-close:focus-visible { outline: 3px solid rgba(243,107,155,.5); outline-offset: 2px; }
+@media (max-width: 520px) { .wishlist-hint { flex-wrap: wrap; padding: 14px; } .wishlist-hint p { flex-basis: calc(100% - 44px); } .wishlist-hint-close { margin-left: auto; } }
+
 /* A toast's action button (Undo). */
 .toast-action { flex: 0 0 auto; margin-left: 4px; padding: 6px 12px; border: 1px solid rgba(255,247,232,.35); border-radius: 999px; background: transparent; color: var(--cream); font: inherit; font-weight: 600; cursor: pointer; }
 .toast-action:hover, .toast-action:focus-visible { background: var(--cream); color: #17121b; }

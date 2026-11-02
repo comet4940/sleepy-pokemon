@@ -107,6 +107,19 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
           </ol>
         </section>
 
+        <section class="about-section about-standard" id="wishlist" aria-labelledby="aboutWishlistTitle">
+          <div class="about-standard-intro">
+            <p class="about-eyebrow">Your wishlist</p>
+            <h2 id="aboutWishlistTitle">How your wishlist works</h2>
+            <p>No account, no sign-up: it lives in your browser.</p>
+          </div>
+          <ol class="about-rules">
+            <li><span class="about-rule-number" aria-hidden="true">01</span><div><h3>Tap the star</h3><p>See a sleepy card you love? Tap the star next to its name, or <em>Add to wishlist</em> on its page. Its frame turns into a starry night sky. Tap again to take it off.</p></div></li>
+            <li><span class="about-rule-number" aria-hidden="true">02</span><div><h3>Find it in the header</h3><p><em>Wishlist</em> shows just your cards. Filter them like the rest of the collection, then download the list, with prices, as a checklist.</p></div></li>
+            <li><span class="about-rule-number" aria-hidden="true">03</span><div><h3>Saved on this device</h3><p>Your wishlist stays in this browser. Which cards you wish for is never sent anywhere, so it doesn't follow you to another phone or computer, and clearing this site's data in your browser erases it.</p></div></li>
+          </ol>
+        </section>
+
         <section class="about-chase" aria-labelledby="aboutChaseTitle">
           <div class="about-chase-copy">
             <p class="about-eyebrow">The current chase</p>

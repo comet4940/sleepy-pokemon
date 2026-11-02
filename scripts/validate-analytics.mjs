@@ -57,6 +57,8 @@ const requiredAppEvents = [
   "suggestion_submit_failed",
   "checklist_downloaded",
   "wishlist_toggled",
+  "wishlist_hint_shown",
+  "wishlist_hint_dismissed",
 ];
 
 await checkChromeStyles();
@@ -425,6 +427,9 @@ function checkWishlistStar(appSource, binderSource) {
     const button = { dataset: { wishSlug: slug, wishName: card.name } };
     app.context.toggleWish(button);
     if (!app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star doesn't save the card");
+    // The first wish ever gets the longer, explaining message; later wishes the short one.
+    if (!/saved on this device/i.test(toasts.at(-1)?.message || "")) fail(`the first wish should explain where the wishlist is saved, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
+    if (!app.context.window.sleepyBinder.hintSeen("wishlist_first_wish")) fail("the first-wish message isn't remembered, so it would show every time");
     const tile = app.context.renderCard(card);
     if (!/class="card-tile is-wished"/.test(tile) || !/aria-pressed="true"/.test(tile)) fail("a wished card's tile isn't drawn wished (starry frame, pressed star)");
     if (!/class="wish-sky"/.test(tile)) fail("a tile doesn't draw the twinkling sky its frame shows when wished");
@@ -436,6 +441,10 @@ function checkWishlistStar(appSource, binderSource) {
       undo();
       if (!app.context.window.sleepyBinder.has("wished", slug)) fail("Undo doesn't put the card back");
     }
+    // Remove and wish again: a later wish shows the short message.
+    app.context.toggleWish(button);
+    app.context.toggleWish(button);
+    if (!/^Added to your wishlist · /.test(toasts.at(-1)?.message || "")) fail(`a later wish should show the short message, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
     // A card already marked owned can't be wished for: no success message, no burst, no event (review on #200).
     app.context.window.sleepyBinder.add("owned", "owned-card-slug");
     const before = events.length;
@@ -444,7 +453,7 @@ function checkWishlistStar(appSource, binderSource) {
     if (events.length !== before) fail("a refused add still sent wishlist_toggled");
     if (!/already have this card/.test(toasts.at(-1)?.message || "")) fail(`a refused add should say the card is already collected, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
-    if (wishEvents.length !== 2) fail(`expected 2 wishlist_toggled events, got ${wishEvents.length}`);
+    if (wishEvents.length !== 4) fail(`expected 4 wishlist_toggled events, got ${wishEvents.length}`);
     for (const { params } of wishEvents) {
       const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
       if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
