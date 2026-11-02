@@ -107,6 +107,16 @@ function renderWishButton(card) {
   return `<div class="detail-wish-row"><button class="detail-wish" type="button" data-wish-slug="${escapeAttribute(card.slug)}" data-wish-name="${escapeAttribute(card.name || card.pokemon || "this card")}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg><span class="detail-wish-label">Add to wishlist</span></button><span class="sr-only" role="status" aria-live="polite" data-wish-status></span></div>`;
 }
 
+// The starry sky a wished card's art frame twinkles with. Written into the card page's frame so the lightbox
+// (which shows this page's details) gets it too. Must match renderWishSky() in docs/app.js (the validator checks).
+function renderWishSky() {
+  const WISH_SPARKLE_PATH = "M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z";
+  const WISH_SKY_STARS = [[8, 4, 2.4, 0], [26, 2.5, 1.6, 0.9], [50, 3, 2, 0.4], [74, 2.5, 1.8, 1.4], [93, 6, 2.2, 0.2], [3, 22, 1.8, 1.1], [97, 30, 2, 0.7], [2.5, 48, 2.2, 1.8], [97.5, 62, 1.6, 0.3], [3, 80, 2, 1.3], [96, 88, 2.4, 0.6], [18, 97, 2, 1.6], [44, 97.5, 1.6, 0.1], [70, 97, 2.2, 1], [88, 98, 1.8, 1.9]];
+  const sparkle = `<svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg>`;
+  const stars = WISH_SKY_STARS.map(([x, y, size, delay]) => `<i style="left:${x}%;top:${y}%;--size:${size}px;--delay:${delay}s;--length:${(2.4 + (delay % 1.2)).toFixed(1)}s"></i>`).join("");
+  return `<span class="wish-sky" aria-hidden="true">${stars}<b class="wish-sparkle is-cream">${sparkle}</b><b class="wish-sparkle is-pink">${sparkle}</b><b class="wish-sparkle is-lavender">${sparkle}</b></span>`;
+}
+
 async function syncCollectionIndex(cardList) {
   const items = cardList.map((card) => {
     const title = [card.name, card.number ? `#${card.number}` : ""].filter(Boolean).join(" ");
@@ -199,6 +209,7 @@ ${renderHead({
         <article class="card-detail-frame card-detail-v3 card-page-detail" data-card-slug="${escapeAttribute(card.slug)}">
           <div class="detail-art-column">
             <div class="detail-image-frame">
+            ${renderWishSky()}
             ${image ? `<img src="${escapeAttribute(image)}" alt="${escapeAttribute(imageAlt)}" />` : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
             </div>
             <a class="detail-full-link" href="../../collection/" data-analytics-event="navigation_clicked" data-analytics-source="card_page" data-analytics-destination="collection"><span aria-hidden="true">←</span> Back to the sleepy stack</a>

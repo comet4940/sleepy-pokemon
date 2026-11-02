@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
@@ -384,6 +384,8 @@ function checkCardSlugs(html, label, path) {
     // "Add to wishlist" (#119): one per card page, for this card, and card-page.js to run it (the lightbox uses app.js).
     const wishButtons = [...html.matchAll(/<button class="detail-wish"[^>]*data-wish-slug="([^"]*)"/g)].map(([, slug]) => slug);
     if (wishButtons.length !== 1 || wishButtons[0] !== pageSlug) errors.push(`${label}: needs exactly one "Add to wishlist" button for ${pageSlug}, found ${JSON.stringify(wishButtons)}`);
+    // The art frame's starry sky must be the one app.js draws on tiles (the lightbox shows this same markup).
+    if (!html.includes(`<div class="detail-image-frame">\n            ${appWishSky()}`)) errors.push(`${label}: the art frame's wish sky is missing or differs from renderWishSky() in docs/app.js`);
     if (!html.includes(`card-page.js?v=${ASSET_VERSIONS["card-page.js"]}`)) errors.push(`${label}: doesn't load card-page.js?v=${ASSET_VERSIONS["card-page.js"]} (its wishlist button needs it)`);
   }
   if (/data-card-slug="/.test(html)) {
@@ -391,6 +393,16 @@ function checkCardSlugs(html, label, path) {
     if (binderAt === -1) errors.push(`${label}: shows cards but doesn't load binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
     else if (html.includes("app.js?v=") && html.indexOf("app.js?v=") < binderAt) errors.push(`${label}: loads app.js before binder.js`);
   }
+}
+
+// app.js's wish sky, worked out once (pages are checked before the rest of this file's setup runs).
+function appWishSky() {
+  if (appWishSky.markup === undefined) {
+    const app = loadApp(readFileSync(join(DOCS_DIR, "app.js"), "utf8"));
+    app.context.window.sleepyBinder = {};
+    appWishSky.markup = app.context.renderWishSky();
+  }
+  return appWishSky.markup;
 }
 
 function classesOnPage(html) {
@@ -480,9 +492,18 @@ function checkCardPageWish(source, binderSource) {
     const events = [];
     const attributes = {};
     const label = { textContent: "Add to wishlist" };
+    const classList = (initial = []) => {
+      const names = new Set(initial);
+      return { names, add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
+    };
+    const article = { classList: classList() };
+    const status = { textContent: "", classList: classList(["sr-only"]) };
     let click = null;
     const button = {
       dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+      classList: classList(),
+      parentElement: { querySelector: () => status },
+      closest: () => article,
       setAttribute: (name, value) => { attributes[name] = value; },
       querySelector: () => label,
       addEventListener: (type, fn) => { if (type === "click") click = fn; },
@@ -506,8 +527,13 @@ function checkCardPageWish(source, binderSource) {
       if (!context.window.sleepyBinder.hintSeen(hint)) fail(`a wish made on a card page doesn't mark the "${hint}" hint as seen`);
     }
     if (attributes["aria-pressed"] !== "true" || label.textContent !== "On your wishlist") fail("the button doesn't show the card is on the wishlist");
+    if (!article.classList.contains("is-wished")) fail("a wished card's art frame doesn't get its starry sky (.card-page-detail.is-wished)");
+    if (!status.classList.contains("detail-wish-note") || !/saved on this device/i.test(status.textContent)) fail("the first wish doesn't explain where the wishlist is saved");
     click();
     if (context.window.sleepyBinder.has("wished", "test-card-slug") || label.textContent !== "Add to wishlist") fail("a second click doesn't remove the card");
+    if (article.classList.contains("is-wished")) fail("a removed card's art frame keeps its starry sky");
+    // Review on #200: the "saved" note mustn't stay once the card is taken off the wishlist.
+    if (status.textContent || status.classList.contains("detail-wish-note") || !status.classList.contains("sr-only")) fail("the first-wish note stays after the card is removed");
     // A card already marked owned: the click is refused, nothing is tracked, and the button says why.
     context.window.sleepyBinder.add("owned", "test-card-slug");
     const before = events.length;

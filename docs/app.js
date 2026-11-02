@@ -1318,8 +1318,15 @@ function syncWishlist(root = document) {
 }
 
 // The lightbox's (and card page's) "Add to wishlist" / "On your wishlist" button. card-page.js mirrors this.
+// Its art frame gets the same starry sky as a wished tile.
 function syncDetailWish(button) {
   const wished = isWished(button.dataset.wishSlug);
+  const host = button.closest?.(".card-page-detail, #cardDetailDialog");
+  if (host) {
+    host.classList.toggle("is-wished", wished);
+    const frame = host.querySelector(".detail-image-frame");
+    if (frame && !frame.querySelector(".wish-sky")) frame.insertAdjacentHTML("beforeend", renderWishSky());
+  }
   button.setAttribute("aria-pressed", String(wished));
   button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
   const label = button.querySelector(".detail-wish-label");
@@ -1529,6 +1536,7 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
 function showCardDetail(card) {
   // The binder (binder.js) finds the open card by its slug, like every other card element.
   elements.cardDetailDialog.dataset.cardSlug = card.slug;
+  elements.cardDetailDialog.classList.toggle("is-wished", isWished(card.slug));
   // The lightbox shows the card page's own details (see loadCardPage), so features live in one place: the card
   // page generator. Until that arrives (usually instantly, as tapping a card starts loading it) or if it can't
   // load, show the essentials from the catalog.

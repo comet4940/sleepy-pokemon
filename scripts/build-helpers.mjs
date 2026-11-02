@@ -18,16 +18,16 @@ export const CARD_SLUGS_PATH = "data/card-slugs.json";
 export const ASSET_VERSIONS = {
   "styles.css": 7,
   "site-chrome.css": 3,
-  "home-v3.css": 31,
+  "home-v3.css": 32,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 16,
+  "card-detail-v3.css": 17,
   "guides.css": 5,
   "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 67,
+  "app.js": 68,
   "binder.js": 1,
-  "card-page.js": 3,
+  "card-page.js": 4,
   "site-header.js": 2,
 };
 

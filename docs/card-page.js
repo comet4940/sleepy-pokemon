@@ -18,9 +18,44 @@
     }
   };
 
+  // The first-wish note under the button only makes sense while the card is wished: taken off, it goes.
+  function clearNote(button) {
+    const status = button.parentElement?.querySelector("[data-wish-status]");
+    if (!status?.classList.contains("detail-wish-note")) return;
+    status.textContent = "";
+    status.classList.remove("detail-wish-note");
+    status.classList.add("sr-only");
+  }
+
+  // The same wishing burst as app.js (burstWish there), from the button's centre. Skipped for reduced motion.
+  const SPARKLE = "M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z";
+  const BURST_COLOURS = ["#f36b9b", "#fff7e8", "#c9bcff", "#ffd678", "#f36b9b", "#fff7e8", "#a7e8d4", "#f36b9b"];
+  function burst(button) {
+    if (typeof button.getBoundingClientRect !== "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const box = button.getBoundingClientRect();
+    const element = document.createElement("span");
+    element.className = "wish-burst";
+    element.setAttribute("aria-hidden", "true");
+    element.style.left = `${box.left + box.width / 2}px`;
+    element.style.top = `${box.top + box.height / 2}px`;
+    element.innerHTML = BURST_COLOURS.map((colour, index) => {
+      const angle = (index / BURST_COLOURS.length) * Math.PI * 2 - Math.PI / 2;
+      const distance = 30 + (index % 3) * 9;
+      return `<b style="--colour:${colour};--x:${(Math.cos(angle) * distance).toFixed(1)}px;--y:${(Math.sin(angle) * distance).toFixed(1)}px;animation-delay:${(index % 2) * 40}ms"><svg viewBox="0 0 24 24" focusable="false"><path d="${SPARKLE}" /></svg></b>`;
+    }).join("");
+    document.body.append(element);
+    window.setTimeout(() => element.remove(), 900);
+    button.classList.remove("is-popping");
+    void button.offsetWidth;
+    button.classList.add("is-popping");
+  }
+
   function sync() {
     buttons.forEach((button) => {
       const wished = isWished(button.dataset.wishSlug);
+      // The art frame gets the starry sky of a wished card (the sky's markup is already in the page).
+      button.closest?.(".card-page-detail")?.classList.toggle("is-wished", wished);
+      if (!wished) clearNote(button);
       button.setAttribute("aria-pressed", String(wished));
       button.setAttribute("aria-label", label(button.dataset.wishName, wished));
       const text = button.querySelector(".detail-wish-label");
@@ -48,6 +83,7 @@
         return;
       }
       if (!wasWished) {
+        burst(button);
         const firstWish = !binder.hintSeen(HINTS.firstWish);
         binder.markHintSeen(HINTS.strip);
         binder.markHintSeen(HINTS.firstWish);
