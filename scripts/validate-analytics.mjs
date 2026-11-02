@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
@@ -56,6 +56,9 @@ const requiredAppEvents = [
   "suggestion_submitted",
   "suggestion_submit_failed",
   "checklist_downloaded",
+  "wishlist_toggled",
+  "wishlist_hint_shown",
+  "wishlist_hint_dismissed",
 ];
 
 await checkChromeStyles();
@@ -70,6 +73,9 @@ for (const path of htmlFiles) {
   if (!pageType || !validPageTypes.has(pageType)) errors.push(`${label}: missing or invalid page type`);
   else pageTypeCounts.set(pageType, (pageTypeCounts.get(pageType) || 0) + 1);
   if (!html.includes(`analytics.js?v=${ASSET_VERSIONS["analytics.js"]}`)) errors.push(`${label}: analytics script is not versioned at v${ASSET_VERSIONS["analytics.js"]}`);
+  // The header's wishlist entry (★ beside ☰ on phones, "Wishlist" in the menu) and the binder.js that feeds its count.
+  if ((html.match(/data-analytics-destination="wishlist"/g) || []).length !== 2 || (html.match(/data-wishlist-count/g) || []).length !== 2) errors.push(`${label}: header wishlist entry (phone ★ and menu link, each with a count) is missing`);
+  if (!html.includes(`binder.js?v=${ASSET_VERSIONS["binder.js"]}`)) errors.push(`${label}: doesn't load binder.js?v=${ASSET_VERSIONS["binder.js"]} (the header's wishlist count needs it)`);
   // The header's phone menu (☰) only opens with site-header.js.
   if (!html.includes(`site-header.js?v=${ASSET_VERSIONS["site-header.js"]}`)) errors.push(`${label}: header menu script is missing or not versioned at v${ASSET_VERSIONS["site-header.js"]}`);
   // The header and footer are styled by site-chrome.css alone (checkChromeStyles), loaded on every page.
@@ -88,8 +94,10 @@ for (const path of htmlFiles) {
     if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
       errors.push(`${label}: shared footer studio-link tracking is missing`);
     }
-    if (!/data-name="BMC-Widget"/.test(footer) || !/data-id="cometakira"/.test(footer) || !/data-color="#F36B9B"/.test(footer)) {
-      errors.push(`${label}: Buy Me a Coffee widget is missing or off-brand`);
+    // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show, so it's off for now
+    // while its new home is decided (#201).
+    if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
+      errors.push(`${label}: loads the floating Buy Me a Coffee widget, which is off until #201 decides where the coffee link lives`);
     }
     if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
       errors.push(`${label}: fan-made copyright disclaimer is missing`);
@@ -147,7 +155,18 @@ checkAppCardIdentity(appSource);
 checkRarityGroups(appSource);
 checkChecklistDownloads(appSource);
 checkAppCardSlugs(appSource);
-checkBinder(await readFile(join(DOCS_DIR, "binder.js"), "utf8"));
+const binderSource = await readFile(join(DOCS_DIR, "binder.js"), "utf8");
+checkBinder(binderSource);
+checkWishlistStar(appSource, binderSource);
+const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
+checkCardPageWish(cardPageSource, binderSource);
+checkWishlistUnsaved(appSource, cardPageSource, binderSource);
+// card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
+for (const name of ["strip", "firstWish"]) {
+  const inApp = appSource.match(new RegExp(`WISHLIST_HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
+  const inCardPage = cardPageSource.match(new RegExp(`HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
+  if (!inApp || inApp !== inCardPage) errors.push(`docs/card-page.js: hint ${name} is "${inCardPage}" but app.js uses "${inApp}"`);
+}
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -365,12 +384,28 @@ function checkCardSlugs(html, label, path) {
   if (classesOnPage(html).has("card-page-detail")) {
     const pageSlug = relative(join(DOCS_DIR, "cards"), path).split(/[\\/]/)[0];
     if (!new RegExp(`card-page-detail"[^>]*data-card-slug="${pageSlug}"`).test(html)) errors.push(`${label}: the card page's data-card-slug isn't its own address (${pageSlug})`);
+    // "Add to wishlist" (#119): one per card page, for this card, and card-page.js to run it (the lightbox uses app.js).
+    const wishButtons = [...html.matchAll(/<button class="detail-wish"[^>]*data-wish-slug="([^"]*)"/g)].map(([, slug]) => slug);
+    if (wishButtons.length !== 1 || wishButtons[0] !== pageSlug) errors.push(`${label}: needs exactly one "Add to wishlist" button for ${pageSlug}, found ${JSON.stringify(wishButtons)}`);
+    // The art frame's starry sky must be the one app.js draws on tiles (the lightbox shows this same markup).
+    if (!html.includes(`<div class="detail-image-frame">\n            ${appWishSky()}`)) errors.push(`${label}: the art frame's wish sky is missing or differs from renderWishSky() in docs/app.js`);
+    if (!html.includes(`card-page.js?v=${ASSET_VERSIONS["card-page.js"]}`)) errors.push(`${label}: doesn't load card-page.js?v=${ASSET_VERSIONS["card-page.js"]} (its wishlist button needs it)`);
   }
   if (/data-card-slug="/.test(html)) {
     const binderAt = html.indexOf(`binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
     if (binderAt === -1) errors.push(`${label}: shows cards but doesn't load binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
     else if (html.includes("app.js?v=") && html.indexOf("app.js?v=") < binderAt) errors.push(`${label}: loads app.js before binder.js`);
   }
+}
+
+// app.js's wish sky, worked out once (pages are checked before the rest of this file's setup runs).
+function appWishSky() {
+  if (appWishSky.markup === undefined) {
+    const app = loadApp(readFileSync(join(DOCS_DIR, "app.js"), "utf8"));
+    app.context.window.sleepyBinder = {};
+    appWishSky.markup = app.context.renderWishSky();
+  }
+  return appWishSky.markup;
 }
 
 function classesOnPage(html) {
@@ -384,6 +419,196 @@ function checkAppCardSlugs(appSource) {
   const tile = app.context.renderCard(card);
   if (!tile.includes(`data-card-slug="${slugByIdentity.get(getCardIdentity(browserCards[0]))}"`)) errors.push("docs/app.js: renderCard's .card-tile has no data-card-slug (the binder needs it)");
   if (!/cardDetailDialog\.dataset\.cardSlug = card\.slug/.test(appSource)) errors.push("docs/app.js: the card lightbox no longer sets data-card-slug on #cardDetailDialog");
+}
+
+// The wishlist star (#119), run through app.js with the real binder.js: tiles draw the star in the right state,
+// toggling saves and offers Undo on removal, and the analytics event never says which card it was.
+function checkWishlistStar(appSource, binderSource) {
+  const fail = (message) => errors.push(`docs/app.js (wishlist): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const store = new Map();
+    const listeners = new Map();
+    Object.assign(app.context.window, {
+      localStorage: { getItem: (key) => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+    });
+    app.context.CustomEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
+    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const toasts = [];
+    app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options })");
+    app.context.__toasts = toasts;
+    const card = app.context.normalizeCard(browserCards[0]);
+    const slug = slugByIdentity.get(getCardIdentity(browserCards[0]));
+    if (!/class="wish-toggle"[^>]*aria-pressed="false"/.test(app.context.renderCard(card))) fail("a tile doesn't draw an unpressed star");
+    if (/<article[^>]*role="button"/.test(app.context.renderCard(card))) fail("the tile is a button again, so the star would be a button inside a button");
+    const button = { dataset: { wishSlug: slug, wishName: card.name } };
+    app.context.toggleWish(button);
+    if (!app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star doesn't save the card");
+    // The first wish ever gets the longer, explaining message; later wishes the short one.
+    if (!/saved on this device/i.test(toasts.at(-1)?.message || "")) fail(`the first wish should explain where the wishlist is saved, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
+    if (!app.context.window.sleepyBinder.hintSeen("wishlist_first_wish")) fail("the first-wish message isn't remembered, so it would show every time");
+    const tile = app.context.renderCard(card);
+    if (!/class="card-tile is-wished"/.test(tile) || !/aria-pressed="true"/.test(tile)) fail("a wished card's tile isn't drawn wished (starry frame, pressed star)");
+    if (!/class="wish-sky"/.test(tile)) fail("a tile doesn't draw the twinkling sky its frame shows when wished");
+    app.context.toggleWish(button);
+    if (app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star again doesn't remove the card");
+    const undo = toasts.at(-1)?.options?.onAction;
+    if (!undo) fail("removing a card doesn't offer Undo");
+    else {
+      undo();
+      if (!app.context.window.sleepyBinder.has("wished", slug)) fail("Undo doesn't put the card back");
+    }
+    // Remove and wish again: a later wish shows the short message.
+    app.context.toggleWish(button);
+    app.context.toggleWish(button);
+    if (!/^Added to your wishlist · /.test(toasts.at(-1)?.message || "")) fail(`a later wish should show the short message, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
+    // A card already marked owned can't be wished for: no success message, no burst, no event (review on #200).
+    app.context.window.sleepyBinder.add("owned", "owned-card-slug");
+    const before = events.length;
+    app.context.toggleWish({ dataset: { wishSlug: "owned-card-slug", wishName: "Owned Card" } });
+    if (app.context.window.sleepyBinder.has("wished", "owned-card-slug")) fail("an owned card was added to the wishlist");
+    if (events.length !== before) fail("a refused add still sent wishlist_toggled");
+    if (!/already have this card/.test(toasts.at(-1)?.message || "")) fail(`a refused add should say the card is already collected, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
+    const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
+    if (wishEvents.length !== 4) fail(`expected 4 wishlist_toggled events, got ${wishEvents.length}`);
+    for (const { params } of wishEvents) {
+      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
+      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+    }
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// card-page.js runs the card page's "Add to wishlist" button: a click saves, a second removes, the label follows,
+// and the analytics event never says which card it was.
+function checkCardPageWish(source, binderSource) {
+  const fail = (message) => errors.push(`docs/card-page.js: ${message}`);
+  try {
+    const store = new Map();
+    const listeners = new Map();
+    const events = [];
+    const attributes = {};
+    const label = { textContent: "Add to wishlist" };
+    const classList = (initial = []) => {
+      const names = new Set(initial);
+      return { names, add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
+    };
+    const article = { classList: classList() };
+    const status = { textContent: "", classList: classList(["sr-only"]) };
+    let click = null;
+    const button = {
+      dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+      classList: classList(),
+      parentElement: { querySelector: () => status },
+      closest: () => article,
+      setAttribute: (name, value) => { attributes[name] = value; },
+      querySelector: () => label,
+      addEventListener: (type, fn) => { if (type === "click") click = fn; },
+    };
+    const window = {
+      localStorage: { getItem: (key) => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+      sleepyAnalytics: { track: (name, params) => events.push({ name, params }) },
+      setTimeout() {},
+    };
+    const context = vm.createContext({ window, document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
+    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+    vm.runInContext(source, context, { filename: "docs/card-page.js" });
+    if (!click) return fail("doesn't listen for clicks on the wishlist button");
+    click();
+    if (!context.window.sleepyBinder.has("wished", "test-card-slug")) fail("a click doesn't add the card to the wishlist");
+    // A first wish here counts everywhere: the collection's intro strip and first-wish message mustn't show after it.
+    for (const hint of ["wishlist_strip", "wishlist_first_wish"]) {
+      if (!context.window.sleepyBinder.hintSeen(hint)) fail(`a wish made on a card page doesn't mark the "${hint}" hint as seen`);
+    }
+    if (attributes["aria-pressed"] !== "true" || label.textContent !== "On your wishlist") fail("the button doesn't show the card is on the wishlist");
+    if (!article.classList.contains("is-wished")) fail("a wished card's art frame doesn't get its starry sky (.card-page-detail.is-wished)");
+    if (!status.classList.contains("detail-wish-note") || !/saved on this device/i.test(status.textContent)) fail("the first wish doesn't explain where the wishlist is saved");
+    click();
+    if (context.window.sleepyBinder.has("wished", "test-card-slug") || label.textContent !== "Add to wishlist") fail("a second click doesn't remove the card");
+    if (article.classList.contains("is-wished")) fail("a removed card's art frame keeps its starry sky");
+    // Review on #200: the "saved" note mustn't stay once the card is taken off the wishlist.
+    if (status.textContent || status.classList.contains("detail-wish-note") || !status.classList.contains("sr-only")) fail("the first-wish note stays after the card is removed");
+    // A card already marked owned: the click is refused, nothing is tracked, and the button says why.
+    context.window.sleepyBinder.add("owned", "test-card-slug");
+    const before = events.length;
+    click();
+    if (context.window.sleepyBinder.has("wished", "test-card-slug")) fail("an owned card was added to the wishlist");
+    if (events.length !== before) fail("a refused add still sent wishlist_toggled");
+    if (attributes["aria-pressed"] !== "false" || !/already have this card/.test(label.textContent)) fail(`a refused add should leave the button unpressed and say the card is already collected, shows ${JSON.stringify(label.textContent)}`);
+    const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
+    if (wishEvents.length !== 2 || wishEvents.some(({ params }) => params.interaction_source !== "card_page")) fail("should send wishlist_toggled with interaction_source card_page for each click");
+    for (const { params } of wishEvents) {
+      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
+      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+    }
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// Review on #200: when the browser won't save (private modes, full or blocked storage), binder.js keeps wishes for
+// this visit only, so neither the collection nor a card page may say a wish was "saved on this device".
+function checkWishlistUnsaved(appSource, cardPageSource, binderSource) {
+  const blockedStorage = { getItem: () => null, setItem: () => { throw new Error("QuotaExceededError"); } };
+  const fakeWindow = () => {
+    const listeners = new Map();
+    return {
+      localStorage: blockedStorage,
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+      setTimeout() {},
+    };
+  };
+  const FakeEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
+  try {
+    const app = loadApp(appSource);
+    Object.assign(app.context.window, fakeWindow());
+    app.context.CustomEvent = FakeEvent;
+    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+    const toasts = [];
+    app.context.__toasts = toasts;
+    app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options })");
+    const card = app.context.normalizeCard(browserCards[0]);
+    app.context.toggleWish({ dataset: { wishSlug: slugByIdentity.get(getCardIdentity(browserCards[0])), wishName: card.name } });
+    const message = toasts.at(-1)?.message || "";
+    if (/saved on this device/i.test(message) || !/this visit only/i.test(message)) errors.push(`docs/app.js (wishlist): when the browser can't save, a wish must say it's for this visit only, showed ${JSON.stringify(message)}`);
+  } catch (error) {
+    errors.push(`docs/app.js (wishlist, storage blocked): threw ${error.message}`);
+  }
+  try {
+    const classList = (initial = []) => {
+      const names = new Set(initial);
+      return { add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
+    };
+    const status = { textContent: "", classList: classList(["sr-only"]) };
+    let click = null;
+    const button = {
+      dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+      classList: classList(),
+      parentElement: { querySelector: () => status },
+      closest: () => ({ classList: classList() }),
+      setAttribute() {},
+      querySelector: () => ({ textContent: "" }),
+      addEventListener: (type, fn) => { if (type === "click") click = fn; },
+    };
+    const context = vm.createContext({ window: fakeWindow(), document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: FakeEvent });
+    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+    vm.runInContext(cardPageSource, context, { filename: "docs/card-page.js" });
+    click();
+    if (/saved on this device/i.test(status.textContent) || !/this visit only/i.test(status.textContent) || !status.classList.contains("detail-wish-note")) errors.push(`docs/card-page.js: when the browser can't save, a wish must say it's for this visit only, shows ${JSON.stringify(status.textContent)}`);
+  } catch (error) {
+    errors.push(`docs/card-page.js (storage blocked): threw ${error.message}`);
+  }
 }
 
 // Runs docs/binder.js against a fake browser and checks how it saves: the binder must never lose or corrupt
@@ -558,6 +783,17 @@ function checkChecklistDownloads(appSource) {
       expect: { ...collectionEvent, checklist_scope: "filtered_collection" },
     },
     {
+      name: "wishlist",
+      label: "Wishlist",
+      // Two wished cards, plus a search that would match others: the wishlist view downloads only the wished ones.
+      wished: (cards) => [cards[0].slug, cards[2].slug],
+      filters: { wishlist: true },
+      subset: true,
+      expectedCards: (app) => app.context.getFilteredCards(),
+      expect: { ...collectionEvent, checklist_scope: "wishlist" },
+      filename: "sleepy-pokemon-wishlist.csv",
+    },
+    {
       name: "guide",
       label: "Guide",
       body: guideBody,
@@ -576,6 +812,10 @@ function checkChecklistDownloads(appSource) {
     app.context.__cards = browserCards;
     app.context.__filters = testCase.filters || {};
     app.run("state.cards = __cards.map(normalizeCard); Object.assign(state.filters, __filters);");
+    if (testCase.wished) {
+      const wished = new Set(testCase.wished(app.run("state.cards")));
+      app.context.window.sleepyBinder = { has: (list, slug) => list === "wished" && wished.has(slug), count: () => wished.size };
+    }
     if (testCase.guide) app.run("state.guideSelection = { cards: state.cards.slice(0, 2), complete: true };");
     const allCards = app.run("state.cards");
     const expectedNames = testCase.expectedCards(app, allCards).map((card) => card.name || card.pokemon || "");
@@ -604,6 +844,7 @@ function checkChecklistDownloads(appSource) {
       errors.push(`${label} showed ${JSON.stringify(toasts)}, expected "${testCase.label} checklist downloaded (${expectedNames.length} cards)."`);
     }
 
+    if (testCase.filename && app.context.getChecklistContext().filename !== testCase.filename) errors.push(`${label} names its file ${app.context.getChecklistContext().filename}, expected ${testCase.filename}`);
     const event = events.find(({ name }) => name === "checklist_downloaded");
     if (!event) {
       errors.push(`${label} sent no checklist_downloaded event`);

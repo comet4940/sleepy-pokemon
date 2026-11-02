@@ -37,6 +37,7 @@ const CHECKLIST_LABELS = {
   search_results: "Search results",
   filtered_collection: "Filtered",
   guide: "Guide",
+  wishlist: "Wishlist",
 };
 
 const state = {
@@ -57,6 +58,8 @@ const state = {
     artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
+    // The visitor's own wishlist (#119): only their wished cards. Saved in binder.js, so it's per browser.
+    wishlist: false,
   },
   renderToken: 0,
   showAllCards: false,
@@ -273,11 +276,10 @@ function bindEvents() {
     }
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
+  bindWishlist();
   bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
   bind(elements.cardGrid, "click", handleCardGridClick);
-  bind(elements.cardGrid, "keydown", handleCardGridKeydown);
   bind(elements.latestGrid, "click", handleCardGridClick);
-  bind(elements.latestGrid, "keydown", handleCardGridKeydown);
   bind(elements.guideCardList, "click", handleGuideCardClick);
   bind(elements.aboutMain, "click", handleGuideCardClick);
   bind(elements.featuredCard, "click", handleGuideCardClick);
@@ -859,7 +861,7 @@ function trackFilterChange(key, interactionSource) {
   const value = state.filters[key];
   const params = {
     filter_value: getAnalyticsFilterValue(key, value),
-    filter_action: value === "all" || value === "" ? "removed" : "applied",
+    filter_action: value === "all" || value === "" || value === false ? "removed" : "applied",
     result_count: getFilteredCards().length,
     interaction_source: interactionSource,
   };
@@ -880,6 +882,7 @@ function renderCards() {
   updateCollectionHeading(filteredCards.length);
   updateChecklistButton(filteredCards);
   renderActiveFilterControls();
+  renderWishlistHint();
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
   if (state.catalogLoadFailed) {
@@ -892,6 +895,7 @@ function renderCards() {
     return;
   }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
+  describeEmptyState();
   if (elements.searchSuggestionPrompt) {
     elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
   }
@@ -955,6 +959,7 @@ function filterCards(filters) {
       if (filters.language !== "all" && card.language !== filters.language) return false;
       if (filters.artist !== "all" && slugify(card.artist) !== filters.artist) return false;
       if (maxPrice !== null && !(getDisplayPrice(card) > 0 && getDisplayPrice(card) <= maxPrice)) return false;
+      if (filters.wishlist && !isWished(card.slug)) return false;
       return true;
     });
 }
@@ -967,7 +972,8 @@ function hasActiveFilters() {
     || state.filters.rarity !== "all"
     || state.filters.language !== "all"
     || state.filters.artist !== "all"
-    || state.filters.maxPrice,
+    || state.filters.maxPrice
+    || state.filters.wishlist,
   );
 }
 
@@ -980,6 +986,7 @@ function countActiveFilters() {
     state.filters.language !== "all",
     state.filters.artist !== "all",
     Boolean(state.filters.maxPrice),
+    state.filters.wishlist,
   ].filter(Boolean).length;
 }
 
@@ -999,6 +1006,7 @@ function renderActiveFilterControls() {
       }, { once: true });
     }
   }
+  renderWishlistChip();
   if (elements.activeAdvancedFilters) {
     // Artist has no drawer section (over a hundred artists); it's set from an artist link and cleared here.
     const advancedFilters = ["artist", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all");
@@ -1032,7 +1040,8 @@ function renderActiveFilterControls() {
       return chip;
     }));
   }
-  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0;
+  // In the wishlist view alone, its chip's × already does what "Show all" would.
+  if (elements.clearFiltersLink) elements.clearFiltersLink.hidden = countActiveFilters() === 0 || (state.filters.wishlist && countActiveFilters() === 1);
 }
 
 function getFilterLabel(key, value) {
@@ -1071,7 +1080,9 @@ function updateCollectionHeading(resultCount) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     return;
   }
-  if (!active) {
+  if (state.filters.wishlist) {
+    describeWishlistView(resultCount);
+  } else if (!active) {
     elements.collectionTitle.textContent = "All sleepy Pokemon";
     elements.collectionMeta.textContent = `${state.cards.length} cards · zero alarm clocks`;
   } else {
@@ -1102,8 +1113,10 @@ function updateChecklistButton(filteredCards) {
   const checklist = getChecklistContext(filteredCards);
   const { text, ariaLabel } = describeChecklistButton(checklist);
   button.disabled = !checklist.complete || !checklist.cards.length;
+  button.classList.toggle("is-wishlist", checklist.scope === "wishlist");
+  button.hidden = checklist.scope === "wishlist" && !(wishlistStore()?.count("wished"));
   // The collection's button sits beside the card count, so it can be shorter; the aria-label still says what it holds.
-  button.textContent = button.dataset.shortLabel || text;
+  button.textContent = button.dataset.shortLabel ? (checklist.scope === "wishlist" ? "Wishlist" : button.dataset.shortLabel) : text;
   button.setAttribute("aria-label", ariaLabel);
 }
 
@@ -1118,6 +1131,10 @@ function describeChecklistButton(checklist) {
       text: `Download checklist (${count})`,
       ariaLabel: `Download checklist for all ${count} cards in this guide`,
     };
+  }
+  if (checklist.scope === "wishlist") {
+    if (!count) return { text: "Download wishlist (0)", ariaLabel: "No wishlist cards to download" };
+    return { text: `Download wishlist (${count})`, ariaLabel: `Download your wishlist: ${count} ${count === 1 ? "card" : "cards"}` };
   }
   if (!count) return { text: "Download checklist (0)", ariaLabel: "No cards match active filters to download" };
   if (checklist.scope === "full_collection") {
@@ -1168,27 +1185,19 @@ function compareCards(a, b) {
 
 function renderCard(card) {
   return `
-    <article class="card-tile" data-card-id="${escapeAttribute(card.catalogIdentity)}" data-card-slug="${escapeAttribute(card.slug)}" tabindex="0" role="button" aria-label="Open ${escapeAttribute(card.name)} preview">
+    <article class="card-tile${isWished(card.slug) ? " is-wished" : ""}" data-card-id="${escapeAttribute(card.catalogIdentity)}" data-card-slug="${escapeAttribute(card.slug)}">
       <div class="card-image-frame">
         ${card.imageSmall || card.imageLarge
           ? `<img src="${escapeAttribute(card.imageSmall || card.imageLarge)}" alt="${escapeAttribute(`${card.name} card`)}" loading="lazy" decoding="async" />`
           : `<div class="image-fallback">${escapeHtml(card.name)}</div>`}
+        ${renderWishSky()}
       </div>
       <div class="card-body">
-        <div class="card-title-row"><h3>${escapeHtml(card.name)}</h3></div>
+        <div class="card-title-row"><h3><button class="card-open" type="button" aria-label="Open ${escapeAttribute(card.name)} preview">${escapeHtml(card.name)}</button></h3>${renderWishButton(card.slug, card.name)}</div>
         <p class="card-subtitle">${escapeHtml(card.setName)} · ${escapeHtml(card.number)} · ${escapeHtml(card.rarity)}</p>
       </div>
     </article>
   `;
-}
-
-function handleCardGridKeydown(event) {
-  if (event.key !== "Enter" && event.key !== " ") return;
-  const tile = event.target.closest(".card-tile[data-card-id]");
-  if (!tile) return;
-  event.preventDefault();
-  const card = findCardByIdentity(tile.dataset.cardId);
-  if (card) openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
 }
 
 function handleCardGridClick(event) {
@@ -1217,6 +1226,279 @@ function handleGuideCardClick(event) {
   const list = link.closest(".guide-card-list, .about-main");
   const deck = list ? [...new Set([...list.querySelectorAll("a[data-card-id]")].map((item) => item.dataset.cardId))] : [];
   openCardDetail(card, link.dataset.lightboxSource || "guide_page", { deck });
+}
+
+// ---- Wishlist (#119) -----------------------------------------------------------------------------------
+// binder.js stores the wishlist; this draws it. A wished card gets the starry frame (.is-wished) and a filled pink
+// star by its name. Collection and homepage tiles draw their star (renderCard); guide and set cards, written by
+// the generators, get theirs added here. Any change, in this tab or another, updates every star on the page.
+const WISH_STAR_PATH = "M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z";
+const WISHABLE_CARDS = "article.card-tile[data-card-slug], .guide-card[data-card-slug]";
+// A wished card's frame twinkles: tiny stars and three sparkles, all in the frame's padding (never over the art).
+// They only animate on wished cards (CSS), and "reduce motion" stills them.
+const WISH_SPARKLE_PATH = "M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z";
+const WISH_SKY_STARS = [[8, 4, 2.4, 0], [26, 2.5, 1.6, 0.9], [50, 3, 2, 0.4], [74, 2.5, 1.8, 1.4], [93, 6, 2.2, 0.2], [3, 22, 1.8, 1.1], [97, 30, 2, 0.7], [2.5, 48, 2.2, 1.8], [97.5, 62, 1.6, 0.3], [3, 80, 2, 1.3], [96, 88, 2.4, 0.6], [18, 97, 2, 1.6], [44, 97.5, 1.6, 0.1], [70, 97, 2.2, 1], [88, 98, 1.8, 1.9]];
+const WISH_BURST_COLOURS = ["#f36b9b", "#fff7e8", "#c9bcff", "#ffd678", "#f36b9b", "#fff7e8", "#a7e8d4", "#f36b9b"];
+let wishSkyMarkup = "";
+
+function renderWishSky() {
+  if (!wishlistStore()) return "";
+  if (!wishSkyMarkup) {
+    const sparkle = `<svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg>`;
+    const stars = WISH_SKY_STARS.map(([x, y, size, delay]) => `<i style="left:${x}%;top:${y}%;--size:${size}px;--delay:${delay}s;--length:${(2.4 + (delay % 1.2)).toFixed(1)}s"></i>`).join("");
+    wishSkyMarkup = `<span class="wish-sky" aria-hidden="true">${stars}<b class="wish-sparkle is-cream">${sparkle}</b><b class="wish-sparkle is-pink">${sparkle}</b><b class="wish-sparkle is-lavender">${sparkle}</b></span>`;
+  }
+  return wishSkyMarkup;
+}
+
+// A little pop of sparkles from the star when a card is wished.
+// The burst comes from the star itself (on the "Add to wishlist" buttons too, not the middle of the label). In the
+// lightbox it's added inside the dialog, since an open dialog sits above everything else on the page.
+function burstWish(button) {
+  if (typeof button.getBoundingClientRect !== "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  const box = (button.querySelector("svg") || button).getBoundingClientRect();
+  const burst = document.createElement("span");
+  burst.className = "wish-burst";
+  burst.setAttribute("aria-hidden", "true");
+  const x = box.left + box.width / 2;
+  const y = box.top + box.height / 2;
+  burst.style.left = `${x}px`;
+  burst.style.top = `${y}px`;
+  burst.innerHTML = WISH_BURST_COLOURS.map((colour, index) => {
+    const angle = (index / WISH_BURST_COLOURS.length) * Math.PI * 2 - Math.PI / 2;
+    const distance = 30 + (index % 3) * 9;
+    return `<b style="--colour:${colour};--x:${(Math.cos(angle) * distance).toFixed(1)}px;--y:${(Math.sin(angle) * distance).toFixed(1)}px;animation-delay:${(index % 2) * 40}ms"><svg viewBox="0 0 24 24" focusable="false"><path d="${WISH_SPARKLE_PATH}" /></svg></b>`;
+  }).join("");
+  (button.closest("dialog[open]") || document.body).append(burst);
+  // Inside a dialog that's moved or scaled (its opening animation), "fixed" is measured from the dialog: correct it.
+  const placed = burst.getBoundingClientRect();
+  if (Math.abs(placed.left - x) > 1 || Math.abs(placed.top - y) > 1) {
+    burst.style.left = `${2 * x - placed.left}px`;
+    burst.style.top = `${2 * y - placed.top}px`;
+  }
+  window.setTimeout(() => burst.remove(), 900);
+  button.classList.remove("is-popping");
+  void button.offsetWidth;
+  button.classList.add("is-popping");
+}
+
+function wishlistStore() {
+  return window.sleepyBinder || null;
+}
+
+function isWished(slug) {
+  try {
+    return Boolean(wishlistStore()?.has("wished", slug));
+  } catch {
+    return false;
+  }
+}
+
+function wishLabel(name, wished) {
+  return wished ? `Remove ${name} from your wishlist` : `Add ${name} to your wishlist`;
+}
+
+function renderWishButton(slug, name) {
+  if (!wishlistStore()) return "";
+  const wished = isWished(slug);
+  return `<button class="wish-toggle" type="button" data-wish-slug="${escapeAttribute(slug)}" data-wish-name="${escapeAttribute(name)}" aria-pressed="${wished}" aria-label="${escapeAttribute(wishLabel(name, wished))}" title="${wished ? "Remove from wishlist" : "Add to wishlist"}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg></button>`;
+}
+
+// Adds the star to cards that don't have one yet and brings every card's state up to date.
+function syncWishlist(root = document) {
+  if (!wishlistStore()) return;
+  root.querySelectorAll(WISHABLE_CARDS).forEach((card) => {
+    const slug = card.dataset.cardSlug;
+    const wished = isWished(slug);
+    card.classList.toggle("is-wished", wished);
+    const frame = card.querySelector(".card-image-frame, .guide-card-image");
+    if (frame && !frame.querySelector(".wish-sky")) frame.insertAdjacentHTML("beforeend", renderWishSky());
+    let button = card.querySelector(".wish-toggle");
+    if (!button) {
+      const title = card.querySelector(".guide-card-copy h2");
+      if (!title) return;
+      title.insertAdjacentHTML("beforeend", renderWishButton(slug, title.textContent.trim()));
+      return;
+    }
+    button.setAttribute("aria-pressed", String(wished));
+    button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
+    button.title = wished ? "Remove from wishlist" : "Add to wishlist";
+  });
+  root.querySelectorAll(".detail-wish").forEach(syncDetailWish);
+}
+
+// The lightbox's (and card page's) "Add to wishlist" / "On your wishlist" button. card-page.js mirrors this.
+// Its art frame gets the same starry sky as a wished tile.
+function syncDetailWish(button) {
+  const wished = isWished(button.dataset.wishSlug);
+  const host = button.closest?.(".card-page-detail, #cardDetailDialog");
+  if (host) {
+    host.classList.toggle("is-wished", wished);
+    const frame = host.querySelector(".detail-image-frame");
+    if (frame && !frame.querySelector(".wish-sky")) frame.insertAdjacentHTML("beforeend", renderWishSky());
+  }
+  button.setAttribute("aria-pressed", String(wished));
+  button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
+  const label = button.querySelector(".detail-wish-label");
+  if (label) label.textContent = wished ? "On your wishlist" : "Add to wishlist";
+}
+
+function bindWishlist() {
+  const store = wishlistStore();
+  if (!store) return;
+  // Capture: handled before the tile's own click, which would open the card.
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest?.(".wish-toggle, .detail-wish");
+    if (!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    toggleWish(button);
+  }, true);
+  store.onChange((change) => {
+    if (state.filters.wishlist && change.type !== "hint") render();
+    syncWishlist();
+    if (change.type === "unavailable") showToast("Your browser couldn't save your wishlist on this device.");
+  });
+  // Back, a restored tab or returning to the window can show a page saved before the latest change.
+  window.addEventListener("pageshow", () => syncWishlist());
+  window.addEventListener("focus", () => syncWishlist());
+  syncWishlist();
+}
+
+function toggleWish(button) {
+  const store = wishlistStore();
+  const slug = button.dataset.wishSlug;
+  const wasWished = store.has("wished", slug);
+  // binder.js only reports success when the wishlist really changed: a card someone already has (owned) can't be
+  // wished for. Nothing below runs, or is tracked, unless it did.
+  const changed = wasWished ? store.remove("wished", slug) : store.add("wished", slug);
+  if (!changed) {
+    syncWishlist();
+    showToast(!wasWished && store.has("owned", slug)
+      ? "You already have this card, so it's not added to your wishlist."
+      : "Couldn't update your wishlist. Please try again.");
+    return;
+  }
+  const count = store.count("wished");
+  if (wasWished) {
+    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
+  } else {
+    burstWish(button);
+    dismissWishlistHint("first_wish", button);
+    // The browser won't let the site save (private modes, full or blocked storage): binder.js keeps the wishlist
+    // for this visit only, so never say it's saved (review on #200).
+    if (!store.isPersistent()) {
+      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500 });
+    } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
+      store.markHintSeen(WISHLIST_HINTS.firstWish);
+      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500 });
+    } else {
+      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+    }
+  }
+  // Which card it was stays private: never send card details with wishlist events.
+  const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
+  trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
+}
+
+// One-time onboarding (#119), remembered in binder.js: the collection's strip above the grid until it's dismissed
+// or the first wish is made, and a longer message for that first wish.
+const WISHLIST_HINTS = { strip: "wishlist_strip", firstWish: "wishlist_first_wish" };
+
+function renderWishlistHint() {
+  const store = wishlistStore();
+  const existing = document.querySelector(".wishlist-hint");
+  const show = Boolean(elements.cardGrid && store && !state.catalogLoadFailed && state.cards.length && !state.filters.wishlist && !store.hintSeen(WISHLIST_HINTS.strip));
+  if (!show) {
+    existing?.remove();
+    return;
+  }
+  if (existing) return;
+  const hint = document.createElement("aside");
+  hint.className = "wishlist-hint";
+  hint.setAttribute("aria-label", "About your wishlist");
+  hint.innerHTML = `<svg class="wishlist-hint-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg>
+    <p class="wishlist-hint-text"><strong>See a sleepy card you love?</strong> Tap the star to add it to your wishlist, then download it anytime.</p>
+    <p class="wishlist-hint-note">Saved on this device · <a href="../about/#wishlist" data-analytics-event="navigation_clicked" data-analytics-source="wishlist_hint" data-analytics-destination="about">How it works</a></p>
+    <button class="wishlist-hint-close" type="button">Got it</button>`;
+  hint.querySelector(".wishlist-hint-close").addEventListener("click", () => dismissWishlistHint("got_it"));
+  elements.cardGrid.before(hint);
+  trackEvent("wishlist_hint_shown", { interaction_source: "collection_strip" });
+}
+
+function dismissWishlistHint(method, keepInPlace) {
+  const store = wishlistStore();
+  if (!store || store.hintSeen(WISHLIST_HINTS.strip)) return;
+  store.markHintSeen(WISHLIST_HINTS.strip);
+  const hint = document.querySelector(".wishlist-hint");
+  if (!hint) return;
+  // The strip sits above the cards: when a wish removes it, keep the star just tapped where it was. Some browsers
+  // adjust the scroll for removed content themselves (scroll anchoring) and some don't, so measure, then correct.
+  const before = keepInPlace?.getBoundingClientRect?.().top;
+  hint.remove();
+  if (before !== undefined) {
+    const shift = keepInPlace.getBoundingClientRect().top - before;
+    if (Math.abs(shift) > 1) window.scrollBy(0, shift);
+  }
+  trackEvent("wishlist_hint_dismissed", { interaction_source: "collection_strip", dismiss_method: method });
+}
+
+// The wishlist view's chip, first in the filter row: "★ Wishlist ×". Tapping × leaves the view.
+function renderWishlistChip() {
+  const row = elements.openFiltersButton?.parentElement;
+  if (!row) return;
+  let chip = row.querySelector(".wishlist-chip");
+  if (!state.filters.wishlist) {
+    chip?.remove();
+    return;
+  }
+  if (chip) return;
+  chip = document.createElement("button");
+  chip.type = "button";
+  chip.className = "mood-chip wishlist-chip is-active";
+  chip.setAttribute("aria-label", "Leave your wishlist and show all cards");
+  chip.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg>Wishlist`;
+  chip.addEventListener("click", () => {
+    state.filters.wishlist = false;
+    state.showAllCards = hasActiveFilters();
+    markHistoryStep();
+    render();
+    trackFilterChange("wishlist", "active_filter_chip");
+  });
+  elements.openFiltersButton?.after(chip);
+}
+
+// "6 cards on your wishlist · about $85", and the other filters' names when some are on.
+function describeWishlistView(resultCount) {
+  const wishedCount = wishlistStore()?.count("wished") || 0;
+  const filtered = getFilteredCards();
+  const total = filtered.reduce((sum, card) => sum + (getDisplayPrice(card) || 0), 0);
+  elements.collectionTitle.textContent = "Your wishlist";
+  const others = hasActiveFilters() && countActiveFilters() > 1;
+  if (!wishedCount) {
+    elements.collectionMeta.textContent = "Your wishlist is empty";
+    return;
+  }
+  const count = others ? `${resultCount} of ${wishedCount} on your wishlist` : `${resultCount} on your wishlist`;
+  const price = total > 0 ? Object.assign(document.createElement("span"), { className: "collection-meta-names", textContent: ` · about ${total >= 10 ? `$${Math.round(total).toLocaleString("en-US")}` : formatCurrency(total)}` }) : "";
+  elements.collectionMeta.replaceChildren(count, price);
+}
+
+let defaultEmptyState = null;
+function describeEmptyState() {
+  if (!elements.emptyState) return;
+  const title = elements.emptyState.querySelector("h3");
+  const text = elements.emptyState.querySelector("p");
+  defaultEmptyState ||= { title: title.textContent, text: text.textContent, action: elements.clearCollectionButton?.textContent };
+  const noWishes = state.filters.wishlist && !(wishlistStore()?.count("wished"));
+  elements.emptyState.classList.toggle("is-wishlist-empty", noWishes);
+  title.textContent = noWishes ? "No wishes yet" : defaultEmptyState.title;
+  text.textContent = noWishes ? "See a sleepy card you love? Tap the star next to its name and it lands here, ready to download as a list. Your wishlist is saved on this device only." : defaultEmptyState.text;
+  if (elements.clearCollectionButton) {
+    elements.clearCollectionButton.textContent = noWishes ? `Browse all ${state.cards.length} sleepers` : defaultEmptyState.action;
+    if (noWishes) elements.clearCollectionButton.hidden = false;
+  }
+  if (noWishes && elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
 }
 
 function findCardByIdentity(cardId) {
@@ -1268,6 +1550,7 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
 function showCardDetail(card) {
   // The binder (binder.js) finds the open card by its slug, like every other card element.
   elements.cardDetailDialog.dataset.cardSlug = card.slug;
+  elements.cardDetailDialog.classList.toggle("is-wished", isWished(card.slug));
   // The lightbox shows the card page's own details (see loadCardPage), so features live in one place: the card
   // page generator. Until that arrives (usually instantly, as tapping a card starts loading it) or if it can't
   // load, show the essentials from the catalog.
@@ -1280,6 +1563,7 @@ function showCardDetail(card) {
       return;
     }
     elements.detailScroll.replaceChildren(details.cloneNode(true));
+    syncWishlist(elements.detailScroll);
     const priceRow = elements.detailScroll.querySelector(".detail-price-row");
     if (priceRow) priceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
   });
@@ -1512,7 +1796,7 @@ function getMoodLabel(moodSlug) {
 // Keep ?mood= in the collection URL matching the active mood, so a reload or shared link shows the same cards.
 // The collection URL carries every active filter, so shared links, reloads and back/forward show the same view.
 // e.g. /collection/?q=pikachu&mood=belly-up&rarity=promo&set=neo-destiny&language=japanese&artist=sui&maxPrice=10&sort=price-low
-const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "artist", "maxPrice", "sort"];
+const URL_FILTER_KEYS = ["q", "mood", "rarity", "set", "language", "artist", "maxPrice", "sort", "wishlist"];
 
 function getFilterUrlParams(filters) {
   const params = [];
@@ -1524,6 +1808,7 @@ function getFilterUrlParams(filters) {
   if (filters.artist !== "all") params.push(["artist", filters.artist]);
   if (filters.maxPrice) params.push(["maxPrice", filters.maxPrice]);
   if (filters.sort !== PUBLIC_DEFAULT_SORT) params.push(["sort", filters.sort]);
+  if (filters.wishlist) params.push(["wishlist", "1"]);
   return params;
 }
 
@@ -1552,7 +1837,7 @@ function markHistoryStep() {
 // Reads filters from the URL once cards are loaded; unknown values fall back to "all".
 function readUrlFilters() {
   const params = new URLSearchParams(window.location.search);
-  const filters = { mood: "all", rarity: "all", set: "all", language: "all", artist: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT };
+  const filters = { mood: "all", rarity: "all", set: "all", language: "all", artist: "all", maxPrice: "", sort: PUBLIC_DEFAULT_SORT, wishlist: false };
   const mood = slugify(params.get("mood"));
   // Old links used ?mood=under-5 for what is now the Price filter.
   if (mood === "under-5") filters.maxPrice = "5";
@@ -1568,6 +1853,8 @@ function readUrlFilters() {
   if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
   const sort = params.get("sort");
   if (SORT_OPTIONS.some((option) => option.value === sort)) filters.sort = sort;
+  // The header's Wishlist link opens ?wishlist=1; any value (or none, ?wishlist) counts.
+  filters.wishlist = params.has("wishlist") && params.get("wishlist") !== "0" && Boolean(wishlistStore());
   return filters;
 }
 
@@ -1682,7 +1969,8 @@ function getChecklistContext(filteredCards) {
   }
   const isFiltered = hasActiveFilters();
   const hasSearch = Boolean(state.filters.search);
-  const scope = hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
+  // The wishlist view always downloads as the wishlist, whatever else is filtered.
+  const scope = state.filters.wishlist ? "wishlist" : hasSearch ? "search_results" : isFiltered ? "filtered_collection" : "full_collection";
   return {
     cards: isFiltered ? filteredCards || getFilteredCards() : state.cards,
     complete: true,
@@ -1695,6 +1983,7 @@ function getChecklistContext(filteredCards) {
 }
 
 function getCollectionChecklistFilename() {
+  if (state.filters.wishlist) return "sleepy-pokemon-wishlist.csv";
   if (!hasActiveFilters()) return "sleepy-pokemon-checklist.csv";
 
   const search = state.filters.search.trim();
@@ -1758,6 +2047,7 @@ function clearFilters(interactionSource) {
     artist: "all",
     maxPrice: "",
     sort: PUBLIC_DEFAULT_SORT,
+    wishlist: false,
   };
   state.showAllCards = false;
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
@@ -1793,6 +2083,7 @@ function getCatalogSurface() {
 
 function getAnalyticsFilterValue(key, value) {
   if (key === "maxPrice") return numericOrNull(value) ?? "none";
+  if (key === "wishlist") return value ? "wishlist" : "all";
   return value || "all";
 }
 
@@ -1837,13 +2128,27 @@ function formatCurrency(value) {
   }).format(number);
 }
 
-function showToast(message) {
+// A short message at the bottom of the screen. With { actionLabel, onAction } it also offers a button (Undo) and
+// stays a little longer, so there's time to reach it.
+function showToast(message, { actionLabel, onAction, duration } = {}) {
+  if (!elements.toast) return;
   elements.toast.textContent = message;
+  if (actionLabel && onAction) {
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "toast-action";
+    action.textContent = actionLabel;
+    action.addEventListener("click", () => {
+      elements.toast.classList.add("hidden");
+      onAction();
+    }, { once: true });
+    elements.toast.append(action);
+  }
   elements.toast.classList.remove("hidden");
   window.clearTimeout(showToast.timeout);
   showToast.timeout = window.setTimeout(() => {
     elements.toast.classList.add("hidden");
-  }, 3200);
+  }, duration || (actionLabel ? 6000 : 3200));
 }
 
 function escapeHtml(value) {
