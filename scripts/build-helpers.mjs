@@ -20,13 +20,14 @@ export const ASSET_VERSIONS = {
   "site-chrome.css": 2,
   "home-v3.css": 29,
   "filter-drawer.css": 1,
-  "card-detail-v3.css": 14,
+  "card-detail-v3.css": 15,
   "guides.css": 5,
   "about.css": 4,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 63,
+  "app.js": 64,
   "binder.js": 1,
+  "card-page.js": 1,
   "site-header.js": 2,
 };
 

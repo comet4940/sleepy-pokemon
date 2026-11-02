@@ -1313,6 +1313,16 @@ function syncWishlist(root = document) {
     button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
     button.title = wished ? "Remove from wishlist" : "Add to wishlist";
   });
+  root.querySelectorAll(".detail-wish").forEach(syncDetailWish);
+}
+
+// The lightbox's (and card page's) "Add to wishlist" / "On your wishlist" button. card-page.js mirrors this.
+function syncDetailWish(button) {
+  const wished = isWished(button.dataset.wishSlug);
+  button.setAttribute("aria-pressed", String(wished));
+  button.setAttribute("aria-label", wishLabel(button.dataset.wishName, wished));
+  const label = button.querySelector(".detail-wish-label");
+  if (label) label.textContent = wished ? "On your wishlist" : "Add to wishlist";
 }
 
 function bindWishlist() {
@@ -1320,7 +1330,7 @@ function bindWishlist() {
   if (!store) return;
   // Capture: handled before the tile's own click, which would open the card.
   document.addEventListener("click", (event) => {
-    const button = event.target.closest?.(".wish-toggle");
+    const button = event.target.closest?.(".wish-toggle, .detail-wish");
     if (!button) return;
     event.preventDefault();
     event.stopPropagation();
@@ -1351,7 +1361,8 @@ function toggleWish(button) {
     showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
   }
   // Which card it was stays private: never send card details with wishlist events.
-  trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_tile" });
+  const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
+  trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
 }
 
 // The wishlist view's chip, first in the filter row: "★ Wishlist ×". Tapping × leaves the view.
@@ -1473,6 +1484,7 @@ function showCardDetail(card) {
       return;
     }
     elements.detailScroll.replaceChildren(details.cloneNode(true));
+    syncWishlist(elements.detailScroll);
     const priceRow = elements.detailScroll.querySelector(".detail-price-row");
     if (priceRow) priceRow.innerHTML = window.sleepyPrices?.renderRow(card.price, card.setReleaseDate) || "";
   });

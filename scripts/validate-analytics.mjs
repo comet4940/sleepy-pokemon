@@ -154,6 +154,7 @@ checkAppCardSlugs(appSource);
 const binderSource = await readFile(join(DOCS_DIR, "binder.js"), "utf8");
 checkBinder(binderSource);
 checkWishlistStar(appSource, binderSource);
+checkCardPageWish(await readFile(join(DOCS_DIR, "card-page.js"), "utf8"), binderSource);
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -371,6 +372,10 @@ function checkCardSlugs(html, label, path) {
   if (classesOnPage(html).has("card-page-detail")) {
     const pageSlug = relative(join(DOCS_DIR, "cards"), path).split(/[\\/]/)[0];
     if (!new RegExp(`card-page-detail"[^>]*data-card-slug="${pageSlug}"`).test(html)) errors.push(`${label}: the card page's data-card-slug isn't its own address (${pageSlug})`);
+    // "Add to wishlist" (#119): one per card page, for this card, and card-page.js to run it (the lightbox uses app.js).
+    const wishButtons = [...html.matchAll(/<button class="detail-wish"[^>]*data-wish-slug="([^"]*)"/g)].map(([, slug]) => slug);
+    if (wishButtons.length !== 1 || wishButtons[0] !== pageSlug) errors.push(`${label}: needs exactly one "Add to wishlist" button for ${pageSlug}, found ${JSON.stringify(wishButtons)}`);
+    if (!html.includes(`card-page.js?v=${ASSET_VERSIONS["card-page.js"]}`)) errors.push(`${label}: doesn't load card-page.js?v=${ASSET_VERSIONS["card-page.js"]} (its wishlist button needs it)`);
   }
   if (/data-card-slug="/.test(html)) {
     const binderAt = html.indexOf(`binder.js?v=${ASSET_VERSIONS["binder.js"]}`);
@@ -433,6 +438,50 @@ function checkWishlistStar(appSource, binderSource) {
     }
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
     if (wishEvents.length !== 2) fail(`expected 2 wishlist_toggled events, got ${wishEvents.length}`);
+    for (const { params } of wishEvents) {
+      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
+      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+    }
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// card-page.js runs the card page's "Add to wishlist" button: a click saves, a second removes, the label follows,
+// and the analytics event never says which card it was.
+function checkCardPageWish(source, binderSource) {
+  const fail = (message) => errors.push(`docs/card-page.js: ${message}`);
+  try {
+    const store = new Map();
+    const listeners = new Map();
+    const events = [];
+    const attributes = {};
+    const label = { textContent: "Add to wishlist" };
+    let click = null;
+    const button = {
+      dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+      setAttribute: (name, value) => { attributes[name] = value; },
+      querySelector: () => label,
+      addEventListener: (type, fn) => { if (type === "click") click = fn; },
+    };
+    const window = {
+      localStorage: { getItem: (key) => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+      sleepyAnalytics: { track: (name, params) => events.push({ name, params }) },
+    };
+    const context = vm.createContext({ window, document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
+    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+    vm.runInContext(source, context, { filename: "docs/card-page.js" });
+    if (!click) return fail("doesn't listen for clicks on the wishlist button");
+    click();
+    if (!context.window.sleepyBinder.has("wished", "test-card-slug")) fail("a click doesn't add the card to the wishlist");
+    if (attributes["aria-pressed"] !== "true" || label.textContent !== "On your wishlist") fail("the button doesn't show the card is on the wishlist");
+    click();
+    if (context.window.sleepyBinder.has("wished", "test-card-slug") || label.textContent !== "Add to wishlist") fail("a second click doesn't remove the card");
+    const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
+    if (wishEvents.length !== 2 || wishEvents.some(({ params }) => params.interaction_source !== "card_page")) fail("should send wishlist_toggled with interaction_source card_page for each click");
     for (const { params } of wishEvents) {
       const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
       if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);

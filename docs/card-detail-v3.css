@@ -612,3 +612,67 @@ html:has(.card-detail-dialog[open]) {
     animation: none !important;
   }
 }
+
+/* "Add to wishlist" on card pages and in the lightbox (#119). Pink belongs to wishing. */
+.detail-wish-row {
+  margin: 14px 0 4px;
+}
+
+.detail-wish {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 20px 0 16px;
+  border: 1px solid rgba(255, 247, 232, .24);
+  border-radius: 999px;
+  background: rgba(255, 247, 232, .05);
+  color: var(--detail-cream, #fff7e8);
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.detail-wish svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}
+
+.detail-wish path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.detail-wish:hover,
+.detail-wish:focus-visible {
+  border-color: var(--detail-pink, #f36b9b);
+}
+
+.detail-wish:focus-visible {
+  outline: 3px solid rgba(243, 107, 155, .45);
+  outline-offset: 2px;
+}
+
+.detail-wish:active {
+  transform: scale(.97);
+}
+
+.detail-wish[aria-pressed="true"] {
+  border-color: rgba(243, 107, 155, .85);
+  background: rgba(243, 107, 155, .16);
+  box-shadow: 0 0 14px rgba(243, 107, 155, .25);
+}
+
+.detail-wish[aria-pressed="true"] path {
+  fill: var(--detail-pink, #f36b9b);
+  stroke: var(--detail-pink, #f36b9b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-wish { transition: none; }
+}
