@@ -171,6 +171,7 @@ function cacheElements() {
   elements.suggestionCard = document.querySelector("#suggestionCard");
   elements.suggestionReason = document.querySelector("#suggestionReason");
   elements.suggestionNotes = document.querySelector("#suggestionNotes");
+  elements.suggestionEmail = document.querySelector("#suggestionEmail");
   elements.suggestionSuccess = document.querySelector("#suggestionSuccess");
   elements.suggestionDoneButton = document.querySelector("#suggestionDoneButton");
   elements.guideCardList = document.querySelector(".guide-card-list");
@@ -633,6 +634,8 @@ async function handleSuggestionSubmit(event) {
     selection_method: elements.suggestionSelected.hidden ? "manual" : "catalog_lookup",
     lookup_used: state.suggestionLookupUsed,
     has_notes: Boolean(elements.suggestionNotes.value.trim()),
+    // Whether an email was left for a "your card made it" note (#85); never the address itself.
+    has_email: Boolean(elements.suggestionEmail?.value.trim()),
     interaction_source: state.suggestionSource,
   };
   const endpoint = elements.suggestionForm.dataset.emailEndpoint;
