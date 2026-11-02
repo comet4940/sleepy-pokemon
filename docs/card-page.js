@@ -6,6 +6,9 @@
   const buttons = [...document.querySelectorAll(".detail-wish")];
   if (!binder || !buttons.length) return;
 
+  // The same one-time hints app.js uses (WISHLIST_HINTS there): a first wish made here counts everywhere, so the
+  // collection won't show its intro strip or first-wish message afterwards.
+  const HINTS = { strip: "wishlist_strip", firstWish: "wishlist_first_wish" };
   const label = (name, wished) => (wished ? `Remove ${name} from your wishlist` : `Add ${name} to your wishlist`);
   const isWished = (slug) => {
     try {
@@ -43,6 +46,21 @@
         const status = button.parentElement?.querySelector("[data-wish-status]");
         if (status) status.textContent = message === "You already have this card" ? "You already have this card, so it's not added to your wishlist." : `${message}. Please try again.`;
         return;
+      }
+      if (!wasWished) {
+        const firstWish = !binder.hintSeen(HINTS.firstWish);
+        binder.markHintSeen(HINTS.strip);
+        binder.markHintSeen(HINTS.firstWish);
+        // Card pages have no toast: the first wish ever explains itself under the button (and to screen readers).
+        if (firstWish) {
+          const note = "Saved on this device. Find it under Wishlist in the header.";
+          const status = button.parentElement?.querySelector("[data-wish-status]");
+          if (status) {
+            status.textContent = note;
+            status.classList.remove("sr-only");
+            status.classList.add("detail-wish-note");
+          }
+        }
       }
       // Which card it was stays private: never send card details with wishlist events.
       window.sleepyAnalytics?.track("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_page" });

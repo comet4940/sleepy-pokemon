@@ -156,7 +156,14 @@ checkAppCardSlugs(appSource);
 const binderSource = await readFile(join(DOCS_DIR, "binder.js"), "utf8");
 checkBinder(binderSource);
 checkWishlistStar(appSource, binderSource);
-checkCardPageWish(await readFile(join(DOCS_DIR, "card-page.js"), "utf8"), binderSource);
+const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
+checkCardPageWish(cardPageSource, binderSource);
+// card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
+for (const name of ["strip", "firstWish"]) {
+  const inApp = appSource.match(new RegExp(`WISHLIST_HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
+  const inCardPage = cardPageSource.match(new RegExp(`HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
+  if (!inApp || inApp !== inCardPage) errors.push(`docs/card-page.js: hint ${name} is "${inCardPage}" but app.js uses "${inApp}"`);
+}
 if (!analyticsSource.includes("productionHosts")) errors.push("local analytics traffic is not guarded");
 if (!analyticsSource.includes("SLEEPY_ANALYTICS_VERSION")) errors.push("analytics contract version is missing");
 
@@ -494,6 +501,10 @@ function checkCardPageWish(source, binderSource) {
     if (!click) return fail("doesn't listen for clicks on the wishlist button");
     click();
     if (!context.window.sleepyBinder.has("wished", "test-card-slug")) fail("a click doesn't add the card to the wishlist");
+    // A first wish here counts everywhere: the collection's intro strip and first-wish message mustn't show after it.
+    for (const hint of ["wishlist_strip", "wishlist_first_wish"]) {
+      if (!context.window.sleepyBinder.hintSeen(hint)) fail(`a wish made on a card page doesn't mark the "${hint}" hint as seen`);
+    }
     if (attributes["aria-pressed"] !== "true" || label.textContent !== "On your wishlist") fail("the button doesn't show the card is on the wishlist");
     click();
     if (context.window.sleepyBinder.has("wished", "test-card-slug") || label.textContent !== "Add to wishlist") fail("a second click doesn't remove the card");

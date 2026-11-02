@@ -676,3 +676,12 @@ html:has(.card-detail-dialog[open]) {
 @media (prefers-reduced-motion: reduce) {
   .detail-wish { transition: none; }
 }
+
+/* A first wish made on a card page explains itself under the button (card pages have no toast). */
+.detail-wish-note {
+  display: block;
+  margin-top: 8px;
+  color: var(--detail-muted, #b8b0c8);
+  font-size: .85rem;
+  line-height: 1.45;
+}
