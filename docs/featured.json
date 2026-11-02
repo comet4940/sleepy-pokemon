@@ -1,5 +1,5 @@
 {
-  "showing": "meowth-me-30th-celebration-144-128",
+  "showing": "mew-crown-zenith-galarian-gallery-gg10-gg70",
   "current": {
     "startsOn": "2026-10-25",
     "cards": [
@@ -22,6 +22,10 @@
     {
       "week": "2026-10-25",
       "card": "meowth-me-30th-celebration-144-128"
+    },
+    {
+      "week": "2026-11-01",
+      "card": "mew-crown-zenith-galarian-gallery-gg10-gg70"
     }
   ]
 }
