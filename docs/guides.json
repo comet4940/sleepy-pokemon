@@ -77,9 +77,9 @@
     "slug": "sleepiest-pikachu-cards",
     "title": "The Sleepiest of Pikachus",
     "eyebrow": "Pikachu field notes",
-    "description": "Every sleepy Pikachu currently in the collection, plus two extremely important cameo appearances. Sometimes Pikachu is the nap. Sometimes Pikachu is the pillow. Both are doing excellent work.",
-    "metaDescription": "Browse six sleepy Pikachu cards and Pikachu cameo cards, including Lost Origin Trainer Gallery, 30th Celebration, Eevee, and Whimsicott.",
-    "updatedAt": "2026-11-02T21:00:00.000Z",
+    "description": "Every sleepy Pikachu currently in the collection, plus one extremely important cameo where Pikachu sneaks a nap into someone else’s card. Pikachu is always doing excellent work.",
+    "metaDescription": "Browse five sleepy Pikachu cards, including Lost Origin Trainer Gallery, 30th Celebration, the 2024 Illustration Contest promo, and a Munna cameo.",
+    "updatedAt": "2026-11-02T21:30:00.000Z",
     "cards": [
       {
         "slug": "pikachu-lost-origin-trainer-gallery-tg05-tg30",
@@ -98,12 +98,8 @@
         "reason": "Not asleep yet, but that eyes-shut, full-body yawn says the nap is minutes away. A fan painting that won the 2024 Illustration Contest, with an attack called Unwind."
       },
       {
-        "slug": "eevee-scarlet-and-violet-promos-173-150",
-        "reason": "Eevee is the official sleeper, but the Pikachu plush tucked beside it has earned full cameo status."
-      },
-      {
-        "slug": "whimsicott-fates-collide-71-124",
-        "reason": "Whimsicott has built a serious pillow nest, including one unmistakably Pikachu-shaped cushion peeking out behind it. It counts."
+        "slug": "munna-unified-minds-88-236",
+        "reason": "Munna is the star, but Pikachu is the one fast asleep, tucked under a flowery quilt with Eevee. Munna eats bad dreams, so this nap is in very good hands."
       }
     ]
   },
