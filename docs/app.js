@@ -878,11 +878,7 @@ function renderCards() {
   const latestCards = getRecentlyAddedCards();
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
   // A polite live region, so screen readers hear the new count after a search or filter change.
-  if (elements.resultCount) elements.resultCount.textContent = describeResultCount(filteredCards.length);
-  updateCollectionHeading(filteredCards.length);
-  updateChecklistButton(filteredCards);
-  renderActiveFilterControls();
-  renderWishlistHint();
+  renderCollectionSummary(filteredCards);
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
   if (state.catalogLoadFailed) {
@@ -914,6 +910,64 @@ function renderCards() {
   };
 
   renderBatch(0);
+}
+
+// Everything about the collection's results except the grid itself: the count line, heading, download button and
+// active filter chips. Shared by renderCards and by removing one card from the wishlist view.
+function renderCollectionSummary(filteredCards) {
+  if (elements.resultCount) elements.resultCount.textContent = describeResultCount(filteredCards.length);
+  updateCollectionHeading(filteredCards.length);
+  updateChecklistButton(filteredCards);
+  renderActiveFilterControls();
+  renderWishlistHint();
+}
+
+// Removing a card inside the wishlist view takes out just its tile (it fades, and the tiles after it slide into
+// place) and updates the counts, instead of redrawing the whole grid, which replayed every tile's fade-in and
+// looked like a page refresh. Anything else (Undo, a change in another tab) still redraws everything.
+function removeWishlistTile(slug) {
+  const tile = elements.cardGrid?.querySelector(`.card-tile[data-card-slug="${slug}"]`);
+  if (!tile || !/^[a-z0-9-]+$/.test(slug)) return render();
+  const filteredCards = getFilteredCards();
+  renderFilters();
+  renderCollectionSummary(filteredCards);
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const token = state.renderToken;
+  const finish = () => {
+    // Undo (or anything else) redrew the grid while the tile was fading: nothing left to do.
+    if (state.renderToken !== token || !tile.isConnected) return;
+    // The tiles after it move up a place: measure them, remove the tile, then slide them from where they were.
+    const following = [];
+    for (let next = tile.nextElementSibling; next; next = next.nextElementSibling) following.push(next);
+    const before = following.map((element) => element.getBoundingClientRect());
+    // Keyboard focus was on its star: move it to the next card (or the one before), not the top of the page.
+    const hadFocus = tile.contains(document.activeElement);
+    const neighbour = following[0] || tile.previousElementSibling;
+    // The browser's scroll anchoring would follow a tile that moves up a place and scroll the page; keep it still.
+    const scrollY = window.scrollY;
+    elements.cardGrid.style.overflowAnchor = "none";
+    tile.remove();
+    if (window.scrollY !== scrollY) window.scrollTo(window.scrollX, scrollY);
+    window.requestAnimationFrame(() => { elements.cardGrid.style.overflowAnchor = ""; });
+    if (hadFocus) (neighbour?.querySelector(".card-open") || elements.emptyState?.querySelector("button, a"))?.focus({ preventScroll: true });
+    if (!reduceMotion) {
+      following.forEach((element, index) => {
+        const after = element.getBoundingClientRect();
+        const dx = before[index].left - after.left;
+        const dy = before[index].top - after.top;
+        if ((dx || dy) && typeof element.animate === "function") {
+          element.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: 260, easing: "ease-out" });
+        }
+      });
+    }
+    const remaining = getFilteredCards().length;
+    elements.emptyState.classList.toggle("hidden", remaining > 0);
+    describeEmptyState();
+    if (hadFocus && !remaining) elements.emptyState?.querySelector("button, a")?.focus({ preventScroll: true });
+  };
+  if (reduceMotion || typeof tile.animate !== "function") return finish();
+  tile.style.pointerEvents = "none";
+  tile.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.92)" }], { duration: 200, easing: "ease-in", fill: "forwards" }).finished.then(finish, finish);
 }
 
 function normalizeSearchText(value) {
@@ -1355,7 +1409,8 @@ function bindWishlist() {
     toggleWish(button);
   }, true);
   store.onChange((change) => {
-    if (state.filters.wishlist && change.type !== "hint") render();
+    if (state.filters.wishlist && change.type === "removed" && change.list === "wished") removeWishlistTile(change.slug);
+    else if (state.filters.wishlist && change.type !== "hint") render();
     syncWishlist();
     if (change.type === "unavailable") showToast("Your browser couldn't save your wishlist on this device.");
   });
