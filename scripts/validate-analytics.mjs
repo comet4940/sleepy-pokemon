@@ -81,6 +81,11 @@ for (const path of htmlFiles) {
   // The header's phone menu (☰) only opens with site-header.js.
   if (!html.includes(`site-header.js?v=${ASSET_VERSIONS["site-header.js"]}`)) errors.push(`${label}: header menu script is missing or not versioned at v${ASSET_VERSIONS["site-header.js"]}`);
   // The header and footer are styled by site-chrome.css alone (checkChromeStyles), loaded on every page.
+  // Site icons (favicon.ico, the SVG and the 180px iOS icon), each at its current version.
+  for (const icon of ["favicon.ico", "assets/favicon.svg", "assets/apple-touch-icon.png"]) {
+    if (!html.includes(`${icon}?v=${ASSET_VERSIONS[icon]}"`)) errors.push(`${label}: site icon ${icon}?v=${ASSET_VERSIONS[icon]} is missing`);
+  }
+  if (/rel="apple-touch-icon"[^>]*sleepy-pokemon\.png/.test(html)) errors.push(`${label}: uses the 2912px banner as its iOS icon; use assets/apple-touch-icon.png`);
   if (!html.includes(`site-chrome.css?v=${ASSET_VERSIONS["site-chrome.css"]}`)) errors.push(`${label}: site-chrome.css is missing or not versioned at v${ASSET_VERSIONS["site-chrome.css"]}`);
   // Price slots stay empty unless prices.js fills them, and each must name a published card.
   const priceSlots = [...html.matchAll(/data-price-for="([^"]*)"/g)].map(([, id]) => id.replaceAll("&amp;", "&").replaceAll("&#39;", "'").replaceAll("&quot;", '"'));
