@@ -22,12 +22,13 @@ export const ASSET_VERSIONS = {
   "filter-drawer.css": 1,
   "card-detail-v3.css": 17,
   "guides.css": 5,
-  "about.css": 4,
+  "about.css": 5,
   "analytics.js": 5,
   "prices.js": 2,
   "app.js": 72,
   "binder.js": 1,
   "card-page.js": 6,
+  "contact.js": 1,
   "site-header.js": 2,
 };
 

@@ -99,12 +99,25 @@ Allowed values:
 
 No lookup query, suggested card text, reason, or notes are sent to GA4.
 
+## Contact
+
+The About page's *Say hi* section opens a *Contact Comet* form (`docs/contact.js`, #209), sent through its own Formspree form (separate from suggestions). Its *or find us on Instagram* link sends `navigation_clicked` (`interaction_source: about_contact`, `destination: instagram`).
+
+| Event | Trigger | Parameters |
+| --- | --- | --- |
+| `contact_opened` | The contact dialog opens | `interaction_source` (`about_page`) |
+| `contact_submitted` | Formspree accepts the message | `interaction_source`, `has_email` (`true` if an email was left for a reply) |
+| `contact_submit_failed` | The message can't be delivered | `interaction_source`, `error_type` (`configuration`, `http`, `network`) |
+
+**Never the message, name or email.** The validator runs `contact.js` and fails if any of them is sent.
+
 ## Creator Links
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `coffee_clicked` | Buy Me a Coffee is selected. **Not sent today:** the floating widget was removed while #201 decides where the coffee link lives | `interaction_source`, `destination`, `destination_path` |
 | `studio_link_clicked` | Semi Serious Labs is selected | `interaction_source`, `destination`, `destination_path` |
+
+`coffee_clicked` is retired: the Buy Me a Coffee widget was removed in #200 and the coffee link was dropped for good (#201, #209). Its old events stay in GA4 history.
 
 ## Collector Checklist Event
 
@@ -207,7 +220,8 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
 | Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions |
-| Do creator links earn attention? | `studio_link_clicked` by page type (and `coffee_clicked` once the coffee link is back, #201) |
+| Do creator links earn attention? | `studio_link_clicked` by page type |
+| Do visitors reach out? | `contact_opened` to `contact_submitted` (share with `has_email = true` shows how many want a reply); `contact_submit_failed` by `error_type` as a diagnostic |
 | Do visitors use the wishlist? | **Adoption:** users with `wishlist_toggled` (`action = added`) ÷ users who viewed the collection. Segment by device and new vs returning users |
 | Does the wishlist lead to a download? **(Headline wishlist measure)** | `checklist_downloaded` with `checklist_scope = wishlist`, and the share of users who added a card and later downloaded their wishlist. `checklist_downloaded` is already a key event, so wishlist downloads need no key event of their own: filter it by `checklist_scope` |
 | Do people come back to their wishlist? | `navigation_clicked` with `destination = wishlist` (the header entry), especially by returning users |
@@ -231,7 +245,7 @@ Use the production HTTPS site with GA4 DebugView, or begin a local preview sessi
 6. Open cards from Recently Added, collection results, random sleeper, and a guide; verify `interaction_source`.
 7. Open each suggestion entry point, test successful/no-result/error lookups, select/remove a card, and test successful and failed submissions.
 8. Open guides from the directory and card lightbox field notes.
-9. Click the footer Semi Serious Labs link (the coffee link is off for now, #201).
+9. Click the footer Semi Serious Labs link. On About, open *Contact Comet*, send a test message, and check `contact_opened` and `contact_submitted` arrive with no message content.
 10. Confirm guide pages do not emit `catalog_loaded`.
 
 ## Automatic GA4 Events
@@ -240,4 +254,4 @@ Use the production HTTPS site with GA4 DebugView, or begin a local preview sessi
 
 - `page_view` now means a real page load. **Views before and after 2026-11-01 aren't comparable**; compare active users or sessions across that date instead.
 - Keep that box unticked. Cards seen in the lightbox are counted by `card_opened` and `card_navigated`, and filter changes by `filter_changed`.
-- The other enhanced measurement events stay on: `scroll`, `click` (outbound links), `view_search_results` (`?q=` loads), `form_start`, `form_submit`, video and `file_download`. They're broad signals and must not be treated as feature usage or conversions; the site's own events (`search_results_viewed`, `coffee_clicked`, `studio_link_clicked`, `checklist_downloaded`) are the ones to use.
+- The other enhanced measurement events stay on: `scroll`, `click` (outbound links), `view_search_results` (`?q=` loads), `form_start`, `form_submit`, video and `file_download`. They're broad signals and must not be treated as feature usage or conversions; the site's own events (`search_results_viewed`, `studio_link_clicked`, `contact_submitted`, `checklist_downloaded`) are the ones to use.
