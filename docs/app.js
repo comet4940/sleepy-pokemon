@@ -348,6 +348,9 @@ function handleHeaderSearchSubmit(event) {
     if (previousQuery) clearSearchFilter("global_header");
     return;
   }
+  // A header search looks across every card, so it drops the drawer filters (not the wishlist view or the sort).
+  // Counted for search_results_viewed, so GA4 sees the filters were dropped (#154).
+  const clearedFilterCount = ["mood", "set", "rarity", "language", "artist"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   state.filters = {
     ...state.filters,
     search: query,
@@ -368,6 +371,7 @@ function handleHeaderSearchSubmit(event) {
       interaction_source: "global_header",
       query_length: query.length,
       result_count: getFilteredCards().length,
+      cleared_filter_count: clearedFilterCount,
     });
   }
 }
@@ -2125,6 +2129,8 @@ function clearFilters(interactionSource) {
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   markHistoryStep();
   render();
+  // Only a real clear is tracked: Reset with nothing on (or only the sort changed) isn't one (#154).
+  if (!activeFilterCount) return;
   trackEvent("filters_cleared", {
     interaction_source: interactionSource,
     active_filter_count: activeFilterCount,
