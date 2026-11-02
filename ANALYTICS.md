@@ -206,8 +206,9 @@ GA4 reports and explorations can break events down by a parameter only from the 
 | Registered | Custom metrics |
 | --- | --- |
 | 2026-11-02 | `card_count` (unit: Standard). Two events send it, so always filter by event name: on `checklist_downloaded` it's the cards in the downloaded checklist; on `catalog_loaded` it's the catalog size |
+| 2026-11-02 | `cleared_filter_count` (unit: Standard), on `search_results_viewed`: how many drawer filters a header search turned off (#154) |
 
-**Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`, `cleared_filter_count`. Update these tables when anything is registered or archived in GA4.
+**Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`. Update these tables when anything is registered or archived in GA4.
 
 Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` as GA4 key events (conversions representing contribution, collector intent, and a collector refining the collection with the filter drawer). Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
 
