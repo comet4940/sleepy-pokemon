@@ -1392,7 +1392,7 @@ function toggleWish(button) {
       showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500, link });
     } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
       store.markHintSeen(WISHLIST_HINTS.firstWish);
-      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500, link });
+      showToast("Added to your wishlist ★ It's saved on this device.", { duration: 6500, link });
     } else {
       showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`, { link });
     }
