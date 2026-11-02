@@ -104,7 +104,7 @@ async function renderFeaturedCard() {
 // "Add to wishlist" on the card page and in the lightbox (which shows this page's details). Written unpressed;
 // card-page.js (card pages) or app.js (the lightbox) sets its state from the visitor's wishlist (#119).
 function renderWishButton(card) {
-  return `<div class="detail-wish-row"><button class="detail-wish" type="button" data-wish-slug="${escapeAttribute(card.slug)}" data-wish-name="${escapeAttribute(card.name || card.pokemon || "this card")}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg><span class="detail-wish-label">Add to wishlist</span></button></div>`;
+  return `<div class="detail-wish-row"><button class="detail-wish" type="button" data-wish-slug="${escapeAttribute(card.slug)}" data-wish-name="${escapeAttribute(card.name || card.pokemon || "this card")}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg><span class="detail-wish-label">Add to wishlist</span></button><span class="sr-only" role="status" aria-live="polite" data-wish-status></span></div>`;
 }
 
 async function syncCollectionIndex(cardList) {

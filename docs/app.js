@@ -1351,8 +1351,16 @@ function toggleWish(button) {
   const store = wishlistStore();
   const slug = button.dataset.wishSlug;
   const wasWished = store.has("wished", slug);
-  if (wasWished) store.remove("wished", slug);
-  else store.add("wished", slug);
+  // binder.js only reports success when the wishlist really changed: a card someone already has (owned) can't be
+  // wished for. Nothing below runs, or is tracked, unless it did.
+  const changed = wasWished ? store.remove("wished", slug) : store.add("wished", slug);
+  if (!changed) {
+    syncWishlist();
+    showToast(!wasWished && store.has("owned", slug)
+      ? "You already have this card, so it's not added to your wishlist."
+      : "Couldn't update your wishlist. Please try again.");
+    return;
+  }
   const count = store.count("wished");
   if (wasWished) {
     showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });

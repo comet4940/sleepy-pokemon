@@ -436,6 +436,13 @@ function checkWishlistStar(appSource, binderSource) {
       undo();
       if (!app.context.window.sleepyBinder.has("wished", slug)) fail("Undo doesn't put the card back");
     }
+    // A card already marked owned can't be wished for: no success message, no burst, no event (review on #200).
+    app.context.window.sleepyBinder.add("owned", "owned-card-slug");
+    const before = events.length;
+    app.context.toggleWish({ dataset: { wishSlug: "owned-card-slug", wishName: "Owned Card" } });
+    if (app.context.window.sleepyBinder.has("wished", "owned-card-slug")) fail("an owned card was added to the wishlist");
+    if (events.length !== before) fail("a refused add still sent wishlist_toggled");
+    if (!/already have this card/.test(toasts.at(-1)?.message || "")) fail(`a refused add should say the card is already collected, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
     if (wishEvents.length !== 2) fail(`expected 2 wishlist_toggled events, got ${wishEvents.length}`);
     for (const { params } of wishEvents) {
@@ -470,6 +477,7 @@ function checkCardPageWish(source, binderSource) {
       removeEventListener() {},
       dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
       sleepyAnalytics: { track: (name, params) => events.push({ name, params }) },
+      setTimeout() {},
     };
     const context = vm.createContext({ window, document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
     vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
@@ -480,6 +488,13 @@ function checkCardPageWish(source, binderSource) {
     if (attributes["aria-pressed"] !== "true" || label.textContent !== "On your wishlist") fail("the button doesn't show the card is on the wishlist");
     click();
     if (context.window.sleepyBinder.has("wished", "test-card-slug") || label.textContent !== "Add to wishlist") fail("a second click doesn't remove the card");
+    // A card already marked owned: the click is refused, nothing is tracked, and the button says why.
+    context.window.sleepyBinder.add("owned", "test-card-slug");
+    const before = events.length;
+    click();
+    if (context.window.sleepyBinder.has("wished", "test-card-slug")) fail("an owned card was added to the wishlist");
+    if (events.length !== before) fail("a refused add still sent wishlist_toggled");
+    if (attributes["aria-pressed"] !== "false" || !/already have this card/.test(label.textContent)) fail(`a refused add should leave the button unpressed and say the card is already collected, shows ${JSON.stringify(label.textContent)}`);
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
     if (wishEvents.length !== 2 || wishEvents.some(({ params }) => params.interaction_source !== "card_page")) fail("should send wishlist_toggled with interaction_source card_page for each click");
     for (const { params } of wishEvents) {

@@ -29,8 +29,21 @@
     button.addEventListener("click", () => {
       const slug = button.dataset.wishSlug;
       const wasWished = isWished(slug);
-      if (wasWished) binder.remove("wished", slug);
-      else binder.add("wished", slug);
+      // binder.js only reports success when the wishlist really changed (a card someone already has can't be
+      // wished for). Card pages have no toast, so the button's label says why for a few seconds.
+      const changed = wasWished ? binder.remove("wished", slug) : binder.add("wished", slug);
+      if (!changed) {
+        sync();
+        const text = button.querySelector(".detail-wish-label");
+        const message = !wasWished && binder.has("owned", slug) ? "You already have this card" : "Couldn't update your wishlist";
+        if (text) {
+          text.textContent = message;
+          window.setTimeout(sync, 3000);
+        }
+        const status = button.parentElement?.querySelector("[data-wish-status]");
+        if (status) status.textContent = message === "You already have this card" ? "You already have this card, so it's not added to your wishlist." : `${message}. Please try again.`;
+        return;
+      }
       // Which card it was stays private: never send card details with wishlist events.
       window.sleepyAnalytics?.track("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_page" });
     });
