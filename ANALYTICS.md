@@ -200,13 +200,12 @@ GA4 reports and explorations can break events down by a parameter only from the 
 | 2026-10-22 | `filter_name`, `filter_value` |
 | 2026-10-23 | `close_method` |
 | 2026-10-26 | `interaction_source` |
+| 2026-11-02 | `has_email` (contact and suggestion submissions; "Do visitors reach out?" and "Does the community contribute?" split by it) |
 | 2026-11-02 | `action`, `dismiss_method` (#202); `page_type`, `destination`, `checklist_scope`, `guide_slug`, `filter_action`, `lookup_outcome`, `error_type`, `card_name`, `download_surface`, `had_active_filters`, `direction`, `lookup_type`, `selection_method` |
 
 | Registered | Custom metrics |
 | --- | --- |
 | 2026-11-02 | `card_count` (unit: Standard). Two events send it, so always filter by event name: on `checklist_downloaded` it's the cards in the downloaded checklist; on `catalog_loaded` it's the catalog size |
-
-**Not registered yet, but needed:** `has_email`. "Do visitors reach out?" and "Does the community contribute?" split submissions by it, so register it (event-scoped) before relying on those splits in GA4; until then, and for anything sent before it's registered, use BigQuery. Move it into the table above once it's registered.
 
 **Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`. Update these tables when anything is registered or archived in GA4.
 
