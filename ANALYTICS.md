@@ -167,7 +167,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `changes_count`
 - `close_method`
 - `dismiss_method`
-- `action` (`wishlist_toggled`: `added` or `removed`; registered 2026-11-02, so GA4 reports split adds from removes only from then; BigQuery has it from the start, #202)
+- `action` (`wishlist_toggled`: `added` or `removed`)
 - `direction`
 - `had_active_filters`
 - `lookup_type`
@@ -176,6 +176,23 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `error_type`
 
 Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, and `active_filter_count`. Events no longer carry `price_market` (removed in #152: the site doesn't measure sales, and prices aren't in the page HTML anymore); archive the custom metric in GA4 if it was registered.
+
+### Registered in GA4 (as of 2026-11-02)
+
+GA4 reports and explorations can break events down by a parameter only from the day it was registered. Earlier events still have it in the BigQuery export, which keeps every parameter. When comparing periods in GA4, start after the registration date.
+
+| Registered | Custom dimensions (event-scoped) |
+| --- | --- |
+| 2026-10-22 | `filter_name`, `filter_value` |
+| 2026-10-23 | `close_method` |
+| 2026-10-26 | `interaction_source` |
+| 2026-11-02 | `action`, `dismiss_method` (#202); `page_type`, `destination`, `checklist_scope`, `guide_slug`, `filter_action`, `lookup_outcome`, `error_type`, `card_name`, `download_surface`, `had_active_filters`, `direction`, `lookup_type`, `selection_method` |
+
+| Registered | Custom metrics |
+| --- | --- |
+| 2026-11-02 | `card_count` (unit: Standard). Two events send it, so always filter by event name: on `checklist_downloaded` it's the cards in the downloaded checklist; on `catalog_loaded` it's the catalog size |
+
+**Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`. Update these tables when anything is registered or archived in GA4.
 
 Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` as GA4 key events (conversions representing contribution, collector intent, and a collector refining the collection with the filter drawer). Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
 
@@ -200,7 +217,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
 
-**Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. `action` was registered as a custom dimension on 2026-11-02 (#202), so GA4 splits adds from removes only from then; for the first hours, use the BigQuery export, which has every parameter.
+**Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. `action`, `dismiss_method`, `checklist_scope` and `destination` were registered on 2026-11-02 (see "Registered in GA4"), so GA4 breaks wishlist events down only from then; for the first hours, use the BigQuery export, which has every parameter.
 
 ## Verification Checklist
 
