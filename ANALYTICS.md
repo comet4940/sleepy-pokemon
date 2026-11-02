@@ -87,8 +87,8 @@ Search text is intentionally excluded. `query_length` is the only query-level pa
 | `suggestion_lookup_completed` | An external card lookup returns or fails | `lookup_type`, `lookup_outcome`, `result_count` |
 | `suggestion_card_selected` | A lookup result is selected | card parameters |
 | `suggestion_card_removed` | A selected lookup result is removed | none beyond shared parameters |
-| `suggestion_submitted` | Formspree accepts the suggestion | `selection_method`, `lookup_used`, `has_notes`, `interaction_source` (where the form was opened from, as on `suggestion_opened`) |
-| `suggestion_submit_failed` | Submission cannot be delivered | `selection_method`, `lookup_used`, `has_notes`, `interaction_source`, `error_type` |
+| `suggestion_submitted` | Formspree accepts the suggestion | `selection_method`, `lookup_used`, `has_notes`, `has_email` (`true` if an email was left for a "your card made it" note, #85), `interaction_source` (where the form was opened from, as on `suggestion_opened`) |
+| `suggestion_submit_failed` | Submission cannot be delivered | `selection_method`, `lookup_used`, `has_notes`, `has_email`, `interaction_source`, `error_type` |
 
 Allowed values:
 
@@ -97,7 +97,7 @@ Allowed values:
 - `selection_method`: `catalog_lookup`, `manual`
 - `error_type`: `configuration`, `http`, `network`
 
-No lookup query, suggested card text, reason, or notes are sent to GA4.
+No lookup query, suggested card text, reason, notes, or email address are sent to GA4: `has_email` only says whether one was left.
 
 ## Contact
 
@@ -219,7 +219,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | Is the filter drawer used? | Adoption: users with `filters_opened` ÷ collection page-view users. Success: `filters_modal_applied` ÷ (`filters_modal_applied` + `filters_modal_bounced`), with `close_method = show_results` as the clearest signal. Drawer vs chip row: `filter_changed` by `interaction_source`. Segment by device |
 | How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
-| Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions |
+| Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions. The share of `suggestion_submitted` with `has_email = true` shows how many contributors want to hear back (#85) |
 | Do creator links earn attention? | `studio_link_clicked` by page type |
 | Do visitors reach out? | `contact_opened` to `contact_submitted` (share with `has_email = true` shows how many want a reply); `contact_submit_failed` by `error_type` as a diagnostic |
 | Do visitors use the wishlist? | **Adoption:** users with `wishlist_toggled` (`action = added`) ÷ users who viewed the collection. Segment by device and new vs returning users |

@@ -118,6 +118,12 @@ for (const path of htmlFiles) {
   } else if (/id="contactForm"/.test(html)) {
     errors.push(`${label}: has the Contact Comet form, which belongs on About only`);
   }
+  // The suggestion form's email is optional (#85): a type="email" field named "email", never required.
+  if (/id="suggestionForm"/.test(html)) {
+    const emailField = html.match(/<input[^>]*id="suggestionEmail"[^>]*>/)?.[0];
+    if (!emailField || !/name="email"/.test(emailField) || !/type="email"/.test(emailField)) errors.push(`${label}: the suggestion form has no optional email field (name="email", type="email")`);
+    else if (/\brequired\b/.test(emailField)) errors.push(`${label}: the suggestion form's email must stay optional`);
+  }
   if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
@@ -158,6 +164,9 @@ const activeSources = `${appSource}\n${analyticsSource}\n${guideSource}`;
 for (const eventName of legacyEvents) {
   if (activeSources.includes(`"${eventName}"`)) errors.push(`legacy event remains active: ${eventName}`);
 }
+// Suggestions say whether an email was left, never the address (#85).
+if (!/has_email: Boolean\(elements\.suggestionEmail\?\.value\.trim\(\)\)/.test(appSource)) errors.push("docs/app.js: suggestion events should send has_email (whether an email was left, never the address)");
+if (/suggestionEmail\??\.value(?!\.trim\(\)\))/.test(appSource)) errors.push("docs/app.js: the suggestion email's value is used somewhere besides has_email; it must never reach analytics");
 for (const eventName of requiredAppEvents) {
   if (!appSource.includes(`"${eventName}"`)) errors.push(`missing app event: ${eventName}`);
 }
