@@ -190,8 +190,16 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
 | Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions |
 | Do creator links earn attention? | `studio_link_clicked` by page type (and `coffee_clicked` once the coffee link is back, #201) |
+| Do visitors use the wishlist? | **Adoption:** users with `wishlist_toggled` (`action = added`) ÷ users who viewed the collection. Segment by device and new vs returning users |
+| Does the wishlist lead to a download? **(Headline wishlist measure)** | `checklist_downloaded` with `checklist_scope = wishlist`, and the share of users who added a card and later downloaded their wishlist. `checklist_downloaded` is already a key event, so wishlist downloads need no key event of their own: filter it by `checklist_scope` |
+| Do people come back to their wishlist? | `navigation_clicked` with `destination = wishlist` (the header entry), especially by returning users |
+| Does the wishlist onboarding work? | `wishlist_hint_dismissed` by `dismiss_method` (`first_wish` vs `got_it`), and adoption among users with `wishlist_hint_shown` |
+| Where do people wish? | `wishlist_toggled` (`action = added`) by `interaction_source` (`card_tile`, `card_modal`, `card_page`) |
+| Is the wishlist healthy, and did it change anything else? | Removals ÷ adds (`wishlist_toggled` by `action`); overall `checklist_downloaded` and `card_opened`; `suggestion_opened` and `suggestion_submitted`, since *Suggest a card* moved to mint in the same release |
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
+
+**Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. Splitting adds from removes in GA4 needs `action` registered as a custom dimension (#202); until then, use the BigQuery export, which has every parameter.
 
 ## Verification Checklist
 
