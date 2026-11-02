@@ -94,8 +94,10 @@ for (const path of htmlFiles) {
     if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
       errors.push(`${label}: shared footer studio-link tracking is missing`);
     }
-    if (!/data-name="BMC-Widget"/.test(footer) || !/data-id="cometakira"/.test(footer) || !/data-color="#F36B9B"/.test(footer)) {
-      errors.push(`${label}: Buy Me a Coffee widget is missing or off-brand`);
+    // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show, so it's off for now
+    // while its new home is decided (#201).
+    if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
+      errors.push(`${label}: loads the floating Buy Me a Coffee widget, which is off until #201 decides where the coffee link lives`);
     }
     if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
       errors.push(`${label}: fan-made copyright disclaimer is missing`);

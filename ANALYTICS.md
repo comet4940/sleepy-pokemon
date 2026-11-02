@@ -103,7 +103,7 @@ No lookup query, suggested card text, reason, or notes are sent to GA4.
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `coffee_clicked` | Buy Me a Coffee is selected | `interaction_source`, `destination`, `destination_path` |
+| `coffee_clicked` | Buy Me a Coffee is selected. **Not sent today:** the floating widget was removed while #201 decides where the coffee link lives | `interaction_source`, `destination`, `destination_path` |
 | `studio_link_clicked` | Semi Serious Labs is selected | `interaction_source`, `destination`, `destination_path` |
 
 ## Collector Checklist Event
@@ -189,7 +189,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
 | Do guides drive discovery? | `guide_opened`, `guide_page_view`, and `guide_card_selected` followed by `card_opened` |
 | Does the community contribute? | `suggestion_opened` to `suggestion_submitted`, with lookup errors and submission failures as diagnostics. Segment both by `interaction_source` to see which entry point (header pill, search results prompt, shared link) brings suggestions |
-| Do creator links earn attention? | `coffee_clicked` and `studio_link_clicked` by page type |
+| Do creator links earn attention? | `studio_link_clicked` by page type (and `coffee_clicked` once the coffee link is back, #201) |
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
 
@@ -205,7 +205,7 @@ Use the production HTTPS site with GA4 DebugView, or begin a local preview sessi
 6. Open cards from Recently Added, collection results, random sleeper, and a guide; verify `interaction_source`.
 7. Open each suggestion entry point, test successful/no-result/error lookups, select/remove a card, and test successful and failed submissions.
 8. Open guides from the directory and card lightbox field notes.
-9. Click the footer coffee and Semi Serious Labs links.
+9. Click the footer Semi Serious Labs link (the coffee link is off for now, #201).
 10. Confirm guide pages do not emit `catalog_loaded`.
 
 ## Automatic GA4 Events
