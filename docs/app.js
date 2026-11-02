@@ -1397,7 +1397,8 @@ function renderWishlistHint() {
   hint.className = "wishlist-hint";
   hint.setAttribute("aria-label", "About your wishlist");
   hint.innerHTML = `<svg class="wishlist-hint-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${WISH_STAR_PATH}" /></svg>
-    <p><strong>See a sleepy card you love?</strong> Tap the star to add it to your wishlist, then download it anytime. <span class="wishlist-hint-note">Saved on this device · <a href="../about/#wishlist" data-analytics-event="navigation_clicked" data-analytics-source="wishlist_hint" data-analytics-destination="about">How it works</a></span></p>
+    <p class="wishlist-hint-text"><strong>See a sleepy card you love?</strong> Tap the star to add it to your wishlist, then download it anytime.</p>
+    <p class="wishlist-hint-note">Saved on this device · <a href="../about/#wishlist" data-analytics-event="navigation_clicked" data-analytics-source="wishlist_hint" data-analytics-destination="about">How it works</a></p>
     <button class="wishlist-hint-close" type="button">Got it</button>`;
   hint.querySelector(".wishlist-hint-close").addEventListener("click", () => dismissWishlistHint("got_it"));
   elements.cardGrid.before(hint);
