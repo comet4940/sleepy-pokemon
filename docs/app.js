@@ -1403,11 +1403,12 @@ function toggleWish(button) {
 }
 
 // "wishlist" in the wishlist toasts links to the wishlist view (the header's own link, so the path is right on every
-// page). Not inside the wishlist view itself, where it would go nowhere.
+// page). Not inside the wishlist view itself, where it would go nowhere. Resolved against the page's own address:
+// the lightbox changes the address to the card's page, which would send a relative link nowhere (review on #206).
 function wishlistToastLink() {
   if (state.filters?.wishlist) return undefined;
   const href = document.querySelector(".header-wishlist, .menu-wishlist")?.getAttribute("href");
-  return href ? { text: "wishlist", href, source: "wishlist_toast", destination: "wishlist" } : undefined;
+  return href ? { text: "wishlist", href: new URL(href, PAGE_URL).href, source: "wishlist_toast", destination: "wishlist" } : undefined;
 }
 
 // One-time onboarding (#119), remembered in binder.js: the collection's strip above the grid until it's dismissed
@@ -2160,6 +2161,11 @@ function showToast(message, { actionLabel, onAction, duration, link } = {}) {
     text.append(message.slice(0, at), anchor, message.slice(at + link.text.length));
   }
   elements.toast.replaceChildren(text);
+  // An open dialog (the card lightbox, the suggestion form) sits above the rest of the page and makes it inert, so a
+  // toast left in the page can't be seen or tapped (Undo included). Show it inside the dialog instead; back in the
+  // page otherwise (review on #206).
+  const host = document.querySelector("dialog[open]") || document.body;
+  if (elements.toast.parentElement !== host) host.append(elements.toast);
   if (actionLabel && onAction) {
     const action = document.createElement("button");
     action.type = "button";

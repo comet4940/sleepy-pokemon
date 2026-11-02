@@ -473,8 +473,9 @@ function checkWishlistStar(appSource, binderSource) {
     app.context.toggleWish(button);
     app.context.toggleWish(button);
     const link = toasts.at(-1)?.options?.link;
-    if (link?.href !== "../collection/?wishlist=1" || link.text !== "wishlist" || link.source !== "wishlist_toast" || link.destination !== "wishlist" || !toasts.at(-1).message.includes(link.text)) fail(`a wish's toast should link "wishlist" to the wishlist view, got ${JSON.stringify(link)}`);
-    if (toasts.at(-2)?.options?.link?.href !== "../collection/?wishlist=1") fail("the removal toast should link to the wishlist view too");
+    // Resolved against the page's own address (sandbox: /collection/), never the lightbox's /cards/<slug>/ (review on #206).
+    if (link?.href !== "https://www.sleepypokemon.com/collection/?wishlist=1" || link.text !== "wishlist" || link.source !== "wishlist_toast" || link.destination !== "wishlist" || !toasts.at(-1).message.includes(link.text)) fail(`a wish's toast should link "wishlist" to the wishlist view, got ${JSON.stringify(link)}`);
+    if (toasts.at(-2)?.options?.link?.href !== "https://www.sleepypokemon.com/collection/?wishlist=1") fail("the removal toast should link to the wishlist view too");
     app.context.document.querySelector = header;
     // A card already marked owned can't be wished for: no success message, no burst, no event (review on #200).
     app.context.window.sleepyBinder.add("owned", "owned-card-slug");
@@ -697,7 +698,7 @@ function loadApp(appSource, bodyDataset = {}) {
       createElement: () => ({ style: {}, click() {}, remove() {} }),
     },
     window: { setTimeout() {}, location: { href: "https://www.sleepypokemon.com/collection/" } },
-    URL: { createObjectURL: () => "blob:checklist", revokeObjectURL() {} },
+    URL: Object.assign(class extends URL {}, { createObjectURL: () => "blob:checklist", revokeObjectURL() {} }),
     Blob: class {
       constructor(parts) {
         downloads.push(parts.join(""));
