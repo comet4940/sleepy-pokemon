@@ -56,7 +56,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | Event | Trigger | Parameters |
 | --- | --- | --- |
 | `search_submitted` | A non-empty global-header search is submitted | `interaction_source`, `query_length` |
-| `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count` |
+| `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count`, `cleared_filter_count` (header searches on the collection only: how many drawer filters the search turned off, `0` if none; the wishlist view and sort are kept) |
 | `search_cleared` | The active query is removed | `result_count` |
 | `filters_opened` | The filter drawer opens (the **All filters** button on the collection) | `active_filter_count` |
 | `filters_modal_bounced` | The filter drawer is closed without changing any filter or the sort | `close_method`, `had_active_filters`, `active_filter_count` |
@@ -65,7 +65,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `filter_facet_<facet>` | Direct facet event (`mood`, `set`, `rarity`, `language`, `artist`, `maxPrice`, `wishlist`; `pokemon` was retired with the filter drawer). Same data as `filter_changed`, kept for per-filter history from before `filter_name` was registered | `filter_action`, `filter_value`, `result_count`, `interaction_source` |
 | `filter_chip_removed` | An active filter pill is dismissed directly from the collection filter row | `filter_name`, `result_count` |
 | `sort_changed` | Collection order changes in the filter drawer | `filter_name`, `filter_value`, `filter_action`, `result_count`, `interaction_source` |
-| `filters_cleared` | All active collection filters are cleared | `interaction_source`, `active_filter_count`, `result_count` |
+| `filters_cleared` | All active collection filters are cleared. Sent only when at least one filter (search and the wishlist view included) was on; a Reset with nothing on, or with only the sort changed, sends nothing | `interaction_source`, `active_filter_count` (always 1 or more), `result_count` |
 
 Filter `interaction_source` values say where the change was made:
 
@@ -189,7 +189,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `selection_method`
 - `error_type`
 
-Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, and `active_filter_count`. Events no longer carry `price_market` (removed in #152: the site doesn't measure sales, and prices aren't in the page HTML anymore); archive the custom metric in GA4 if it was registered.
+Useful numeric custom metrics are `card_count`, `result_count`, `query_length`, `active_filter_count`, and `cleared_filter_count`. Events no longer carry `price_market` (removed in #152: the site doesn't measure sales, and prices aren't in the page HTML anymore); archive the custom metric in GA4 if it was registered.
 
 ### Registered in GA4 (as of 2026-11-02)
 
@@ -207,7 +207,7 @@ GA4 reports and explorations can break events down by a parameter only from the 
 | --- | --- |
 | 2026-11-02 | `card_count` (unit: Standard). Two events send it, so always filter by event name: on `checklist_downloaded` it's the cards in the downloaded checklist; on `catalog_loaded` it's the catalog size |
 
-**Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`. Update these tables when anything is registered or archived in GA4.
+**Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`, `cleared_filter_count`. Update these tables when anything is registered or archived in GA4.
 
 Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` as GA4 key events (conversions representing contribution, collector intent, and a collector refining the collection with the filter drawer). Routine browsing, search, and outbound links should remain diagnostic events rather than conversions.
 

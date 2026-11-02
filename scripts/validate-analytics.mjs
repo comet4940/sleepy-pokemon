@@ -181,6 +181,7 @@ checkWishlistStar(appSource, binderSource);
 const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
 checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
+checkFilterClearTracking(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
@@ -807,6 +808,42 @@ function loadApp(appSource, bodyDataset = {}) {
     downloads,
     run: (code) => vm.runInContext(code, context),
   };
+}
+
+// #154: a header search on the collection says how many filters it turned off, and a Reset with nothing on
+// sends no filters_cleared.
+function checkFilterClearTracking(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#154): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    app.run(`
+      render = () => {}; markHistoryStep = () => {};
+      state.cards = [];
+      Object.assign(elements, { cardGrid: {}, moodChips: [], headerSearchInput: { value: "", blur() {} } });
+    `);
+    const search = (query, filters) => {
+      app.run(`Object.assign(state.filters, ${JSON.stringify(filters)})`);
+      app.run(`elements.headerSearchInput.value = ${JSON.stringify(query)}; handleHeaderSearchSubmit({ preventDefault() {} })`);
+      return events.filter((event) => event.name === "search_results_viewed").at(-1)?.params;
+    };
+    const dropped = search("pikachu", { mood: "belly-up", set: "neo-destiny", maxPrice: "10", wishlist: true });
+    if (dropped?.cleared_filter_count !== 3) fail(`a header search with mood, set and price filters on should send cleared_filter_count: 3 (the wishlist view is kept), got ${JSON.stringify(dropped)}`);
+    if (!app.run("state.filters.wishlist")) fail("a header search shouldn't leave the wishlist view");
+    const none = search("snorlax", {});
+    if (none?.cleared_filter_count !== 0) fail(`a header search with no filters on should send cleared_filter_count: 0, got ${JSON.stringify(none)}`);
+    const clears = () => events.filter((event) => event.name === "filters_cleared").length;
+    app.run("clearFilters('filter_drawer_reset')");
+    const afterReset = clears();
+    app.run("clearFilters('filter_drawer_reset')");
+    if (clears() !== afterReset) fail("Reset with no filters on still sends filters_cleared");
+    app.run(`state.filters.mood = "belly-up"; clearFilters("collection_clear_all")`);
+    const real = events.filter((event) => event.name === "filters_cleared").at(-1);
+    if (clears() !== afterReset + 1 || real?.params.active_filter_count !== 1) fail(`clearing one filter should send filters_cleared with active_filter_count: 1, got ${JSON.stringify(real?.params)}`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
 }
 
 // A rarity outside RARITY_GROUPS gets a drawer pill of its own (one card's "Rare Ultra" did, #153), so every rarity must be grouped.
