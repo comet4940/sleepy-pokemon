@@ -120,30 +120,6 @@
       ]
     },
     {
-      "apiId": "svp-173",
-      "tcgdexId": "",
-      "name": "Eevee",
-      "pokemon": "Eevee",
-      "setName": "Scarlet & Violet Promos",
-      "setSeries": "Scarlet & Violet",
-      "setId": "svp",
-      "number": "173/150",
-      "rarity": "Promo",
-      "language": "English",
-      "artist": "Makura Tami",
-      "imageSmall": "https://images.pokemontcg.io/svp/173.png",
-      "imageLarge": "https://images.pokemontcg.io/svp/173_hires.png",
-      "setReleaseDate": "2022/11/01",
-      "whyItBelongs": "Cozy nap curled on a sunny cushion. Eevee rolled into a soft cinnamon loaf next to tea is promo perfection for any cozy binder page.",
-      "createdAt": "2026-05-07T03:40:48.216Z",
-      "updatedAt": "2026-10-22T19:59:05.759Z",
-      "slug": "eevee-scarlet-and-violet-promos-173-150",
-      "moods": [
-        "Belly Up",
-        "Couch & Cushion"
-      ]
-    },
-    {
       "apiId": "xy10-71",
       "tcgdexId": "",
       "name": "Whimsicott",
