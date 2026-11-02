@@ -181,6 +181,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `close_method`
 - `dismiss_method`
 - `action` (`wishlist_toggled`: `added` or `removed`)
+- `has_email` (`contact_submitted` and `suggestion_submitted` / `suggestion_submit_failed`: whether an email was left, never the address)
 - `direction`
 - `had_active_filters`
 - `lookup_type`
@@ -204,6 +205,8 @@ GA4 reports and explorations can break events down by a parameter only from the 
 | Registered | Custom metrics |
 | --- | --- |
 | 2026-11-02 | `card_count` (unit: Standard). Two events send it, so always filter by event name: on `checklist_downloaded` it's the cards in the downloaded checklist; on `catalog_loaded` it's the catalog size |
+
+**Not registered yet, but needed:** `has_email`. "Do visitors reach out?" and "Does the community contribute?" split submissions by it, so register it (event-scoped) before relying on those splits in GA4; until then, and for anything sent before it's registered, use BigQuery. Move it into the table above once it's registered.
 
 **Not registered** (register when a question needs them): dimensions `analytics_version` (always `redesign_v1`), `file_format` (always CSV), `guide_title` (same information as `guide_slug`), `catalog_surface`, `changes_count`, `card_pokemon`, `card_set`, `card_number`, `card_rarity`, `card_language`; metrics `result_count`, `query_length`, `active_filter_count`. Update these tables when anything is registered or archived in GA4.
 
