@@ -185,5 +185,87 @@
         "reason": "Jolteon keeps watch beneath the stars while Togepi sleeps against its chest and Rattata curls up nearby. A gentle guardian cameo for this shelf."
       }
     ]
+  },
+  {
+    "slug": "sleepy-snorlax-cards",
+    "title": "Snorlax, the Original Sleeper",
+    "eyebrow": "28 years of Snorlax naps",
+    "description": "Snorlax has been napping on Pokémon cards since 1998, and it has never once set an alarm. Here is every sleeping Snorlax in the collection, oldest to newest, plus one cameo where it nods off on the Pokémon Center floor.",
+    "metaDescription": "Browse all 17 sleeping Snorlax cards from 1998 to 2026, including the Vending Machine contest card, Wizards Promo 49, Fates Collide and Crown Zenith, plus a Chansey cameo.",
+    "updatedAt": "2026-11-02T22:00:00.000Z",
+    "cards": [
+      {
+        "slug": "snorlax-vending-machine-series-1-143",
+        "reason": "Where it all begins: a fan’s drawing that won CoroCoro’s 1998 contest, with Snorlax asleep in the middle of the road, exactly where its Pokédex says it might be."
+      },
+      {
+        "slug": "snorlax-wizards-black-star-promos-49",
+        "reason": "The classic: out cold under the moon with comic-strip Z’s floating overhead. If you picture a sleeping Snorlax, you’re probably picturing this one."
+      },
+      {
+        "slug": "rocket-s-snorlax-gym-heroes-33-132",
+        "reason": "Face-down among empty bottles and wrappers. Team Rocket’s Snorlax ate everything in reach and called it a night."
+      },
+      {
+        "slug": "snorlax-skyridge-100-144",
+        "reason": "Up to its chin in a steaming hot spring, snowy mountains behind it. It is not getting out."
+      },
+      {
+        "slug": "snorlax-kalos-starter-set-26-39",
+        "reason": "Face-down in a bed of white flowers, smiling. Possibly the gentlest nap in the collection."
+      },
+      {
+        "slug": "snorlax-generations-58-83",
+        "reason": "Just Snorlax, tall grass and nothing else. It dropped where it stood."
+      },
+      {
+        "slug": "snorlax-fates-collide-77-124",
+        "reason": "The only Snorlax nap that causes a stampede: it rolls through town fast asleep, and its attack hits harder while it’s Asleep."
+      },
+      {
+        "slug": "snorlax-unbroken-bonds-158-214",
+        "reason": "Asleep under the trees with a Torchic on its head and two Pikachu nearby. Nobody is in a hurry to wake it."
+      },
+      {
+        "slug": "snorlax-hidden-fates-50-68",
+        "reason": "Arms flung wide, mid-snore, in the dappled shade of a big tree. The afternoon nap, perfected."
+      },
+      {
+        "slug": "snorlax-sword-and-shield-promos-swsh032",
+        "reason": "A soft night sky and a cozy patch of ground. Classic bedtime."
+      },
+      {
+        "slug": "snorlax-vivid-voltage-131-185",
+        "reason": "Slumped against a forest tree after a feast, in Atsuko Nishida’s warm storybook style."
+      },
+      {
+        "slug": "snorlax-fusion-strike-206-264",
+        "reason": "Flat on its back under an apple tree, half-eaten apples all around. Food coma, case closed."
+      },
+      {
+        "slug": "snorlax-pokemon-go-55-78",
+        "reason": "Blocking a real-world entrance, just like in the game. Please walk around."
+      },
+      {
+        "slug": "snorlax-lost-origin-143-196",
+        "reason": "Chin on its arm in a field of yellow flowers. Pure pastoral bliss."
+      },
+      {
+        "slug": "snorlax-crown-zenith-109-159",
+        "reason": "Knitted in yarn by Asako Ito and caught mid-yawn on a felt-flower hill. A handmade nap."
+      },
+      {
+        "slug": "snorlax-scarlet-and-violet-black-star-promos-51-215",
+        "reason": "Asleep by a pond while a Pidgey perches on its belly and a Diglett pops up nearby. Its own tiny ecosystem."
+      },
+      {
+        "slug": "snorlax-me-30th-celebration-119-128",
+        "reason": "Knocked out among wild berries and mushrooms in Aya Kusube’s fairytale woods. Twenty-eight years in, still napping."
+      },
+      {
+        "slug": "chansey-twilight-masquerade-187-167",
+        "reason": "Bonus cameo: Chansey is hard at work in the Pokémon Center while Snorlax naps on the tiled floor."
+      }
+    ]
   }
 ]
