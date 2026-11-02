@@ -167,6 +167,7 @@ Register these event-scoped custom dimensions when reusable GA4 reporting is nee
 - `changes_count`
 - `close_method`
 - `dismiss_method`
+- `action` (`wishlist_toggled`: `added` or `removed`; registered 2026-11-02, so GA4 reports split adds from removes only from then; BigQuery has it from the start, #202)
 - `direction`
 - `had_active_filters`
 - `lookup_type`
@@ -199,7 +200,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
 
-**Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. Splitting adds from removes in GA4 needs `action` registered as a custom dimension (#202); until then, use the BigQuery export, which has every parameter.
+**Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. `action` was registered as a custom dimension on 2026-11-02 (#202), so GA4 splits adds from removes only from then; for the first hours, use the BigQuery export, which has every parameter.
 
 ## Verification Checklist
 
