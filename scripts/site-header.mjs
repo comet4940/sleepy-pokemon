@@ -1,6 +1,6 @@
 import { assetUrl } from "./build-helpers.mjs";
 
-// The header on every page. Wider screens show Browse, Guides, About, Wishlist and Suggest in the header; phones put
+// The header on every page. Wider screens show Browse, Guides, About, Wishlist and "Suggest a card" in the header; phones put
 // them behind the ☰ button, except the wishlist, which stays visible as a ★ with a count (site-header.js opens the
 // menu and keeps the counts current). binder.js, which stores the wishlist, loads here so every page has it.
 const WISHLIST_STAR = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.87l-5.5 2.88 1.05-6.12L3.1 9.3l6.15-.9z" /></svg>`;
@@ -44,7 +44,7 @@ export function renderSiteHeader(basePath = "") {
             <a href="${basePath}guides/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="guides">Guides</a>
             <a href="${basePath}about/" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="about">About</a>
             <a class="menu-wishlist" href="${basePath}collection/?wishlist=1" data-analytics-event="navigation_clicked" data-analytics-source="global_header" data-analytics-destination="wishlist">${WISHLIST_STAR}Wishlist<span class="wishlist-count" data-wishlist-count hidden></span></a>
-            <a class="header-cta" href="${basePath}collection/?suggest=header" data-header-suggest><span aria-hidden="true">✦</span> Suggest</a>
+            <a class="header-cta" href="${basePath}collection/?suggest=header" data-header-suggest><svg class="header-cta-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.2" y="3.2" width="11.6" height="16.6" rx="2.6" transform="rotate(-7 12 11.5)" /><path d="M12 8.6v6.2M8.9 11.7h6.2" /></svg>Suggest a card</a>
           </div>
         </nav>
       </header>

@@ -17,7 +17,7 @@ export const CARD_SLUGS_PATH = "data/card-slugs.json";
 // generated pages and the hand-written homepage and collection page all pick it up.
 export const ASSET_VERSIONS = {
   "styles.css": 7,
-  "site-chrome.css": 2,
+  "site-chrome.css": 3,
   "home-v3.css": 31,
   "filter-drawer.css": 1,
   "card-detail-v3.css": 15,
