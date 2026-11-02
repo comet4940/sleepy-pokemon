@@ -160,6 +160,7 @@ checkBinder(binderSource);
 checkWishlistStar(appSource, binderSource);
 const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
 checkCardPageWish(cardPageSource, binderSource);
+checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
   const inApp = appSource.match(new RegExp(`WISHLIST_HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
@@ -551,6 +552,62 @@ function checkCardPageWish(source, binderSource) {
     }
   } catch (error) {
     fail(`threw ${error.message}`);
+  }
+}
+
+// Review on #200: when the browser won't save (private modes, full or blocked storage), binder.js keeps wishes for
+// this visit only, so neither the collection nor a card page may say a wish was "saved on this device".
+function checkWishlistUnsaved(appSource, cardPageSource, binderSource) {
+  const blockedStorage = { getItem: () => null, setItem: () => { throw new Error("QuotaExceededError"); } };
+  const fakeWindow = () => {
+    const listeners = new Map();
+    return {
+      localStorage: blockedStorage,
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+      setTimeout() {},
+    };
+  };
+  const FakeEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
+  try {
+    const app = loadApp(appSource);
+    Object.assign(app.context.window, fakeWindow());
+    app.context.CustomEvent = FakeEvent;
+    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+    const toasts = [];
+    app.context.__toasts = toasts;
+    app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options })");
+    const card = app.context.normalizeCard(browserCards[0]);
+    app.context.toggleWish({ dataset: { wishSlug: slugByIdentity.get(getCardIdentity(browserCards[0])), wishName: card.name } });
+    const message = toasts.at(-1)?.message || "";
+    if (/saved on this device/i.test(message) || !/this visit only/i.test(message)) errors.push(`docs/app.js (wishlist): when the browser can't save, a wish must say it's for this visit only, showed ${JSON.stringify(message)}`);
+  } catch (error) {
+    errors.push(`docs/app.js (wishlist, storage blocked): threw ${error.message}`);
+  }
+  try {
+    const classList = (initial = []) => {
+      const names = new Set(initial);
+      return { add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
+    };
+    const status = { textContent: "", classList: classList(["sr-only"]) };
+    let click = null;
+    const button = {
+      dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+      classList: classList(),
+      parentElement: { querySelector: () => status },
+      closest: () => ({ classList: classList() }),
+      setAttribute() {},
+      querySelector: () => ({ textContent: "" }),
+      addEventListener: (type, fn) => { if (type === "click") click = fn; },
+    };
+    const context = vm.createContext({ window: fakeWindow(), document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: FakeEvent });
+    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+    vm.runInContext(cardPageSource, context, { filename: "docs/card-page.js" });
+    click();
+    if (/saved on this device/i.test(status.textContent) || !/this visit only/i.test(status.textContent) || !status.classList.contains("detail-wish-note")) errors.push(`docs/card-page.js: when the browser can't save, a wish must say it's for this visit only, shows ${JSON.stringify(status.textContent)}`);
+  } catch (error) {
+    errors.push(`docs/card-page.js (storage blocked): threw ${error.message}`);
   }
 }
 

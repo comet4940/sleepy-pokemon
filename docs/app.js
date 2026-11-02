@@ -1385,7 +1385,11 @@ function toggleWish(button) {
   } else {
     burstWish(button);
     dismissWishlistHint("first_wish", button);
-    if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
+    // The browser won't let the site save (private modes, full or blocked storage): binder.js keeps the wishlist
+    // for this visit only, so never say it's saved (review on #200).
+    if (!store.isPersistent()) {
+      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500 });
+    } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
       store.markHintSeen(WISHLIST_HINTS.firstWish);
       showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500 });
     } else {

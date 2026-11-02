@@ -88,9 +88,14 @@
         const firstWish = !binder.hintSeen(HINTS.firstWish);
         binder.markHintSeen(HINTS.strip);
         binder.markHintSeen(HINTS.firstWish);
+        // When the browser won't let the site save, the wishlist lasts for this visit only: say so on every add,
+        // never "saved" (review on #200).
+        const visitOnly = !binder.isPersistent();
         // Card pages have no toast: the first wish ever explains itself under the button (and to screen readers).
-        if (firstWish) {
-          const note = "Saved on this device. Find it under Wishlist in the header.";
+        if (firstWish || visitOnly) {
+          const note = visitOnly
+            ? "Added for this visit only. Your browser isn't letting this site save your wishlist."
+            : "Saved on this device. Find it under Wishlist in the header.";
           const status = button.parentElement?.querySelector("[data-wish-status]");
           if (status) {
             status.textContent = note;
