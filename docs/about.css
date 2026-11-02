@@ -310,6 +310,101 @@
   text-decoration: underline;
 }
 
+/* "Say hi" (#209): lavender, since pink belongs to wishing and mint to suggestions and links. */
+.about-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(20px, 4vw, 48px);
+  align-items: center;
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  padding: clamp(24px, 5vw, 40px);
+  border: 1px solid rgba(169, 147, 255, .28);
+  border-radius: 18px;
+  background: #191927;
+}
+
+.about-contact-copy p:not(.about-eyebrow) {
+  max-width: 560px;
+  margin: 16px 0 0;
+}
+
+.about-contact-actions {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.about-contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 1px solid var(--lavender);
+  border-radius: 24px;
+  background: rgba(169, 147, 255, .12);
+  color: var(--cream);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(169, 147, 255, .3);
+  transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.about-contact-button:hover,
+.about-contact-button:focus-visible {
+  background: var(--lavender);
+  color: #17121b;
+  transform: translateY(-1px);
+}
+
+.about-contact-button svg,
+.contact-submit svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.about-contact-alt {
+  margin: 0;
+  color: rgba(255, 247, 232, .7);
+  font-size: .85rem;
+}
+
+.about-contact-alt a {
+  color: var(--mint);
+  font-weight: 600;
+}
+
+.contact-dialog .suggestion-field em {
+  color: rgba(255, 247, 232, .55);
+  font-style: normal;
+}
+
+.contact-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-submit:disabled {
+  opacity: .7;
+  cursor: progress;
+}
+
+.contact-error {
+  margin: -4px 0 0;
+  color: #ffb3c8;
+  font-size: .86rem;
+}
+
+.contact-error[hidden] {
+  display: none;
+}
+
 .about-next {
   display: flex;
   flex-wrap: wrap;
@@ -322,7 +417,8 @@
   }
 
   .about-people,
-  .about-standard {
+  .about-standard,
+  .about-contact {
     grid-template-columns: minmax(0, 1fr);
   }
 

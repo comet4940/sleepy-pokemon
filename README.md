@@ -192,5 +192,5 @@ Typography is paired with **Fredoka** for friendly, rounded headings and **Inter
 ## ☕ Creator & Credits
 
 - Curated and maintained with ♥ by **Comet** at [Semi Serious Labs](https://semiseriousllc.com).
-- Support the project on [Buy Me a Coffee](https://buymeacoffee.com/cometakira).
+- Say hi through **Contact Comet** on the [About page](https://www.sleepypokemon.com/about/#contact).
 - **Disclaimer**: Pokémon and Pokémon character names are trademarks of Nintendo, Creatures Inc., and GAME FREAK Inc. Card artwork belongs to their respective illustrators and The Pokémon Company. Sleepy Pokémon Cards is an unofficial, non-commercial fan project created for card enthusiasts and collectors.

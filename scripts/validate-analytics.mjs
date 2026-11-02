@@ -37,6 +37,8 @@ const legacyEvents = [
   "sleepy_card_suggestion_clicked",
   "sleepy_card_submit_clicked",
   "guide_card_clicked",
+  // Retired with the coffee link (#201, #209).
+  "coffee_clicked",
 ];
 const requiredAppEvents = [
   "catalog_loaded",
@@ -94,10 +96,10 @@ for (const path of htmlFiles) {
     if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
       errors.push(`${label}: shared footer studio-link tracking is missing`);
     }
-    // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show, so it's off for now
-    // while its new home is decided (#201).
+    // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show; the coffee link was
+    // dropped for good (#201), and About's Contact Comet form is the way to reach the curator (#209).
     if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
-      errors.push(`${label}: loads the floating Buy Me a Coffee widget, which is off until #201 decides where the coffee link lives`);
+      errors.push(`${label}: loads the floating Buy Me a Coffee widget, which was dropped for good (#201, #209)`);
     }
     if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
       errors.push(`${label}: fan-made copyright disclaimer is missing`);
@@ -107,6 +109,15 @@ for (const path of htmlFiles) {
     }
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
+  // Contact Comet (#209): the About page has the form, posting to a real Formspree form, and loads contact.js.
+  if (pageType === "about") {
+    if (!/<form[^>]*id="contactForm"[^>]*data-email-endpoint="https:\/\/formspree\.io\/f\/[A-Za-z0-9]+"/.test(html)) errors.push(`${label}: the Contact Comet form is missing or has no Formspree endpoint`);
+    if (!/data-open-contact-form/.test(html)) errors.push(`${label}: nothing opens the Contact Comet form`);
+    if (!html.includes(`contact.js?v=${ASSET_VERSIONS["contact.js"]}`)) errors.push(`${label}: doesn't load contact.js?v=${ASSET_VERSIONS["contact.js"]}`);
+    if (/mgavoazj/.test(html.match(/id="contactForm"[^>]*/)?.[0] || "")) errors.push(`${label}: the contact form uses Suggest a card's Formspree form; it has its own`);
+  } else if (/id="contactForm"/.test(html)) {
+    errors.push(`${label}: has the Contact Comet form, which belongs on About only`);
+  }
   if (pageType === "guide" && !/id="downloadChecklistButton"/.test(html)) {
     errors.push(`${label}: guide checklist download control is missing`);
   }
@@ -161,6 +172,7 @@ checkWishlistStar(appSource, binderSource);
 const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
 checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
+await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
   const inApp = appSource.match(new RegExp(`WISHLIST_HINTS = \\{[^}]*\\b${name}: "([^"]+)"`))?.[1];
@@ -559,6 +571,80 @@ function checkCardPageWish(source, binderSource) {
     for (const { params } of wishEvents) {
       const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
       if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+    }
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// Contact Comet (#209): runs docs/contact.js against a fake About page. It must send the message to Formspree, report
+// success or failure, and never put what someone wrote (message, name, email) into an analytics event.
+async function checkContactForm(source) {
+  const fail = (message) => errors.push(`docs/contact.js: ${message}`);
+  const ALLOWED = { contact_opened: ["interaction_source"], contact_submitted: ["interaction_source", "has_email"], contact_submit_failed: ["interaction_source", "error_type"] };
+  const run = async ({ message = "", email = "", respond = "ok" } = {}) => {
+    const events = [];
+    const posts = [];
+    const handlers = {};
+    const on = (key) => (type, fn) => { handlers[`${key}:${type}`] = fn; };
+    const classes = (initial = []) => { const set = new Set(initial); return { add: (n) => set.add(n), remove: (n) => set.delete(n), contains: (n) => set.has(n) }; };
+    const field = (value, valid = true) => ({ value, validity: { valid }, focus() {} });
+    const fields = { "#contactMessage": field(message), "#contactEmail": field(email, !email || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) };
+    const error = { textContent: "", hidden: true };
+    const success = { hidden: true, querySelector: () => ({ focus() {} }) };
+    const submit = { disabled: false, querySelector: () => ({ textContent: "Send message" }) };
+    const form = {
+      dataset: { emailEndpoint: "https://formspree.io/f/test1234" },
+      classList: classes(),
+      elements: { _gotcha: { value: "" } },
+      querySelector: (selector) => fields[selector] || { "#contactError": error, "#contactSuccess": success, ".contact-submit": submit }[selector],
+      querySelectorAll: () => [],
+      addEventListener: on("form"),
+      reset() { fields["#contactMessage"].value = ""; fields["#contactEmail"].value = ""; },
+    };
+    const dialog = { open: false, showModal() { this.open = true; }, close() { this.open = false; }, addEventListener: on("dialog") };
+    const opener = { addEventListener: on("opener") };
+    const context = vm.createContext({
+      window: { sleepyAnalytics: { track: (name, params) => events.push({ name, params }) }, setTimeout() {} },
+      document: { querySelector: (selector) => ({ "#contactDialog": dialog, "#contactForm": form })[selector], querySelectorAll: () => [opener] },
+      FormData: class { constructor(target) { this.target = target; } },
+      fetch: async (url, options) => {
+        posts.push({ url, options });
+        if (respond === "network") throw new Error("offline");
+        return { ok: respond === "ok" };
+      },
+    });
+    vm.runInContext(source, context, { filename: "docs/contact.js" });
+    handlers["opener:click"]?.();
+    await handlers["form:submit"]?.({ preventDefault() {} });
+    return { events, posts, dialog, error, success, form };
+  };
+  try {
+    const sent = await run({ message: "Hi Comet! Love the site.", email: "fan@example.com" });
+    if (!sent.dialog.open) fail("the Contact Comet button doesn't open the dialog");
+    if (sent.posts.length !== 1 || sent.posts[0].url !== "https://formspree.io/f/test1234" || sent.posts[0].options?.method !== "POST") fail("a message isn't posted to the form's Formspree endpoint");
+    if (!sent.form.classList.contains("is-success") || sent.success.hidden) fail("a sent message doesn't show the thank-you");
+    const submitted = sent.events.find((event) => event.name === "contact_submitted");
+    if (!submitted || submitted.params.has_email !== true || submitted.params.interaction_source !== "about_page") fail(`contact_submitted should carry has_email: true and interaction_source: about_page, got ${JSON.stringify(submitted?.params)}`);
+    if (!sent.events.some((event) => event.name === "contact_opened")) fail("opening the form doesn't send contact_opened");
+    const empty = await run({ message: "   " });
+    if (empty.posts.length || empty.error.hidden) fail("an empty message is sent instead of asking for one");
+    const badEmail = await run({ message: "Hello", email: "not-an-email" });
+    if (badEmail.posts.length || badEmail.error.hidden) fail("a malformed email is sent instead of being flagged");
+    const noEmail = await run({ message: "Hello" });
+    if (noEmail.events.find((event) => event.name === "contact_submitted")?.params.has_email !== false) fail("a message without an email should send has_email: false");
+    for (const respond of ["http", "network"]) {
+      const failed = await run({ message: "Hello", respond });
+      const event = failed.events.find((item) => item.name === "contact_submit_failed");
+      if (event?.params.error_type !== respond || failed.error.hidden || failed.form.classList.contains("is-success")) fail(`a ${respond} failure should show an error and send contact_submit_failed with error_type ${respond}`);
+    }
+    // Privacy: only the listed parameters, and never anything someone typed.
+    for (const { events } of [sent, noEmail]) {
+      for (const { name, params } of events) {
+        const extra = Object.keys(params).filter((key) => !(ALLOWED[name] || []).includes(key));
+        if (extra.length) fail(`${name} must never carry what someone wrote, but sends ${extra.join(", ")}`);
+        if (JSON.stringify(params).includes("Hi Comet") || JSON.stringify(params).includes("fan@example.com")) fail(`${name} leaks the message or email`);
+      }
     }
   } catch (error) {
     fail(`threw ${error.message}`);

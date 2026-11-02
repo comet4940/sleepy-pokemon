@@ -5,6 +5,9 @@ import { getCardIdentity } from "./card-identity.mjs";
 import { SITE_URL, assetUrl, escapeAttribute, escapeHtml, renderHead } from "./build-helpers.mjs";
 
 const INSTAGRAM_URL = "https://www.instagram.com/sprigatitosquad/";
+// "Contact Comet" (#209): its own Formspree form, separate from Suggest a card's, so the two inboxes stay apart.
+export const CONTACT_ENDPOINT = "https://formspree.io/f/mgaappeg";
+const ENVELOPE_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5" /><path d="M4 7.5l8 6 8-6" /></svg>`;
 
 // Cards named on the About page, by card-page slug. A missing slug fails the build so the page never links to nothing.
 const FAVORITES = {
@@ -132,6 +135,18 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
           </a>
         </section>
 
+        <section class="about-contact" id="contact" aria-labelledby="aboutContactTitle">
+          <div class="about-contact-copy">
+            <p class="about-eyebrow">Say hi</p>
+            <h2 id="aboutContactTitle">Write to Comet</h2>
+            <p>Spotted a mistake, have a question about a card, or just want to share your own sleepy favorite? Comet reads every message.</p>
+          </div>
+          <div class="about-contact-actions">
+            <button class="about-contact-button" type="button" data-open-contact-form>${ENVELOPE_ICON}<span>Contact Comet</span></button>
+            <p class="about-contact-alt">or find us on <a href="${INSTAGRAM_URL}" target="_blank" rel="noopener noreferrer" data-analytics-event="navigation_clicked" data-analytics-source="about_contact" data-analytics-destination="instagram">Instagram</a></p>
+          </div>
+        </section>
+
         <nav class="about-next" aria-label="Keep exploring">
           <a class="about-text-link" href="../collection/" data-analytics-event="navigation_clicked" data-analytics-source="about_page" data-analytics-destination="collection">Browse the collection <span aria-hidden="true">→</span></a>
           <a class="about-text-link" href="../guides/" data-analytics-event="navigation_clicked" data-analytics-source="about_page" data-analytics-destination="guides">Read the collector guides <span aria-hidden="true">→</span></a>
@@ -140,12 +155,36 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
 ${renderSiteFooter()}
     </div>
     ${renderCardDetailDialog()}
+${renderContactDialog()}
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
     <script src="${assetUrl("../", "prices.js")}"></script>
     <script src="${assetUrl("../", "app.js")}"></script>
+    <script src="${assetUrl("../", "contact.js")}"></script>
   </body>
 </html>
 `;
+}
+
+// The "Contact Comet" form (#209), run by docs/contact.js. It reuses the Suggest a card dialog's look (home-v3.css).
+// Formspree uses the "email" field as the reply-to address; the message, name and email never go to analytics.
+function renderContactDialog() {
+  return `    <dialog id="contactDialog" class="suggestion-dialog contact-dialog" aria-labelledby="contactTitle">
+      <form class="suggestion-panel" id="contactForm" data-email-endpoint="${CONTACT_ENDPOINT}" novalidate>
+        <input type="hidden" name="_subject" value="New message from Sleepy Pokemon" />
+        <input class="form-honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="icon-button suggestion-close" type="button" data-close-contact-form aria-label="Close contact form">×</button>
+        <p class="eyebrow">Say hi</p>
+        <h2 id="contactTitle">Contact Comet</h2>
+        <p class="suggestion-intro">A question, a mistake to fix, or a sleepy card story: write it here and it goes straight to Comet.</p>
+        <label class="suggestion-field"><span>Message</span><textarea id="contactMessage" name="message" rows="5" required maxlength="5000" placeholder="Hi Comet! I noticed..."></textarea></label>
+        <label class="suggestion-field"><span>Your email <em>(optional, only if you'd like a reply)</em></span><input id="contactEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" /></label>
+        <label class="suggestion-field"><span>Your name <em>(optional)</em></span><input id="contactName" name="name" type="text" autocomplete="name" maxlength="120" /></label>
+        <p class="contact-error" id="contactError" role="alert" hidden></p>
+        <button class="button primary-button suggestion-submit contact-submit" type="submit">${ENVELOPE_ICON}<span>Send message</span></button>
+        <p class="suggestion-footnote">Sent with Formspree. Your email is only used to reply to you.</p>
+        <div class="suggestion-success" id="contactSuccess" hidden><p class="eyebrow">Message sent</p><h2>Thanks for writing! <span aria-hidden="true">✦</span></h2><p>Comet will read it soon. If you left your email, a reply will come from there.</p><button class="suggestion-done" type="button" data-close-contact-form>Done</button></div>
+      </form>
+    </dialog>`;
 }
 
 // Counted from the catalog at build time, so the line keeps up as cards are added.
