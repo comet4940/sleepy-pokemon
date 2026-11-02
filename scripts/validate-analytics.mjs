@@ -467,6 +467,15 @@ function checkWishlistStar(appSource, binderSource) {
     app.context.toggleWish(button);
     app.context.toggleWish(button);
     if (!/^Added to your wishlist · /.test(toasts.at(-1)?.message || "")) fail(`a later wish should show the short message, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
+    // "wishlist" in the toast links to the wishlist view (the header's own link), tracked like other measured links.
+    const header = app.context.document.querySelector;
+    app.context.document.querySelector = (selector) => (selector.includes("header-wishlist") ? { getAttribute: () => "../collection/?wishlist=1" } : null);
+    app.context.toggleWish(button);
+    app.context.toggleWish(button);
+    const link = toasts.at(-1)?.options?.link;
+    if (link?.href !== "../collection/?wishlist=1" || link.text !== "wishlist" || link.source !== "wishlist_toast" || link.destination !== "wishlist" || !toasts.at(-1).message.includes(link.text)) fail(`a wish's toast should link "wishlist" to the wishlist view, got ${JSON.stringify(link)}`);
+    if (toasts.at(-2)?.options?.link?.href !== "../collection/?wishlist=1") fail("the removal toast should link to the wishlist view too");
+    app.context.document.querySelector = header;
     // A card already marked owned can't be wished for: no success message, no burst, no event (review on #200).
     app.context.window.sleepyBinder.add("owned", "owned-card-slug");
     const before = events.length;
@@ -475,7 +484,7 @@ function checkWishlistStar(appSource, binderSource) {
     if (events.length !== before) fail("a refused add still sent wishlist_toggled");
     if (!/already have this card/.test(toasts.at(-1)?.message || "")) fail(`a refused add should say the card is already collected, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
-    if (wishEvents.length !== 4) fail(`expected 4 wishlist_toggled events, got ${wishEvents.length}`);
+    if (wishEvents.length !== 6) fail(`expected 6 wishlist_toggled events, got ${wishEvents.length}`);
     for (const { params } of wishEvents) {
       const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
       if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);

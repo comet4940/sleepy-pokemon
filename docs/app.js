@@ -1380,25 +1380,34 @@ function toggleWish(button) {
     return;
   }
   const count = store.count("wished");
+  const link = wishlistToastLink();
   if (wasWished) {
-    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
+    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug), link });
   } else {
     burstWish(button);
     dismissWishlistHint("first_wish", button);
     // The browser won't let the site save (private modes, full or blocked storage): binder.js keeps the wishlist
     // for this visit only, so never say it's saved (review on #200).
     if (!store.isPersistent()) {
-      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500 });
+      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500, link });
     } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
       store.markHintSeen(WISHLIST_HINTS.firstWish);
-      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500 });
+      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500, link });
     } else {
-      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`, { link });
     }
   }
   // Which card it was stays private: never send card details with wishlist events.
   const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
   trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
+}
+
+// "wishlist" in the wishlist toasts links to the wishlist view (the header's own link, so the path is right on every
+// page). Not inside the wishlist view itself, where it would go nowhere.
+function wishlistToastLink() {
+  if (state.filters?.wishlist) return undefined;
+  const href = document.querySelector(".header-wishlist, .menu-wishlist")?.getAttribute("href");
+  return href ? { text: "wishlist", href, source: "wishlist_toast", destination: "wishlist" } : undefined;
 }
 
 // One-time onboarding (#119), remembered in binder.js: the collection's strip above the grid until it's dismissed
@@ -2130,9 +2139,27 @@ function formatCurrency(value) {
 
 // A short message at the bottom of the screen. With { actionLabel, onAction } it also offers a button (Undo) and
 // stays a little longer, so there's time to reach it.
-function showToast(message, { actionLabel, onAction, duration } = {}) {
+// link: { text, href, source, destination } turns the first `text` in the message into a link (the wishlist toasts link
+// "wishlist" to the wishlist view, since the header's Wishlist is far away on phones). It's tracked as
+// navigation_clicked like any other measured link.
+function showToast(message, { actionLabel, onAction, duration, link } = {}) {
   if (!elements.toast) return;
-  elements.toast.textContent = message;
+  const text = document.createElement("span");
+  text.className = "toast-text";
+  const at = link?.href ? message.indexOf(link.text) : -1;
+  if (at === -1) {
+    text.textContent = message;
+  } else {
+    const anchor = document.createElement("a");
+    anchor.className = "toast-link";
+    anchor.href = link.href;
+    anchor.textContent = link.text;
+    anchor.dataset.analyticsEvent = "navigation_clicked";
+    anchor.dataset.analyticsSource = link.source;
+    anchor.dataset.analyticsDestination = link.destination;
+    text.append(message.slice(0, at), anchor, message.slice(at + link.text.length));
+  }
+  elements.toast.replaceChildren(text);
   if (actionLabel && onAction) {
     const action = document.createElement("button");
     action.type = "button";
