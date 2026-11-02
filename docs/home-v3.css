@@ -207,13 +207,12 @@ a { color: inherit; }
   gap: 10px;
   max-width: min(460px, calc(100vw - 36px));
   padding: 13px 20px;
-  border: 1px solid rgba(169, 147, 255, .38);
+  /* Cream on the dark site, so a message never melts into the page (phones especially). */
+  border: 1px solid rgba(169, 147, 255, .7);
   border-radius: 24px;
-  background: rgba(25, 24, 39, .95);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .48), 0 0 0 1px rgba(255, 247, 232, .06);
-  color: var(--cream);
+  background: #fff7e8;
+  color: #1d1830;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .5), 0 0 0 4px rgba(169, 147, 255, .22), 0 0 28px rgba(169, 147, 255, .35);
   font-family: var(--ui);
   font-size: .92rem;
   font-weight: 500;
@@ -354,8 +353,11 @@ a { color: inherit; }
 }
 
 /* A toast's action button (Undo). */
-.toast-action { flex: 0 0 auto; margin-left: 4px; padding: 6px 12px; border: 1px solid rgba(255,247,232,.35); border-radius: 999px; background: transparent; color: var(--cream); font: inherit; font-weight: 600; cursor: pointer; }
-.toast-action:hover, .toast-action:focus-visible { background: var(--cream); color: #17121b; }
+.toast-action { flex: 0 0 auto; margin-left: 4px; padding: 6px 12px; border: 1px solid rgba(29,24,48,.45); border-radius: 999px; background: transparent; color: #1d1830; font: inherit; font-weight: 600; cursor: pointer; }
+.toast-action:hover, .toast-action:focus-visible { background: #1d1830; color: #fff7e8; }
+/* "wishlist" in the wishlist toasts links to the wishlist view; the padding gives it a bigger tap target. */
+.toast-link { color: #c2306a; font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; padding: 10px 2px; margin: -10px -2px; }
+.toast-link:hover, .toast-link:focus-visible { color: #8f1f4d; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

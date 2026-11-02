@@ -878,11 +878,7 @@ function renderCards() {
   const latestCards = getRecentlyAddedCards();
   if (elements.heroCardCount) elements.heroCardCount.textContent = state.cards.length;
   // A polite live region, so screen readers hear the new count after a search or filter change.
-  if (elements.resultCount) elements.resultCount.textContent = describeResultCount(filteredCards.length);
-  updateCollectionHeading(filteredCards.length);
-  updateChecklistButton(filteredCards);
-  renderActiveFilterControls();
-  renderWishlistHint();
+  renderCollectionSummary(filteredCards);
   if (elements.latestGrid) elements.latestGrid.innerHTML = latestCards.map(renderCard).join("");
   if (!elements.cardGrid) return;
   if (state.catalogLoadFailed) {
@@ -914,6 +910,64 @@ function renderCards() {
   };
 
   renderBatch(0);
+}
+
+// Everything about the collection's results except the grid itself: the count line, heading, download button and
+// active filter chips. Shared by renderCards and by removing one card from the wishlist view.
+function renderCollectionSummary(filteredCards) {
+  if (elements.resultCount) elements.resultCount.textContent = describeResultCount(filteredCards.length);
+  updateCollectionHeading(filteredCards.length);
+  updateChecklistButton(filteredCards);
+  renderActiveFilterControls();
+  renderWishlistHint();
+}
+
+// Removing a card inside the wishlist view takes out just its tile (it fades, and the tiles after it slide into
+// place) and updates the counts, instead of redrawing the whole grid, which replayed every tile's fade-in and
+// looked like a page refresh. Anything else (Undo, a change in another tab) still redraws everything.
+function removeWishlistTile(slug) {
+  const tile = elements.cardGrid?.querySelector(`.card-tile[data-card-slug="${slug}"]`);
+  if (!tile || !/^[a-z0-9-]+$/.test(slug)) return render();
+  const filteredCards = getFilteredCards();
+  renderFilters();
+  renderCollectionSummary(filteredCards);
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const token = state.renderToken;
+  const finish = () => {
+    // Undo (or anything else) redrew the grid while the tile was fading: nothing left to do.
+    if (state.renderToken !== token || !tile.isConnected) return;
+    // The tiles after it move up a place: measure them, remove the tile, then slide them from where they were.
+    const following = [];
+    for (let next = tile.nextElementSibling; next; next = next.nextElementSibling) following.push(next);
+    const before = following.map((element) => element.getBoundingClientRect());
+    // Keyboard focus was on its star: move it to the next card (or the one before), not the top of the page.
+    const hadFocus = tile.contains(document.activeElement);
+    const neighbour = following[0] || tile.previousElementSibling;
+    // The browser's scroll anchoring would follow a tile that moves up a place and scroll the page; keep it still.
+    const scrollY = window.scrollY;
+    elements.cardGrid.style.overflowAnchor = "none";
+    tile.remove();
+    if (window.scrollY !== scrollY) window.scrollTo(window.scrollX, scrollY);
+    window.requestAnimationFrame(() => { elements.cardGrid.style.overflowAnchor = ""; });
+    if (hadFocus) (neighbour?.querySelector(".card-open") || elements.emptyState?.querySelector("button, a"))?.focus({ preventScroll: true });
+    if (!reduceMotion) {
+      following.forEach((element, index) => {
+        const after = element.getBoundingClientRect();
+        const dx = before[index].left - after.left;
+        const dy = before[index].top - after.top;
+        if ((dx || dy) && typeof element.animate === "function") {
+          element.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: 260, easing: "ease-out" });
+        }
+      });
+    }
+    const remaining = getFilteredCards().length;
+    elements.emptyState.classList.toggle("hidden", remaining > 0);
+    describeEmptyState();
+    if (hadFocus && !remaining) elements.emptyState?.querySelector("button, a")?.focus({ preventScroll: true });
+  };
+  if (reduceMotion || typeof tile.animate !== "function") return finish();
+  tile.style.pointerEvents = "none";
+  tile.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.92)" }], { duration: 200, easing: "ease-in", fill: "forwards" }).finished.then(finish, finish);
 }
 
 function normalizeSearchText(value) {
@@ -1355,7 +1409,8 @@ function bindWishlist() {
     toggleWish(button);
   }, true);
   store.onChange((change) => {
-    if (state.filters.wishlist && change.type !== "hint") render();
+    if (state.filters.wishlist && change.type === "removed" && change.list === "wished") removeWishlistTile(change.slug);
+    else if (state.filters.wishlist && change.type !== "hint") render();
     syncWishlist();
     if (change.type === "unavailable") showToast("Your browser couldn't save your wishlist on this device.");
   });
@@ -1380,25 +1435,35 @@ function toggleWish(button) {
     return;
   }
   const count = store.count("wished");
+  const link = wishlistToastLink();
   if (wasWished) {
-    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug) });
+    showToast("Removed from your wishlist", { actionLabel: "Undo", onAction: () => store.add("wished", slug), link });
   } else {
     burstWish(button);
     dismissWishlistHint("first_wish", button);
     // The browser won't let the site save (private modes, full or blocked storage): binder.js keeps the wishlist
     // for this visit only, so never say it's saved (review on #200).
     if (!store.isPersistent()) {
-      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500 });
+      showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500, link });
     } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
       store.markHintSeen(WISHLIST_HINTS.firstWish);
-      showToast("Added to your wishlist ★ It's saved on this device. Find it under Wishlist in the header.", { duration: 6500 });
+      showToast("Added to your wishlist ★ It's saved on this device.", { duration: 6500, link });
     } else {
-      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`);
+      showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`, { link });
     }
   }
   // Which card it was stays private: never send card details with wishlist events.
   const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
   trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
+}
+
+// "wishlist" in the wishlist toasts links to the wishlist view (the header's own link, so the path is right on every
+// page). Not inside the wishlist view itself, where it would go nowhere. Resolved against the page's own address:
+// the lightbox changes the address to the card's page, which would send a relative link nowhere (review on #206).
+function wishlistToastLink() {
+  if (state.filters?.wishlist) return undefined;
+  const href = document.querySelector(".header-wishlist, .menu-wishlist")?.getAttribute("href");
+  return href ? { text: "wishlist", href: new URL(href, PAGE_URL).href, source: "wishlist_toast", destination: "wishlist" } : undefined;
 }
 
 // One-time onboarding (#119), remembered in binder.js: the collection's strip above the grid until it's dismissed
@@ -2130,9 +2195,32 @@ function formatCurrency(value) {
 
 // A short message at the bottom of the screen. With { actionLabel, onAction } it also offers a button (Undo) and
 // stays a little longer, so there's time to reach it.
-function showToast(message, { actionLabel, onAction, duration } = {}) {
+// link: { text, href, source, destination } turns the first `text` in the message into a link (the wishlist toasts link
+// "wishlist" to the wishlist view, since the header's Wishlist is far away on phones). It's tracked as
+// navigation_clicked like any other measured link.
+function showToast(message, { actionLabel, onAction, duration, link } = {}) {
   if (!elements.toast) return;
-  elements.toast.textContent = message;
+  const text = document.createElement("span");
+  text.className = "toast-text";
+  const at = link?.href ? message.indexOf(link.text) : -1;
+  if (at === -1) {
+    text.textContent = message;
+  } else {
+    const anchor = document.createElement("a");
+    anchor.className = "toast-link";
+    anchor.href = link.href;
+    anchor.textContent = link.text;
+    anchor.dataset.analyticsEvent = "navigation_clicked";
+    anchor.dataset.analyticsSource = link.source;
+    anchor.dataset.analyticsDestination = link.destination;
+    text.append(message.slice(0, at), anchor, message.slice(at + link.text.length));
+  }
+  elements.toast.replaceChildren(text);
+  // An open dialog (the card lightbox, the suggestion form) sits above the rest of the page and makes it inert, so a
+  // toast left in the page can't be seen or tapped (Undo included). Show it inside the dialog instead; back in the
+  // page otherwise (review on #206).
+  const host = document.querySelector("dialog[open]") || document.body;
+  if (elements.toast.parentElement !== host) host.append(elements.toast);
   if (actionLabel && onAction) {
     const action = document.createElement("button");
     action.type = "button";
