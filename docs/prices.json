@@ -1241,6 +1241,21 @@
       "market": 49.55,
       "source": "TCGplayer",
       "updatedAt": "2026/11/02"
+    },
+    "Japanese::Sun & Moon Promos::080/SM-P::Lillie": {
+      "market": 403.41,
+      "source": "Manual",
+      "updatedAt": "2026/11/03"
+    },
+    "Japanese::Tropical Mega Battle::Unnumbered::Tropical Wind": {
+      "market": 6904.88,
+      "source": "Manual",
+      "updatedAt": "2026/11/03"
+    },
+    "dpp-DP25::English::Diamond & Pearl Promos::DP25::Tropical Wind": {
+      "market": 755.99,
+      "source": "Manual",
+      "updatedAt": "2026/11/03"
     }
   }
 }

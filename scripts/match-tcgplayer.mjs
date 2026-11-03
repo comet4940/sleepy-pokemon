@@ -24,6 +24,7 @@ const SET_ALIASES = {
   "Legendary Treasures": ["Legendary Treasures", "Legendary Treasures: Radiant Collection"],
   "Scarlet & Violet Promos": ["SV: Scarlet & Violet Promo Cards"],
   "Sword & Shield Promos": ["SWSH: Sword & Shield Promo Cards"],
+  "Diamond & Pearl Promos": ["Diamond and Pearl Promos"],
   "Sun & Moon Promos": ["SM Promos"],
   "Wizards Promos": ["WoTC Promo"],
 };
