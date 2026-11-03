@@ -1,6 +1,101 @@
 {
   "cards": [
     {
+      "apiId": "sv4-37",
+      "tcgdexId": "",
+      "name": "Snorunt",
+      "pokemon": "Snorunt",
+      "setName": "Paradox Rift",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv4",
+      "number": "037/182",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "satoma",
+      "imageSmall": "https://images.pokemontcg.io/sv4/37.png",
+      "imageLarge": "https://images.pokemontcg.io/sv4/37_hires.png",
+      "setReleaseDate": "2023/11/03",
+      "whyItBelongs": "The Pokédex says Snorunt gather under giant leaves and live together in harmony. This one skipped the leaves and the company: it’s asleep alone in a dark hollow of an ice cave, eyes shut, its reflection glowing in the frozen floor below.",
+      "createdAt": "2026-11-03T20:11:43.000Z",
+      "updatedAt": "2026-11-03T20:11:43.000Z",
+      "slug": "snorunt-paradox-rift-037-182",
+      "moods": [
+        "Snow Naps"
+      ]
+    },
+    {
+      "apiId": "hgss4-89",
+      "tcgdexId": "",
+      "name": "Twins",
+      "pokemon": "Mareep",
+      "setName": "HS—Triumphant",
+      "setSeries": "HeartGold & SoulSilver",
+      "setId": "hgss4",
+      "number": "89/102",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Kanako Eo",
+      "imageSmall": "https://images.pokemontcg.io/hgss4/89.png",
+      "imageLarge": "https://images.pokemontcg.io/hgss4/89_hires.png",
+      "setReleaseDate": "2010/11/03",
+      "whyItBelongs": "Two sisters weaving flower crowns, Marill grinning at the left, and squeezed against the right edge, a Mareep that has already dozed off with a flower on its head.",
+      "createdAt": "2026-11-03T20:11:43.000Z",
+      "updatedAt": "2026-11-03T20:11:43.000Z",
+      "slug": "twins-hs-triumphant-89-102",
+      "moods": [
+        "Cameo Sleepers",
+        "Flower Beds"
+      ]
+    },
+    {
+      "apiId": "dp2-109",
+      "tcgdexId": "",
+      "name": "Bebe's Search",
+      "pokemon": "Glameow",
+      "setName": "Mysterious Treasures",
+      "setSeries": "Diamond & Pearl",
+      "setId": "dp2",
+      "number": "109/123",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Ken Sugimori",
+      "imageSmall": "https://images.pokemontcg.io/dp2/109.png",
+      "imageLarge": "https://images.pokemontcg.io/dp2/109_hires.png",
+      "setReleaseDate": "2007/08/22",
+      "whyItBelongs": "Bebe is deep in the PC; Glameow is deep asleep beside it.",
+      "createdAt": "2026-11-03T20:11:43.000Z",
+      "updatedAt": "2026-11-03T20:11:43.000Z",
+      "slug": "bebe-s-search-mysterious-treasures-109-123",
+      "moods": [
+        "Cameo Sleepers",
+        "Study Break"
+      ]
+    },
+    {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Lillie",
+      "pokemon": "Cosmog",
+      "setName": "Sun & Moon Promos",
+      "setSeries": "Sun & Moon",
+      "setId": "smp-jp",
+      "number": "080/SM-P",
+      "rarity": "Promo",
+      "language": "Japanese",
+      "artist": "Megumi Mizutani",
+      "imageSmall": "/assets/cards/lillie-sm-p-080.jpg",
+      "imageLarge": "/assets/cards/lillie-sm-p-080.jpg",
+      "whyItBelongs": "Who’s keeping an eye on Nebby? Clefairy, by the look of it: Cosmog is curled up asleep on the couch with sleep bubbles drifting up, Clefairy sits right beside it, and Lillie is busy writing in her notebook.",
+      "createdAt": "2026-11-03T20:11:43.000Z",
+      "updatedAt": "2026-11-03T20:11:43.000Z",
+      "slug": "lillie-sun-and-moon-promos-080-sm-p",
+      "moods": [
+        "Cameo Sleepers",
+        "Couch & Cushion",
+        "Nap Watch"
+      ]
+    },
+    {
       "apiId": "sv7-172",
       "tcgdexId": "",
       "name": "Lacey",
