@@ -133,8 +133,8 @@
     "title": "Sleepy Pokemon Cameos",
     "eyebrow": "Cameo field notes",
     "description": "Sometimes the featured Pokemon is wide awake, but another sleeper quietly steals the scene. These cameos reward a closer look, and this growing shelf is here to help you spot them.",
-    "metaDescription": "Find sleeping Pokemon cameos in card art, from Pidove and Teddiursa to Sewaddle, Joltik, Pachirisu, Psyduck, and more.",
-    "updatedAt": "2026-10-20T20:52:50.000Z",
+    "metaDescription": "Find sleeping Pokemon cameos in card art, from Pidove and Teddiursa to Sewaddle, Pachirisu, Psyduck, Mareep, Glameow, Cosmog, and even a sleeping Drayton.",
+    "updatedAt": "2026-11-03T21:02:00.000Z",
     "cards": [
       {
         "slug": "munna-black-bolt-116-086",
@@ -183,6 +183,22 @@
       {
         "slug": "light-jolteon-neo-destiny-48-105",
         "reason": "Jolteon keeps watch beneath the stars while Togepi sleeps against its chest and Rattata curls up nearby. A gentle guardian cameo for this shelf."
+      },
+      {
+        "slug": "lacey-stellar-crown-172-142",
+        "reason": "The Blueberry League Elite Four are in the middle of something, and Drayton has quietly checked out. He’s easy to miss up in the top-right corner of the table, asleep on his arm."
+      },
+      {
+        "slug": "twins-hs-triumphant-89-102",
+        "reason": "The twins and their flower crowns fill the whole card, so the sleeper hides at the edge: Mareep, half out of frame, snoozing under a flower of its own."
+      },
+      {
+        "slug": "bebe-s-search-mysterious-treasures-109-123",
+        "reason": "Your eye goes straight to Bebe at the keyboard. Glameow, stretched out beside the laptop with its eyes shut, is the cat nap hiding in plain sight."
+      },
+      {
+        "slug": "lillie-sun-and-moon-promos-080-sm-p",
+        "reason": "Lillie and Clefairy are both awake. The sleeper is the small starry cloud between them: Cosmog has drifted off on the couch, sleep bubbles and all."
       }
     ]
   },
