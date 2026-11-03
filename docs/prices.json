@@ -1241,6 +1241,11 @@
       "market": 49.55,
       "source": "TCGplayer",
       "updatedAt": "2026/11/02"
+    },
+    "Japanese::Sun & Moon Promos::080/SM-P::Lillie": {
+      "market": 403.41,
+      "source": "Manual",
+      "updatedAt": "2026/11/03"
     }
   }
 }

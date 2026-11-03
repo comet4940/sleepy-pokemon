@@ -124,7 +124,8 @@
       "artist": "Megumi Mizutani",
       "imageSmall": "/assets/cards/lillie-sm-p-080.jpg",
       "imageLarge": "/assets/cards/lillie-sm-p-080.jpg",
-      "notes": "Sent in by the curator, with the image. Japanese promo, not on TCGdex or pokemontcg.io. The sleeper is Cosmog (Nebby). Release date and Manual price still to add.",
+      "setReleaseDate": "2017/06/16",
+      "notes": "Sent in by the curator, with the image. Japanese promo, not on TCGdex or pokemontcg.io. The sleeper is Cosmog (Nebby). Price and release date (2017/06/16) from PriceCharting, via the curator.",
       "moods": [
         "Cameo Sleepers",
         "Couch & Cushion",
@@ -132,7 +133,7 @@
       ],
       "whyItBelongs": "Who’s keeping an eye on Nebby? Clefairy, by the look of it: Cosmog is curled up asleep on the couch with sleep bubbles drifting up, Clefairy sits right beside it, and Lillie is busy writing in her notebook.",
       "createdAt": "2026-11-03T20:11:43.000Z",
-      "updatedAt": "2026-11-03T20:11:43.000Z"
+      "updatedAt": "2026-11-03T20:26:53.000Z"
     },
     {
       "apiId": "sv7-172",
