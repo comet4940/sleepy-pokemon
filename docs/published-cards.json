@@ -1,6 +1,52 @@
 {
   "cards": [
     {
+      "apiId": "dpp-DP25",
+      "tcgdexId": "",
+      "name": "Tropical Wind",
+      "pokemon": "Psyduck",
+      "setName": "Diamond & Pearl Promos",
+      "setSeries": "Diamond & Pearl",
+      "setId": "dpp",
+      "number": "DP25",
+      "rarity": "Promo",
+      "language": "English",
+      "artist": "Sumiyoshi Kizuki",
+      "imageSmall": "https://images.pokemontcg.io/dpp/DP25.png",
+      "imageLarge": "https://images.pokemontcg.io/dpp/DP25_hires.png",
+      "whyItBelongs": "Buneary is strumming a ukulele, Pachirisu has found a beach ball and Croagunk is lounging in a deck chair. Up in the hammock under the palm tree, Psyduck has slept through the whole beach party.",
+      "createdAt": "2026-11-03T20:30:41.000Z",
+      "updatedAt": "2026-11-03T20:30:41.000Z",
+      "slug": "tropical-wind-diamond-and-pearl-promos-dp25",
+      "moods": [
+        "Beach Naps",
+        "Nap Watch"
+      ]
+    },
+    {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Tropical Wind",
+      "pokemon": "Psyduck",
+      "setName": "Tropical Mega Battle",
+      "setSeries": "Other",
+      "setId": "tmb-jp",
+      "number": "Unnumbered",
+      "rarity": "Promo",
+      "language": "Japanese",
+      "artist": "Sumiyoshi Kizuki",
+      "imageSmall": "/assets/cards/tropical-wind-tropical-mega-battle.png",
+      "imageLarge": "/assets/cards/tropical-wind-tropical-mega-battle.png",
+      "whyItBelongs": "Tails on this card puts both Active Pokémon to sleep, and Psyduck seems to have flipped it on itself: it’s out cold in a hammock under the palms, a hibiscus on its head and a ukulele still in its arms, while a pink friend peeks in from the end of the hammock.",
+      "createdAt": "2026-11-03T20:30:41.000Z",
+      "updatedAt": "2026-11-03T20:30:41.000Z",
+      "slug": "tropical-wind-tropical-mega-battle-unnumbered",
+      "moods": [
+        "Beach Naps",
+        "Nap Watch"
+      ]
+    },
+    {
       "apiId": "zsv10pt5-148",
       "tcgdexId": "",
       "name": "Pidove",
