@@ -3,6 +3,34 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "sv7-172",
+      "tcgdexId": "",
+      "name": "Lacey",
+      "pokemon": "Lacey",
+      "setName": "Stellar Crown",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv7",
+      "number": "172/142",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Souichirou Gunjima",
+      "imageSmall": "https://images.pokemontcg.io/sv7/172.png",
+      "imageLarge": "https://images.pokemontcg.io/sv7/172_hires.png",
+      "setReleaseDate": "2024/09/13",
+      "notes": "Found while hunting for sleepy trainer cards (#224). The sleeper is Drayton, face down at the back of the table. Details checked against TCGdex (sv07-172) and the card image.",
+      "moods": [
+        "Cameo Sleepers",
+        "Sleepy Trainers",
+        "Study Break"
+      ],
+      "whyItBelongs": "Look past Lacey and Crispin to the far end of the table: Drayton is out cold, face down on his folded arms among the snacks and open books. The study session carries on without him.",
+      "createdAt": "2026-11-03T19:50:56.000Z",
+      "updatedAt": "2026-11-03T19:50:56.000Z",
+      "tcgplayerProductId": 567484,
+      "tcgplayerGroupId": 23537,
+      "priceType": "Holofoil"
+    },
+    {
       "apiId": "sv8pt5-18",
       "tcgdexId": "",
       "name": "Slowpoke",
