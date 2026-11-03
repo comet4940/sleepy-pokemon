@@ -3,6 +3,34 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "zsv10pt5-148",
+      "tcgdexId": "",
+      "name": "Pidove",
+      "pokemon": "Pidove",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "148/086",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/148.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/148_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "notes": "Sent in by the curator. Details checked against TCGdex (sv10.5b-148) and the card image.",
+      "moods": [
+        "Group Naps",
+        "Nap Watch",
+        "Town Naps"
+      ],
+      "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove on the warm paving stones has flopped over and gone to sleep among the fallen leaves. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
+      "createdAt": "2026-11-03T20:14:09.000Z",
+      "updatedAt": "2026-11-03T20:14:09.000Z",
+      "tcgplayerProductId": 642602,
+      "tcgplayerGroupId": 24325,
+      "priceType": "Holofoil"
+    },
+    {
       "apiId": "sv4-37",
       "tcgdexId": "",
       "name": "Snorunt",

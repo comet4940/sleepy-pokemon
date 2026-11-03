@@ -115,6 +115,31 @@
       "moods": [
         "Dream Sequence"
       ]
+    },
+    {
+      "apiId": "zsv10pt5-148",
+      "tcgdexId": "",
+      "name": "Pidove",
+      "pokemon": "Pidove",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "148/086",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/148.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/148_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove on the warm paving stones has flopped over and gone to sleep among the fallen leaves. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
+      "createdAt": "2026-11-03T20:14:09.000Z",
+      "updatedAt": "2026-11-03T20:14:09.000Z",
+      "slug": "pidove-black-bolt-148-086",
+      "moods": [
+        "Group Naps",
+        "Nap Watch",
+        "Town Naps"
+      ]
     }
   ]
 }
