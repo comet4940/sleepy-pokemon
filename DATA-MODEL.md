@@ -78,6 +78,29 @@ The validator rejects any card that still has these:
 - **Prices come from the refresh**, into `docs/prices.json`. See [Prices](#prices).
 - **Moods are a fixed list.** Add a new mood to `scripts/moods.mjs` before using it. A mood is only tagged when it truly shows in the art.
 
+## Writing "Why it belongs"
+
+`whyItBelongs` is the curator's note on a card page and in the lightbox. Each one should read like it was written for that card, not filled into a template.
+
+**Describe only what's in the art.** Look at the full-size image (`imageLarge`), not the thumbnail, before writing. Small details are easy to get wrong: who is asleep and who is awake, where they are (a ledge or the ground, a bed or a rug, indoors or out), and how they're lying (face down, or cheek on an arm). Leave out anything you can't see, and avoid guessing at what's going on outside the frame. Name trainers when you know who they are (Ace Trainer Dara, Professor Kukui, Drayton); search also finds them by name.
+
+**Mix up the shape.** One pattern repeated across the catalog makes every note read the same. Avoid these in particular:
+- the same opening words: over a hundred older notes start with "Cozy nap" or "Out cold";
+- the default formula "[Pokémon] has [settled/flopped/stretched out] on [place], eyes shut… [Artist]'s [style] makes/turns…".
+
+Rotate between these six patterns, and mix within a note when it helps:
+
+| Pattern | Shape | Example |
+| --- | --- | --- |
+| Question | Opens with a question the art answers | "Who needs a tent when your dragon is asleep? Ace Trainer Dara sits tucked in the curl of Druddigon's body…" (Druddigon TG09) |
+| Scene first | A few quick details of the setting, then the sleeper | "Muddy paw prints on the floorboards, a cloth in Professor Kukui's hand, and the culprit belly up on the rug…" (Rockruff TG07) |
+| Other character first | Starts with the awake trainer or Pokémon, then the sleeper | "Two Togedemaru, one nap. The one by the old tree has dozed off… while its friend peeks over the grass…" (Togedemaru 104/94) |
+| Look closer | Points the eye to a detail that's easy to miss | "In a cave full of flustered, squabbling Gible, one sneaky little guy at the top center has quietly slipped away for a nap." (Gible 94/113) |
+| Lore contrast | What the Pokédex or flavor text says, against what the art shows | "The Winged King, said to have split the land with its bare fists, is taking a nap." (Koraidon SVP 14) |
+| One-liner | A single punchy line; best when the art speaks for itself | "Sleeping like it means it." (Togetic 137/214) |
+
+Guide reasons (`reason` in `docs/guides.json`) follow the same idea. They say why the card fits that guide, and shouldn't repeat the card's own note word for word.
+
 ## Prices
 
 Market prices live in their own file, `docs/prices.json`, not in the cards or the pages:
@@ -143,7 +166,7 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 
 1. **Check it isn't already listed**: search `data/cards.json` for the Pokémon, set and number.
 2. **Collect the details** from the card itself and a source like pokemontcg.io, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, image.
-3. **Write the curation**: pick moods, write `whyItBelongs`, and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
+3. **Write the curation**: pick moods, write `whyItBelongs` (see [Writing "Why it belongs"](#writing-why-it-belongs)), and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
 4. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
 5. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
 6. **Regenerate and check**:
