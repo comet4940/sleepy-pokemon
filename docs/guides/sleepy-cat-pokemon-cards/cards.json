@@ -46,6 +46,32 @@
       ]
     },
     {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Litten",
+      "pokemon": "Litten",
+      "setName": "Sun & Moon Promos",
+      "setSeries": "Sun & Moon",
+      "setId": "smp-jp",
+      "number": "259/SM-P",
+      "rarity": "Promo",
+      "language": "Japanese",
+      "artist": "Saya Tsuruta",
+      "imageSmall": "/assets/cards/litten-sm-p-259.png",
+      "imageLarge": "/assets/cards/litten-sm-p-259.png",
+      "setReleaseDate": "2018/07/15",
+      "whyItBelongs": "Litten is curled up on a plush rose-colored armchair, tail dangling, completely unbothered while Chespin flutters around and books drift through the air. The dusky-purple reading room is a perfect backdrop for a cat nap, and Litten is the only one in it who has figured out the best use of the afternoon. As a rare Japanese-only Card Station promo whose art continues on the Chespin card, it’s a cozy, quietly smug addition to the stack.",
+      "createdAt": "2026-10-20T18:50:46.000Z",
+      "updatedAt": "2026-10-20T18:50:46.000Z",
+      "slug": "litten-sun-and-moon-promos-259-sm-p",
+      "moods": [
+        "Nap Watch",
+        "Face-Plant",
+        "Couch & Cushion",
+        "Study Break"
+      ]
+    },
+    {
       "apiId": "sv2-196",
       "tcgdexId": "",
       "name": "Sprigatito",
@@ -164,6 +190,30 @@
       ]
     },
     {
+      "apiId": "dp2-109",
+      "tcgdexId": "",
+      "name": "Bebe's Search",
+      "pokemon": "Glameow",
+      "setName": "Mysterious Treasures",
+      "setSeries": "Diamond & Pearl",
+      "setId": "dp2",
+      "number": "109/123",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Ken Sugimori",
+      "imageSmall": "https://images.pokemontcg.io/dp2/109.png",
+      "imageLarge": "https://images.pokemontcg.io/dp2/109_hires.png",
+      "setReleaseDate": "2007/08/22",
+      "whyItBelongs": "Bebe is deep in the PC; Glameow is deep asleep beside it.",
+      "createdAt": "2026-11-03T20:11:43.000Z",
+      "updatedAt": "2026-11-03T20:11:43.000Z",
+      "slug": "bebe-s-search-mysterious-treasures-109-123",
+      "moods": [
+        "Cameo Sleepers",
+        "Study Break"
+      ]
+    },
+    {
       "apiId": "me3-95",
       "tcgdexId": "",
       "name": "Espurr",
@@ -208,6 +258,31 @@
       "moods": []
     },
     {
+      "apiId": "sm6-45",
+      "tcgdexId": "",
+      "name": "Meowstic",
+      "pokemon": "Meowstic",
+      "setName": "Forbidden Light",
+      "setSeries": "Sun & Moon",
+      "setId": "sm6",
+      "number": "45/131",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "0313",
+      "imageSmall": "https://images.pokemontcg.io/sm6/45.png",
+      "imageLarge": "https://images.pokemontcg.io/sm6/45_hires.png",
+      "setReleaseDate": "2018/05/04",
+      "whyItBelongs": "Meowstic is tucked into a restful pose in a sun-warmed room, making this a calm indoor nap. The stillness of the illustration gives the card its gentle, sleepy feel.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:05.826Z",
+      "slug": "meowstic-forbidden-light-45-131",
+      "moods": [
+        "Face-Plant",
+        "Couch & Cushion",
+        "Sunbeam Naps"
+      ]
+    },
+    {
       "apiId": "swsh12-32",
       "tcgdexId": "",
       "name": "Incineroar",
@@ -229,6 +304,30 @@
       "moods": [
         "Belly Up",
         "Drool & Snore"
+      ]
+    },
+    {
+      "apiId": "swsh12pt5-41",
+      "tcgdexId": "",
+      "name": "Luxio",
+      "pokemon": "Luxio",
+      "setName": "Crown Zenith",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12pt5",
+      "number": "041/159",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Shibuzoh.",
+      "imageSmall": "https://images.pokemontcg.io/swsh12pt5/41.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12pt5/41_hires.png",
+      "setReleaseDate": "2023/01/20",
+      "whyItBelongs": "Luxio has drifted off beside a soft toy, turning a normally energetic Pokémon into a very convincing bedtime companion. The plush-filled setting gives this Crown Zenith card a warm, tucked-in feel.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-22T15:53:38.140Z",
+      "slug": "luxio-crown-zenith-041-159",
+      "moods": [
+        "Hug Buddy",
+        "Couch & Cushion"
       ]
     },
     {
