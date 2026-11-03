@@ -24,6 +24,29 @@
       ]
     },
     {
+      "apiId": "zsv10pt5-97",
+      "tcgdexId": "",
+      "name": "Darumaka",
+      "pokemon": "Darumaka",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "097/086",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Tomowaka",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/97.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/97_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "Darumaka’s own flavor text says that when the fire inside it dies down, it falls asleep. Here the fire is clearly out: it sits bolt upright on a tasseled floor cushion, eyes shut, with a Qualot Berry, a Payapa Berry, a bonsai pine and a few blue wildflowers keeping it company.",
+      "createdAt": "2026-11-03T23:23:30.000Z",
+      "updatedAt": "2026-11-03T23:29:23.000Z",
+      "slug": "darumaka-black-bolt-097-086",
+      "moods": [
+        "Couch & Cushion"
+      ]
+    },
+    {
       "apiId": "zsv10pt5-101",
       "tcgdexId": "",
       "name": "Panpour",
