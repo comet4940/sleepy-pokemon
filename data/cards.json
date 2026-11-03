@@ -16,6 +16,7 @@
       "artist": "Sumiyoshi Kizuki",
       "imageSmall": "https://images.pokemontcg.io/dpp/DP25.png",
       "imageLarge": "https://images.pokemontcg.io/dpp/DP25_hires.png",
+      "setReleaseDate": "2008/08/17",
       "notes": "Sent in by the curator. The Worlds 2008 printing (stamped \"Worlds 08\"); same artist and hammock scene as the 1999 Japanese Tropical Mega Battle card, redrawn with Sinnoh Pokémon. Details checked against TCGdex (dpp-DP25) and the card image.",
       "moods": [
         "Beach Naps",
@@ -23,7 +24,7 @@
       ],
       "whyItBelongs": "Buneary is strumming a ukulele, Pachirisu has found a beach ball and Croagunk is lounging in a deck chair. Up in the hammock under the palm tree, Psyduck has slept through the whole beach party.",
       "createdAt": "2026-11-03T20:30:41.000Z",
-      "updatedAt": "2026-11-03T20:30:41.000Z"
+      "updatedAt": "2026-11-03T20:39:04.000Z"
     },
     {
       "apiId": "",
@@ -34,11 +35,13 @@
       "setSeries": "Other",
       "setId": "tmb-jp",
       "number": "Unnumbered",
+      "slug": "tropical-wind-tropical-mega-battle",
       "rarity": "Promo",
       "language": "Japanese",
       "artist": "Sumiyoshi Kizuki",
       "imageSmall": "/assets/cards/tropical-wind-tropical-mega-battle.png",
       "imageLarge": "/assets/cards/tropical-wind-tropical-mega-battle.png",
+      "setReleaseDate": "1999/08/15",
       "notes": "Sent in by the curator, with the image. Participation card from the 1999 Tropical Mega Battle (Challenge Road '99); the card prints no number. Price from PriceCharting, via the curator. Not on TCGdex or pokemontcg.io.",
       "moods": [
         "Beach Naps",
@@ -46,7 +49,7 @@
       ],
       "whyItBelongs": "Tails on this card puts both Active Pokémon to sleep, and Psyduck seems to have flipped it on itself: it’s out cold in a hammock under the palms, a hibiscus on its head and a ukulele still in its arms, while a pink friend peeks in from the end of the hammock.",
       "createdAt": "2026-11-03T20:30:41.000Z",
-      "updatedAt": "2026-11-03T20:30:41.000Z"
+      "updatedAt": "2026-11-03T20:39:04.000Z"
     },
     {
       "apiId": "zsv10pt5-148",
@@ -69,9 +72,9 @@
         "Nap Watch",
         "Town Naps"
       ],
-      "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove on the warm paving stones has flopped over and gone to sleep among the fallen leaves. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
+      "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove has flopped over and gone to sleep on the cobblestones, like pigeons dozing on a city square. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
       "createdAt": "2026-11-03T20:14:09.000Z",
-      "updatedAt": "2026-11-03T20:14:09.000Z",
+      "updatedAt": "2026-11-03T20:39:04.000Z",
       "tcgplayerProductId": 642602,
       "tcgplayerGroupId": 24325,
       "priceType": "Holofoil"
