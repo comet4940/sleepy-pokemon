@@ -18,7 +18,7 @@ export function renderSiteHeader(basePath = "") {
           </svg>
           <div>
             <h1>Sleepy Pokemon</h1>
-            <p class="brand-byline">A collection by Comet</p>
+            <p class="brand-byline">A collection by Comet&nbsp;&amp;&nbsp;Linkcat</p>
           </div>
         </a>
         <nav class="topbar-actions" aria-label="Main navigation">
