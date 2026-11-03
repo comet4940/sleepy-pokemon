@@ -223,8 +223,10 @@ function renderGuidePage(guide) {
   <head>
 ${renderHead({
   root: "../../",
-  title: `${title} | Sleepy Pokemon Cards`,
-  socialTitle: title,
+  // seoTitle (optional) is the whole <title> and social title, written for how people search; the page heading,
+  // guide lists and analytics keep using title.
+  title: guide.seoTitle || `${title} | Sleepy Pokemon Cards`,
+  socialTitle: guide.seoTitle || title,
   description,
   canonicalUrl,
   image,
