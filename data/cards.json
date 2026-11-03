@@ -6188,7 +6188,7 @@
       "apiId": "neo1-100",
       "tcgdexId": "",
       "name": "Double Gust",
-      "pokemon": "Rattata",
+      "pokemon": "Sentret",
       "setName": "Neo Genesis",
       "setSeries": "Neo",
       "setId": "neo1",
@@ -6200,13 +6200,13 @@
       "imageLarge": "https://images.pokemontcg.io/neo1/100_hires.png",
       "priceType": "1st Edition",
       "setReleaseDate": "2000/12/16",
-      "notes": "The trainer card's illustration includes a Rattata resting among the other Pokémon.",
+      "notes": "The trainer card's illustration includes a sleeping Sentret among Hoppip, Hoothoot and Mareep (all awake). Corrected from Rattata on 2026-11-03.",
       "moods": [
         "Cameo Sleepers"
       ],
-      "whyItBelongs": "This is a trainer card rather than a Pokémon card, but its illustration gives a sleepy Rattata a memorable cameo among the other Pokémon. Tomokazu Komiya's playful scene makes it a fun vintage binder extra.",
+      "whyItBelongs": "Picked for battle? Sentret would rather not. It’s curled up asleep in the middle circle, eyes shut, while Hoppip sweats, Hoothoot beams and Mareep peeks up from the bottom edge.",
       "createdAt": "2026-10-20T00:00:00.000Z",
-      "updatedAt": "2026-10-21T15:57:02.883Z",
+      "updatedAt": "2026-11-03T21:25:22.000Z",
       "tcgplayerProductId": 84891,
       "tcgplayerGroupId": 1396
     },

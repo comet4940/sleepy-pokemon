@@ -133,8 +133,8 @@
     "title": "Sleepy Pokemon Cameos",
     "eyebrow": "Cameo field notes",
     "description": "Sometimes the featured Pokemon is wide awake, but another sleeper quietly steals the scene. These cameos reward a closer look, and this growing shelf is here to help you spot them.",
-    "metaDescription": "Find sleeping Pokemon cameos in card art, from Pidove and Teddiursa to Sewaddle, Joltik, Pachirisu, Psyduck, and more.",
-    "updatedAt": "2026-10-20T20:52:50.000Z",
+    "metaDescription": "Find sleeping Pokemon cameos in card art, from Pidove and Teddiursa to Sewaddle, Pachirisu, Psyduck, Mareep, Glameow, Cosmog, and even a sleeping Drayton.",
+    "updatedAt": "2026-11-03T21:25:22.000Z",
     "cards": [
       {
         "slug": "munna-black-bolt-116-086",
@@ -183,6 +183,42 @@
       {
         "slug": "light-jolteon-neo-destiny-48-105",
         "reason": "Jolteon keeps watch beneath the stars while Togepi sleeps against its chest and Rattata curls up nearby. A gentle guardian cameo for this shelf."
+      },
+      {
+        "slug": "lacey-stellar-crown-172-142",
+        "reason": "The Blueberry League Elite Four are in the middle of something, and Drayton has quietly checked out. He’s easy to miss up in the top-right corner of the table, asleep on his arm."
+      },
+      {
+        "slug": "twins-hs-triumphant-89-102",
+        "reason": "The twins and their flower crowns fill the whole card, so the sleeper hides at the edge: Mareep, half out of frame, snoozing under a flower of its own."
+      },
+      {
+        "slug": "bebe-s-search-mysterious-treasures-109-123",
+        "reason": "Your eye goes straight to Bebe at the keyboard. Glameow, stretched out beside the laptop with its eyes shut, is the cat nap hiding in plain sight."
+      },
+      {
+        "slug": "lillie-sun-and-moon-promos-080-sm-p",
+        "reason": "Lillie and Clefairy are both awake. The sleeper is the small starry cloud between them: Cosmog has drifted off on the couch, sleep bubbles and all."
+      },
+      {
+        "slug": "greedent-v-fusion-strike-257-264",
+        "reason": "Most of the Skwovet lined up along the log are still chewing and grinning. One near the middle has stopped: eyelids drooping and cheeks still full, it’s nodding off mid-snack while Greedent keeps eating."
+      },
+      {
+        "slug": "reuniclus-temporal-forces-171-162",
+        "reason": "Reuniclus is having a splashy time in the shallows. Look up past it: a Duosion floats on its back across the top of the card, eyes closed, napping on the water."
+      },
+      {
+        "slug": "light-piloswine-neo-destiny-26-105",
+        "reason": "Count the Swinub: one asleep on top of Light Piloswine’s head and three more dozing against its shaggy sides. Piloswine has become a hill for a family nap."
+      },
+      {
+        "slug": "bouffalant-legendary-treasures-107-113",
+        "reason": "Two Natu have nested in Bouffalant’s afro. The one on the left is already asleep; its friend is keeping one eye open."
+      },
+      {
+        "slug": "double-gust-neo-genesis-100-111",
+        "reason": "A finger is choosing who gets switched in, Hoppip is sweating it out, and Sentret has simply lain down in the middle circle and fallen asleep."
       }
     ]
   },
