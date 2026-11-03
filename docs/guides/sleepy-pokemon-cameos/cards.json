@@ -390,6 +390,131 @@
         "Couch & Cushion",
         "Nap Watch"
       ]
+    },
+    {
+      "apiId": "swsh8-257",
+      "tcgdexId": "",
+      "name": "Greedent V",
+      "pokemon": "Greedent",
+      "setName": "Fusion Strike",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh8",
+      "number": "257/264",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "Saya Tsuruta",
+      "imageSmall": "https://images.pokemontcg.io/swsh8/257.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh8/257_hires.png",
+      "setReleaseDate": "2021/11/12",
+      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
+      "createdAt": "2026-10-27T22:43:34.000Z",
+      "updatedAt": "2026-10-27T22:43:34.000Z",
+      "slug": "greedent-v-fusion-strike-257-264",
+      "moods": [
+        "Nap Watch",
+        "Cameo Sleepers",
+        "Food Coma"
+      ]
+    },
+    {
+      "apiId": "sv5-171",
+      "tcgdexId": "",
+      "name": "Reuniclus",
+      "pokemon": "Reuniclus",
+      "setName": "Temporal Forces",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv5",
+      "number": "171/162",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Atsushi Furusawa",
+      "imageSmall": "https://images.pokemontcg.io/sv5/171.png",
+      "imageLarge": "https://images.pokemontcg.io/sv5/171_hires.png",
+      "setReleaseDate": "2024/03/22",
+      "whyItBelongs": "Two Duosion drift lazily across the top of this card, floating on the shimmering water while the sun sparkles around them. The whole scene feels like a warm afternoon on a pool float, with a cheerful Reuniclus keeping watch over the nap.",
+      "createdAt": "2026-10-27T21:59:45.000Z",
+      "updatedAt": "2026-10-27T21:59:45.000Z",
+      "slug": "reuniclus-temporal-forces-171-162",
+      "moods": [
+        "Nap Watch",
+        "Cameo Sleepers",
+        "Water Naps"
+      ]
+    },
+    {
+      "apiId": "neo4-26",
+      "tcgdexId": "",
+      "name": "Light Piloswine",
+      "pokemon": "Piloswine",
+      "setName": "Neo Destiny",
+      "setSeries": "Neo",
+      "setId": "neo4",
+      "number": "26/105",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "Yukiko Baba",
+      "imageSmall": "https://images.pokemontcg.io/neo4/26.png",
+      "imageLarge": "https://images.pokemontcg.io/neo4/26_hires.png",
+      "setReleaseDate": "2002/02/28",
+      "whyItBelongs": "Out cold in a silent snowfall. Yukiko Baba's distinctive folk-art linework turns this ancient swine nap into vintage poetry.",
+      "createdAt": "2026-05-05T21:38:02.638Z",
+      "updatedAt": "2026-10-23T20:00:00.000Z",
+      "slug": "light-piloswine-neo-destiny-26-105",
+      "moods": [
+        "Group Naps",
+        "Cameo Sleepers",
+        "Face-Plant",
+        "Pokémon Pillow"
+      ]
+    },
+    {
+      "apiId": "bw11-107",
+      "tcgdexId": "",
+      "name": "Bouffalant",
+      "pokemon": "Bouffalant",
+      "setName": "Legendary Treasures",
+      "setSeries": "Black & White",
+      "setId": "bw11",
+      "number": "107/113",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Sanosuke Sakuma",
+      "imageSmall": "https://images.pokemontcg.io/bw11/107.png",
+      "imageLarge": "https://images.pokemontcg.io/bw11/107_hires.png",
+      "setReleaseDate": "2013/11/06",
+      "whyItBelongs": "A pair of tiny companions are tucked into Bouffalant's enormous woolly mane, looking perfectly content to rest there. Sanosuke Sakuma makes this feel like the coziest group nap on the prairie.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:01.096Z",
+      "slug": "bouffalant-legendary-treasures-107-113",
+      "moods": [
+        "Nap Watch",
+        "Cameo Sleepers",
+        "Pokémon Pillow",
+        "Snow Naps"
+      ]
+    },
+    {
+      "apiId": "neo1-100",
+      "tcgdexId": "",
+      "name": "Double Gust",
+      "pokemon": "Rattata",
+      "setName": "Neo Genesis",
+      "setSeries": "Neo",
+      "setId": "neo1",
+      "number": "100/111",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Tomokazu Komiya",
+      "imageSmall": "https://images.pokemontcg.io/neo1/100.png",
+      "imageLarge": "https://images.pokemontcg.io/neo1/100_hires.png",
+      "setReleaseDate": "2000/12/16",
+      "whyItBelongs": "This is a trainer card rather than a Pokémon card, but its illustration gives a sleepy Rattata a memorable cameo among the other Pokémon. Tomokazu Komiya's playful scene makes it a fun vintage binder extra.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:02.883Z",
+      "slug": "double-gust-neo-genesis-100-111",
+      "moods": [
+        "Cameo Sleepers"
+      ]
     }
   ]
 }
