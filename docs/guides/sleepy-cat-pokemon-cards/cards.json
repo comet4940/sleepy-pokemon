@@ -187,6 +187,27 @@
       ]
     },
     {
+      "apiId": "sm10-79",
+      "tcgdexId": "",
+      "name": "Espurr",
+      "pokemon": "Espurr",
+      "setName": "Unbroken Bonds",
+      "setSeries": "Sun & Moon",
+      "setId": "sm10",
+      "number": "79/214",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "HYOGONOSUKE",
+      "imageSmall": "https://images.pokemontcg.io/sm10/79.png",
+      "imageLarge": "https://images.pokemontcg.io/sm10/79_hires.png",
+      "setReleaseDate": "2019/05/03",
+      "whyItBelongs": "Espurr is stretched out in the grass beneath a broad tree, eyes closed and mouth open in a tiny sleepy yawn. HYOGONOSUKE's sun-dappled scene makes this feel like a warm afternoon nap interrupted only by the light.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:03.841Z",
+      "slug": "espurr-unbroken-bonds-79-214",
+      "moods": []
+    },
+    {
       "apiId": "swsh12-32",
       "tcgdexId": "",
       "name": "Incineroar",
@@ -211,30 +232,6 @@
       ]
     },
     {
-      "apiId": "swsh12pt5gg-GG42",
-      "tcgdexId": "",
-      "name": "Zeraora VMAX",
-      "pokemon": "Zeraora",
-      "setName": "Crown Zenith Galarian Gallery",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh12pt5gg",
-      "number": "GG42/GG70",
-      "rarity": "Rare Holo VMAX",
-      "language": "English",
-      "artist": "aoki",
-      "imageSmall": "https://images.pokemontcg.io/swsh12pt5gg/GG42.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh12pt5gg/GG42_hires.png",
-      "setReleaseDate": "2023/01/20",
-      "whyItBelongs": "Zeraora is crackling with lightning, and a Pachirisu has curled up on top of its head and fallen asleep anyway. Being an Electric type probably helps.",
-      "createdAt": "2026-05-05T21:17:44.284Z",
-      "updatedAt": "2026-11-03T22:11:25.000Z",
-      "slug": "zeraora-vmax-crown-zenith-galarian-gallery-gg42-gg70",
-      "moods": [
-        "Cameo Sleepers",
-        "Pokémon Pillow"
-      ]
-    },
-    {
       "apiId": "swsh12pt5gg-GG10",
       "tcgdexId": "",
       "name": "Mew",
@@ -255,6 +252,30 @@
       "slug": "mew-crown-zenith-galarian-gallery-gg10-gg70",
       "moods": [
         "Hug Buddy",
+        "Flower Beds"
+      ]
+    },
+    {
+      "apiId": "me55-152",
+      "tcgdexId": "",
+      "name": "Mew ex",
+      "pokemon": "Mew",
+      "setName": "ME: 30th Celebration",
+      "setSeries": "Mega Evolution",
+      "setId": "me55",
+      "number": "152/128",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Kuroimori",
+      "imageSmall": "https://images.scrydex.com/pokemon/me55-152/small",
+      "imageLarge": "https://images.scrydex.com/pokemon/me55-152/large",
+      "setReleaseDate": "2026/09/16",
+      "whyItBelongs": "Mew isn’t quite asleep; it hovers with heavy lidded eyes in a sunlit forest glade. Its loosely looping tail, the blossom covered branches, and the golden light make the moment feel suspended between waking and dreaming. As an iconic 30th Celebration centerpiece, it brings a sleepy binder something special: not a nap caught in progress, but that weightless drift just before sleep.",
+      "createdAt": "2026-10-04T16:56:57.000Z",
+      "updatedAt": "2026-10-06T17:10:53.918Z",
+      "slug": "mew-ex-me-30th-celebration-152-128",
+      "moods": [
+        "Dream Sequence",
         "Flower Beds"
       ]
     },
@@ -324,6 +345,53 @@
       "slug": "umbreon-gem-pack-volume-2-06-15-15",
       "moods": [
         "Sunbeam Naps"
+      ]
+    },
+    {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Karen's Umbreon",
+      "pokemon": "Umbreon",
+      "setName": "Pokémon VS",
+      "setSeries": "Pokémon VS",
+      "setId": "vs1-jp",
+      "number": "091/141",
+      "rarity": "Rare Holo",
+      "language": "Japanese",
+      "artist": "Hajime Kusajima",
+      "imageSmall": "/assets/cards/karens-umbreon-vs-091.jpg",
+      "imageLarge": "/assets/cards/karens-umbreon-vs-091.jpg",
+      "setReleaseDate": "2001/07/19",
+      "whyItBelongs": "Umbreon is curled into a tight, round ball with its head tucked in, and its glowing yellow rings look like small lanterns in the dark. The holo foil scatters glittering specks across the background, so the whole scene feels like a sleeping Umbreon surrounded by stars. The card’s category line reads げっこうポケモン, “Moonlight Pokémon,” which fits a Pokémon that spends the night curled up in its own soft glow.\n\nIt’s also a trainer card with some history. Karen, an Elite Four member, owns an Umbreon in Pokémon Gold, Silver and Crystal. That makes this a quieter side of a famously cool, composed trainer’s partner, caught resting away from the battle. And this is a Japanese card that has not been officially released in English, so it’s a nice addition to the stack for anyone who likes the Japanese-only prints",
+      "createdAt": "2026-10-20T18:50:46.000Z",
+      "updatedAt": "2026-10-20T18:50:46.000Z",
+      "slug": "karen-s-umbreon-pokemon-vs-091-141",
+      "moods": [
+        "Dream Sequence",
+        "Moonlit Naps"
+      ]
+    },
+    {
+      "apiId": "miscpp_jp-025",
+      "tcgdexId": "",
+      "name": "Umbreon",
+      "pokemon": "Umbreon",
+      "setName": "McDonald's Promotion (2002)",
+      "setSeries": "Other",
+      "setId": "miscpp_jp",
+      "number": "025/P",
+      "rarity": "Promo",
+      "language": "Japanese",
+      "artist": "Mitsuhiro Arita",
+      "imageSmall": "https://pokeboon.com/wp-content/uploads/P-300x-re-name/025p-umbreon-promo.jpg",
+      "imageLarge": "https://pokeboon.com/wp-content/uploads/P-300x-re-name/025p-umbreon-promo.jpg",
+      "setReleaseDate": "2002/01/26",
+      "whyItBelongs": "Caught mid yawn, Umbreon sprawls across the green rooftop tiles while the city carries on below. Its loose, stretched out pose and drooping eye make this feel like a quiet afternoon break that could turn into a nap at any moment. Arita gives the 2002 Japanese McDonald's promo a lovely sleepy story: even Umbreon needs a rooftop perch to yawn and unwind!",
+      "createdAt": "2026-10-04T16:56:57.000Z",
+      "updatedAt": "2026-10-04T16:56:57.000Z",
+      "slug": "umbreon-mcdonald-s-promotion-2002-025-p",
+      "moods": [
+        "Town Naps"
       ]
     },
     {
