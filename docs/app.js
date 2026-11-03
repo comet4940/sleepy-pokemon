@@ -1254,18 +1254,23 @@ function renderCard(card) {
         ${renderWishSky()}
       </div>
       <div class="card-body">
-        <div class="card-title-row"><h3><button class="card-open" type="button" aria-label="Open ${escapeAttribute(card.name)} preview">${escapeHtml(card.name)}</button></h3>${renderWishButton(card.slug, card.name)}</div>
+        <div class="card-title-row"><h3><a class="card-open" href="${escapeAttribute(getCardPageUrl(card))}" aria-label="Open ${escapeAttribute(card.name)} preview">${escapeHtml(card.name)}</a></h3>${renderWishButton(card.slug, card.name)}</div>
         <p class="card-subtitle">${escapeHtml(card.setName)} · ${escapeHtml(card.number)} · ${escapeHtml(card.rarity)}</p>
       </div>
     </article>
   `;
 }
 
+// Each tile's name is a real link to the card page (#251), stretched over the whole tile by CSS. A plain click
+// opens the lightbox instead; modified and non-primary clicks open the card page in a new tab or window.
 function handleCardGridClick(event) {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const tile = event.target.closest(".card-tile[data-card-id]");
   if (!tile) return;
   const card = findCardByIdentity(tile.dataset.cardId);
-  if (card) openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
+  if (!card) return;
+  event.preventDefault();
+  openCardDetail(card, getCardDiscoverySource(tile), { deck: getGridDeck(tile) });
 }
 
 // The collection steps through the filtered, sorted results (all of them, even before the grid has finished

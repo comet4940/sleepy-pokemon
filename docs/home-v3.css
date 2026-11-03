@@ -289,7 +289,7 @@ a { color: inherit; }
 
 /* Card tiles: the name is the tile's real button, stretched over the whole tile, so the wishlist star can sit
    beside it without one button inside another. */
-.card-open { padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-align: left; cursor: pointer; }
+.card-open { padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-align: left; text-decoration: none; cursor: pointer; }
 .card-open::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
 .card-open:focus-visible { outline: none; }
 .card-tile:has(.card-open:focus-visible) { outline: 3px solid var(--pink); outline-offset: 4px; }
