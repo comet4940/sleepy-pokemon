@@ -331,6 +331,30 @@
       ]
     },
     {
+      "apiId": "swsh12pt5-52",
+      "tcgdexId": "",
+      "name": "Zeraora",
+      "pokemon": "Zeraora",
+      "setName": "Crown Zenith",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12pt5",
+      "number": "052/159",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "HYOGONOSUKE",
+      "imageSmall": "https://images.pokemontcg.io/swsh12pt5/52.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12pt5/52_hires.png",
+      "setReleaseDate": "2023/01/20",
+      "whyItBelongs": "All stretched out in a flower-filled meadow, Zeraora looks like it found the perfect spot to recharge in the sun.",
+      "createdAt": "2026-10-20T18:50:46.000Z",
+      "updatedAt": "2026-10-21T15:55:39.617Z",
+      "slug": "zeraora-crown-zenith-052-159",
+      "moods": [
+        "Belly Up",
+        "Flower Beds"
+      ]
+    },
+    {
       "apiId": "swsh12pt5gg-GG10",
       "tcgdexId": "",
       "name": "Mew",
@@ -514,6 +538,31 @@
       "slug": "eevee-scarlet-and-violet-promos-173-150",
       "moods": [
         "Belly Up",
+        "Couch & Cushion"
+      ]
+    },
+    {
+      "apiId": "sv6-188",
+      "tcgdexId": "sv6-188",
+      "name": "Eevee",
+      "pokemon": "Eevee",
+      "setName": "Twilight Masquerade",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv6",
+      "number": "188/167",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Narumi Sato",
+      "imageSmall": "https://images.pokemontcg.io/sv6/188.png",
+      "imageLarge": "https://images.pokemontcg.io/sv6/188_hires.png",
+      "setReleaseDate": "2024/05/24",
+      "whyItBelongs": "In a room packed with energetic, scampering Eevees tumbling over tables and knocking over books, one little guy in the bottom-right corner has opted out of the chaos entirely. Curled up into a tiny ball on a plush cushion with eyes tightly shut, this Eevee represents peak unbothered comfort.",
+      "createdAt": "2026-09-21T00:00:00.000Z",
+      "updatedAt": "2026-10-18T14:34:46.873Z",
+      "slug": "eevee-twilight-masquerade-188-167",
+      "moods": [
+        "Face-Plant",
+        "Hug Buddy",
         "Couch & Cushion"
       ]
     }

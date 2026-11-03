@@ -108,8 +108,8 @@
     "title": "Sleepy Cat Pokemon Cards",
     "eyebrow": "Om's field notes",
     "description": "Every sleepy cat Pokemon card currently in the collection, researched with Om (linkcat): tiny kittens, dramatic big cats, psychic cats, electric cats, and a few cat-adjacent creatures making a very convincing case. We do not discriminate here.",
-    "metaDescription": "Browse 22 sleepy cat Pokemon cards featuring Meowth, Litten, Sprigatito, Skitty, Glameow, Espurr, Meowstic, Incineroar, Luxio, Mew, Espeon, Umbreon, and Eevee.",
-    "updatedAt": "2026-11-03T22:24:54.000Z",
+    "metaDescription": "Browse 24 sleepy cat Pokemon cards featuring Meowth, Litten, Sprigatito, Skitty, Glameow, Espurr, Meowstic, Incineroar, Luxio, Zeraora, Mew, Espeon, Umbreon, and Eevee.",
+    "updatedAt": "2026-11-03T22:26:08.000Z",
     "cards": [
       { "slug": "skitty-ascended-heroes-165-217", "reason": "Skitty is a kitten curled up in a tiny bed. No debate, no notes, full marks for understanding the assignment." },
       { "slug": "litten-temporal-forces-167-162", "reason": "A literal Fire Cat enjoying a warm, very committed nap. Litten may be the purest expression of this guide." },
@@ -125,6 +125,7 @@
       { "slug": "meowstic-forbidden-light-45-131", "reason": "Meowstic has flattened itself across a sunny rug by the window, eyes shut. Anyone who has lived with a cat knows this exact pose." },
       { "slug": "incineroar-silver-tempest-32-195", "reason": "Litten's fully evolved big-cat form proves that even a dramatic wrestling heel needs a proper recovery nap." },
       { "slug": "luxio-crown-zenith-041-159", "reason": "Luxio has curled up on a pink pillow hugging a teddy bear, one eye already shut and the other not far behind." },
+      { "slug": "zeraora-crown-zenith-052-159", "reason": "This is the Zeraora that belongs here: flat on its back in a meadow of white flowers, eyes shut, arms flung wide. Its card says it moves at the speed of lightning. Not today." },
       { "slug": "mew-crown-zenith-galarian-gallery-gg10-gg70", "reason": "Mew is our mythical, cat-shaped technicality. The ears, paws, tail, and excellent sleeping form make a persuasive case." },
       { "slug": "mew-ex-me-30th-celebration-152-128", "reason": "Our cat-shaped technicality again, this time drifting through a blossoming forest with its eyes half closed. Not quite asleep, but very much on the way." },
       { "slug": "espeon-vmax-fusion-strike-270-264", "reason": "Espeon is the clearly feline Eeveelution, here in spectacularly oversized sleepy-cat form." },
@@ -132,7 +133,8 @@
       { "slug": "umbreon-gem-pack-volume-2-06-15-15", "reason": "A second sleepy Umbreon strengthens the case. We remain open-minded when the evidence is this cozy." },
       { "slug": "karen-s-umbreon-pokemon-vs-091-141", "reason": "Curled into a tight ball with its rings glowing, which is about the most cat way to sleep there is. Karen’s Umbreon makes the case all by itself." },
       { "slug": "umbreon-mcdonald-s-promotion-2002-025-p", "reason": "Stretched out on a rooftop above the city, mid-yawn. If that isn’t cat behavior, nothing in this guide is." },
-      { "slug": "eevee-scarlet-and-violet-promos-173-150", "reason": "Eevee is famously a little cat, dog, and fox at once. That is more than enough cat for this collection." }
+      { "slug": "eevee-scarlet-and-violet-promos-173-150", "reason": "Eevee is famously a little cat, dog, and fox at once. That is more than enough cat for this collection." },
+      { "slug": "eevee-twilight-masquerade-188-167", "reason": "A whole litter of Eevee has taken over the living room, and several have already given up: one hugging a plush on the couch, another curled up in a basket in the corner." }
     ]
   },
   {
