@@ -134,6 +134,8 @@ Market prices live in their own file, `docs/prices.json`, not in the cards or th
 
 Guides live in `docs/guides.json`: each one has a `slug`, `title`, `eyebrow`, `description`, `metaDescription`, `updatedAt` and its `cards` (each a card `slug` and the curator's `reason`).
 
+- **`seoTitle` (optional)** is the page's whole `<title>` and social title, written in the words people search with ("Sleeping Pikachu Cards…"). Without it, the title is `{title} | Sleepy Pokemon Cards`. The page heading, guide lists and analytics (`guide_title`) always use `title`, so a playful title can stay on the page. Search Console shows people type "sleeping" more than "sleepy", so prefer "sleeping" in `seoTitle` and `metaDescription` where it fits. Keep `seoTitle` under about 60 characters.
+
 - **Bump `updatedAt` whenever a guide changes**: cards added, removed or reordered, a reason rewritten, or its title or descriptions edited. Use an ISO 8601 timestamp, like a card's `updatedAt`.
 - Unlike the catalog, guides do lose cards, and nothing else records that. The sitemap dates a guide page by the newer of `updatedAt` and its cards' own changes, and the homepage and `/guides/` by the newest guide `updatedAt`. The validator checks every guide has one.
 
