@@ -81,35 +81,15 @@
     "description": "On a full art card the nap takes up the whole card, with no frame around the art. Here are fifteen of our favorites: a Sword & Shield alt art, Trainer Gallery and Galarian Gallery cards, Special Illustration Rares, Illustration Rares, and one Chinese card worth tracking down.",
     "seoTitle": "Sleeping Pokemon Full Art & Illustration Rare Cards",
     "metaDescription": "15 sleeping Pokemon full art cards: the Skuntank V alt art, Jacq and Bianca's Devotion SIRs, and Illustration Rares like Mesprit, Lechonk and Rowlet.",
-    "updatedAt": "2026-11-04T23:02:27.000Z",
+    "updatedAt": "2026-11-04T23:10:37.000Z",
     "cards": [
       {
         "slug": "skuntank-v-silver-tempest-181-195",
         "reason": "Look past the two Skuntank on guard outside, down into the burrow under the tree roots. Two tiny Stunky are curled up asleep next to the family’s fruit stash, the best nap on the card hiding where you’d look last."
       },
       {
-        "slug": "druddigon-silver-tempest-trainer-gallery-tg09-tg30",
-        "reason": "Trainer Gallery cards pair a Pokémon with its trainer, and these two make a good team: Ace Trainer Dara reads her map in the curl of Druddigon's body while Druddigon dozes with its head down."
-      },
-      {
-        "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
-        "reason": "Professor Kukui is down on the floor with a cloth, cleaning up. Rockruff is belly up on the rug, eyes shut and tongue out, contributing nothing."
-      },
-      {
-        "slug": "solrock-crown-zenith-galarian-gallery-gg15-gg70",
-        "reason": "Solrock's own flavor text says it gives off light like the sun when it spins. In this Galarian Gallery card the sun has set, the sky is turning purple, and Solrock has stopped spinning to doze in the flowers while Volbeat and Illumise take over the lighting."
-      },
-      {
         "slug": "jacq-scarlet-and-violet-250-198",
         "reason": "A Special Illustration Rare for anyone who has fallen asleep studying. Jacq is face down at his desk with his glasses still on, a mug and a landslide of books and papers around him."
-      },
-      {
-        "slug": "bianca-s-devotion-temporal-forces-209-162",
-        "reason": "Bianca has crashed on the couch, curled into the cushions with her bag still on, and Musharna dozes right above her. All soft light and warm colors, it's one of the coziest Special Illustration Rares around."
-      },
-      {
-        "slug": "misty-s-lapras-destined-rivals-194-182",
-        "reason": "Misty has dozed off against Lapras's shell, smiling, while Lapras gazes out to sea. A beach day for two, and only one of them is still awake."
       },
       {
         "slug": "pidove-black-bolt-148-086",
@@ -120,12 +100,20 @@
         "reason": "A pod of Spheal dozing on the ice floes under a bright sun, except the one in the middle, eyes wide open and diving into the water. Its attack, Powder Snow, puts the opponent to sleep, so the others are covered."
       },
       {
+        "slug": "druddigon-silver-tempest-trainer-gallery-tg09-tg30",
+        "reason": "Trainer Gallery cards pair a Pokémon with its trainer, and these two make a good team: Ace Trainer Dara reads her map in the curl of Druddigon's body while Druddigon dozes with its head down."
+      },
+      {
         "slug": "darumaka-black-bolt-097-086",
         "reason": "Darumaka is said to fall asleep once the fire inside it dies down. This Illustration Rare catches that exact moment: sitting bolt upright on its cushion, eyes closed, not moving an inch."
       },
       {
         "slug": "lechonk-obsidian-flames-209-197",
         "reason": "Lechonk’s flavor text says it spends all day searching for food. Mission accomplished: the bowl is tipped over, crumbs are everywhere, and Lechonk has flopped down on the checkered tiles with its eyes shut."
+      },
+      {
+        "slug": "misty-s-lapras-destined-rivals-194-182",
+        "reason": "Misty has dozed off against Lapras's shell, smiling, while Lapras gazes out to sea. A beach day for two, and only one of them is still awake."
       },
       {
         "slug": "sawsbuck-white-flare-92-86",
@@ -136,8 +124,20 @@
         "reason": "Rowlet supposedly likes tight, dark places, like the inside of its Trainer’s bag. Not today: it has dozed off out in the open, a round little ball among bright green leaves, eyes squeezed into happy arcs."
       },
       {
+        "slug": "bianca-s-devotion-temporal-forces-209-162",
+        "reason": "Bianca has crashed on the couch, curled into the cushions with her bag still on, and Musharna dozes right above her. All soft light and warm colors, it's one of the coziest Special Illustration Rares around."
+      },
+      {
+        "slug": "solrock-crown-zenith-galarian-gallery-gg15-gg70",
+        "reason": "Solrock's own flavor text says it gives off light like the sun when it spins. In this Galarian Gallery card the sun has set, the sky is turning purple, and Solrock has stopped spinning to doze in the flowers while Volbeat and Illumise take over the lighting."
+      },
+      {
         "slug": "mesprit-surging-sparks-204-191",
         "reason": "Mesprit is known as the Being of Emotion, the one that taught people sorrow, pain and joy. The only emotion on this card is contentment: it drifts through a pink sunset sky with its eyes closed and its tails trailing behind."
+      },
+      {
+        "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
+        "reason": "Professor Kukui is down on the floor with a cloth, cleaning up. Rockruff is belly up on the rug, eyes shut and tongue out, contributing nothing."
       },
       {
         "slug": "cubone-gem-pack-vol-3-04-07-07",

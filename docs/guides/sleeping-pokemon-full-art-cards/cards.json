@@ -26,89 +26,6 @@
       ]
     },
     {
-      "apiId": "swsh12tg-TG09",
-      "tcgdexId": "",
-      "name": "Druddigon",
-      "pokemon": "Druddigon",
-      "setName": "Silver Tempest Trainer Gallery",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh12tg",
-      "number": "TG09/TG30",
-      "rarity": "Trainer Gallery Rare Holo",
-      "language": "English",
-      "artist": "Teeziro",
-      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG09.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG09_hires.png",
-      "setReleaseDate": "2022/11/11",
-      "whyItBelongs": "Who needs a tent when your dragon is asleep? Ace Trainer Dara sits tucked in the curl of Druddigon’s body, reading a map in the shade of its wing, while Druddigon dozes with its head down beside her, cliffs and rock spires rising behind them. The card’s own flavor text calls it vicious and cunning. You’d never guess.",
-      "createdAt": "2026-05-05T00:53:44.741Z",
-      "updatedAt": "2026-11-03T19:41:50.000Z",
-      "slug": "druddigon-silver-tempest-trainer-gallery-tg09-tg30",
-      "moods": [
-        "Nap Watch"
-      ],
-      "searchKeywords": [
-        "full art"
-      ]
-    },
-    {
-      "apiId": "swsh12tg-TG07",
-      "tcgdexId": "",
-      "name": "Rockruff",
-      "pokemon": "Rockruff",
-      "setName": "Silver Tempest Trainer Gallery",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh12tg",
-      "number": "TG07/TG30",
-      "rarity": "Trainer Gallery Rare Holo",
-      "language": "English",
-      "artist": "Hideki Ishikawa",
-      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG07.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG07_hires.png",
-      "setReleaseDate": "2022/11/11",
-      "whyItBelongs": "Muddy paw prints on the floorboards, a cloth in Professor Kukui’s hand, and the culprit belly up on the rug, eyes squeezed shut and tongue out. Rockruff has decided the cleanup can happen without it.",
-      "createdAt": "2026-05-05T00:51:50.624Z",
-      "updatedAt": "2026-11-03T19:34:42.000Z",
-      "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
-      "moods": [
-        "Belly Up",
-        "Nap Watch"
-      ],
-      "searchKeywords": [
-        "full art",
-        "dog",
-        "puppy"
-      ]
-    },
-    {
-      "apiId": "swsh12pt5gg-GG15",
-      "tcgdexId": "",
-      "name": "Solrock",
-      "pokemon": "Solrock",
-      "setName": "Crown Zenith Galarian Gallery",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh12pt5gg",
-      "number": "GG15/GG70",
-      "rarity": "Trainer Gallery Rare Holo",
-      "language": "English",
-      "artist": "Nobuhiro Imagawa",
-      "imageSmall": "https://images.pokemontcg.io/swsh12pt5gg/GG15.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh12pt5gg/GG15_hires.png",
-      "setReleaseDate": "2023/01/20",
-      "whyItBelongs": "Night is settling over a wildflower meadow, and even Solrock is starting to drift off. With its eyes peacefully shut and Volbeat and Illumise glowing nearby, Nobuhiro Imagawa turns sunset into bedtime — the sun-shaped Pokémon slowly falling asleep as the fireflies come out.",
-      "createdAt": "2026-05-07T18:00:40.191Z",
-      "updatedAt": "2026-10-16T15:21:25.452Z",
-      "slug": "solrock-crown-zenith-galarian-gallery-gg15-gg70",
-      "moods": [
-        "Nap Watch",
-        "Flower Beds",
-        "Moonlit Naps"
-      ],
-      "searchKeywords": [
-        "full art"
-      ]
-    },
-    {
       "apiId": "sv1-250",
       "tcgdexId": "",
       "name": "Jacq",
@@ -130,61 +47,6 @@
       "moods": [
         "Sleepy Trainers",
         "Study Break"
-      ],
-      "searchKeywords": [
-        "full art"
-      ]
-    },
-    {
-      "apiId": "sv5-209",
-      "tcgdexId": "",
-      "name": "Bianca's Devotion",
-      "pokemon": "Bianca",
-      "setName": "Temporal Forces",
-      "setSeries": "Scarlet & Violet",
-      "setId": "sv5",
-      "number": "209/162",
-      "rarity": "Special Illustration Rare",
-      "language": "English",
-      "artist": "Cona Nitanda",
-      "imageSmall": "https://images.pokemontcg.io/sv5/209.png",
-      "imageLarge": "https://images.pokemontcg.io/sv5/209_hires.png",
-      "setReleaseDate": "2024/03/22",
-      "whyItBelongs": "Group nap wrapped in warm, dreamy light. Bianca has dozed off on the couch with her signature Musharna snoozing alongside her, turning an ordinary afternoon crash into a beautifully soft little moment of companionship.",
-      "createdAt": "2026-05-05T01:02:17.565Z",
-      "updatedAt": "2026-10-15T15:37:35.626Z",
-      "slug": "bianca-s-devotion-temporal-forces-209-162",
-      "moods": [
-        "Sleepy Trainers",
-        "Couch & Cushion"
-      ],
-      "searchKeywords": [
-        "full art"
-      ]
-    },
-    {
-      "apiId": "sv10-194",
-      "tcgdexId": "",
-      "name": "Misty's Lapras",
-      "pokemon": "Lapras",
-      "setName": "Destined Rivals",
-      "setSeries": "Scarlet & Violet",
-      "setId": "sv10",
-      "number": "194/182",
-      "rarity": "Illustration Rare",
-      "language": "English",
-      "artist": "Orca",
-      "imageSmall": "https://images.pokemontcg.io/sv10/194.png",
-      "imageLarge": "https://images.pokemontcg.io/sv10/194_hires.png",
-      "setReleaseDate": "2025/05/30",
-      "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together.",
-      "createdAt": "2026-05-06T21:03:55.441Z",
-      "updatedAt": "2026-10-24T09:00:00.000Z",
-      "slug": "misty-s-lapras-destined-rivals-194-182",
-      "moods": [
-        "Sleepy Trainers",
-        "Pokémon Pillow",
-        "Beach Naps"
       ],
       "searchKeywords": [
         "full art"
@@ -248,6 +110,32 @@
       ]
     },
     {
+      "apiId": "swsh12tg-TG09",
+      "tcgdexId": "",
+      "name": "Druddigon",
+      "pokemon": "Druddigon",
+      "setName": "Silver Tempest Trainer Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12tg",
+      "number": "TG09/TG30",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Teeziro",
+      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG09.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG09_hires.png",
+      "setReleaseDate": "2022/11/11",
+      "whyItBelongs": "Who needs a tent when your dragon is asleep? Ace Trainer Dara sits tucked in the curl of Druddigon’s body, reading a map in the shade of its wing, while Druddigon dozes with its head down beside her, cliffs and rock spires rising behind them. The card’s own flavor text calls it vicious and cunning. You’d never guess.",
+      "createdAt": "2026-05-05T00:53:44.741Z",
+      "updatedAt": "2026-11-03T19:41:50.000Z",
+      "slug": "druddigon-silver-tempest-trainer-gallery-tg09-tg30",
+      "moods": [
+        "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
       "apiId": "zsv10pt5-97",
       "tcgdexId": "",
       "name": "Darumaka",
@@ -295,6 +183,34 @@
       "moods": [
         "Food Coma",
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv10-194",
+      "tcgdexId": "",
+      "name": "Misty's Lapras",
+      "pokemon": "Lapras",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "194/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Orca",
+      "imageSmall": "https://images.pokemontcg.io/sv10/194.png",
+      "imageLarge": "https://images.pokemontcg.io/sv10/194_hires.png",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together.",
+      "createdAt": "2026-05-06T21:03:55.441Z",
+      "updatedAt": "2026-10-24T09:00:00.000Z",
+      "slug": "misty-s-lapras-destined-rivals-194-182",
+      "moods": [
+        "Sleepy Trainers",
+        "Pokémon Pillow",
+        "Beach Naps"
       ],
       "searchKeywords": [
         "full art"
@@ -354,6 +270,61 @@
       ]
     },
     {
+      "apiId": "sv5-209",
+      "tcgdexId": "",
+      "name": "Bianca's Devotion",
+      "pokemon": "Bianca",
+      "setName": "Temporal Forces",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv5",
+      "number": "209/162",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Cona Nitanda",
+      "imageSmall": "https://images.pokemontcg.io/sv5/209.png",
+      "imageLarge": "https://images.pokemontcg.io/sv5/209_hires.png",
+      "setReleaseDate": "2024/03/22",
+      "whyItBelongs": "Group nap wrapped in warm, dreamy light. Bianca has dozed off on the couch with her signature Musharna snoozing alongside her, turning an ordinary afternoon crash into a beautifully soft little moment of companionship.",
+      "createdAt": "2026-05-05T01:02:17.565Z",
+      "updatedAt": "2026-10-15T15:37:35.626Z",
+      "slug": "bianca-s-devotion-temporal-forces-209-162",
+      "moods": [
+        "Sleepy Trainers",
+        "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "swsh12pt5gg-GG15",
+      "tcgdexId": "",
+      "name": "Solrock",
+      "pokemon": "Solrock",
+      "setName": "Crown Zenith Galarian Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12pt5gg",
+      "number": "GG15/GG70",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Nobuhiro Imagawa",
+      "imageSmall": "https://images.pokemontcg.io/swsh12pt5gg/GG15.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12pt5gg/GG15_hires.png",
+      "setReleaseDate": "2023/01/20",
+      "whyItBelongs": "Night is settling over a wildflower meadow, and even Solrock is starting to drift off. With its eyes peacefully shut and Volbeat and Illumise glowing nearby, Nobuhiro Imagawa turns sunset into bedtime — the sun-shaped Pokémon slowly falling asleep as the fireflies come out.",
+      "createdAt": "2026-05-07T18:00:40.191Z",
+      "updatedAt": "2026-10-16T15:21:25.452Z",
+      "slug": "solrock-crown-zenith-galarian-gallery-gg15-gg70",
+      "moods": [
+        "Nap Watch",
+        "Flower Beds",
+        "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
       "apiId": "sv8-204",
       "tcgdexId": "",
       "name": "Mesprit",
@@ -377,6 +348,35 @@
       ],
       "searchKeywords": [
         "full art"
+      ]
+    },
+    {
+      "apiId": "swsh12tg-TG07",
+      "tcgdexId": "",
+      "name": "Rockruff",
+      "pokemon": "Rockruff",
+      "setName": "Silver Tempest Trainer Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12tg",
+      "number": "TG07/TG30",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Hideki Ishikawa",
+      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG07.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG07_hires.png",
+      "setReleaseDate": "2022/11/11",
+      "whyItBelongs": "Muddy paw prints on the floorboards, a cloth in Professor Kukui’s hand, and the culprit belly up on the rug, eyes squeezed shut and tongue out. Rockruff has decided the cleanup can happen without it.",
+      "createdAt": "2026-05-05T00:51:50.624Z",
+      "updatedAt": "2026-11-03T19:34:42.000Z",
+      "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
+      "moods": [
+        "Belly Up",
+        "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
       ]
     },
     {
