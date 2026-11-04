@@ -274,6 +274,112 @@
       ]
     },
     {
+      "apiId": "sv3-209",
+      "tcgdexId": "",
+      "name": "Lechonk",
+      "pokemon": "Lechonk",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "209/197",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Narumi Sato",
+      "imageSmall": "https://images.pokemontcg.io/sv3/209.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/209_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Food coma on the sunlit kitchen tile. Narumi Sato paints the little gourmet pig fast asleep next to its food bowl after sniffing out and devouring every treat in the house.",
+      "createdAt": "2026-05-05T00:52:54.368Z",
+      "updatedAt": "2026-10-15T15:37:40.615Z",
+      "slug": "lechonk-obsidian-flames-209-197",
+      "moods": [
+        "Food Coma",
+        "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "rsv10pt5-92",
+      "tcgdexId": "",
+      "name": "Sawsbuck",
+      "pokemon": "Sawsbuck",
+      "setName": "White Flare",
+      "setSeries": "Scarlet & Violet",
+      "setId": "rsv10pt5",
+      "number": "92/86",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Yano Keiji",
+      "imageSmall": "https://images.pokemontcg.io/rsv10pt5/92.png",
+      "imageLarge": "https://images.pokemontcg.io/rsv10pt5/92_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "Sawsbuck has stretched out in a grassy meadow and fallen completely asleep, its leafy antlers blending right into the surrounding greenery. The whole scene feels wonderfully still and summery. Less “found a shady nap spot” and more “became part of the landscape and powered down.”",
+      "createdAt": "2026-05-05T01:00:01.383Z",
+      "updatedAt": "2026-10-20T15:38:19.372Z",
+      "slug": "sawsbuck-white-flare-92-86",
+      "moods": [
+        "Face-Plant",
+        "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "me3-90",
+      "tcgdexId": "",
+      "name": "Rowlet",
+      "pokemon": "Rowlet",
+      "setName": "Perfect Order",
+      "setSeries": "Mega Evolution",
+      "setId": "me3",
+      "number": "090/088",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "ryoma uratsuka",
+      "imageSmall": "https://images.scrydex.com/pokemon/me3-90/small",
+      "imageLarge": "https://images.scrydex.com/pokemon/me3-90/large",
+      "setReleaseDate": "2026/03/27",
+      "whyItBelongs": "Cozy nap perched on a branch. A perfectly spherical Rowlet dozing peacefully in the sunny canopy by ryoma uratsuka.",
+      "createdAt": "2026-09-16T01:07:10.520Z",
+      "updatedAt": "2026-09-16T01:07:10.520Z",
+      "slug": "rowlet-perfect-order-090-088",
+      "moods": [
+        "Treetop Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv8-204",
+      "tcgdexId": "",
+      "name": "Mesprit",
+      "pokemon": "Mesprit",
+      "setName": "Surging Sparks",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv8",
+      "number": "204/191",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "HYOGONOSUKE",
+      "imageSmall": "https://images.pokemontcg.io/sv8/204.png",
+      "imageLarge": "https://images.pokemontcg.io/sv8/204_hires.png",
+      "setReleaseDate": "2024/11/08",
+      "whyItBelongs": "Cozy nap drifting through twilight lake skies. A legendary guardian of emotion enjoying serene, dreamlike rest above Lake Verity.",
+      "createdAt": "2026-05-05T00:52:17.270Z",
+      "updatedAt": "2026-10-22T19:36:42.825Z",
+      "slug": "mesprit-surging-sparks-204-191",
+      "moods": [
+        "Dream Sequence"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
       "apiId": "",
       "tcgdexId": "",
       "name": "Cubone",

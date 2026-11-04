@@ -78,10 +78,10 @@
     "slug": "sleeping-pokemon-full-art-cards",
     "title": "Sleepy Full Art Cards",
     "eyebrow": "Full art field notes",
-    "description": "On a full art card the nap takes up the whole card, with no frame around the art. Here are eleven favorites you won’t find in our other guides: a Sword & Shield alt art, Trainer Gallery and Galarian Gallery cards, Special Illustration Rares, Illustration Rares, and one Chinese card worth tracking down.",
+    "description": "On a full art card the nap takes up the whole card, with no frame around the art. Here are fifteen of our favorites: a Sword & Shield alt art, Trainer Gallery and Galarian Gallery cards, Special Illustration Rares, Illustration Rares, and one Chinese card worth tracking down.",
     "seoTitle": "Sleeping Pokemon Full Art & Illustration Rare Cards",
-    "metaDescription": "11 sleeping Pokemon full art cards: the Skuntank V alt art, Jacq and Bianca's Devotion SIRs, and Illustration Rares like Spheal, Pidove and Darumaka.",
-    "updatedAt": "2026-11-04T23:30:00.000Z",
+    "metaDescription": "15 sleeping Pokemon full art cards: the Skuntank V alt art, Jacq and Bianca's Devotion SIRs, and Illustration Rares like Mesprit, Lechonk and Rowlet.",
+    "updatedAt": "2026-11-05T00:00:00.000Z",
     "cards": [
       {
         "slug": "skuntank-v-silver-tempest-181-195",
@@ -122,6 +122,22 @@
       {
         "slug": "darumaka-black-bolt-097-086",
         "reason": "Darumaka is said to fall asleep once the fire inside it dies down. This Illustration Rare catches that exact moment: sitting bolt upright on its cushion, eyes closed, not moving an inch."
+      },
+      {
+        "slug": "lechonk-obsidian-flames-209-197",
+        "reason": "Lechonk’s flavor text says it spends all day searching for food. Mission accomplished: the bowl is tipped over, crumbs are everywhere, and Lechonk has flopped down on the checkered tiles with its eyes shut."
+      },
+      {
+        "slug": "sawsbuck-white-flare-92-86",
+        "reason": "People can tell the season by Sawsbuck’s antlers, says its flavor text. These are thick with summer leaves, and Sawsbuck is stretched out asleep in the long grass beneath them, practically part of the meadow."
+      },
+      {
+        "slug": "rowlet-perfect-order-090-088",
+        "reason": "Rowlet supposedly likes tight, dark places, like the inside of its Trainer’s bag. Not today: it has dozed off out in the open, a round little ball among bright green leaves, eyes squeezed into happy arcs."
+      },
+      {
+        "slug": "mesprit-surging-sparks-204-191",
+        "reason": "Mesprit is known as the Being of Emotion, the one that taught people sorrow, pain and joy. The only emotion on this card is contentment: it drifts through a pink sunset sky with its eyes closed and its tails trailing behind."
       },
       {
         "slug": "cubone-gem-pack-vol-3-04-07-07",
