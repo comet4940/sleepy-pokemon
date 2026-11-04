@@ -238,8 +238,8 @@
     "eyebrow": "28 years of Snorlax naps",
     "description": "Snorlax has been napping on Pokémon cards since 1998, and it has never once set an alarm. Here is every sleeping Snorlax in the collection, oldest to newest, plus one cameo where it nods off on the Pokémon Center floor.",
     "seoTitle": "Sleeping Snorlax Cards: Every Snorlax Nap, 1998–2026",
-    "metaDescription": "All 17 sleeping Snorlax cards in the collection, from the 1998 Vending Machine contest card and Wizards Promo 49 to Fates Collide and Crown Zenith, plus a Chansey cameo.",
-    "updatedAt": "2026-11-03T23:36:38.000Z",
+    "metaDescription": "All 21 sleeping Snorlax cards in the collection, from the 1998 Vending Machine contest card and Wizards Promo 49 to Fates Collide, 151 and Perfect Order, plus a Chansey cameo.",
+    "updatedAt": "2026-11-04T00:15:58.000Z",
     "cards": [
       {
         "slug": "snorlax-vending-machine-series-1-143",
@@ -260,6 +260,10 @@
       {
         "slug": "snorlax-kalos-starter-set-26-39",
         "reason": "Face-down in a bed of white flowers, smiling. Possibly the gentlest nap in the collection."
+      },
+      {
+        "slug": "snorlax-flashfire-80-106",
+        "reason": "The original printing of the Generations sleeper: Mitsuhiro Arita’s Snorlax, flat out in the grass two years earlier."
       },
       {
         "slug": "snorlax-generations-58-83",
@@ -304,6 +308,18 @@
       {
         "slug": "snorlax-scarlet-and-violet-black-star-promos-51-215",
         "reason": "Asleep by a pond while a Pidgey perches on its belly and a Diglett pops up nearby. Its own tiny ecosystem."
+      },
+      {
+        "slug": "snorlax-151-143-165",
+        "reason": "From the set that revisited the original 151: Snorlax dozing against a tree in the shade, exactly where you’d expect to find it."
+      },
+      {
+        "slug": "snorlax-twilight-masquerade-136-167",
+        "reason": "Snoozing upright on the pavement outside a building, mouth wide open. Everyone else will just have to walk around."
+      },
+      {
+        "slug": "snorlax-perfect-order-063-088",
+        "reason": "Seen from its feet: Snorlax on its back under the trees, out cold."
       },
       {
         "slug": "snorlax-me-30th-celebration-119-128",
