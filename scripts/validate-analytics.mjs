@@ -973,7 +973,7 @@ function checkSearchKeywordMatching(appSource) {
       ["full moon", "Swinub"],
       ["pokemon go", "Chansey"],
       // A keyword matches whole words only: "cat" finds the tagged cat and a note's "cat nap", not "Raticate"'s letters.
-      ["cat", "Sprigatito, Raticate"], ["full art sprigatito", "Sprigatito"], ["full art", "Sprigatito, Eevee"],
+      ["cat", "Sprigatito, Raticate"], ["full art sprigatito", "Sprigatito"], ["full arts", "Sprigatito, Eevee"], ["full art", "Sprigatito, Eevee"],
     ]) {
       const got = names(search);
       if (got !== expected) fail(`searching "${search}" should find ${expected}, found ${JSON.stringify(got)}`);

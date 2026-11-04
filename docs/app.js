@@ -1069,13 +1069,15 @@ function getSearchKeywordSet() {
   return state.searchKeywordSet.set;
 }
 
-// ["full", "art", "pikachu"] → ["full art", "pikachu"] when "full art" is a keyword.
+// ["full", "art", "pikachu"] → ["full art", "pikachu"] when "full art" is a keyword ("alt arts" → "alt art" too).
 function groupKeywordPhrases(terms, keywords) {
+  const asKeyword = (phrase) => (keywords.has(phrase) ? phrase : (phrase.endsWith("s") && keywords.has(phrase.slice(0, -1)) ? phrase.slice(0, -1) : null));
   const units = [];
   for (let index = 0; index < terms.length;) {
     let length = Math.min(4, terms.length - index);
-    while (length > 1 && !keywords.has(terms.slice(index, index + length).join(" "))) length -= 1;
-    units.push(terms.slice(index, index + length).join(" "));
+    while (length > 1 && !asKeyword(terms.slice(index, index + length).join(" "))) length -= 1;
+    const phrase = terms.slice(index, index + length).join(" ");
+    units.push(length > 1 ? asKeyword(phrase) : phrase);
     index += length;
   }
   return units;

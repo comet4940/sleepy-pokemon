@@ -189,6 +189,7 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 | Keyword | Which cards | Kind |
 | --- | --- | --- |
 | `full art` | Full art cards: art across the whole card, not in a frame. None before 2011. Usually Illustration Rare, Special Illustration Rare, Ultra Rare (2011 on), Trainer Gallery, Galarian Gallery, Rare Ultra and Rare Rainbow; check promos and non-English cards by eye | Art |
+| `alt art` | Traditional alternate arts from Sword & Shield and Sun & Moon: full-art V, VMAX and GX cards with a scene-style illustration (Dragonite V 192/203, Espeon VMAX 270/264, which some databases list as Rainbow Rare). Not Illustration Rares or Special Illustration Rares, which are their own category. Every alt art also has `full art` | Art |
 | `crochet`, `yarn`, `amigurumi`, `knitted` | Yarn-made art (Asako Ito) | Art |
 | `cat`, `kitty`, `kitten` | Cat Pokémon: Meowth, Skitty, Espurr, Meowstic, Glameow, Litten, Incineroar, Sprigatito, Luxio, Zeraora, Espeon, Umbreon, Mew (as in the Sleepy Cat guide) | Pokémon |
 | `dog`, `puppy` | Dog Pokémon: Growlithe, Arcanine, Rockruff, Lycanroc, Houndour | Pokémon |
