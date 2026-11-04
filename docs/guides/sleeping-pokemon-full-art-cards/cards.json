@@ -1,63 +1,6 @@
 {
   "cards": [
     {
-      "apiId": "swsh7-192",
-      "tcgdexId": "",
-      "name": "Dragonite V",
-      "pokemon": "Dragonite",
-      "setName": "Evolving Skies",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh7",
-      "number": "192/203",
-      "rarity": "Ultra Rare",
-      "language": "English",
-      "artist": "Atsushi Furusawa",
-      "imageSmall": "https://images.pokemontcg.io/swsh7/192.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh7/192_hires.png",
-      "setReleaseDate": "2021/08/27",
-      "whyItBelongs": "Dragonite can circle the globe in about sixteen hours. On this card it has given up on the trip entirely: it drifts belly up over misty mountain peaks, wings slack, eyes shut and smiling in its sleep, while a flock of Spearow carries on without it. Of all the sleepy cards, this is the one collectors know on sight.",
-      "createdAt": "2026-05-06T03:02:55.825Z",
-      "updatedAt": "2026-11-03T22:11:25.000Z",
-      "slug": "dragonite-v-evolving-skies-192-203",
-      "moods": [
-        "Dream Sequence",
-        "Belly Up"
-      ],
-      "searchKeywords": [
-        "full art",
-        "alt art"
-      ]
-    },
-    {
-      "apiId": "swsh5-155",
-      "tcgdexId": "",
-      "name": "Tyranitar V",
-      "pokemon": "Tyranitar",
-      "setName": "Battle Styles",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh5",
-      "number": "155/163",
-      "rarity": "Ultra Rare",
-      "language": "English",
-      "artist": "HYOGONOSUKE",
-      "imageSmall": "https://images.pokemontcg.io/swsh5/155.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh5/155_hires.png",
-      "setReleaseDate": "2021/03/19",
-      "whyItBelongs": "Food coma literally wherever. Passed out in a legendary post-buffet stupor next to towering stacks of empty dishes while a sweating Pignite watches from behind a tree. The undisputed king of chaos naps and a modern alternate-art grail.",
-      "createdAt": "2026-05-05T00:57:22.016Z",
-      "updatedAt": "2026-10-22T19:51:58.425Z",
-      "slug": "tyranitar-v-battle-styles-155-163",
-      "moods": [
-        "Food Coma",
-        "Belly Up",
-        "Drool & Snore"
-      ],
-      "searchKeywords": [
-        "full art",
-        "alt art"
-      ]
-    },
-    {
       "apiId": "swsh12-181",
       "tcgdexId": "swsh12-181",
       "name": "Skuntank V",
@@ -80,63 +23,6 @@
       "searchKeywords": [
         "full art",
         "alt art"
-      ]
-    },
-    {
-      "apiId": "swsh8-257",
-      "tcgdexId": "",
-      "name": "Greedent V",
-      "pokemon": "Greedent",
-      "setName": "Fusion Strike",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh8",
-      "number": "257/264",
-      "rarity": "Ultra Rare",
-      "language": "English",
-      "artist": "Saya Tsuruta",
-      "imageSmall": "https://images.pokemontcg.io/swsh8/257.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh8/257_hires.png",
-      "setReleaseDate": "2021/11/12",
-      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
-      "createdAt": "2026-10-27T22:43:34.000Z",
-      "updatedAt": "2026-10-27T22:43:34.000Z",
-      "slug": "greedent-v-fusion-strike-257-264",
-      "moods": [
-        "Nap Watch",
-        "Cameo Sleepers",
-        "Food Coma"
-      ],
-      "searchKeywords": [
-        "full art",
-        "alt art"
-      ]
-    },
-    {
-      "apiId": "swsh8-270",
-      "tcgdexId": "",
-      "name": "Espeon VMAX",
-      "pokemon": "Espeon",
-      "setName": "Fusion Strike",
-      "setSeries": "Sword & Shield",
-      "setId": "swsh8",
-      "number": "270/264",
-      "rarity": "Rare Rainbow",
-      "language": "English",
-      "artist": "Kouki Saitou",
-      "imageSmall": "https://images.pokemontcg.io/swsh8/270.png",
-      "imageLarge": "https://images.pokemontcg.io/swsh8/270_hires.png",
-      "setReleaseDate": "2021/11/12",
-      "whyItBelongs": "Dynamax or not, Espeon is still a cat. Kouki Saitou shows it draped lazily across a rooftop, eyes peacefully closed while Wingull circle through the bright sky nearby. The enormous scale makes the scene wonderfully absurd: one building has apparently become Espeon’s personal sun-warmed nap spot.",
-      "createdAt": "2026-05-05T00:58:01.876Z",
-      "updatedAt": "2026-10-16T15:21:54.631Z",
-      "slug": "espeon-vmax-fusion-strike-270-264",
-      "moods": [],
-      "searchKeywords": [
-        "full art",
-        "alt art",
-        "cat",
-        "kitty",
-        "kitten"
       ]
     },
     {
