@@ -1,4 +1,5 @@
 // Finds each English card's TCGplayer product on TCGCSV, so the price refresh can look prices up by ID.
+// Cards with a Manual price in docs/prices.json are skipped.
 //
 //   node scripts/match-tcgplayer.mjs            report matches for cards without a tcgplayerProductId
 //   node scripts/match-tcgplayer.mjs --all      report for every English card, including matched ones
@@ -6,7 +7,8 @@
 //
 // Review the report before writing: it flags guesses (no clear printing, big price changes, no match).
 import { readFile, writeFile } from "node:fs/promises";
-import { CARDS_PATH } from "./build-helpers.mjs";
+import { CARDS_PATH, loadPrices } from "./build-helpers.mjs";
+import { getCardIdentity } from "./card-identity.mjs";
 import { fetchGroups, fetchPrices, fetchProducts } from "./tcgcsv.mjs";
 
 const WRITE = process.argv.includes("--write");
@@ -43,7 +45,10 @@ const DEFAULT_PRINTINGS = ["Holofoil", "Normal", "Unlimited Holofoil", "Unlimite
 
 const raw = await readFile(CARDS_PATH, "utf8");
 const payload = JSON.parse(raw);
-const cards = payload.cards.filter((card) => (card.language || "English") === "English" && (ALL || !card.tcgplayerProductId));
+// Cards with a curator's Manual price stay off TCGplayer, just as the refresh leaves those prices alone (DATA-MODEL.md).
+const manualPrices = (await loadPrices()).prices || {};
+const isManual = (card) => manualPrices[getCardIdentity(card)]?.source === "Manual";
+const cards = payload.cards.filter((card) => (card.language || "English") === "English" && !isManual(card) && (ALL || !card.tcgplayerProductId));
 
 const groups = await fetchGroups();
 const groupsByKey = new Map();
