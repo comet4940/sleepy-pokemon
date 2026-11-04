@@ -325,26 +325,26 @@
       ]
     },
     {
-      "apiId": "sv8-204",
+      "apiId": "sv7-143",
       "tcgdexId": "",
-      "name": "Mesprit",
-      "pokemon": "Mesprit",
-      "setName": "Surging Sparks",
+      "name": "Bulbasaur",
+      "pokemon": "Bulbasaur",
+      "setName": "Stellar Crown",
       "setSeries": "Scarlet & Violet",
-      "setId": "sv8",
-      "number": "204/191",
+      "setId": "sv7",
+      "number": "143/142",
       "rarity": "Illustration Rare",
       "language": "English",
-      "artist": "HYOGONOSUKE",
-      "imageSmall": "https://images.pokemontcg.io/sv8/204.png",
-      "imageLarge": "https://images.pokemontcg.io/sv8/204_hires.png",
-      "setReleaseDate": "2024/11/08",
-      "whyItBelongs": "Cozy nap drifting through twilight lake skies. A legendary guardian of emotion enjoying serene, dreamlike rest above Lake Verity.",
-      "createdAt": "2026-05-05T00:52:17.270Z",
+      "artist": "Orca",
+      "imageSmall": "https://images.pokemontcg.io/sv7/143.png",
+      "imageLarge": "https://images.pokemontcg.io/sv7/143_hires.png",
+      "setReleaseDate": "2024/09/13",
+      "whyItBelongs": "Cozy nap in an indoor greenhouse. Bulbasaur curled up amidst potted houseplants brings lush conservatory vibes indoors.",
+      "createdAt": "2026-05-04T23:43:44.428Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
-      "slug": "mesprit-surging-sparks-204-191",
+      "slug": "bulbasaur-stellar-crown-143-142",
       "moods": [
-        "Dream Sequence"
+        "Sunbeam Naps"
       ],
       "searchKeywords": [
         "full art"
