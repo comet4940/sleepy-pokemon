@@ -246,6 +246,16 @@
   line-height: 1.5;
 }
 
+.site-footer p.site-footer-trademarks {
+  padding-top: 4px;
+}
+
+.site-footer-disclaimer a {
+  color: inherit;
+  text-decoration-color: rgba(255, 247, 232, 0.38);
+  text-underline-offset: 3px;
+}
+
 .footer-heart {
   color: var(--pink, #f36b9b);
 }

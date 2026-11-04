@@ -110,7 +110,8 @@ for (const path of htmlFiles) {
     if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
       errors.push(`${label}: loads the floating Buy Me a Coffee widget, which was dropped for good (#201, #209)`);
     }
-    if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
+    // #265: a TikTok account impersonates us, so every page says we sell nothing and names our one account.
+    if (!footer.includes("We don’t sell cards, toys, plushies or merchandise") || !footer.includes("Not affiliated with or endorsed by Nintendo, The Pokémon Company or TCGplayer.")) {
       errors.push(`${label}: fan-made copyright disclaimer is missing`);
     }
     if (/class="footer-coffee"/.test(footer)) {

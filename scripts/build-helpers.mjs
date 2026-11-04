@@ -22,7 +22,7 @@ export const ASSET_VERSIONS = {
   "filter-drawer.css": 1,
   "card-detail-v3.css": 17,
   "guides.css": 5,
-  "about.css": 5,
+  "about.css": 6,
   "analytics.js": 5,
   "prices.js": 2,
   "app.js": 80,

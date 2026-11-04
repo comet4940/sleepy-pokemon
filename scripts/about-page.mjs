@@ -139,6 +139,7 @@ ${ORIGIN_CARDS.map((slug) => renderCardTile(card(slug))).join("\n")}
             <p class="about-eyebrow">Say hi</p>
             <h2 id="aboutContactTitle">Write to Comet</h2>
             <p>Spotted a mistake, have a question about a card, or just want to share your own sleepy favorite? Comet reads every message.</p>
+            <p class="about-no-sales"><strong>We don’t sell anything.</strong> No cards, toys, plushies or merchandise, and Instagram @${INSTAGRAM_HANDLE} is our only social account. If you see an account or store selling Sleepy Pokemon products, it isn’t us. Please let Comet know.</p>
           </div>
           <div class="about-contact-actions">
             <button class="about-contact-button" type="button" data-open-contact-form>${ENVELOPE_ICON}<span>Contact Comet</span></button>
