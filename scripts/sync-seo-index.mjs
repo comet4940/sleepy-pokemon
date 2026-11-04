@@ -161,7 +161,7 @@ ${items}
 }
 
 function renderCardPage(card, memberships) {
-  const title = `${card.name} Sleepy Pokemon Card - ${[card.setName, card.number].filter(Boolean).join(" ")}`.trim();
+  const title = buildCardTitle(card);
   const description = buildDescription(card);
   const pageHeading = `${card.name || card.pokemon || "Pokemon"} Sleepy Pokemon Card`;
   const imageAlt = buildImageAlt(card);
@@ -307,10 +307,56 @@ function renderMoods(card) {
   return `<div class="detail-moods">${card.moods.map((mood) => `<a class="mood-tag" href="../../collection/?mood=${escapeAttribute(slugify(mood))}" data-analytics-event="navigation_clicked" data-analytics-source="card_mood_pill" data-analytics-destination="collection" data-analytics-filter-value="${escapeAttribute(slugify(mood))}">${escapeHtml(mood)}</a>`).join("")}</div>`;
 }
 
+// The card page <title> (and social title), written for how people search for a card (#247):
+//   the named Pokemon is the sleeper   "Sleepy Snorlax Card – Vivid Voltage 131/185 | Sleepy Pokemon"
+//   the sleeper is someone else        "Lillie Card with a Sleeping Cosmog – Sun & Moon Promos 080/SM-P"
+//   Cameo Sleepers (named one awake)   "Lapras Card with a Sleeping Cameo – ME: 30th Celebration 131/128"
+// A card's own seoTitle overrides all of this. Gallery set names drop the part the number already shows
+// ("Lost Origin TG05/TG30"), and the site name is added only while the title stays short.
+function buildCardTitle(card) {
+  if (card.seoTitle) return card.seoTitle;
+  const name = card.name || card.pokemon || "Pokemon";
+  const sleeper = card.pokemon || "";
+  let head;
+  if (sleeper && !name.toLowerCase().includes(sleeper.toLowerCase())) head = `${name} Card with a Sleeping ${sleeper}`;
+  else if ((card.moods || []).includes("Cameo Sleepers")) head = `${name} Card with a Sleeping Cameo`;
+  else head = `Sleepy ${name} Card`;
+  const where = [shortSetName(card), card.number === "Unnumbered" ? "" : card.number].filter(Boolean).join(" ");
+  const base = where ? `${head} – ${where}` : head;
+  return base.length <= 44 ? `${base} | Sleepy Pokemon` : base;
+}
+
+function shortSetName(card) {
+  const setName = card.setName || "";
+  const number = String(card.number || "").toUpperCase();
+  for (const [suffix, prefix] of [[" Trainer Gallery", "TG"], [" Galarian Gallery", "GG"], [" Radiant Collection", "RC"]]) {
+    if (setName.endsWith(suffix) && number.startsWith(prefix)) return setName.slice(0, -suffix.length);
+  }
+  return setName;
+}
+
+// The meta description names the card and set, then the opening of the curator's own note (whyItBelongs).
+// Search engines show about 160 characters, so it stops as soon as it can.
 function buildDescription(card) {
-  const artist = card.artist ? ` illustrated by ${card.artist}` : "";
-  const setPart = card.setName ? ` from ${card.setName}` : "";
-  return `${card.name || card.pokemon}${setPart} is a sleepy Pokemon card${artist}. View set, number, rarity, release date, and collector details.`.replace(/\s+/g, " ").trim();
+  const number = card.number && card.number !== "Unnumbered" ? ` ${card.number}` : "";
+  const where = card.setName ? `, ${card.setName}${number}` : "";
+  const lead = `${card.name || card.pokemon}${where}.`;
+  const note = String(card.whyItBelongs || "").replace(/\s+/g, " ").trim();
+  if (!note) return `${lead} A sleepy Pokemon card, with set, number, rarity, release date and collector details.`;
+  const sentences = note.match(/[^.!?]+(?:[.!?]+["”’)]?|$)\s*/g) || [note];
+  // Whole sentences until there are about 100 characters and the nap itself has been mentioned, so a note
+  // that opens with the awake character ("Lycanroc stands tall…") still reaches the sleeper; never past ~150.
+  const SLEEP_WORDS = /\b(sleep\w*|asleep|nap\w*|doz\w*|snooz\w*|snor\w*|slumber\w*|out cold|dream\w*|drift\w* off|nodd\w* off)/i;
+  let text = lead;
+  let mentionsSleep = false;
+  for (const sentence of sentences) {
+    text = `${text} ${sentence.trim()}`;
+    mentionsSleep ||= SLEEP_WORDS.test(sentence);
+    if ((text.length >= 100 && mentionsSleep) || text.length >= 150) break;
+  }
+  text = text.trim();
+  // A single long sentence can still run over; end it at a word break rather than let a search engine cut mid-word.
+  return text.length <= 160 ? text : `${text.slice(0, 158).replace(/[\s,;:–—-]+\S*$/, "")}…`;
 }
 
 

@@ -45,6 +45,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `imageSourceUrl` | No | Page the hosted image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
 | `whyItBelongs` | Yes | The curator's short note on what's happening in the art. Shown as "Why it belongs" | `Dinner is still on the table, and Growlithe...` |
+| `seoTitle` | No | Overrides the card page's `<title>` and social title, for the rare card the usual pattern gets wrong (see [Card page titles](#card-page-titles)). Leave it out otherwise | `Sleeping Snorlax & Eevee Card – Wizards Promos 49 \| Sleepy Pokemon` |
 | `notes` | No | Internal provenance and sources: where the card came from, which suggestion or issue it was, where the details were checked. Not shown, searched or sent to browsers, but the repo is public, so keep anything private out | `Community submission via the Suggest a card form.` |
 | `setReleaseDate` | No | Release date of the set, `YYYY/MM/DD`. Drives "Newest sets" sorting; cards without it sort last | `1998/11/24` |
 | `apiId` | No | pokemontcg.io card ID. Part of the card's identity (`scripts/card-identity.mjs`); no longer used for prices | `smp-SM41` |
@@ -77,6 +78,20 @@ The validator rejects any card that still has these:
 - **Images: hosted first.** Prefer a card API image (pokemontcg.io, TCGdex, Scrydex) or another stable host with `imageSource` credit. Store a file in `docs/assets/cards/` only when there's no hosted image or the local scan is clearly better. Name local files after the card, e.g. `growlithe-vending-machine-series-3-58.jpg`.
 - **Prices come from the refresh**, into `docs/prices.json`. See [Prices](#prices).
 - **Moods are a fixed list.** Add a new mood to `scripts/moods.mjs` before using it. A mood is only tagged when it truly shows in the art.
+
+## Card page titles
+
+Card pages get their `<title>` and social title from `buildCardTitle` in `scripts/sync-seo-index.mjs`, written for how people search for a single card ("sleepy charizard", "sleepy umbreon card"):
+
+| The card… | Title |
+| --- | --- |
+| shows its own Pokémon asleep (most cards) | Sleepy Snorlax Card – Vivid Voltage 131/185 \| Sleepy Pokemon |
+| is a trainer card whose `pokemon` is the sleeper | Lillie Card with a Sleeping Cosmog – Sun & Moon Promos 080/SM-P |
+| has the *Cameo Sleepers* mood (its own Pokémon is awake) | Lapras Card with a Sleeping Cameo – ME: 30th Celebration 131/128 |
+
+Gallery set names drop the part the number already shows ("Lost Origin TG05/TG30"), and "\| Sleepy Pokemon" is added only while the title stays short. When a card doesn't fit (Wizards Promo 49: Snorlax *and* the Eevee cameo are asleep), give it a `seoTitle`.
+
+The meta description is the card and its set, then the opening of `whyItBelongs`: whole sentences until it reaches about 100 characters and has mentioned the nap (or reaches about 150), trimmed at a word break with "…" past 160 characters. A better note makes a better search snippet.
 
 ## Writing "Why it belongs"
 
