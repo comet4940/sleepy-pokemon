@@ -113,7 +113,7 @@ async function init() {
     trackEvent("search_results_viewed", {
       interaction_source: "collection_url",
       query_length: state.filters.search.length,
-      result_count: getFilteredCards().length,
+      ...getSearchResultParams(),
     });
   }
 }
@@ -373,7 +373,7 @@ function handleHeaderSearchSubmit(event) {
     trackEvent("search_results_viewed", {
       interaction_source: "global_header",
       query_length: query.length,
-      result_count: getFilteredCards().length,
+      ...getSearchResultParams(),
       cleared_filter_count: clearedFilterCount,
     });
   }
@@ -721,6 +721,7 @@ function normalizeCard(card) {
     updatedAt: card.updatedAt || "",
     slug: card.slug || slugify([card.name, card.setName, card.number].filter(Boolean).join(" ")),
     moods: Array.isArray(card.moods) ? card.moods : (Array.isArray(card.curation?.moods) ? card.curation.moods : []),
+    searchKeywords: Array.isArray(card.searchKeywords) ? card.searchKeywords.map((keyword) => normalizeSearchText(keyword)) : [],
   };
 }
 
@@ -996,9 +997,22 @@ function getFilteredCards() {
 }
 
 // Everything a search looks through on one card, normalized (and cached: it never changes for a loaded card).
+// That includes the card's hidden searchKeywords (dog, cat, full art, crochet…; see DATA-MODEL.md, #223).
 const cardSearchText = new WeakMap();
 function getCardSearchText(card) {
   if (cardSearchText.has(card)) return cardSearchText.get(card);
+  const text = normalizeSearchText([
+    getCardTextWithoutKeywords(card),
+    ...(card.searchKeywords || []),
+  ].join(" "));
+  cardSearchText.set(card, text);
+  return text;
+}
+
+// The same without searchKeywords, to tell when a keyword is what found a card (search_results_viewed.keyword_match).
+const cardTextWithoutKeywords = new WeakMap();
+function getCardTextWithoutKeywords(card) {
+  if (cardTextWithoutKeywords.has(card)) return cardTextWithoutKeywords.get(card);
   const text = normalizeSearchText([
     card.name,
     card.pokemon,
@@ -1011,21 +1025,85 @@ function getCardSearchText(card) {
     card.whyItBelongs,
     ...card.moods,
   ].join(" "));
-  cardSearchText.set(card, text);
+  cardTextWithoutKeywords.set(card, text);
   return text;
 }
 
+// Words that describe what everyone here is looking at ("crochet cards", "sleepy dogs"). They only drop out when
+// keeping them would find nothing, so "pokemon go" still means Pokémon GO.
+const SEARCH_FILLER_WORDS = new Set(["card", "cards", "pokemon", "sleepy", "sleeping", "tcg"]);
+
+// The singulars a plural search word could stand for: "dogs" → "dog", "foxes" → "foxe", "fox",
+// "puppies" → "puppie", "puppi", "puppy".
+function singularForms(term) {
+  if (term.length <= 3 || !term.endsWith("s")) return [];
+  const forms = [term.slice(0, -1)];
+  if (term.endsWith("es") && term.length > 4) forms.push(term.slice(0, -2));
+  if (term.endsWith("ies") && term.length > 4) forms.push(`${term.slice(0, -3)}y`);
+  return forms;
+}
+
+// A search word matches if it appears in the card's text; a plural also matches its singular ("dogs" finds "dog").
+function textHasTerm(text, term) {
+  return text.includes(term) || singularForms(term).some((singular) => text.includes(singular));
+}
+
+// The search as a matcher: every word must appear on the card, ignoring case and accents. A word or phrase that is
+// someone's searchKeyword ("cat", "full art") matches that keyword, or the same whole word in a card's text, never
+// part of a longer word: "cat" finds the cat cards, not Raticate. Other words match anywhere, as before. Filler
+// words are dropped if the search finds nothing with them.
+function getSearchMatcher(query, { withKeywords = true } = {}) {
+  const allTerms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  if (!allTerms.length) return null;
+  const keywords = getSearchKeywordSet();
+  const build = (terms) => {
+    const tests = groupKeywordPhrases(terms, keywords).map((unit) => {
+      const keyword = keywords.has(unit) ? unit : (singularForms(unit).find((singular) => keywords.has(singular)) ?? null);
+      if (!keyword) return (card) => textHasTerm(withKeywords ? getCardSearchText(card) : getCardTextWithoutKeywords(card), unit);
+      const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      // The keyword or its plural as a whole word: "puppy", "puppys", "puppies".
+      const plural = keyword.endsWith("y") ? `|${escaped.slice(0, -1)}ies` : "";
+      const wholeWord = new RegExp(`(^|[^a-z0-9])(${escaped}(e?s)?${plural})([^a-z0-9]|$)`);
+      return (card) => (withKeywords && card.searchKeywords?.includes(keyword)) || wholeWord.test(getCardTextWithoutKeywords(card));
+    });
+    return (card) => tests.every((test) => test(card));
+  };
+  const matcher = build(allTerms);
+  const meaningful = allTerms.filter((term) => !SEARCH_FILLER_WORDS.has(term));
+  if (!meaningful.length || meaningful.length === allTerms.length || state.cards.some(matcher)) return matcher;
+  return build(meaningful);
+}
+
+// Every keyword in the catalog, normalized (cached per catalog).
+function getSearchKeywordSet() {
+  if (state.searchKeywordSet?.cards !== state.cards) {
+    state.searchKeywordSet = { cards: state.cards, set: new Set(state.cards.flatMap((card) => card.searchKeywords || [])) };
+  }
+  return state.searchKeywordSet.set;
+}
+
+// ["full", "art", "pikachu"] → ["full art", "pikachu"] when "full art" is a keyword ("alt arts" → "alt art" too).
+function groupKeywordPhrases(terms, keywords) {
+  const asKeyword = (phrase) => (keywords.has(phrase) ? phrase : (singularForms(phrase).find((singular) => keywords.has(singular)) ?? null));
+  const units = [];
+  for (let index = 0; index < terms.length;) {
+    let length = Math.min(4, terms.length - index);
+    while (length > 1 && !asKeyword(terms.slice(index, index + length).join(" "))) length -= 1;
+    const phrase = terms.slice(index, index + length).join(" ");
+    units.push(length > 1 ? asKeyword(phrase) : phrase);
+    index += length;
+  }
+  return units;
+}
+
 function filterCards(filters) {
-  // Every word must appear somewhere on the card, ignoring case and accents ("pokemon go" finds "Pokémon GO").
-  const searchTerms = normalizeSearchText(filters.search).split(/\s+/).filter(Boolean);
+  // See getSearchMatcher: every word must appear somewhere on the card ("pokemon go" finds "Pokémon GO").
+  const matchesSearch = getSearchMatcher(filters.search, { withKeywords: filters.searchKeywords !== false });
   const maxPrice = numericOrNull(filters.maxPrice);
 
   return state.cards
     .filter((card) => {
-      if (searchTerms.length) {
-        const searchable = getCardSearchText(card);
-        if (!searchTerms.every((term) => searchable.includes(term))) return false;
-      }
+      if (matchesSearch && !matchesSearch(card)) return false;
       if (filters.mood !== "all") {
         if (!card.moods.some((mood) => slugify(mood) === filters.mood)) return false;
       }
@@ -1670,9 +1748,21 @@ function renderEmptySearchState(resultCount) {
   }
 }
 
+function getSearchResultParams() {
+  const results = getFilteredCards();
+  return { result_count: results.length, keyword_match: searchUsedKeywords(results) };
+}
+
 function catalogMatchesSearch(query) {
-  const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
-  return state.cards.some((card) => terms.every((term) => getCardSearchText(card).includes(term)));
+  const matcher = getSearchMatcher(query);
+  return Boolean(matcher) && state.cards.some(matcher);
+}
+
+// Whether a keyword (not the card's own text) is what found some of these results: it's on search_results_viewed
+// as keyword_match, so we can tell if keywords earn their keep. Never the search text itself.
+function searchUsedKeywords(results) {
+  if (!state.filters.search.trim() || !results.length) return false;
+  return filterCards({ ...state.filters, searchKeywords: false }).length < results.length;
 }
 
 function handleEmptyStateClick(event) {
@@ -1706,7 +1796,7 @@ function handleEmptyStateClick(event) {
   trackEvent("search_results_viewed", {
     interaction_source: "did_you_mean",
     query_length: query.length,
-    result_count: getFilteredCards().length,
+    ...getSearchResultParams(),
   });
 }
 
@@ -1719,7 +1809,7 @@ function findSearchSuggestion(query) {
   let changed = false;
   const words = [];
   for (const term of terms) {
-    if (state.cards.some((card) => getCardSearchText(card).includes(term))) {
+    if (state.cards.some((card) => textHasTerm(getCardSearchText(card), term))) {
       words.push(term);
       continue;
     }
@@ -1767,6 +1857,7 @@ function getSearchVocabulary() {
     add(card.setName, "other");
     add(card.artist, "other");
     card.moods.forEach((mood) => add(mood, "other"));
+    (card.searchKeywords || []).forEach((keyword) => add(keyword, "other"));
   }
   state.searchVocabulary = [...entries.values()].map((entry) => ({ ...entry, chars: [...entry.key], skeleton: [...consonantSkeleton(entry.key)], soundex: soundex(entry.key) }));
   return state.searchVocabulary;

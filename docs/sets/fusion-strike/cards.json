@@ -21,7 +21,8 @@
       "slug": "clamperl-fusion-strike-065-264",
       "moods": [
         "Water Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh8-122",
@@ -45,7 +46,8 @@
       "moods": [
         "Dream Sequence",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh8-206",
@@ -69,7 +71,8 @@
       "moods": [
         "Food Coma",
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh8-252",
@@ -92,6 +95,10 @@
       "slug": "sandaconda-v-fusion-strike-252-264",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art",
+        "alt art"
       ]
     },
     {
@@ -117,6 +124,10 @@
         "Nap Watch",
         "Cameo Sleepers",
         "Food Coma"
+      ],
+      "searchKeywords": [
+        "full art",
+        "alt art"
       ]
     },
     {
@@ -138,7 +149,14 @@
       "createdAt": "2026-05-05T00:58:01.876Z",
       "updatedAt": "2026-10-16T15:21:54.631Z",
       "slug": "espeon-vmax-fusion-strike-270-264",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art",
+        "alt art",
+        "cat",
+        "kitty",
+        "kitten"
+      ]
     }
   ]
 }

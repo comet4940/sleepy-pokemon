@@ -21,7 +21,8 @@
       "slug": "light-dragonair-neo-destiny-22-105",
       "moods": [
         "Dream Sequence"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "neo4-26",
@@ -46,7 +47,8 @@
         "Group Naps",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "neo4-48",
@@ -71,7 +73,8 @@
         "Nap Watch",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "neo4-68",
@@ -94,6 +97,10 @@
       "slug": "growlithe-neo-destiny-68-105",
       "moods": [
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
       ]
     },
     {
@@ -117,7 +124,8 @@
       "slug": "phanpy-neo-destiny-76-105",
       "moods": [
         "Face-Plant"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "neo4-84",
@@ -140,7 +148,8 @@
       "slug": "swinub-neo-destiny-84-105",
       "moods": [
         "Group Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "neo4-91",
@@ -161,7 +170,10 @@
       "createdAt": "2026-05-05T21:21:24.402Z",
       "updatedAt": "2026-10-15T15:37:27.833Z",
       "slug": "vulpix-neo-destiny-91-105",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "fox"
+      ]
     }
   ]
 }

@@ -21,7 +21,8 @@
       "slug": "solosis-black-bolt-037-086",
       "moods": [
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "zsv10pt5-97",
@@ -44,6 +45,9 @@
       "slug": "darumaka-black-bolt-097-086",
       "moods": [
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -67,6 +71,9 @@
       "slug": "panpour-black-bolt-101-86",
       "moods": [
         "Treetop Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -90,6 +97,9 @@
       "slug": "tympole-black-bolt-103-86",
       "moods": [
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -114,6 +124,9 @@
       "moods": [
         "Cameo Sleepers",
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -137,6 +150,9 @@
       "slug": "musharna-black-bolt-117-86",
       "moods": [
         "Dream Sequence"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -162,6 +178,9 @@
         "Group Naps",
         "Nap Watch",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]

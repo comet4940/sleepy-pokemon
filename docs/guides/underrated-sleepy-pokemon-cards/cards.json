@@ -22,6 +22,9 @@
       "moods": [
         "Sleepy Trainers",
         "Pokémon Pillow"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -46,6 +49,9 @@
       "moods": [
         "Sleepy Trainers",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -69,6 +75,11 @@
       "slug": "lycanroc-journey-together-166-159",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
       ]
     },
     {
@@ -92,6 +103,9 @@
       "slug": "togedemaru-phantasmal-flames-104-94",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -117,7 +131,8 @@
         "Group Naps",
         "Sleepy Trainers",
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-207",
@@ -141,7 +156,8 @@
       "moods": [
         "Dream Sequence",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "xy8-18",
@@ -164,7 +180,8 @@
       "slug": "cyndaquil-breakthrough-18-162",
       "moods": [
         "Face-Plant"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-137",
@@ -187,7 +204,8 @@
       "slug": "togetic-unbroken-bonds-137-214",
       "moods": [
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "svp-14",
@@ -210,6 +228,9 @@
       "slug": "koraidon-scarlet-and-violet-black-star-promos-14-215",
       "moods": [
         "Face-Plant"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -233,7 +254,8 @@
       "slug": "tepig-cosmic-eclipse-31-236",
       "moods": [
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "hgss4-36",
@@ -258,7 +280,8 @@
         "Group Naps",
         "Propped Up",
         "Drool & Snore"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "bw11-94",
@@ -279,7 +302,8 @@
       "createdAt": "2026-10-27T21:59:45.000Z",
       "updatedAt": "2026-10-27T22:07:04.000Z",
       "slug": "gible-legendary-treasures-94-113",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     }
   ]
 }

@@ -23,6 +23,7 @@ const CARD_DISPLAY_CLASSES = ["card-tile", "hero-card", "about-favorite", "about
 await checkPublishedSlugs();
 await checkPublishedCopy();
 checkCardMoods();
+checkPokemonKeywords();
 await checkSetIntros();
 await checkGuideDates();
 await checkCardFields();
@@ -188,6 +189,7 @@ checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 checkFilterClearTracking(appSource);
 checkDidYouMean(appSource);
+checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
@@ -248,6 +250,7 @@ function checkCardMoods() {
       errors.push(`${label} has no moods array (use [] for none)`);
       continue;
     }
+    checkSearchKeywords(card, label);
     const unknown = card.moods.filter((mood) => !MOODS.includes(mood));
     if (unknown.length) errors.push(`${label} has unknown moods: ${unknown.join(", ")}`);
     if (new Set(card.moods).size !== card.moods.length) errors.push(`${label} lists a mood twice`);
@@ -265,6 +268,32 @@ function checkCardMoods() {
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
+    }
+  }
+}
+
+// searchKeywords (#223): words a card can be found by that aren't in its name, set or note. Lowercase, no repeats,
+// [] for none. They're published, so no private notes.
+function checkSearchKeywords(card, label) {
+  if (!Array.isArray(card.searchKeywords)) {
+    errors.push(`${label} has no searchKeywords array (use [] for none)`);
+    return;
+  }
+  for (const keyword of card.searchKeywords) {
+    if (typeof keyword !== "string" || !keyword.trim() || keyword !== keyword.trim().toLowerCase()) errors.push(`${label} has searchKeyword ${JSON.stringify(keyword)}: use lowercase words`);
+  }
+  if (new Set(card.searchKeywords).size !== card.searchKeywords.length) errors.push(`${label} lists a searchKeyword twice`);
+}
+
+// Keywords about the Pokémon (dog, cat, fox), not the art: every card of that Pokémon should have them, so a new Growlithe without
+// "dog" doesn't silently drop out of a dog search. Art keywords (full art, crochet) are per card and not checked.
+function checkPokemonKeywords() {
+  for (const keyword of ["dog", "cat", "fox"]) {
+    const tagged = new Set(sourceCards.filter((card) => card.searchKeywords?.includes(keyword)).map((card) => card.pokemon));
+    for (const card of sourceCards) {
+      if (tagged.has(card.pokemon) && !card.searchKeywords?.includes(keyword)) {
+        errors.push(`${CARDS_PATH}: ${card.name} (${[card.setName, card.number].filter(Boolean).join(" ")}) has no "${keyword}" searchKeyword, but other ${card.pokemon} cards do`);
+      }
     }
   }
 }
@@ -912,6 +941,48 @@ function checkDidYouMean(appSource) {
     const viewed = events.filter((event) => event.name === "search_results_viewed").at(-1);
     if (app.run("state.filters.search") !== "Meowth") fail("clicking the suggestion should search for it");
     if (viewed?.params.interaction_source !== "did_you_mean" || viewed?.params.result_count !== 1) fail(`clicking the suggestion should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(viewed?.params)}`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// searchKeywords and the search rules around them (#223, DATA-MODEL.md "Search keywords").
+function checkSearchKeywordMatching(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#223 keywords): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const card = (name, setName, whyItBelongs, searchKeywords) => ({ name, pokemon: name, setName, setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs, moods: [], searchKeywords });
+    app.run(`
+      state.cards = ${JSON.stringify([
+        card("Growlithe", "Neo Destiny", "Asleep by the fire.", ["dog", "puppy"]),
+        card("Snorlax", "Crown Zenith", "Asleep on a hill.", ["crochet", "yarn"]),
+        card("Sprigatito", "Paldea Evolved", "Curled up asleep.", ["full art", "cat"]),
+        card("Swinub", "Skyridge", "The full moon makes art of the snow.", []),
+        card("Chansey", "Pokémon GO", "Asleep in a bed.", []),
+        card("Golett", "Test Set", "Golden hour nap.", ["fox"]),
+        card("Raticate", "Skyridge", "A cat nap in the barn.", []),
+        card("Eevee", "Test Set", "A full art feel, asleep in the grass.", []),
+      ].map((entry) => ({ ...entry })))}.map(normalizeCard);
+    `);
+    const names = (search) => app.run(`filterCards({ ...state.filters, search: ${JSON.stringify(search)} }).map((card) => card.name)`).join(", ");
+    for (const [search, expected] of [
+      ["dog", "Growlithe"], ["dogs", "Growlithe"], ["puppy", "Growlithe"], ["puppies", "Growlithe"], ["foxes", "Golett"],
+      ["crochet cards", "Snorlax"], ["sleepy dogs", "Growlithe"],
+      ["full moon", "Swinub"],
+      ["pokemon go", "Chansey"],
+      // A keyword matches whole words only: "cat" finds the tagged cat and a note's "cat nap", not "Raticate"'s letters.
+      ["cat", "Sprigatito, Raticate"], ["full art sprigatito", "Sprigatito"], ["full arts", "Sprigatito, Eevee"], ["full art", "Sprigatito, Eevee"],
+    ]) {
+      const got = names(search);
+      if (got !== expected) fail(`searching "${search}" should find ${expected}, found ${JSON.stringify(got)}`);
+    }
+    app.run(`state.filters.search = "dogs"`);
+    const params = app.run("getSearchResultParams()");
+    if (params.result_count !== 1 || params.keyword_match !== true) fail(`a keyword-only result should report keyword_match: true, got ${JSON.stringify(params)}`);
+    app.run(`state.filters.search = "chansey"`);
+    if (app.run("getSearchResultParams()").keyword_match !== false) fail("a search found by the card's own text should report keyword_match: false");
   } catch (error) {
     fail(`threw ${error.message}`);
   }

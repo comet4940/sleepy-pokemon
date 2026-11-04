@@ -22,7 +22,8 @@
       "moods": [
         "Nap Watch",
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-95",
@@ -45,7 +46,8 @@
       "slug": "seel-skyridge-95-144",
       "moods": [
         "Nap Watch"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-96",
@@ -68,7 +70,8 @@
       "slug": "shuckle-skyridge-96-144",
       "moods": [
         "Beach Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-100",
@@ -91,7 +94,8 @@
       "slug": "snorlax-skyridge-100-144",
       "moods": [
         "Water Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-108",
@@ -112,7 +116,8 @@
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
       "slug": "swinub-skyridge-108-144",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     }
   ]
 }

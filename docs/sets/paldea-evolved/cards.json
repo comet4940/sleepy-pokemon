@@ -22,7 +22,8 @@
       "moods": [
         "Propped Up",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv2-160",
@@ -45,7 +46,8 @@
       "slug": "slakoth-paldea-evolved-160-193",
       "moods": [
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv2-196",
@@ -68,6 +70,12 @@
       "slug": "sprigatito-paldea-evolved-196-193",
       "moods": [
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -92,6 +100,9 @@
       "moods": [
         "Belly Up",
         "Bedtime"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -113,7 +124,10 @@
       "createdAt": "2026-05-06T01:53:25.387Z",
       "updatedAt": "2026-10-24T09:00:00.000Z",
       "slug": "paldean-wooper-paldea-evolved-221-193",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art"
+      ]
     },
     {
       "apiId": "sv2-226",
@@ -136,6 +150,9 @@
       "slug": "maushold-paldea-evolved-226-193",
       "moods": [
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -160,6 +177,9 @@
       "moods": [
         "Group Naps",
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]

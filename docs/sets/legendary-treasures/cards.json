@@ -21,7 +21,8 @@
       "slug": "swadloon-legendary-treasures-11-113",
       "moods": [
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "bw11-55",
@@ -44,7 +45,8 @@
       "slug": "natu-legendary-treasures-55-113",
       "moods": [
         "Snow Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "bw11-94",
@@ -65,7 +67,8 @@
       "createdAt": "2026-10-27T21:59:45.000Z",
       "updatedAt": "2026-10-27T22:07:04.000Z",
       "slug": "gible-legendary-treasures-94-113",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     },
     {
       "apiId": "bw11-107",
@@ -91,7 +94,8 @@
         "Cameo Sleepers",
         "Pokémon Pillow",
         "Snow Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "bw11-RC16",
@@ -117,7 +121,8 @@
         "Pokémon Pillow",
         "Flower Beds",
         "Sunbeam Naps"
-      ]
+      ],
+      "searchKeywords": []
     }
   ]
 }

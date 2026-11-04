@@ -25,7 +25,7 @@ export const ASSET_VERSIONS = {
   "about.css": 5,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 78,
+  "app.js": 80,
   "binder.js": 1,
   "card-page.js": 6,
   "contact.js": 1,
@@ -83,6 +83,7 @@ export const PUBLIC_CARD_FIELDS = [
   "updatedAt",
   "slug",
   "moods",
+  "searchKeywords",
 ];
 
 export function toPublicCard(card) {
