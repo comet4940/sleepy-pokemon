@@ -839,6 +839,69 @@ textarea:focus-visible {
   margin-bottom: 0;
 }
 
+/* A search that found nothing: one main action, then a quieter second one (#223). */
+/* .button sets its own display, which would beat the hidden attribute. */
+.empty-state [hidden] {
+  display: none !important;
+}
+
+.empty-state:not(.is-wishlist-empty) {
+  padding: 28px 18px;
+}
+
+/* Outlined like the summary's "Show all" chip: an offer, not a shout. */
+.empty-state .empty-state-primary {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 0 18px;
+  border: 1px solid rgba(243, 107, 155, 0.65);
+  border-radius: 22px;
+  background: transparent;
+  color: var(--cream);
+  font-size: .92rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.empty-state .empty-state-primary:hover,
+.empty-state .empty-state-primary:focus-visible {
+  background: #f36b9b;
+  color: #211522;
+}
+
+.empty-state .empty-state-did-you-mean {
+  margin-top: 14px;
+  color: var(--cream);
+  font-size: 1.05rem;
+}
+
+.empty-state .empty-state-did-you-mean a {
+  color: #f36b9b;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.empty-state .empty-state-did-you-mean a:hover,
+.empty-state .empty-state-did-you-mean a:focus-visible {
+  color: #ff82ac;
+}
+
+.empty-state .empty-state-secondary {
+  margin-top: 14px;
+  font-size: .95rem;
+}
+
+.empty-state .empty-state-secondary a {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .empty-state .empty-state-action {
   justify-self: center;
   width: auto;

@@ -130,6 +130,8 @@ function cacheElements() {
   elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
+  elements.emptyStatePrimary = document.querySelector("#emptyStatePrimary");
+  elements.emptyStateSecondary = document.querySelector("#emptyStateSecondary");
   elements.searchSuggestionPrompt = document.querySelector("#searchSuggestionPrompt");
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
@@ -278,7 +280,8 @@ function bindEvents() {
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
-  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch }));
+  bind(elements.emptyState, "click", handleEmptyStateClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
   bind(elements.guideCardList, "click", handleGuideCardClick);
@@ -899,8 +902,10 @@ function renderCards() {
   }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   describeEmptyState();
+  renderEmptySearchState(cards.length);
   if (elements.searchSuggestionPrompt) {
-    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
+    // With nothing to show, the empty state offers the suggestion itself (renderEmptySearchState).
+    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim() || cards.length === 0;
   }
   elements.cardGrid.innerHTML = "";
 
@@ -990,6 +995,26 @@ function getFilteredCards() {
   return filterCards(state.filters).sort(compareCards);
 }
 
+// Everything a search looks through on one card, normalized (and cached: it never changes for a loaded card).
+const cardSearchText = new WeakMap();
+function getCardSearchText(card) {
+  if (cardSearchText.has(card)) return cardSearchText.get(card);
+  const text = normalizeSearchText([
+    card.name,
+    card.pokemon,
+    card.setName,
+    card.setSeries,
+    card.number,
+    card.rarity,
+    card.language,
+    card.artist,
+    card.whyItBelongs,
+    ...card.moods,
+  ].join(" "));
+  cardSearchText.set(card, text);
+  return text;
+}
+
 function filterCards(filters) {
   // Every word must appear somewhere on the card, ignoring case and accents ("pokemon go" finds "Pokémon GO").
   const searchTerms = normalizeSearchText(filters.search).split(/\s+/).filter(Boolean);
@@ -998,18 +1023,7 @@ function filterCards(filters) {
   return state.cards
     .filter((card) => {
       if (searchTerms.length) {
-        const searchable = normalizeSearchText([
-          card.name,
-          card.pokemon,
-          card.setName,
-          card.setSeries,
-          card.number,
-          card.rarity,
-          card.language,
-          card.artist,
-          card.whyItBelongs,
-          ...card.moods,
-        ].join(" "));
+        const searchable = getCardSearchText(card);
         if (!searchTerms.every((term) => searchable.includes(term))) return false;
       }
       if (filters.mood !== "all") {
@@ -1578,6 +1592,239 @@ function describeEmptyState() {
   if (noWishes && elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
 }
 
+// ---- "Did you mean…?" (#223) -------------------------------------------------------------------------------
+// When a search finds nothing anywhere in the catalog (not just under the current filters), offer the closest
+// real word as a link: "Did you mean Meowth?". Nothing is corrected automatically; the visitor chooses.
+// Scoring follows PokeMichi's PokemonSpeciesFuzzyMatcher: Damerau-Levenshtein distance, a consonant skeleton
+// and Soundex, so typos ("mewoth"), swapped letters ("riachu") and sound-alikes ("month") all land on Meowth.
+// Among words that clear the score, the fewest edits win, as in PokeMichi's CardNameTypoMatcher.
+// Names (Pokemon, cards) need a score of 0.62; set names, artists and moods need 0.75, so a rare word doesn't
+// win by accident ("dogs" is not "Deoxys").
+const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
+
+// The empty state for a search or filters that found nothing. It says what happened and offers one main action:
+//   a likely typo        "No sleepy cards for “mewoth”."   Did you mean _Meowth_?   Not a typo? Suggest the card…
+//   nothing in the stack "No sleepy cards for “dartrix” yet."   [Suggest a sleepy card]  (form opens with “dartrix”)
+//   a typo, but the filters hide the fix (joltin + Snow Naps)   Did you mean _Joltik_? It’s outside these filters.
+//                        (the link drops the filters)
+//   filters did it       "No cards match these filters."   [Clear filters]  (keeps the search)
+// The summary line above already shows the search and a "Show all", so neither is repeated here, and the separate
+// "Not seeing your snoozer?" prompt stays hidden while there's nothing to show.
+function renderEmptySearchState(resultCount) {
+  const { emptyState, emptyStatePrimary: primary, emptyStateSecondary: secondary } = elements;
+  if (!emptyState || !primary || !secondary) return;
+  primary.hidden = true;
+  secondary.hidden = true;
+  state.emptyStateKeepsSearch = false;
+  const text = emptyState.querySelector("p");
+  text.hidden = false;
+  text.classList?.remove("empty-state-did-you-mean");
+  const query = state.filters.search.trim();
+  const noWishes = emptyState.classList.contains("is-wishlist-empty");
+  if (resultCount || noWishes || (!query && !countActiveFilters())) {
+    state.didYouMeanShown = "";
+    return;
+  }
+  const title = emptyState.querySelector("h3");
+  if (elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
+  if (query && !catalogMatchesSearch(query)) {
+    // The search itself found nothing anywhere: a typo, or a card that isn't in the stack (yet).
+    if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = true;
+    const suggestion = findSearchSuggestion(query);
+    if (suggestion) {
+      // A plain "Did you mean Meowth?" with the name as the link, not a button. The fix may exist only outside the
+      // filters (Joltik isn't a Snow Nap): then the link searches all cards, rather than calling the card missing.
+      const fitsFilters = filterCards({ ...state.filters, search: suggestion }).length > 0;
+      title.textContent = `No sleepy cards for “${query}”.`;
+      const link = `<a href="?q=${escapeAttribute(encodeURIComponent(suggestion))}" data-did-you-mean="${escapeAttribute(suggestion)}"${fitsFilters ? "" : " data-clears-filters"}>${escapeHtml(suggestion)}</a>`;
+      text.innerHTML = fitsFilters ? `Did you mean ${link}?` : `Did you mean ${link}? It’s outside these filters.`;
+      text.classList?.add("empty-state-did-you-mean");
+      secondary.innerHTML = `Not a typo? <a href="#suggest-card" data-empty-suggest>Suggest the card you’re looking for</a>`;
+      secondary.hidden = false;
+      // Once per suggestion, not on every redraw. Never the search text itself (ANALYTICS.md, principle 3).
+      if (state.didYouMeanShown !== suggestion) {
+        state.didYouMeanShown = suggestion;
+        trackEvent("search_suggestion_shown", { interaction_source: "collection_empty_state", query_length: query.length });
+      }
+      return;
+    }
+    state.didYouMeanShown = "";
+    title.textContent = `No sleepy cards for “${query}” yet.`;
+    text.textContent = "Know one that belongs here? Comet would love to add it.";
+    text.hidden = false;
+    primary.href = "#suggest-card";
+    delete primary.dataset.didYouMean;
+    primary.dataset.emptySuggest = "";
+    primary.textContent = "Suggest a sleepy card";
+    primary.hidden = false;
+    return;
+  }
+  // The search is fine on its own (or there is none): the filters left nothing.
+  state.didYouMeanShown = "";
+  title.textContent = "No cards match these filters.";
+  text.hidden = true;
+  state.emptyStateKeepsSearch = Boolean(query);
+  if (elements.clearCollectionButton) {
+    elements.clearCollectionButton.textContent = "Clear filters";
+    elements.clearCollectionButton.hidden = false;
+  }
+}
+
+function catalogMatchesSearch(query) {
+  const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  return state.cards.some((card) => terms.every((term) => getCardSearchText(card).includes(term)));
+}
+
+function handleEmptyStateClick(event) {
+  const suggestLink = event.target.closest("[data-empty-suggest]");
+  if (suggestLink) {
+    event.preventDefault();
+    openSuggestionDialog();
+    // Start the form's card lookup with what they searched for.
+    if (elements.suggestionCardSearch) {
+      elements.suggestionCardSearch.value = state.filters.search.trim();
+      handleSuggestionSearch();
+    }
+    trackSuggestionOpened("collection_empty_state", { has_active_search: Boolean(state.filters.search), result_count: 0 });
+    return;
+  }
+  const link = event.target.closest("a[data-did-you-mean]");
+  if (!link) return;
+  event.preventDefault();
+  const query = link.dataset.didYouMean;
+  state.filters.search = query;
+  if ("clearsFilters" in link.dataset) {
+    // The suggestion only has cards outside the current filters: drop them, keep the corrected search.
+    clearFilters("did_you_mean", { keepSearch: true });
+  } else {
+    state.showAllCards = true;
+    if (elements.searchFilter) elements.searchFilter.value = query;
+    if (elements.headerSearchInput) elements.headerSearchInput.value = query;
+    markHistoryStep();
+    render();
+  }
+  trackEvent("search_results_viewed", {
+    interaction_source: "did_you_mean",
+    query_length: query.length,
+    result_count: getFilteredCards().length,
+  });
+}
+
+// The suggested search, or null. Words the catalog already contains stay as typed; each unknown word is swapped
+// for its best match. The suggestion is only offered if it finds cards (filters aside; the empty state handles those).
+function findSearchSuggestion(query) {
+  const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  if (!terms.length || catalogMatchesSearch(query)) return null;
+  const vocabulary = getSearchVocabulary();
+  let changed = false;
+  const words = [];
+  for (const term of terms) {
+    if (state.cards.some((card) => getCardSearchText(card).includes(term))) {
+      words.push(term);
+      continue;
+    }
+    const letters = term.replace(/[^a-z0-9]/g, "");
+    if (letters.length < 3) return null;
+    // The score decides what counts as a match; among matches, the closest spelling wins (fewest edits), then the
+    // higher score, then the more common word. Otherwise sound-alike bonuses can beat a one-letter typo:
+    // "joltin" scores higher against Jolteon (2 edits) than Joltik (1 edit).
+    const queryChars = [...letters];
+    let best = null;
+    for (const entry of vocabulary) {
+      const score = typoScore(letters, entry);
+      if (score < DID_YOU_MEAN_MIN_SCORE[entry.kind]) continue;
+      const edits = damerauLevenshtein(queryChars, entry.chars);
+      const better = !best || edits < best.edits || (edits === best.edits && (score > best.score || (score === best.score && entry.count > best.entry.count)));
+      if (better) best = { entry, score, edits };
+    }
+    if (!best) return null;
+    words.push(best.entry.display);
+    changed = true;
+  }
+  if (!changed) return null;
+  const suggestion = words.join(" ");
+  return catalogMatchesSearch(suggestion) ? suggestion : null;
+}
+
+// The words a search could have meant, from card names, Pokemon, sets, artists and moods (not the notes).
+function getSearchVocabulary() {
+  if (state.searchVocabulary) return state.searchVocabulary;
+  const entries = new Map();
+  const add = (text, kind) => {
+    for (const word of String(text || "").split(/[\s\-–—/&:,.()]+/)) {
+      const display = word.replace(/['’]s$/, "");
+      const key = normalizeSearchText(display).replace(/[^a-z0-9]/g, "");
+      if (key.length < 3 || /^\d+$/.test(key)) continue;
+      const entry = entries.get(key) || { key, display, kind, count: 0 };
+      if (kind === "name") entry.kind = "name";
+      entry.count += 1;
+      entries.set(key, entry);
+    }
+  };
+  for (const card of state.cards) {
+    add(card.name, "name");
+    add(card.pokemon, "name");
+    add(card.setName, "other");
+    add(card.artist, "other");
+    card.moods.forEach((mood) => add(mood, "other"));
+  }
+  state.searchVocabulary = [...entries.values()].map((entry) => ({ ...entry, chars: [...entry.key], skeleton: [...consonantSkeleton(entry.key)], soundex: soundex(entry.key) }));
+  return state.searchVocabulary;
+}
+
+function typoScore(query, entry) {
+  if (query === entry.key) return 1;
+  if (entry.key.startsWith(query)) return 0.9 + 0.1 * (query.length / entry.key.length);
+  if (entry.key.includes(query)) return 0.8 + 0.1 * (query.length / entry.key.length);
+  const queryChars = [...query];
+  const editScore = Math.max(0, 1 - damerauLevenshtein(queryChars, entry.chars) / Math.max(queryChars.length, entry.chars.length));
+  const querySkeleton = [...consonantSkeleton(query)];
+  const skeletonScore = Math.max(0, 1 - damerauLevenshtein(querySkeleton, entry.skeleton) / Math.max(querySkeleton.length, entry.skeleton.length, 1));
+  const querySoundex = soundex(query);
+  const phoneticBonus = querySoundex === entry.soundex ? 0.15 : querySoundex.slice(1) === entry.soundex.slice(1) ? 0.1 : querySoundex[0] === entry.soundex[0] ? 0.05 : 0;
+  return Math.min(1, 0.5 * editScore + 0.35 * skeletonScore + phoneticBonus);
+}
+
+function damerauLevenshtein(a, b) {
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j += 1) d[0][j] = j;
+  for (let i = 1; i <= a.length; i += 1) {
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[a.length][b.length];
+}
+
+// The first letter, then only consonants: "meowth" → "mwth", so vowel slips barely count.
+function consonantSkeleton(word) {
+  return word ? word[0] + word.slice(1).replace(/[aeiouy]/g, "") : "";
+}
+
+function soundex(word) {
+  const upper = word.toUpperCase();
+  if (!upper) return "0000";
+  const code = (char) => ("BFPV".includes(char) ? "1" : "CGJKQSXZ".includes(char) ? "2" : "DT".includes(char) ? "3" : char === "L" ? "4" : "MN".includes(char) ? "5" : char === "R" ? "6" : null);
+  let result = upper[0];
+  let previous = code(upper[0]);
+  for (const char of upper.slice(1)) {
+    const value = code(char);
+    if (!value) {
+      if (char !== "H" && char !== "W") previous = null;
+      continue;
+    }
+    if (value !== previous) {
+      result += value;
+      previous = value;
+    }
+  }
+  return `${result}000`.slice(0, 4);
+}
+
 function findCardByIdentity(cardId) {
   return state.cards.find((item) => item.catalogIdentity === cardId);
 }
@@ -2110,13 +2357,16 @@ function escapeCsvCell(value) {
   return `"${cell.replace(/"/g, '""')}"`;
 }
 
-function clearFilters(interactionSource) {
-  const activeFilterCount = countActiveFilters();
+// keepSearch: clear only the filters, keeping the search (the empty state's "Clear filters", when the filters
+// are what left nothing to show).
+function clearFilters(interactionSource, { keepSearch = false } = {}) {
+  const search = keepSearch ? state.filters.search : "";
+  const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0);
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
   }
   state.filters = {
-    search: "",
+    search,
     mood: "all",
     set: "all",
     rarity: "all",
@@ -2126,10 +2376,10 @@ function clearFilters(interactionSource) {
     sort: PUBLIC_DEFAULT_SORT,
     wishlist: false,
   };
-  state.showAllCards = false;
+  state.showAllCards = Boolean(search);
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
-  if (elements.searchFilter) elements.searchFilter.value = "";
-  if (elements.headerSearchInput) elements.headerSearchInput.value = "";
+  if (elements.searchFilter) elements.searchFilter.value = search;
+  if (elements.headerSearchInput) elements.headerSearchInput.value = search;
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   markHistoryStep();

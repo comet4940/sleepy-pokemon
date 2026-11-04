@@ -187,6 +187,7 @@ const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
 checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 checkFilterClearTracking(appSource);
+checkDidYouMean(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
@@ -846,6 +847,71 @@ function checkFilterClearTracking(appSource) {
     app.run(`state.filters.mood = "belly-up"; clearFilters("collection_clear_all")`);
     const real = events.filter((event) => event.name === "filters_cleared").at(-1);
     if (clears() !== afterReset + 1 || real?.params.active_filter_count !== 1) fail(`clearing one filter should send filters_cleared with active_filter_count: 1, got ${JSON.stringify(real?.params)}`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #223: a search that finds nothing says so and offers one main action: "Search Meowth instead" for a likely typo
+// (never for a real word or a Pokemon we don't have), "Suggest a sleepy card" when nothing matches, "Clear filters"
+// (keeping the search) when the filters are to blame. No search text in analytics.
+function checkDidYouMean(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#223): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const card = (name, setName) => ({ name, pokemon: name, setName, setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs: "Asleep.", moods: ["Belly Up"] });
+    app.run(`
+      render = () => {}; markHistoryStep = () => {};
+      state.cards = ${JSON.stringify([card("Meowth", "Unbroken Bonds"), card("Raichu", "Temporal Forces"), card("Snorlax", "Fusion Strike"), card("Joltik", "Paradox Rift"), card("Jolteon", "Neo Destiny")])};
+      const node = () => ({ hidden: false, innerHTML: "", href: "", dataset: {}, set textContent(value) { this.innerHTML = value; }, get textContent() { return this.innerHTML.replace(/<[^>]*>/g, ""); } });
+      const title = node(), text = node();
+      Object.assign(elements, {
+        emptyState: { classList: { contains: () => false }, querySelector: (selector) => (selector === "h3" ? title : text) },
+        emptyStatePrimary: node(), emptyStateSecondary: node(), clearCollectionButton: node(), searchSuggestionPrompt: node(),
+        moodChips: [],
+      });
+      emptyTitle = title; emptyText = text;
+    `);
+    const suggest = (query) => app.run(`findSearchSuggestion(${JSON.stringify(query)})`);
+    // "joltin" is one edit from Joltik but scores higher against Jolteon (sound-alike bonuses): the closer spelling wins.
+    for (const [query, expected] of [["mewoth", "Meowth"], ["month", "Meowth"], ["riachu", "Raichu"], ["joltin", "Joltik"], ["jolteen", "Jolteon"], ["snorlax", null], ["dartrix", null], ["dogs", null]]) {
+      const got = suggest(query);
+      if (got !== expected) fail(`"${query}" should suggest ${JSON.stringify(expected)}, got ${JSON.stringify(got)}`);
+    }
+    const view = (search, mood = "all") => {
+      app.run(`state.filters.search = ${JSON.stringify(search)}; state.filters.mood = ${JSON.stringify(mood)}; renderEmptySearchState(0)`);
+      return app.run(`({ title: emptyTitle.textContent, primary: elements.emptyStatePrimary.hidden ? null : elements.emptyStatePrimary.textContent,
+        secondary: !elements.emptyStateSecondary.hidden, clear: elements.clearCollectionButton.hidden ? null : elements.clearCollectionButton.textContent,
+        prompt: !elements.searchSuggestionPrompt.hidden, text: emptyText.hidden ? null : emptyText.textContent, link: emptyText.innerHTML, suggest: "emptySuggest" in elements.emptyStatePrimary.dataset })`);
+    };
+    const typo = view("mewoth");
+    if (typo.text !== "Did you mean Meowth?" || !typo.link.includes('data-did-you-mean="Meowth"') || typo.link.includes("data-clears-filters") || typo.primary !== null || !typo.secondary || typo.clear !== null || typo.prompt) fail(`a typo should say "Did you mean Meowth?" (linked) and offer a "Not a typo?" suggest link, nothing else; got ${JSON.stringify(typo)}`);
+    view("mewoth");
+    const shown = events.filter((event) => event.name === "search_suggestion_shown");
+    if (shown.length !== 1) fail(`search_suggestion_shown should fire once per suggestion, fired ${shown.length} times`);
+    if (JSON.stringify(shown[0]?.params ?? {}).toLowerCase().includes("meow")) fail("search_suggestion_shown must not carry search text");
+    if (shown[0] && (shown[0].params.interaction_source !== "collection_empty_state" || shown[0].params.query_length !== 6)) fail(`search_suggestion_shown params: ${JSON.stringify(shown[0].params)}`);
+    const missing = view("dartrix");
+    if (missing.primary !== "Suggest a sleepy card" || !missing.suggest || missing.link.includes("data-did-you-mean") || missing.clear !== null || !missing.title.includes("dartrix")) fail(`a search with no match and no typo should offer "Suggest a sleepy card"; got ${JSON.stringify(missing)}`);
+    const filtered = view("meowth", "snow-naps");
+    if (filtered.title !== "No cards match these filters." || filtered.clear !== "Clear filters" || filtered.primary !== null) fail(`a real search emptied by filters should offer "Clear filters"; got ${JSON.stringify(filtered)}`);
+    // A typo whose fix the filters hide (Joltik isn't a Snow Nap) is still a typo, not a missing card.
+    const hidden = view("joltin", "snow-naps");
+    if (hidden.text !== "Did you mean Joltik? It’s outside these filters." || !hidden.link.includes("data-clears-filters") || hidden.title.includes("yet") || hidden.primary !== null || hidden.clear !== null) fail(`a typo whose fix the filters hide should say "Did you mean Joltik? It’s outside these filters."; got ${JSON.stringify(hidden)}`);
+    app.run(`handleEmptyStateClick({ preventDefault() {}, target: { closest: (selector) => (selector.includes("did-you-mean") ? { dataset: { didYouMean: "Joltik", clearsFilters: "" } } : null) } })`);
+    if (app.run("state.filters.search") !== "Joltik" || app.run("state.filters.mood") !== "all") fail("the Joltik link should search Joltik and drop the filters");
+    const unhid = events.filter((event) => event.name === "search_results_viewed").at(-1);
+    if (unhid?.params.interaction_source !== "did_you_mean" || unhid?.params.result_count !== 1) fail(`the outside-the-filters link should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(unhid?.params)}`);
+    view("meowth", "snow-naps");
+    app.run(`clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch })`);
+    if (app.run("state.filters.search") !== "meowth" || app.run("state.filters.mood") !== "all") fail("Clear filters in the empty state should keep the search and drop the filters");
+    view("mewoth");
+    app.run(`handleEmptyStateClick({ preventDefault() {}, target: { closest: (selector) => (selector.includes("did-you-mean") ? { dataset: { didYouMean: "Meowth" } } : null) } })`);
+    const viewed = events.filter((event) => event.name === "search_results_viewed").at(-1);
+    if (app.run("state.filters.search") !== "Meowth") fail("clicking the suggestion should search for it");
+    if (viewed?.params.interaction_source !== "did_you_mean" || viewed?.params.result_count !== 1) fail(`clicking the suggestion should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(viewed?.params)}`);
   } catch (error) {
     fail(`threw ${error.message}`);
   }
