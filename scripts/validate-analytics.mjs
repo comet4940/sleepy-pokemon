@@ -864,7 +864,7 @@ function checkDidYouMean(appSource) {
     const card = (name, setName) => ({ name, pokemon: name, setName, setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs: "Asleep.", moods: ["Belly Up"] });
     app.run(`
       render = () => {}; markHistoryStep = () => {};
-      state.cards = ${JSON.stringify([card("Meowth", "Unbroken Bonds"), card("Raichu", "Temporal Forces"), card("Snorlax", "Fusion Strike")])};
+      state.cards = ${JSON.stringify([card("Meowth", "Unbroken Bonds"), card("Raichu", "Temporal Forces"), card("Snorlax", "Fusion Strike"), card("Joltik", "Paradox Rift"), card("Jolteon", "Neo Destiny")])};
       const node = () => ({ hidden: false, textContent: "", innerHTML: "", href: "", dataset: {} });
       const title = node(), text = node();
       Object.assign(elements, {
@@ -875,7 +875,8 @@ function checkDidYouMean(appSource) {
       emptyTitle = title; emptyText = text;
     `);
     const suggest = (query) => app.run(`findSearchSuggestion(${JSON.stringify(query)})`);
-    for (const [query, expected] of [["mewoth", "Meowth"], ["month", "Meowth"], ["riachu", "Raichu"], ["snorlax", null], ["dartrix", null], ["dogs", null]]) {
+    // "joltin" is one edit from Joltik but scores higher against Jolteon (sound-alike bonuses): the closer spelling wins.
+    for (const [query, expected] of [["mewoth", "Meowth"], ["month", "Meowth"], ["riachu", "Raichu"], ["joltin", "Joltik"], ["jolteen", "Jolteon"], ["snorlax", null], ["dartrix", null], ["dogs", null]]) {
       const got = suggest(query);
       if (got !== expected) fail(`"${query}" should suggest ${JSON.stringify(expected)}, got ${JSON.stringify(got)}`);
     }

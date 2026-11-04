@@ -1597,6 +1597,7 @@ function describeEmptyState() {
 // real word as a link: "Did you mean Meowth?". Nothing is corrected automatically; the visitor chooses.
 // Scoring follows PokeMichi's PokemonSpeciesFuzzyMatcher: Damerau-Levenshtein distance, a consonant skeleton
 // and Soundex, so typos ("mewoth"), swapped letters ("riachu") and sound-alikes ("month") all land on Meowth.
+// Among words that clear the score, the fewest edits win, as in PokeMichi's CardNameTypoMatcher.
 // Names (Pokemon, cards) need a score of 0.62; set names, artists and moods need 0.75, so a rare word doesn't
 // win by accident ("dogs" is not "Deoxys").
 const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
@@ -1716,11 +1717,17 @@ function findSearchSuggestion(query) {
     }
     const letters = term.replace(/[^a-z0-9]/g, "");
     if (letters.length < 3) return null;
+    // The score decides what counts as a match; among matches, the closest spelling wins (fewest edits), then the
+    // higher score, then the more common word. Otherwise sound-alike bonuses can beat a one-letter typo:
+    // "joltin" scores higher against Jolteon (2 edits) than Joltik (1 edit).
+    const queryChars = [...letters];
     let best = null;
     for (const entry of vocabulary) {
       const score = typoScore(letters, entry);
       if (score < DID_YOU_MEAN_MIN_SCORE[entry.kind]) continue;
-      if (!best || score > best.score || (score === best.score && entry.count > best.entry.count)) best = { entry, score };
+      const edits = damerauLevenshtein(queryChars, entry.chars);
+      const better = !best || edits < best.edits || (edits === best.edits && (score > best.score || (score === best.score && entry.count > best.entry.count)));
+      if (better) best = { entry, score, edits };
     }
     if (!best) return null;
     words.push(best.entry.display);
