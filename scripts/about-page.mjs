@@ -1,10 +1,9 @@
 import { renderSiteHeader } from "./site-header.mjs";
-import { renderSiteFooter } from "./site-footer.mjs";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL, renderSiteFooter } from "./site-footer.mjs";
 import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
 import { SITE_URL, assetUrl, escapeAttribute, escapeHtml, renderHead } from "./build-helpers.mjs";
 
-const INSTAGRAM_URL = "https://www.instagram.com/sprigatitosquad/";
 // "Contact Comet" (#209): its own Formspree form, separate from Suggest a card's, so the two inboxes stay apart.
 export const CONTACT_ENDPOINT = "https://formspree.io/f/mgaappeg";
 const ENVELOPE_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5" /><path d="M4 7.5l8 6 8-6" /></svg>`;
@@ -65,7 +64,7 @@ ${renderHead({
           <p class="about-lede">We’re Comet and Linkcat, a mother-son duo in the Pacific Northwest. Pokemon has a way of filling our calendar: a tournament here, a card show there, a Pokemon GO walk that somehow takes all afternoon. We came for the games and the community, and stayed for the art, the friendships, and the fun of finding something new together.</p>
           <a class="about-instagram" href="${INSTAGRAM_URL}" target="_blank" rel="noopener noreferrer" data-analytics-event="navigation_clicked" data-analytics-source="about_page" data-analytics-destination="instagram">
             <span class="about-instagram-icon" aria-hidden="true">@</span>
-            <span><small>Find us on Instagram</small><strong>@sprigatitosquad</strong></span>
+            <span><small>Find us on Instagram</small><strong>@${INSTAGRAM_HANDLE}</strong></span>
             <span class="about-instagram-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="about-people">

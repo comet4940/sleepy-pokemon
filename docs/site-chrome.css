@@ -196,20 +196,31 @@
 
 /* Our one official social account (#265: a TikTok account impersonates us). */
 .footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--cream, #fff7e8);
   font-size: 0.78rem;
   text-decoration-color: rgba(255, 247, 232, 0.38);
   text-underline-offset: 3px;
 }
 
-.footer-social-handle {
-  color: var(--muted-cream, #b9b6c7);
+.footer-social-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.footer-social-icon circle:last-child {
+  fill: currentColor;
+  stroke: none;
 }
 
 .footer-social-link:hover,
 .footer-social-link:focus-visible,
-.footer-social-link:hover .footer-social-handle,
-.footer-social-link:focus-visible .footer-social-handle,
 .footer-studio-link:hover,
 .footer-studio-link:focus-visible {
   color: var(--mint, #a7e8d4);
