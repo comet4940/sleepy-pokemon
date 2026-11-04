@@ -102,12 +102,16 @@ for (const path of htmlFiles) {
     if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
       errors.push(`${label}: shared footer studio-link tracking is missing`);
     }
+    if (!/href="https:\/\/www\.instagram\.com\/sleepypokemoncards\/"[^>]+data-analytics-event="social_link_clicked"/.test(footer)) {
+      errors.push(`${label}: shared footer Instagram link (@sleepypokemoncards) or its social_link_clicked tracking is missing`);
+    }
     // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show; the coffee link was
     // dropped for good (#201), and About's Contact Comet form is the way to reach the curator (#209).
     if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
       errors.push(`${label}: loads the floating Buy Me a Coffee widget, which was dropped for good (#201, #209)`);
     }
-    if (!footer.includes("Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.")) {
+    // #265: a TikTok account impersonates us, so every page says we sell nothing and names our one account.
+    if (!footer.includes("We don’t sell cards, toys, plushies or merchandise") || !footer.includes("Not affiliated with or endorsed by Nintendo, The Pokémon Company or TCGplayer.")) {
       errors.push(`${label}: fan-made copyright disclaimer is missing`);
     }
     if (/class="footer-coffee"/.test(footer)) {

@@ -194,6 +194,33 @@
   text-underline-offset: 3px;
 }
 
+/* Our one official social account (#265: a TikTok account impersonates us). */
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cream, #fff7e8);
+  font-size: 0.78rem;
+  text-decoration-color: rgba(255, 247, 232, 0.38);
+  text-underline-offset: 3px;
+}
+
+.footer-social-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.footer-social-icon circle:last-child {
+  fill: currentColor;
+  stroke: none;
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible,
 .footer-studio-link:hover,
 .footer-studio-link:focus-visible {
   color: var(--mint, #a7e8d4);
@@ -219,6 +246,16 @@
   line-height: 1.5;
 }
 
+.site-footer p.site-footer-trademarks {
+  padding-top: 4px;
+}
+
+.site-footer-disclaimer a {
+  color: inherit;
+  text-decoration-color: rgba(255, 247, 232, 0.38);
+  text-underline-offset: 3px;
+}
+
 .footer-heart {
   color: var(--pink, #f36b9b);
 }
@@ -226,6 +263,11 @@
 @media (max-width: 640px) {
   .site-footer-signoff {
     gap: 8px;
+  }
+
+  /* On phones the Instagram link wraps to its own line; a "·" leading that line looks stray. */
+  .footer-social-divider {
+    display: none;
   }
 }
 

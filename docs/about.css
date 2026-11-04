@@ -328,6 +328,11 @@
   margin: 16px 0 0;
 }
 
+.about-contact-copy p.about-no-sales {
+  margin-top: 12px;
+  font-size: 0.92rem;
+}
+
 .about-contact-actions {
   display: grid;
   justify-items: start;
