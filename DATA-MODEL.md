@@ -184,7 +184,7 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 
 ## Search keywords
 
-`searchKeywords` let a search find a card by words that aren't on it (#223). Most cards have none. Search also matches plurals ("dogs" finds "dog") and ignores "card", "cards", "pokemon", "sleepy", "sleeping" and "tcg" when keeping them would find nothing ("crochet cards").
+`searchKeywords` let a search find a card by words that aren't on it (#223). Most cards have none. Search also matches plurals ("dogs" finds "dog", "foxes" finds "fox", "puppies" finds "puppy") and ignores "card", "cards", "pokemon", "sleepy", "sleeping" and "tcg" when keeping them would find nothing ("crochet cards").
 
 | Keyword | Which cards | Kind |
 | --- | --- | --- |

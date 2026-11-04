@@ -968,7 +968,7 @@ function checkSearchKeywordMatching(appSource) {
     `);
     const names = (search) => app.run(`filterCards({ ...state.filters, search: ${JSON.stringify(search)} }).map((card) => card.name)`).join(", ");
     for (const [search, expected] of [
-      ["dog", "Growlithe"], ["dogs", "Growlithe"], ["puppy", "Growlithe"], ["foxes", "Golett"],
+      ["dog", "Growlithe"], ["dogs", "Growlithe"], ["puppy", "Growlithe"], ["puppies", "Growlithe"], ["foxes", "Golett"],
       ["crochet cards", "Snorlax"], ["sleepy dogs", "Growlithe"],
       ["full moon", "Swinub"],
       ["pokemon go", "Chansey"],

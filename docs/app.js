@@ -1033,10 +1033,14 @@ function getCardTextWithoutKeywords(card) {
 // keeping them would find nothing, so "pokemon go" still means Pokémon GO.
 const SEARCH_FILLER_WORDS = new Set(["card", "cards", "pokemon", "sleepy", "sleeping", "tcg"]);
 
-// The singulars a plural search word could stand for: "dogs" → "dog", "foxes" → "foxe", "fox".
+// The singulars a plural search word could stand for: "dogs" → "dog", "foxes" → "foxe", "fox",
+// "puppies" → "puppie", "puppi", "puppy".
 function singularForms(term) {
   if (term.length <= 3 || !term.endsWith("s")) return [];
-  return term.endsWith("es") && term.length > 4 ? [term.slice(0, -1), term.slice(0, -2)] : [term.slice(0, -1)];
+  const forms = [term.slice(0, -1)];
+  if (term.endsWith("es") && term.length > 4) forms.push(term.slice(0, -2));
+  if (term.endsWith("ies") && term.length > 4) forms.push(`${term.slice(0, -3)}y`);
+  return forms;
 }
 
 // A search word matches if it appears in the card's text; a plural also matches its singular ("dogs" finds "dog").
@@ -1056,7 +1060,10 @@ function getSearchMatcher(query, { withKeywords = true } = {}) {
     const tests = groupKeywordPhrases(terms, keywords).map((unit) => {
       const keyword = keywords.has(unit) ? unit : (singularForms(unit).find((singular) => keywords.has(singular)) ?? null);
       if (!keyword) return (card) => textHasTerm(withKeywords ? getCardSearchText(card) : getCardTextWithoutKeywords(card), unit);
-      const wholeWord = new RegExp(`(^|[^a-z0-9])${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(e?s)?([^a-z0-9]|$)`);
+      const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      // The keyword or its plural as a whole word: "puppy", "puppys", "puppies".
+      const plural = keyword.endsWith("y") ? `|${escaped.slice(0, -1)}ies` : "";
+      const wholeWord = new RegExp(`(^|[^a-z0-9])(${escaped}(e?s)?${plural})([^a-z0-9]|$)`);
       return (card) => (withKeywords && card.searchKeywords?.includes(keyword)) || wholeWord.test(getCardTextWithoutKeywords(card));
     });
     return (card) => tests.every((test) => test(card));
