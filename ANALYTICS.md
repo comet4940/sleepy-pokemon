@@ -56,8 +56,8 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | Event | Trigger | Parameters |
 | --- | --- | --- |
 | `search_submitted` | A non-empty global-header search is submitted | `interaction_source`, `query_length` |
-| `search_results_viewed` | The collection displays results for a non-empty query, including after a click on "Did you mean …?" (`interaction_source: did_you_mean`) | `interaction_source`, `query_length`, `result_count`, `cleared_filter_count` (header searches on the collection only: how many drawer filters the search turned off, `0` if none; the wishlist view and sort are kept) |
-| `search_suggestion_shown` | A search that matched no card in the whole catalog shows "Did you mean …?" under *No cards match* (#223). Once per suggestion, not on every redraw; never the query or the suggestion | `interaction_source` (`collection_empty_state`), `query_length` |
+| `search_results_viewed` | The collection displays results for a non-empty query, including after a click on the empty state's "Search {suggestion} instead" (`interaction_source: did_you_mean`) | `interaction_source`, `query_length`, `result_count`, `cleared_filter_count` (header searches on the collection only: how many drawer filters the search turned off, `0` if none; the wishlist view and sort are kept) |
+| `search_suggestion_shown` | A search that matched no card in the whole catalog offers "Search {suggestion} instead" in the empty state (#223). Once per suggestion, not on every redraw; never the query or the suggestion | `interaction_source` (`collection_empty_state`), `query_length` |
 | `search_cleared` | The active query is removed | `result_count` |
 | `filters_opened` | The filter drawer opens (the **All filters** button on the collection) | `active_filter_count` |
 | `filters_modal_bounced` | The filter drawer is closed without changing any filter or the sort | `close_method`, `had_active_filters`, `active_filter_count` |
@@ -84,7 +84,7 @@ Search text is intentionally excluded. `query_length` is the only query-level pa
 
 | Event | Trigger | Parameters |
 | --- | --- | --- |
-| `suggestion_opened` | The suggestion dialog opens. The header Suggest pill opens it in place on the homepage and collection, and elsewhere links to `collection/?suggest=header`; both are tracked when the dialog opens as `interaction_source: global_header`. Any other `?suggest=` link (shared or bookmarked) is tracked as `suggest_link`. On the collection, the prompt shown under search results ("Not seeing your snoozer?") is `collection_search`. The homepage's "Community nap watch" block (`homepage`) was removed on 2026-10-26 in favour of the header pill | `interaction_source`, `has_active_search` and `result_count` (in-page suggestion links only) |
+| `suggestion_opened` | The suggestion dialog opens. The header Suggest pill opens it in place on the homepage and collection, and elsewhere links to `collection/?suggest=header`; both are tracked when the dialog opens as `interaction_source: global_header`. Any other `?suggest=` link (shared or bookmarked) is tracked as `suggest_link`. On the collection, the prompt shown under search results ("Not seeing your snoozer?") is `collection_search`; when a search finds nothing, the empty state's "Suggest a sleepy card" or "Not a typo? Suggest the card…" is `collection_empty_state` (#223), and the form opens with the search already in its card lookup. The homepage's "Community nap watch" block (`homepage`) was removed on 2026-10-26 in favour of the header pill | `interaction_source`, `has_active_search` and `result_count` (in-page suggestion links only) |
 | `suggestion_lookup_completed` | An external card lookup returns or fails | `lookup_type`, `lookup_outcome`, `result_count` |
 | `suggestion_card_selected` | A lookup result is selected | card parameters |
 | `suggestion_card_removed` | A selected lookup result is removed | none beyond shared parameters |

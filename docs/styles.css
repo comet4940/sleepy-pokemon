@@ -839,16 +839,30 @@ textarea:focus-visible {
   margin-bottom: 0;
 }
 
-/* "Did you mean Meowth?" under a search that found nothing (#223). */
-.empty-state .did-you-mean {
-  margin-top: 14px;
-  color: var(--cream);
-  font-size: 1.05rem;
+/* A search that found nothing: one main action, then a quieter second one (#223). */
+/* .button sets its own display, which would beat the hidden attribute. */
+.empty-state [hidden] {
+  display: none !important;
 }
 
-.empty-state .did-you-mean a {
-  color: var(--pink);
-  font-weight: 700;
+.empty-state:not(.is-wishlist-empty) {
+  padding: 28px 18px;
+}
+
+.empty-state .empty-state-primary {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.empty-state .empty-state-secondary {
+  margin-top: 14px;
+  font-size: .95rem;
+}
+
+.empty-state .empty-state-secondary a {
+  color: var(--cream);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

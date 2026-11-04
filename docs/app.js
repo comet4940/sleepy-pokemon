@@ -130,7 +130,8 @@ function cacheElements() {
   elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
-  elements.didYouMean = document.querySelector("#didYouMean");
+  elements.emptyStatePrimary = document.querySelector("#emptyStatePrimary");
+  elements.emptyStateSecondary = document.querySelector("#emptyStateSecondary");
   elements.searchSuggestionPrompt = document.querySelector("#searchSuggestionPrompt");
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
@@ -279,8 +280,8 @@ function bindEvents() {
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
-  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
-  bind(elements.didYouMean, "click", handleDidYouMeanClick);
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch }));
+  bind(elements.emptyState, "click", handleEmptyStateClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
   bind(elements.guideCardList, "click", handleGuideCardClick);
@@ -901,9 +902,10 @@ function renderCards() {
   }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   describeEmptyState();
-  renderDidYouMean(cards.length);
+  renderEmptySearchState(cards.length);
   if (elements.searchSuggestionPrompt) {
-    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
+    // With nothing to show, the empty state offers the suggestion itself (renderEmptySearchState).
+    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim() || cards.length === 0;
   }
   elements.cardGrid.innerHTML = "";
 
@@ -1599,26 +1601,89 @@ function describeEmptyState() {
 // win by accident ("dogs" is not "Deoxys").
 const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
 
-function renderDidYouMean(resultCount) {
-  if (!elements.didYouMean) return;
+// The empty state for a search or filters that found nothing. It says what happened and offers one main action:
+//   a likely typo        "No sleepy cards for “mewoth”."   [Search Meowth instead]   Not a typo? Suggest the card…
+//   nothing in the stack "No sleepy cards for “dartrix” yet."   [Suggest a sleepy card]  (form opens with “dartrix”)
+//   filters did it       "No cards match these filters."   [Clear filters]  (keeps the search)
+// The summary line above already shows the search and a "Show all", so neither is repeated here, and the separate
+// "Not seeing your snoozer?" prompt stays hidden while there's nothing to show.
+function renderEmptySearchState(resultCount) {
+  const { emptyState, emptyStatePrimary: primary, emptyStateSecondary: secondary } = elements;
+  if (!emptyState || !primary || !secondary) return;
+  primary.hidden = true;
+  secondary.hidden = true;
+  state.emptyStateKeepsSearch = false;
+  const text = emptyState.querySelector("p");
+  text.hidden = false;
   const query = state.filters.search.trim();
-  const suggestion = resultCount === 0 && query && !state.filters.wishlist ? findSearchSuggestion(query) : null;
-  elements.didYouMean.hidden = !suggestion;
-  if (!suggestion) {
-    elements.didYouMean.textContent = "";
+  const noWishes = emptyState.classList.contains("is-wishlist-empty");
+  if (resultCount || noWishes || (!query && !countActiveFilters())) {
     state.didYouMeanShown = "";
     return;
   }
-  const href = `?q=${encodeURIComponent(suggestion)}`;
-  elements.didYouMean.innerHTML = `Did you mean <a href="${escapeAttribute(href)}" data-did-you-mean="${escapeAttribute(suggestion)}">${escapeHtml(suggestion)}</a>?`;
-  // Once per suggestion, not on every redraw. Never the search text itself (ANALYTICS.md, principle 3).
-  if (state.didYouMeanShown !== suggestion) {
-    state.didYouMeanShown = suggestion;
-    trackEvent("search_suggestion_shown", { interaction_source: "collection_empty_state", query_length: query.length });
+  const title = emptyState.querySelector("h3");
+  if (elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
+  if (query && !catalogMatchesSearch(query)) {
+    // The search itself found nothing anywhere: a typo, or a card that isn't in the stack (yet).
+    if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = true;
+    const suggestion = findSearchSuggestion(query);
+    if (suggestion) {
+      title.textContent = `No sleepy cards for “${query}”.`;
+      text.hidden = true;
+      primary.href = `?q=${encodeURIComponent(suggestion)}`;
+      delete primary.dataset.emptySuggest;
+      primary.dataset.didYouMean = suggestion;
+      primary.textContent = `Search ${suggestion} instead`;
+      primary.hidden = false;
+      secondary.innerHTML = `Not a typo? <a href="#suggest-card" data-empty-suggest>Suggest the card you’re looking for</a>`;
+      secondary.hidden = false;
+      // Once per suggestion, not on every redraw. Never the search text itself (ANALYTICS.md, principle 3).
+      if (state.didYouMeanShown !== suggestion) {
+        state.didYouMeanShown = suggestion;
+        trackEvent("search_suggestion_shown", { interaction_source: "collection_empty_state", query_length: query.length });
+      }
+      return;
+    }
+    state.didYouMeanShown = "";
+    title.textContent = `No sleepy cards for “${query}” yet.`;
+    text.textContent = "Know one that belongs here? Comet would love to add it.";
+    text.hidden = false;
+    primary.href = "#suggest-card";
+    delete primary.dataset.didYouMean;
+    primary.dataset.emptySuggest = "";
+    primary.textContent = "Suggest a sleepy card";
+    primary.hidden = false;
+    return;
+  }
+  // The search is fine on its own (or there is none): the filters left nothing.
+  state.didYouMeanShown = "";
+  title.textContent = "No cards match these filters.";
+  text.hidden = true;
+  state.emptyStateKeepsSearch = Boolean(query);
+  if (elements.clearCollectionButton) {
+    elements.clearCollectionButton.textContent = "Clear filters";
+    elements.clearCollectionButton.hidden = false;
   }
 }
 
-function handleDidYouMeanClick(event) {
+function catalogMatchesSearch(query) {
+  const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  return state.cards.some((card) => terms.every((term) => getCardSearchText(card).includes(term)));
+}
+
+function handleEmptyStateClick(event) {
+  const suggestLink = event.target.closest("[data-empty-suggest]");
+  if (suggestLink) {
+    event.preventDefault();
+    openSuggestionDialog();
+    // Start the form's card lookup with what they searched for.
+    if (elements.suggestionCardSearch) {
+      elements.suggestionCardSearch.value = state.filters.search.trim();
+      handleSuggestionSearch();
+    }
+    trackSuggestionOpened("collection_empty_state", { has_active_search: Boolean(state.filters.search), result_count: 0 });
+    return;
+  }
   const link = event.target.closest("a[data-did-you-mean]");
   if (!link) return;
   event.preventDefault();
@@ -1640,7 +1705,7 @@ function handleDidYouMeanClick(event) {
 // for its best match. The suggestion is only offered if it finds cards under the current filters.
 function findSearchSuggestion(query) {
   const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
-  if (!terms.length || state.cards.some((card) => terms.every((term) => getCardSearchText(card).includes(term)))) return null;
+  if (!terms.length || catalogMatchesSearch(query)) return null;
   const vocabulary = getSearchVocabulary();
   let changed = false;
   const words = [];
@@ -2277,13 +2342,16 @@ function escapeCsvCell(value) {
   return `"${cell.replace(/"/g, '""')}"`;
 }
 
-function clearFilters(interactionSource) {
-  const activeFilterCount = countActiveFilters();
+// keepSearch: clear only the filters, keeping the search (the empty state's "Clear filters", when the filters
+// are what left nothing to show).
+function clearFilters(interactionSource, { keepSearch = false } = {}) {
+  const search = keepSearch ? state.filters.search : "";
+  const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0);
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
   }
   state.filters = {
-    search: "",
+    search,
     mood: "all",
     set: "all",
     rarity: "all",
@@ -2293,10 +2361,10 @@ function clearFilters(interactionSource) {
     sort: PUBLIC_DEFAULT_SORT,
     wishlist: false,
   };
-  state.showAllCards = false;
+  state.showAllCards = Boolean(search);
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";
-  if (elements.searchFilter) elements.searchFilter.value = "";
-  if (elements.headerSearchInput) elements.headerSearchInput.value = "";
+  if (elements.searchFilter) elements.searchFilter.value = search;
+  if (elements.headerSearchInput) elements.headerSearchInput.value = search;
   elements.moodChips.forEach((chip) => chip.classList.remove("is-active"));
   elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
   markHistoryStep();
