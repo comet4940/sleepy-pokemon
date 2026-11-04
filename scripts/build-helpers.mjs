@@ -16,7 +16,7 @@ export const CARD_SLUGS_PATH = "data/card-slugs.json";
 // Cache-busting versions for every CSS and JS file. Bump a number here and run the generators;
 // generated pages and the hand-written homepage and collection page all pick it up.
 export const ASSET_VERSIONS = {
-  "styles.css": 7,
+  "styles.css": 8,
   "site-chrome.css": 5,
   "home-v3.css": 36,
   "filter-drawer.css": 1,
@@ -25,7 +25,7 @@ export const ASSET_VERSIONS = {
   "about.css": 5,
   "analytics.js": 5,
   "prices.js": 2,
-  "app.js": 75,
+  "app.js": 76,
   "binder.js": 1,
   "card-page.js": 6,
   "contact.js": 1,

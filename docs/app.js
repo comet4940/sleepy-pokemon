@@ -130,6 +130,7 @@ function cacheElements() {
   elements.clearFiltersLink = document.querySelector("#clearFiltersLink");
   elements.heroCardCount = document.querySelector("#heroCardCount");
   elements.emptyState = document.querySelector("#emptyState");
+  elements.didYouMean = document.querySelector("#didYouMean");
   elements.searchSuggestionPrompt = document.querySelector("#searchSuggestionPrompt");
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
@@ -279,6 +280,7 @@ function bindEvents() {
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
   bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state"));
+  bind(elements.didYouMean, "click", handleDidYouMeanClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
   bind(elements.guideCardList, "click", handleGuideCardClick);
@@ -899,6 +901,7 @@ function renderCards() {
   }
   elements.emptyState.classList.toggle("hidden", cards.length > 0);
   describeEmptyState();
+  renderDidYouMean(cards.length);
   if (elements.searchSuggestionPrompt) {
     elements.searchSuggestionPrompt.hidden = !state.filters.search.trim();
   }
@@ -990,6 +993,26 @@ function getFilteredCards() {
   return filterCards(state.filters).sort(compareCards);
 }
 
+// Everything a search looks through on one card, normalized (and cached: it never changes for a loaded card).
+const cardSearchText = new WeakMap();
+function getCardSearchText(card) {
+  if (cardSearchText.has(card)) return cardSearchText.get(card);
+  const text = normalizeSearchText([
+    card.name,
+    card.pokemon,
+    card.setName,
+    card.setSeries,
+    card.number,
+    card.rarity,
+    card.language,
+    card.artist,
+    card.whyItBelongs,
+    ...card.moods,
+  ].join(" "));
+  cardSearchText.set(card, text);
+  return text;
+}
+
 function filterCards(filters) {
   // Every word must appear somewhere on the card, ignoring case and accents ("pokemon go" finds "Pokémon GO").
   const searchTerms = normalizeSearchText(filters.search).split(/\s+/).filter(Boolean);
@@ -998,18 +1021,7 @@ function filterCards(filters) {
   return state.cards
     .filter((card) => {
       if (searchTerms.length) {
-        const searchable = normalizeSearchText([
-          card.name,
-          card.pokemon,
-          card.setName,
-          card.setSeries,
-          card.number,
-          card.rarity,
-          card.language,
-          card.artist,
-          card.whyItBelongs,
-          ...card.moods,
-        ].join(" "));
+        const searchable = getCardSearchText(card);
         if (!searchTerms.every((term) => searchable.includes(term))) return false;
       }
       if (filters.mood !== "all") {
@@ -1576,6 +1588,161 @@ function describeEmptyState() {
     if (noWishes) elements.clearCollectionButton.hidden = false;
   }
   if (noWishes && elements.searchSuggestionPrompt) elements.searchSuggestionPrompt.hidden = true;
+}
+
+// ---- "Did you mean…?" (#223) -------------------------------------------------------------------------------
+// When a search finds nothing anywhere in the catalog (not just under the current filters), offer the closest
+// real word as a link: "Did you mean Meowth?". Nothing is corrected automatically; the visitor chooses.
+// Scoring follows PokeMichi's PokemonSpeciesFuzzyMatcher: Damerau-Levenshtein distance, a consonant skeleton
+// and Soundex, so typos ("mewoth"), swapped letters ("riachu") and sound-alikes ("month") all land on Meowth.
+// Names (Pokemon, cards) need a score of 0.62; set names, artists and moods need 0.75, so a rare word doesn't
+// win by accident ("dogs" is not "Deoxys").
+const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
+
+function renderDidYouMean(resultCount) {
+  if (!elements.didYouMean) return;
+  const query = state.filters.search.trim();
+  const suggestion = resultCount === 0 && query && !state.filters.wishlist ? findSearchSuggestion(query) : null;
+  elements.didYouMean.hidden = !suggestion;
+  if (!suggestion) {
+    elements.didYouMean.textContent = "";
+    state.didYouMeanShown = "";
+    return;
+  }
+  const href = `?q=${encodeURIComponent(suggestion)}`;
+  elements.didYouMean.innerHTML = `Did you mean <a href="${escapeAttribute(href)}" data-did-you-mean="${escapeAttribute(suggestion)}">${escapeHtml(suggestion)}</a>?`;
+  // Once per suggestion, not on every redraw. Never the search text itself (ANALYTICS.md, principle 3).
+  if (state.didYouMeanShown !== suggestion) {
+    state.didYouMeanShown = suggestion;
+    trackEvent("search_suggestion_shown", { interaction_source: "collection_empty_state", query_length: query.length });
+  }
+}
+
+function handleDidYouMeanClick(event) {
+  const link = event.target.closest("a[data-did-you-mean]");
+  if (!link) return;
+  event.preventDefault();
+  const query = link.dataset.didYouMean;
+  state.filters.search = query;
+  state.showAllCards = true;
+  if (elements.searchFilter) elements.searchFilter.value = query;
+  if (elements.headerSearchInput) elements.headerSearchInput.value = query;
+  markHistoryStep();
+  render();
+  trackEvent("search_results_viewed", {
+    interaction_source: "did_you_mean",
+    query_length: query.length,
+    result_count: getFilteredCards().length,
+  });
+}
+
+// The suggested search, or null. Words the catalog already contains stay as typed; each unknown word is swapped
+// for its best match. The suggestion is only offered if it finds cards under the current filters.
+function findSearchSuggestion(query) {
+  const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  if (!terms.length || state.cards.some((card) => terms.every((term) => getCardSearchText(card).includes(term)))) return null;
+  const vocabulary = getSearchVocabulary();
+  let changed = false;
+  const words = [];
+  for (const term of terms) {
+    if (state.cards.some((card) => getCardSearchText(card).includes(term))) {
+      words.push(term);
+      continue;
+    }
+    const letters = term.replace(/[^a-z0-9]/g, "");
+    if (letters.length < 3) return null;
+    let best = null;
+    for (const entry of vocabulary) {
+      const score = typoScore(letters, entry);
+      if (score < DID_YOU_MEAN_MIN_SCORE[entry.kind]) continue;
+      if (!best || score > best.score || (score === best.score && entry.count > best.entry.count)) best = { entry, score };
+    }
+    if (!best) return null;
+    words.push(best.entry.display);
+    changed = true;
+  }
+  if (!changed) return null;
+  const suggestion = words.join(" ");
+  return filterCards({ ...state.filters, search: suggestion }).length ? suggestion : null;
+}
+
+// The words a search could have meant, from card names, Pokemon, sets, artists and moods (not the notes).
+function getSearchVocabulary() {
+  if (state.searchVocabulary) return state.searchVocabulary;
+  const entries = new Map();
+  const add = (text, kind) => {
+    for (const word of String(text || "").split(/[\s\-–—/&:,.()]+/)) {
+      const display = word.replace(/['’]s$/, "");
+      const key = normalizeSearchText(display).replace(/[^a-z0-9]/g, "");
+      if (key.length < 3 || /^\d+$/.test(key)) continue;
+      const entry = entries.get(key) || { key, display, kind, count: 0 };
+      if (kind === "name") entry.kind = "name";
+      entry.count += 1;
+      entries.set(key, entry);
+    }
+  };
+  for (const card of state.cards) {
+    add(card.name, "name");
+    add(card.pokemon, "name");
+    add(card.setName, "other");
+    add(card.artist, "other");
+    card.moods.forEach((mood) => add(mood, "other"));
+  }
+  state.searchVocabulary = [...entries.values()].map((entry) => ({ ...entry, chars: [...entry.key], skeleton: [...consonantSkeleton(entry.key)], soundex: soundex(entry.key) }));
+  return state.searchVocabulary;
+}
+
+function typoScore(query, entry) {
+  if (query === entry.key) return 1;
+  if (entry.key.startsWith(query)) return 0.9 + 0.1 * (query.length / entry.key.length);
+  if (entry.key.includes(query)) return 0.8 + 0.1 * (query.length / entry.key.length);
+  const queryChars = [...query];
+  const editScore = Math.max(0, 1 - damerauLevenshtein(queryChars, entry.chars) / Math.max(queryChars.length, entry.chars.length));
+  const querySkeleton = [...consonantSkeleton(query)];
+  const skeletonScore = Math.max(0, 1 - damerauLevenshtein(querySkeleton, entry.skeleton) / Math.max(querySkeleton.length, entry.skeleton.length, 1));
+  const querySoundex = soundex(query);
+  const phoneticBonus = querySoundex === entry.soundex ? 0.15 : querySoundex.slice(1) === entry.soundex.slice(1) ? 0.1 : querySoundex[0] === entry.soundex[0] ? 0.05 : 0;
+  return Math.min(1, 0.5 * editScore + 0.35 * skeletonScore + phoneticBonus);
+}
+
+function damerauLevenshtein(a, b) {
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j += 1) d[0][j] = j;
+  for (let i = 1; i <= a.length; i += 1) {
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[a.length][b.length];
+}
+
+// The first letter, then only consonants: "meowth" → "mwth", so vowel slips barely count.
+function consonantSkeleton(word) {
+  return word ? word[0] + word.slice(1).replace(/[aeiouy]/g, "") : "";
+}
+
+function soundex(word) {
+  const upper = word.toUpperCase();
+  if (!upper) return "0000";
+  const code = (char) => ("BFPV".includes(char) ? "1" : "CGJKQSXZ".includes(char) ? "2" : "DT".includes(char) ? "3" : char === "L" ? "4" : "MN".includes(char) ? "5" : char === "R" ? "6" : null);
+  let result = upper[0];
+  let previous = code(upper[0]);
+  for (const char of upper.slice(1)) {
+    const value = code(char);
+    if (!value) {
+      if (char !== "H" && char !== "W") previous = null;
+      continue;
+    }
+    if (value !== previous) {
+      result += value;
+      previous = value;
+    }
+  }
+  return `${result}000`.slice(0, 4);
 }
 
 function findCardByIdentity(cardId) {

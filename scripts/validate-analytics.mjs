@@ -187,6 +187,7 @@ const cardPageSource = await readFile(join(DOCS_DIR, "card-page.js"), "utf8");
 checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 checkFilterClearTracking(appSource);
+checkDidYouMean(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
 for (const name of ["strip", "firstWish"]) {
@@ -846,6 +847,39 @@ function checkFilterClearTracking(appSource) {
     app.run(`state.filters.mood = "belly-up"; clearFilters("collection_clear_all")`);
     const real = events.filter((event) => event.name === "filters_cleared").at(-1);
     if (clears() !== afterReset + 1 || real?.params.active_filter_count !== 1) fail(`clearing one filter should send filters_cleared with active_filter_count: 1, got ${JSON.stringify(real?.params)}`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #223: a search that finds nothing offers "Did you mean…?" for a typo, never for a real word or a Pokemon we don't
+// have, sends no search text, and the link reruns the search as did_you_mean.
+function checkDidYouMean(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#223): ${message}`);
+  try {
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const card = (name, setName) => ({ name, pokemon: name, setName, setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs: "Asleep.", moods: ["Belly Up"] });
+    app.run(`
+      render = () => {}; markHistoryStep = () => {};
+      state.cards = ${JSON.stringify([card("Meowth", "Unbroken Bonds"), card("Raichu", "Temporal Forces"), card("Snorlax", "Fusion Strike")])};
+      elements.didYouMean = { hidden: true, textContent: "", innerHTML: "" };
+    `);
+    const suggest = (query) => app.run(`findSearchSuggestion(${JSON.stringify(query)})`);
+    for (const [query, expected] of [["mewoth", "Meowth"], ["month", "Meowth"], ["riachu", "Raichu"], ["snorlax", null], ["dartrix", null], ["dogs", null]]) {
+      const got = suggest(query);
+      if (got !== expected) fail(`"${query}" should suggest ${JSON.stringify(expected)}, got ${JSON.stringify(got)}`);
+    }
+    app.run(`state.filters.search = "mewoth"; renderDidYouMean(0); renderDidYouMean(0)`);
+    const shown = events.filter((event) => event.name === "search_suggestion_shown");
+    if (shown.length !== 1) fail(`search_suggestion_shown should fire once per suggestion, fired ${shown.length} times`);
+    if (JSON.stringify(shown[0]?.params ?? {}).toLowerCase().includes("meow")) fail("search_suggestion_shown must not carry search text");
+    if (shown[0] && (shown[0].params.interaction_source !== "collection_empty_state" || shown[0].params.query_length !== 6)) fail(`search_suggestion_shown params: ${JSON.stringify(shown[0].params)}`);
+    app.run(`handleDidYouMeanClick({ preventDefault() {}, target: { closest: () => ({ dataset: { didYouMean: "Meowth" } }) } })`);
+    const viewed = events.filter((event) => event.name === "search_results_viewed").at(-1);
+    if (app.run("state.filters.search") !== "Meowth") fail("clicking the suggestion should search for it");
+    if (viewed?.params.interaction_source !== "did_you_mean" || viewed?.params.result_count !== 1) fail(`clicking the suggestion should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(viewed?.params)}`);
   } catch (error) {
     fail(`threw ${error.message}`);
   }

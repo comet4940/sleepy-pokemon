@@ -839,6 +839,20 @@ textarea:focus-visible {
   margin-bottom: 0;
 }
 
+/* "Did you mean Meowth?" under a search that found nothing (#223). */
+.empty-state .did-you-mean {
+  margin-top: 14px;
+  color: var(--cream);
+  font-size: 1.05rem;
+}
+
+.empty-state .did-you-mean a {
+  color: var(--pink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .empty-state .empty-state-action {
   justify-self: center;
   width: auto;

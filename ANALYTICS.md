@@ -56,7 +56,8 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | Event | Trigger | Parameters |
 | --- | --- | --- |
 | `search_submitted` | A non-empty global-header search is submitted | `interaction_source`, `query_length` |
-| `search_results_viewed` | The collection displays results for a non-empty query | `interaction_source`, `query_length`, `result_count`, `cleared_filter_count` (header searches on the collection only: how many drawer filters the search turned off, `0` if none; the wishlist view and sort are kept) |
+| `search_results_viewed` | The collection displays results for a non-empty query, including after a click on "Did you mean …?" (`interaction_source: did_you_mean`) | `interaction_source`, `query_length`, `result_count`, `cleared_filter_count` (header searches on the collection only: how many drawer filters the search turned off, `0` if none; the wishlist view and sort are kept) |
+| `search_suggestion_shown` | A search that matched no card in the whole catalog shows "Did you mean …?" under *No cards match* (#223). Once per suggestion, not on every redraw; never the query or the suggestion | `interaction_source` (`collection_empty_state`), `query_length` |
 | `search_cleared` | The active query is removed | `result_count` |
 | `filters_opened` | The filter drawer opens (the **All filters** button on the collection) | `active_filter_count` |
 | `filters_modal_bounced` | The filter drawer is closed without changing any filter or the sort | `close_method`, `had_active_filters`, `active_filter_count` |
@@ -218,6 +219,7 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | --- | --- |
 | Are visitors discovering cards? | Sessions with `card_opened` or `card_page_view`, segmented by `interaction_source` and device |
 | Is global search useful? | `search_submitted` to `search_results_viewed`, followed by `card_opened`; inspect zero-result rate |
+| Does "Did you mean" rescue searches? | `search_suggestion_shown` ÷ zero-result searches (how often there's a suggestion), and `search_results_viewed` with `interaction_source = did_you_mean` ÷ `search_suggestion_shown` (how often it's taken) |
 | Are filters helping? | `filter_changed` followed by `card_opened`, segmented by `filter_name` |
 | Is the filter drawer used? | Adoption: users with `filters_opened` ÷ collection page-view users. Success: `filters_modal_applied` ÷ (`filters_modal_applied` + `filters_modal_bounced`), with `close_method = show_results` as the clearest signal. Drawer vs chip row: `filter_changed` by `interaction_source`. Segment by device |
 | How do collectors refine the collection? | `filters_opened` to `filters_modal_applied` vs `filters_modal_bounced`; facet breakdown via `filter_facet_*`; reset patterns via `filter_chip_removed` vs `filters_cleared` |
