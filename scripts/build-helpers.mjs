@@ -254,6 +254,11 @@ export function buildImageAlt(card) {
 
 // Sitemap lastmod for a card: its newest curation change, falling back to when the card list was exported.
 // Daily price updates don't count; prices aren't what the pages are about.
+// The last time every card page changed at once because of how it's built (its <title>, description, layout),
+// not because of any one card's data. Bump it in the same change, so the sitemap tells search engines
+// all card pages are new (DATA-MODEL.md, "Card page titles").
+export const CARD_PAGES_UPDATED = "2026-11-04";
+
 export function getCardLastmod(card, exportedAt) {
   return getNewestDate([card.updatedAt, card.createdAt, exportedAt]);
 }
