@@ -117,6 +117,7 @@ The About page's *Say hi* section opens a *Contact Comet* form (`docs/contact.js
 | Event | Trigger | Parameters |
 | --- | --- | --- |
 | `studio_link_clicked` | Semi Serious Labs is selected | `interaction_source`, `destination`, `destination_path` |
+| `social_link_clicked` | The footer's Instagram link (@sleepypokemoncards) is selected | `interaction_source` (`global_footer`), `destination` (`instagram`), `destination_path` |
 
 `coffee_clicked` is retired: the Buy Me a Coffee widget was removed in #200 and the coffee link was dropped for good (#201, #209). Its old events stay in GA4 history.
 

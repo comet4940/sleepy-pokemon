@@ -9,6 +9,8 @@ export function renderSiteFooter() {
             <strong class="footer-brand">Sleepy Pokemon</strong>
             <span class="footer-divider" aria-hidden="true">·</span>
             <p>Made with <span class="footer-heart" aria-label="love">&hearts;</span> by <a class="footer-studio-link" href="https://semiseriousllc.com" target="_blank" rel="noopener noreferrer" data-analytics-event="studio_link_clicked" data-analytics-source="global_footer" data-analytics-destination="semi_serious_labs">Semi Serious Labs</a></p>
+            <span class="footer-divider footer-social-divider" aria-hidden="true">·</span>
+            <a class="footer-social-link" href="https://www.instagram.com/sleepypokemoncards/" target="_blank" rel="me noopener noreferrer" data-analytics-event="social_link_clicked" data-analytics-source="global_footer" data-analytics-destination="instagram">Instagram <span class="footer-social-handle">@sleepypokemoncards</span></a>
           </div>
           <p class="site-footer-disclaimer">Fan-made collection checklist. Pokémon and card art belong to their respective owners. Not affiliated with Pokémon or TCGplayer.</p>
         </div>

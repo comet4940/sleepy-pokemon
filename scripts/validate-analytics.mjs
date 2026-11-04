@@ -102,6 +102,9 @@ for (const path of htmlFiles) {
     if (!/data-analytics-event="studio_link_clicked"/.test(footer)) {
       errors.push(`${label}: shared footer studio-link tracking is missing`);
     }
+    if (!/href="https:\/\/www\.instagram\.com\/sleepypokemoncards\/"[^>]+data-analytics-event="social_link_clicked"/.test(footer)) {
+      errors.push(`${label}: shared footer Instagram link (@sleepypokemoncards) or its social_link_clicked tracking is missing`);
+    }
     // The floating Buy Me a Coffee widget sat where toasts and the wishlist's messages show; the coffee link was
     // dropped for good (#201), and About's Contact Comet form is the way to reach the curator (#209).
     if (/BMC-Widget|buymeacoffee\.com\/[\d.]+\/widget/.test(html)) {
