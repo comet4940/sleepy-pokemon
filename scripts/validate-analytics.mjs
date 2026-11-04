@@ -865,7 +865,7 @@ function checkDidYouMean(appSource) {
     app.run(`
       render = () => {}; markHistoryStep = () => {};
       state.cards = ${JSON.stringify([card("Meowth", "Unbroken Bonds"), card("Raichu", "Temporal Forces"), card("Snorlax", "Fusion Strike"), card("Joltik", "Paradox Rift"), card("Jolteon", "Neo Destiny")])};
-      const node = () => ({ hidden: false, textContent: "", innerHTML: "", href: "", dataset: {} });
+      const node = () => ({ hidden: false, innerHTML: "", href: "", dataset: {}, set textContent(value) { this.innerHTML = value; }, get textContent() { return this.innerHTML.replace(/<[^>]*>/g, ""); } });
       const title = node(), text = node();
       Object.assign(elements, {
         emptyState: { classList: { contains: () => false }, querySelector: (selector) => (selector === "h3" ? title : text) },
@@ -884,26 +884,26 @@ function checkDidYouMean(appSource) {
       app.run(`state.filters.search = ${JSON.stringify(search)}; state.filters.mood = ${JSON.stringify(mood)}; renderEmptySearchState(0)`);
       return app.run(`({ title: emptyTitle.textContent, primary: elements.emptyStatePrimary.hidden ? null : elements.emptyStatePrimary.textContent,
         secondary: !elements.emptyStateSecondary.hidden, clear: elements.clearCollectionButton.hidden ? null : elements.clearCollectionButton.textContent,
-        prompt: !elements.searchSuggestionPrompt.hidden, didYouMean: elements.emptyStatePrimary.dataset.didYouMean, suggest: "emptySuggest" in elements.emptyStatePrimary.dataset })`);
+        prompt: !elements.searchSuggestionPrompt.hidden, text: emptyText.hidden ? null : emptyText.textContent, link: emptyText.innerHTML, suggest: "emptySuggest" in elements.emptyStatePrimary.dataset })`);
     };
     const typo = view("mewoth");
-    if (typo.primary !== "Search Meowth instead" || !typo.secondary || typo.clear !== null || typo.prompt || typo.suggest) fail(`a typo should offer "Search Meowth instead" and a "Not a typo?" suggest link, nothing else; got ${JSON.stringify(typo)}`);
+    if (typo.text !== "Did you mean Meowth?" || !typo.link.includes('data-did-you-mean="Meowth"') || typo.link.includes("data-clears-filters") || typo.primary !== null || !typo.secondary || typo.clear !== null || typo.prompt) fail(`a typo should say "Did you mean Meowth?" (linked) and offer a "Not a typo?" suggest link, nothing else; got ${JSON.stringify(typo)}`);
     view("mewoth");
     const shown = events.filter((event) => event.name === "search_suggestion_shown");
     if (shown.length !== 1) fail(`search_suggestion_shown should fire once per suggestion, fired ${shown.length} times`);
     if (JSON.stringify(shown[0]?.params ?? {}).toLowerCase().includes("meow")) fail("search_suggestion_shown must not carry search text");
     if (shown[0] && (shown[0].params.interaction_source !== "collection_empty_state" || shown[0].params.query_length !== 6)) fail(`search_suggestion_shown params: ${JSON.stringify(shown[0].params)}`);
     const missing = view("dartrix");
-    if (missing.primary !== "Suggest a sleepy card" || !missing.suggest || missing.didYouMean || missing.clear !== null || !missing.title.includes("dartrix")) fail(`a search with no match and no typo should offer "Suggest a sleepy card"; got ${JSON.stringify(missing)}`);
+    if (missing.primary !== "Suggest a sleepy card" || !missing.suggest || missing.link.includes("data-did-you-mean") || missing.clear !== null || !missing.title.includes("dartrix")) fail(`a search with no match and no typo should offer "Suggest a sleepy card"; got ${JSON.stringify(missing)}`);
     const filtered = view("meowth", "snow-naps");
     if (filtered.title !== "No cards match these filters." || filtered.clear !== "Clear filters" || filtered.primary !== null) fail(`a real search emptied by filters should offer "Clear filters"; got ${JSON.stringify(filtered)}`);
     // A typo whose fix the filters hide (Joltik isn't a Snow Nap) is still a typo, not a missing card.
     const hidden = view("joltin", "snow-naps");
-    if (hidden.primary !== "Search Joltik in all cards" || hidden.title.includes("yet") || hidden.clear !== null) fail(`a typo whose fix the filters hide should offer "Search Joltik in all cards"; got ${JSON.stringify(hidden)}`);
-    app.run(`handleEmptyStateClick({ preventDefault() {}, target: { closest: (selector) => (selector.includes("did-you-mean") ? elements.emptyStatePrimary : null) } })`);
-    if (app.run("state.filters.search") !== "Joltik" || app.run("state.filters.mood") !== "all") fail("Search Joltik in all cards should search Joltik and drop the filters");
+    if (hidden.text !== "Did you mean Joltik? It’s outside these filters." || !hidden.link.includes("data-clears-filters") || hidden.title.includes("yet") || hidden.primary !== null || hidden.clear !== null) fail(`a typo whose fix the filters hide should say "Did you mean Joltik? It’s outside these filters."; got ${JSON.stringify(hidden)}`);
+    app.run(`handleEmptyStateClick({ preventDefault() {}, target: { closest: (selector) => (selector.includes("did-you-mean") ? { dataset: { didYouMean: "Joltik", clearsFilters: "" } } : null) } })`);
+    if (app.run("state.filters.search") !== "Joltik" || app.run("state.filters.mood") !== "all") fail("the Joltik link should search Joltik and drop the filters");
     const unhid = events.filter((event) => event.name === "search_results_viewed").at(-1);
-    if (unhid?.params.interaction_source !== "did_you_mean" || unhid?.params.result_count !== 1) fail(`Search … in all cards should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(unhid?.params)}`);
+    if (unhid?.params.interaction_source !== "did_you_mean" || unhid?.params.result_count !== 1) fail(`the outside-the-filters link should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(unhid?.params)}`);
     view("meowth", "snow-naps");
     app.run(`clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch })`);
     if (app.run("state.filters.search") !== "meowth" || app.run("state.filters.mood") !== "all") fail("Clear filters in the empty state should keep the search and drop the filters");

@@ -1603,9 +1603,10 @@ function describeEmptyState() {
 const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
 
 // The empty state for a search or filters that found nothing. It says what happened and offers one main action:
-//   a likely typo        "No sleepy cards for “mewoth”."   [Search Meowth instead]   Not a typo? Suggest the card…
+//   a likely typo        "No sleepy cards for “mewoth”."   Did you mean _Meowth_?   Not a typo? Suggest the card…
 //   nothing in the stack "No sleepy cards for “dartrix” yet."   [Suggest a sleepy card]  (form opens with “dartrix”)
-//   a typo, but the filters hide the fix (joltin + Snow Naps)   [Search Joltik in all cards]  (drops the filters)
+//   a typo, but the filters hide the fix (joltin + Snow Naps)   Did you mean _Joltik_? It’s outside these filters.
+//                        (the link drops the filters)
 //   filters did it       "No cards match these filters."   [Clear filters]  (keeps the search)
 // The summary line above already shows the search and a "Show all", so neither is repeated here, and the separate
 // "Not seeing your snoozer?" prompt stays hidden while there's nothing to show.
@@ -1617,6 +1618,7 @@ function renderEmptySearchState(resultCount) {
   state.emptyStateKeepsSearch = false;
   const text = emptyState.querySelector("p");
   text.hidden = false;
+  text.classList?.remove("empty-state-did-you-mean");
   const query = state.filters.search.trim();
   const noWishes = emptyState.classList.contains("is-wishlist-empty");
   if (resultCount || noWishes || (!query && !countActiveFilters())) {
@@ -1630,18 +1632,13 @@ function renderEmptySearchState(resultCount) {
     if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = true;
     const suggestion = findSearchSuggestion(query);
     if (suggestion) {
-      // The fix may exist only outside the filters (Joltik isn't a Snow Nap): then the button searches all cards,
-      // rather than calling the card missing.
+      // A plain "Did you mean Meowth?" with the name as the link, not a button. The fix may exist only outside the
+      // filters (Joltik isn't a Snow Nap): then the link searches all cards, rather than calling the card missing.
       const fitsFilters = filterCards({ ...state.filters, search: suggestion }).length > 0;
       title.textContent = `No sleepy cards for “${query}”.`;
-      text.hidden = true;
-      primary.href = `?q=${encodeURIComponent(suggestion)}`;
-      delete primary.dataset.emptySuggest;
-      primary.dataset.didYouMean = suggestion;
-      if (fitsFilters) delete primary.dataset.clearsFilters;
-      else primary.dataset.clearsFilters = "";
-      primary.textContent = fitsFilters ? `Search ${suggestion} instead` : `Search ${suggestion} in all cards`;
-      primary.hidden = false;
+      const link = `<a href="?q=${escapeAttribute(encodeURIComponent(suggestion))}" data-did-you-mean="${escapeAttribute(suggestion)}"${fitsFilters ? "" : " data-clears-filters"}>${escapeHtml(suggestion)}</a>`;
+      text.innerHTML = fitsFilters ? `Did you mean ${link}?` : `Did you mean ${link}? It’s outside these filters.`;
+      text.classList?.add("empty-state-did-you-mean");
       secondary.innerHTML = `Not a typo? <a href="#suggest-card" data-empty-suggest>Suggest the card you’re looking for</a>`;
       secondary.hidden = false;
       // Once per suggestion, not on every redraw. Never the search text itself (ANALYTICS.md, principle 3).

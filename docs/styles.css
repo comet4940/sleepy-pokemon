@@ -873,6 +873,24 @@ textarea:focus-visible {
   color: #211522;
 }
 
+.empty-state .empty-state-did-you-mean {
+  margin-top: 14px;
+  color: var(--cream);
+  font-size: 1.05rem;
+}
+
+.empty-state .empty-state-did-you-mean a {
+  color: #f36b9b;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.empty-state .empty-state-did-you-mean a:hover,
+.empty-state .empty-state-did-you-mean a:focus-visible {
+  color: #ff82ac;
+}
+
 .empty-state .empty-state-secondary {
   margin-top: 14px;
   font-size: .95rem;
