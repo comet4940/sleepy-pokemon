@@ -147,6 +147,11 @@ ${items}
     /(<span class="collection-meta" id="collectionMeta">)[^<]*(<\/span>)/,
     `$1${cardList.length} cards · zero alarm clocks$2`,
   );
+  // The title, description and social titles name the live card count ("All 261 Sleeping Pokemon Cards…").
+  html = html
+    .replace(/(<title>All )\d+( Sleeping Pokemon Cards)/, `$1${cardList.length}$2`)
+    .replace(/(<meta (?:property="og:title"|name="twitter:title") content="All )\d+( Sleeping Pokemon Cards)/g, `$1${cardList.length}$2`)
+    .replace(/(<meta name="description" content="[^"]*all )\d+( in one place)/, `$1${cardList.length}$2`);
   if (html.includes(START) && html.includes(END)) {
     html = html.replace(new RegExp(`${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}`), section);
   } else {
