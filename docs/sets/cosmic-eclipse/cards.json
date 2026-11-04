@@ -21,7 +21,8 @@
       "slug": "gloom-cosmic-eclipse-3-236",
       "moods": [
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm12-31",
@@ -44,7 +45,8 @@
       "slug": "tepig-cosmic-eclipse-31-236",
       "moods": [
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm12-123",
@@ -67,6 +69,10 @@
       "slug": "rockruff-cosmic-eclipse-123-236",
       "moods": [
         "Bedtime"
+      ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
       ]
     },
     {
@@ -92,6 +98,9 @@
         "Group Naps",
         "Sleepy Trainers",
         "Pokémon Pillow"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -116,6 +125,9 @@
       "moods": [
         "Nap Watch",
         "Hug Buddy"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]

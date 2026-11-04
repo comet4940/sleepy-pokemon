@@ -22,7 +22,8 @@
       "moods": [
         "Drool & Snore",
         "Treetop Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard2-66",
@@ -45,7 +46,8 @@
       "slug": "wooper-aquapolis-66-147",
       "moods": [
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard2-74",
@@ -69,7 +71,8 @@
       "moods": [
         "Belly Up",
         "Town Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard2-84",
@@ -93,7 +96,8 @@
       "moods": [
         "Nap Watch",
         "Water Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard2-108",
@@ -116,7 +120,8 @@
       "slug": "slowpoke-aquapolis-108-147",
       "moods": [
         "Face-Plant"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard2-109",
@@ -137,7 +142,8 @@
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.973Z",
       "slug": "smeargle-aquapolis-109-147",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     }
   ]
 }

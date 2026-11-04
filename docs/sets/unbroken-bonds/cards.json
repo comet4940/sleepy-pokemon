@@ -21,7 +21,8 @@
       "slug": "gloom-unbroken-bonds-7-214",
       "moods": [
         "Drool & Snore"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-17",
@@ -44,7 +45,8 @@
       "slug": "tangrowth-unbroken-bonds-17-214",
       "moods": [
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-79",
@@ -65,7 +67,12 @@
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.841Z",
       "slug": "espurr-unbroken-bonds-79-214",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ]
     },
     {
       "apiId": "sm10-135",
@@ -90,7 +97,8 @@
         "Group Naps",
         "Cameo Sleepers",
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-137",
@@ -113,7 +121,8 @@
       "slug": "togetic-unbroken-bonds-137-214",
       "moods": [
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-147",
@@ -137,6 +146,11 @@
       "moods": [
         "Hug Buddy",
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -161,7 +175,8 @@
       "moods": [
         "Nap Watch",
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     }
   ]
 }

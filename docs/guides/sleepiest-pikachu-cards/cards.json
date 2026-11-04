@@ -23,6 +23,9 @@
         "Group Naps",
         "Sleepy Trainers",
         "Hug Buddy"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -47,6 +50,12 @@
       "moods": [
         "Belly Up",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -72,7 +81,8 @@
         "Nap Watch",
         "Belly Up",
         "Beach Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "svp-214",
@@ -93,7 +103,8 @@
       "createdAt": "2026-11-02T21:00:00.000Z",
       "updatedAt": "2026-11-02T21:00:00.000Z",
       "slug": "pikachu-scarlet-and-violet-promos-214",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-88",
@@ -117,7 +128,8 @@
       "moods": [
         "Cameo Sleepers",
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     }
   ]
 }

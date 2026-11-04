@@ -21,6 +21,9 @@
       "slug": "oshawott-white-flare-105-86",
       "moods": [
         "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -45,6 +48,12 @@
       "moods": [
         "Hug Buddy",
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -68,6 +77,12 @@
       "slug": "sprigatito-paldea-evolved-196-193",
       "moods": [
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -93,6 +108,9 @@
         "Group Naps",
         "Sleepy Trainers",
         "Hug Buddy"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -117,6 +135,9 @@
       "moods": [
         "Nap Watch",
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -138,7 +159,13 @@
       "createdAt": "2026-05-05T00:58:01.876Z",
       "updatedAt": "2026-10-16T15:21:54.631Z",
       "slug": "espeon-vmax-fusion-strike-270-264",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ]
     }
   ]
 }

@@ -22,6 +22,12 @@
       "moods": [
         "Face-Plant",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -46,7 +52,8 @@
       "moods": [
         "Hug Buddy",
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv9-165",
@@ -69,6 +76,9 @@
       "slug": "swinub-journey-together-165-159",
       "moods": [
         "Snow Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -92,6 +102,11 @@
       "slug": "lycanroc-journey-together-166-159",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
       ]
     },
     {
@@ -113,7 +128,10 @@
       "createdAt": "2026-05-05T00:54:50.453Z",
       "updatedAt": "2026-10-15T15:37:37.737Z",
       "slug": "furret-journey-together-168-159",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art"
+      ]
     }
   ]
 }

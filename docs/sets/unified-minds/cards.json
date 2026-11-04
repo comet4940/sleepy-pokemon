@@ -22,7 +22,8 @@
       "moods": [
         "Cameo Sleepers",
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-89",
@@ -45,7 +46,8 @@
       "slug": "musharna-unified-minds-89-236",
       "moods": [
         "Dream Sequence"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-151",
@@ -68,7 +70,8 @@
       "slug": "dragonite-unified-minds-151-236",
       "moods": [
         "Dream Sequence"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-168",
@@ -92,7 +95,8 @@
       "moods": [
         "Belly Up",
         "Treetop Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-185",
@@ -116,7 +120,8 @@
       "moods": [
         "Face-Plant",
         "Hug Buddy"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm11-207",
@@ -140,7 +145,8 @@
       "moods": [
         "Dream Sequence",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     }
   ]
 }

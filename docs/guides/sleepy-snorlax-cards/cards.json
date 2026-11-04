@@ -21,7 +21,8 @@
       "slug": "snorlax-vending-machine-series-1-143",
       "moods": [
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "basep-49",
@@ -46,7 +47,8 @@
         "Cameo Sleepers",
         "Belly Up",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "gym1-33",
@@ -70,7 +72,8 @@
       "moods": [
         "Food Coma",
         "Face-Plant"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-100",
@@ -93,7 +96,8 @@
       "slug": "snorlax-skyridge-100-144",
       "moods": [
         "Water Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "xy0-26",
@@ -117,7 +121,8 @@
       "moods": [
         "Face-Plant",
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "xy2-80",
@@ -141,7 +146,8 @@
       "moods": [
         "Belly Up",
         "Drool & Snore"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "g1-58",
@@ -165,7 +171,8 @@
       "moods": [
         "Belly Up",
         "Drool & Snore"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "xy10-77",
@@ -189,7 +196,8 @@
       "moods": [
         "Nap Watch",
         "Town Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm10-158",
@@ -213,7 +221,8 @@
       "moods": [
         "Nap Watch",
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sm115-50",
@@ -236,7 +245,8 @@
       "slug": "snorlax-hidden-fates-50-68",
       "moods": [
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swshp-SWSH032",
@@ -262,7 +272,8 @@
         "Belly Up",
         "Drool & Snore",
         "Flower Beds"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh4-131",
@@ -283,7 +294,8 @@
       "createdAt": "2026-05-05T01:03:39.881Z",
       "updatedAt": "2026-11-03T22:11:25.000Z",
       "slug": "snorlax-vivid-voltage-131-185",
-      "moods": []
+      "moods": [],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh8-206",
@@ -307,7 +319,8 @@
       "moods": [
         "Food Coma",
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "pgo-55",
@@ -331,7 +344,8 @@
       "moods": [
         "Belly Up",
         "Town Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh11-143",
@@ -354,7 +368,8 @@
       "slug": "snorlax-lost-origin-143-196",
       "moods": [
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh12pt5-109",
@@ -379,6 +394,12 @@
         "Belly Up",
         "Flower Beds",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -403,6 +424,9 @@
       "moods": [
         "Nap Watch",
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -427,7 +451,8 @@
       "moods": [
         "Propped Up",
         "Sunbeam Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv6-136",
@@ -450,7 +475,8 @@
       "slug": "snorlax-twilight-masquerade-136-167",
       "moods": [
         "Town Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "",
@@ -473,7 +499,8 @@
       "slug": "snorlax-perfect-order-063-088",
       "moods": [
         "Belly Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "me30-119",
@@ -499,7 +526,8 @@
         "Belly Up",
         "Flower Beds",
         "Autumn Leaves"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv6-187",
@@ -522,6 +550,9 @@
       "slug": "chansey-twilight-masquerade-187-167",
       "moods": [
         "Cameo Sleepers"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]

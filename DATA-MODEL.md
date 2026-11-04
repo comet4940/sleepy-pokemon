@@ -44,6 +44,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `imageSource` | No | Credit for images hosted by a site that isn't a card API | `PriceCharting`, `Scrydex`, `PokeBoon` |
 | `imageSourceUrl` | No | Page the hosted image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
+| `searchKeywords` | Yes | Hidden words the collection search finds the card by, for what people type that isn't in its name, set, artist, moods or note (see [Search keywords](#search-keywords)). Lowercase, no duplicates, `[]` for none. Published to browsers, so nothing private | `["full art"]`, `["dog", "puppy"]` |
 | `whyItBelongs` | Yes | The curator's short note on what's happening in the art. Shown as "Why it belongs" | `Dinner is still on the table, and Growlithe...` |
 | `seoTitle` | No | Overrides the card page's `<title>` and social title, for the rare card the usual pattern gets wrong (see [Card page titles](#card-page-titles)). Leave it out otherwise | `Sleeping Snorlax & Eevee Card – Wizards Promos 49 \| Sleepy Pokemon` |
 | `notes` | No | Internal provenance and sources: where the card came from, which suggestion or issue it was, where the details were checked. Not shown, searched or sent to browsers, but the repo is public, so keep anything private out | `Community submission via the Suggest a card form.` |
@@ -181,17 +182,34 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 - **Adding the next batch:** put the card slugs (the `cards/<slug>/` part of a card page URL) in `upcoming.cards`. To replace the list early instead, set `current` to the new cards with `startsOn` set to the coming Sunday.
 - The validator checks every slug is a published card and `startsOn` is a Sunday.
 
+## Search keywords
+
+`searchKeywords` let a search find a card by words that aren't on it (#223). Most cards have none. Search also matches plurals ("dogs" finds "dog") and ignores "card", "cards", "pokemon", "sleepy", "sleeping" and "tcg" when keeping them would find nothing ("crochet cards").
+
+| Keyword | Which cards | Kind |
+| --- | --- | --- |
+| `full art` | Full art cards: art across the whole card, not in a frame. None before 2011. Usually Illustration Rare, Special Illustration Rare, Ultra Rare (2011 on), Trainer Gallery, Galarian Gallery, Rare Ultra and Rare Rainbow; check promos and non-English cards by eye | Art |
+| `crochet`, `yarn`, `amigurumi`, `knitted` | Yarn-made art (Asako Ito) | Art |
+| `cat`, `kitty`, `kitten` | Cat Pokémon: Meowth, Skitty, Espurr, Meowstic, Glameow, Litten, Incineroar, Sprigatito, Luxio, Zeraora, Espeon, Umbreon, Mew (as in the Sleepy Cat guide) | Pokémon |
+| `dog`, `puppy` | Dog Pokémon: Growlithe, Arcanine, Rockruff, Lycanroc, Houndour | Pokémon |
+
+- **Art keywords** depend on the card: decide each one when adding it.
+- **Pokémon keywords** (`dog`, `cat`) go on every card of that Pokémon. The validator fails if one card of a tagged Pokémon is missing them.
+- **Add a new keyword** when a real search comes up empty and some cards should match it; add it to this table.
+- **A keyword matches whole words only.** "cat" finds the cards tagged cat and notes with the word "cat", not Raticate; "full art" finds the tagged cards, not every note that happens to contain "full" and "art". Words that aren't keywords still match anywhere, as before.
+
 ## Adding a card
 
 1. **Check it isn't already listed**: search `data/cards.json` for the Pokémon, set and number.
 2. **Collect the details** from the card itself and a source like pokemontcg.io, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, image.
 3. **Write the curation**: pick moods, write `whyItBelongs` (see [Writing "Why it belongs"](#writing-why-it-belongs)), and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
-4. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
-5. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
-6. **Regenerate and check**:
+4. **Add search keywords** from the [Search keywords](#search-keywords) table: `full art` if it is one (2011 or later only), `dog` or `cat` for those Pokémon, plus anything people would search for that isn't in the name or note. Usually `[]`.
+5. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
+6. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
+7. **Regenerate and check**:
    ```bash
    node scripts/sync-seo-index.mjs
    node scripts/sync-guides.mjs
    node scripts/validate-analytics.mjs
    ```
-7. **Open a PR** with the regenerated pages; it goes live once merged. The next price refresh fills in the price.
+8. **Open a PR** with the regenerated pages; it goes live once merged. The next price refresh fills in the price.

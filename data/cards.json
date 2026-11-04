@@ -22,6 +22,7 @@
         "Belly Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Two years before Generations reprinted it, this is where Mitsuhiro Arita’s Snorlax first flopped down in the grass: on its back, eyes shut, mouth hanging open, with nothing else in the field to distract from the nap.",
       "createdAt": "2026-11-04T00:15:28.000Z",
       "updatedAt": "2026-11-04T00:15:28.000Z",
@@ -49,6 +50,7 @@
         "Propped Up",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Dappled shade, tall grass and a scatter of little white flowers. Snorlax has settled back against a tree trunk in the middle of it all, eyes shut, both feet sticking straight out.",
       "createdAt": "2026-11-04T00:15:28.000Z",
       "updatedAt": "2026-11-04T00:15:28.000Z",
@@ -75,6 +77,7 @@
       "moods": [
         "Town Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Its flavor text says eating things off the ground doesn’t bother Snorlax at all. Neither, apparently, does sleeping on it: Snorlax has plopped down on the pavement in front of a big red-and-white building, eyes shut, mouth wide open, one paw resting on its belly.",
       "createdAt": "2026-11-04T00:15:28.000Z",
       "updatedAt": "2026-11-04T00:15:28.000Z",
@@ -101,6 +104,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Who’s looking up at Snorlax from its feet? Whoever it is, Snorlax hasn’t noticed: it’s flat on its back under the branches, eyes shut, with nothing above it but leaves and blue sky.",
       "createdAt": "2026-11-04T00:15:28.000Z",
       "updatedAt": "2026-11-04T00:15:28.000Z",
@@ -127,6 +131,9 @@
       "notes": "Sent in by the curator. Details checked against TCGdex (sv10.5b-097) and the card image.",
       "moods": [
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Darumaka’s own flavor text says that when the fire inside it dies down, it falls asleep. Here the fire is clearly out: it sits bolt upright on a tasseled floor cushion, eyes shut, with a Qualot Berry, a Payapa Berry, a bonsai pine and a few blue wildflowers keeping it company.",
       "createdAt": "2026-11-03T23:23:30.000Z",
@@ -155,6 +162,7 @@
         "Beach Naps",
         "Nap Watch"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Buneary is strumming a ukulele, Pachirisu has found a beach ball and Croagunk is lounging in a deck chair. Up in the hammock under the palm tree, Psyduck has slept through the whole beach party.",
       "createdAt": "2026-11-03T20:30:41.000Z",
       "updatedAt": "2026-11-03T20:39:04.000Z"
@@ -180,6 +188,7 @@
         "Beach Naps",
         "Nap Watch"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Tails on this card puts both Active Pokémon to sleep, and Psyduck seems to have flipped it on itself: it’s out cold in a hammock under the palms, a hibiscus on its head and a ukulele still in its arms, while Jigglypuff peeks in from the end of the hammock.",
       "createdAt": "2026-11-03T20:30:41.000Z",
       "updatedAt": "2026-11-03T20:41:32.000Z"
@@ -204,6 +213,9 @@
         "Group Naps",
         "Nap Watch",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove has flopped over and gone to sleep on the cobblestones, like pigeons dozing on a city square. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
       "createdAt": "2026-11-03T20:14:09.000Z",
@@ -231,6 +243,7 @@
       "moods": [
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "The Pokédex says Snorunt gather under giant leaves and live together in harmony. This one skipped the leaves and the company: it’s asleep alone in a dark hollow of an ice cave, eyes shut, its reflection glowing in the frozen floor below.",
       "createdAt": "2026-11-03T20:11:43.000Z",
       "updatedAt": "2026-11-03T20:11:43.000Z",
@@ -258,6 +271,7 @@
         "Cameo Sleepers",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Two sisters weaving flower crowns, Marill grinning at the left, and squeezed against the right edge, a Mareep that has already dozed off with a flower on its head.",
       "createdAt": "2026-11-03T20:11:43.000Z",
       "updatedAt": "2026-11-03T20:11:43.000Z",
@@ -284,6 +298,11 @@
       "moods": [
         "Cameo Sleepers",
         "Study Break"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Bebe is deep in the PC; Glameow is deep asleep beside it.",
       "createdAt": "2026-11-03T20:11:43.000Z",
@@ -313,6 +332,7 @@
         "Couch & Cushion",
         "Nap Watch"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Who’s keeping an eye on Nebby? Clefairy, by the look of it: Cosmog is curled up asleep on the couch with sleep bubbles drifting up, Clefairy sits right beside it, and Lillie is busy writing in her notebook.",
       "createdAt": "2026-11-03T20:11:43.000Z",
       "updatedAt": "2026-11-03T20:26:53.000Z"
@@ -337,6 +357,9 @@
         "Cameo Sleepers",
         "Sleepy Trainers",
         "Study Break"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "How loud does a Blueberry Academy meeting have to get before someone naps through it? Louder than this, apparently: Drayton is out cold in the corner of the table, cheek on his arm, while Lacey and Crispin carry on over the snacks.",
       "createdAt": "2026-11-03T19:50:56.000Z",
@@ -366,6 +389,7 @@
         "Beach Naps",
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Slowpoke has flopped belly-down at the water’s edge, eyes shut and grinning, its tail trailing in the surf. Its Pokédex entry says it’s good at fishing with its tail; here it has clearly nodded off mid-catch.",
       "createdAt": "2026-11-02T22:30:00.000Z",
       "updatedAt": "2026-11-02T22:30:00.000Z",
@@ -390,6 +414,7 @@
       "setReleaseDate": "2023/01/20",
       "notes": "Community submission via the Suggest a card form.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Chatot has tucked itself under the leaves to wait out a downpour, head low and eye closed, raindrops pattering all around. For a Pokémon that can learn to speak human words, it has gone very quiet. sui paints the rain so softly you can almost hear it.",
       "createdAt": "2026-11-02T22:30:00.000Z",
       "updatedAt": "2026-11-02T22:30:00.000Z",
@@ -414,6 +439,7 @@
       "setReleaseDate": "2025/02/27",
       "notes": "Community submission via the Suggest a card form (\"Yawning Pikachu\"). Grand Prize winner of the 2024 Pokémon TCG Illustration Contest. Release date is the Pokémon Day 2025 distribution, not confirmed to the day. Image from Scrydex (not on pokemontcg.io yet).",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Pikachu has stopped mid-stretch on a sun-warmed garden wall for an enormous, eyes-shut yawn: the moment right before a nap. Kazuki Minami’s painting won the Grand Prize in the 2024 Pokémon TCG Illustration Contest, and even its attack is in the mood: Unwind.",
       "createdAt": "2026-11-02T21:00:00.000Z",
       "updatedAt": "2026-11-02T21:00:00.000Z",
@@ -442,6 +468,7 @@
         "Water Naps",
         "Autumn Leaves"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Dewott has clocked out for the day and is floating belly-up in a leaf-strewn pond, eyes shut and grinning, without a care that a Tynamo is splashing right past. For a Water-type weak to Lightning, that’s a lot of trust. Mina Nakai catches a Pokémon known for its discipline completely off duty.",
       "createdAt": "2026-11-02T20:00:00.000Z",
       "updatedAt": "2026-11-02T20:00:00.000Z",
@@ -469,6 +496,9 @@
         "Nap Watch",
         "Cameo Sleepers",
         "Food Coma"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
       "createdAt": "2026-10-27T22:43:34.000Z",
@@ -498,6 +528,9 @@
         "Cameo Sleepers",
         "Water Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Two Duosion drift lazily across the top of this card, floating on the shimmering water while the sun sparkles around them. The whole scene feels like a warm afternoon on a pool float, with a cheerful Reuniclus keeping watch over the nap.",
       "createdAt": "2026-10-27T21:59:45.000Z",
       "updatedAt": "2026-10-27T21:59:45.000Z",
@@ -523,6 +556,7 @@
       "notes": "User-provided card image; details confirmed against the Pokemon TCG API card bw11-94.",
       "priceType": "Normal",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "In a cave full of flustered, squabbling Gible, one sneaky little guy at the top center has quietly slipped away for a nap. Everyone else is sweating and sputtering below, and he’s still getting his rest.",
       "createdAt": "2026-10-27T21:59:45.000Z",
       "updatedAt": "2026-10-27T22:07:04.000Z",
@@ -548,6 +582,9 @@
       "moods": [
         "Sleepy Trainers",
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Caitlin reclines on soft cushions, one eye squeezed shut and a hand raised over her mouth in a yawn. The pink-and-lilac illustration feels like a quiet pause between battles. She’s a Trainer rather than a sleeping Pokémon, but this unmistakably drowsy moment earns her a spot in the sleepy-trainer corner of the collection.",
       "createdAt": "2026-10-27T00:00:00.000Z",
@@ -576,6 +613,10 @@
         "Food Coma",
         "Face-Plant"
       ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
+      ],
       "whyItBelongs": "Dinner is still on the table, and Growlithe has already curled up underneath it, eyes shut, done for the night.",
       "createdAt": "2026-10-23T18:00:00.000Z",
       "updatedAt": "2026-10-23T18:30:00.000Z"
@@ -600,6 +641,7 @@
         "Nap Watch",
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "A full-on Snorlax nap under the trees, with two Pikachu nearby and a Torchic perched on his head. Nobody in this scene looks in a hurry to wake him.",
       "createdAt": "2026-10-15T16:48:00.000Z",
       "updatedAt": "2026-10-16T15:21:24.630Z",
@@ -626,6 +668,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Curled up among the greenery, Vulpix has found a cozy little spot for a woodland snooze. Those tucked-in tails make the whole clearing feel extra peaceful.",
       "createdAt": "2026-10-15T16:48:00.000Z",
       "updatedAt": "2026-10-19T17:26:41.254Z",
@@ -652,6 +695,9 @@
       "moods": [
         "Water Naps",
         "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Psyduck floats in a peaceful water scene with that famously dazed expression. It may be more of a quiet drift than a deep nap, but the calm, sleepy mood earns it a spot in the stack.",
       "createdAt": "2026-10-15T16:48:00.000Z",
@@ -682,6 +728,11 @@
         "Couch & Cushion",
         "Study Break"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Litten is curled up on a plush rose-colored armchair, tail dangling, completely unbothered while Chespin flutters around and books drift through the air. The dusky-purple reading room is a perfect backdrop for a cat nap, and Litten is the only one in it who has figured out the best use of the afternoon. As a rare Japanese-only Card Station promo whose art continues on the Chespin card, it’s a cozy, quietly smug addition to the stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z"
@@ -705,6 +756,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Torchic is stretched out on its side with its eyes peacefully closed, while flames climb in the background and a blue sky with puffy clouds sits above. For a Fire-type, a blaze is just a warm blanket, and this Torchic looks perfectly at home. The scene is drawn in a bold, hand-colored style that feels like it came straight out of a sketchbook, because it did.\n\nThis isn’t an official artwork card.\n\nIn 2004, Kids’ WB! ran an illustration contest in the United States, with a category for each of Treecko, Torchic, Mudkip, Wurmple and Pikachu. May Do’s drawing won the Torchic category, and the prize was 50 packs containing all five winning cards plus a $500 Target gift card. So this card is a real piece of fan art that got printed as a Pokémon card, and it’s a lovely way to see a sleeping Torchic through someone else’s eyes.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -731,6 +783,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Tangrowth is settled at the base of a big tree with its eyes gently shut, one red hand tucked up near its face. Sunlight filters through the leaves behind it, ferns crowd in at the edges, and a tiny curled sprout pokes up in front like it’s keeping watch. There’s no battle pose and no drama here, just a very large, very tangled Pokémon getting some rest in the shade.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -759,6 +812,7 @@
         "Cameo Sleepers",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "This one is a bit different from the others, because the sleepers are the little ones. Jolteon lies calmly in a bed of autumn leaves beneath a starry night sky, eyes open and expression soft. Tucked up against its chest is Togepi, fast asleep in its shell, and a Rattata is curled up just behind them. Jolteon isn’t napping so much as keeping watch over everyone who is. It’s the quietest, gentlest bedtime scene in the whole stack.\n\nThe card’s identity is built around that kindness. Its Japanese name, やさしいサンダース, translates to “Gentle Thunders.” The gameplay matches: Pulse Guard prevents any damage of 30 or more done to Light Jolteon during the opponent’s next turn. A guardian who can’t be easily hurt is exactly who you want standing over a pile of sleepers. It’s also a piece of Pokémon TCG history: Neo Destiny introduced Light Pokémon, and it was the final English expansion with the 1st Edition symbol.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -785,6 +839,11 @@
       "moods": [
         "Belly Up",
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "All stretched out in a flower-filled meadow, Zeraora looks like it found the perfect spot to recharge in the sun.",
       "createdAt": "2026-10-20T18:50:46.000Z",
@@ -813,6 +872,7 @@
         "Nap Watch",
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Horsea is stretched out with its snout resting on top of a Shellder and its eyes shut tight, completely content. Shellder is much less thrilled. It’s glaring out from under its shell with its tongue sticking out and a sweat drop on its brow, clearly aware it has been turned into a pillow and clearly unable to do anything about it. Behind them are swaying seaweed, a few rocks and a bubble trail drifting up, so the whole scene feels like a calm, slightly comic corner of the seafloor.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
@@ -842,6 +902,7 @@
         "Beach Naps",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Krookodile is propped against a palm trunk on a moonlit beach with its arms folded over its belly and its long tail stretched out across the sand. A full moon hangs over a calm sea, a shooting star streaks across the sky, and two little flowering cacti sit at the edge of the scene. Its black mask reads like a pair of sunglasses, so it’s hard to tell whether it’s fast asleep or just very good at looking relaxed. Either way, it has the look of someone who has decided the night is theirs and isn’t in a hurry.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
@@ -869,6 +930,7 @@
         "Face-Plant",
         "Autumn Leaves"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Slowpoke fills the frame in a soft, close-up view, its eyes closed in two gentle curves and its pale yellow muzzle resting low. Around it are warm, glowing reds and oranges from autumn leaves and blooms, with one bright leaf drifting down in the corner and the light coming in sideways. It’s a very quiet picture of a Pokémon doing the thing it does best, and it may be the most purely peaceful card in the stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
@@ -895,6 +957,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Slowpoke is in a little wooden rowboat on a pond, slumped over the edge with its eyes shut. Under a cheerful red sun, a butterfly flutters past, cattails sway along the bank, and a few blue fish drift by below. A fishing line trails off the side with a bobber floating on the water, so this Slowpoke came out for a peaceful afternoon of fishing and fell asleep almost right away. It’s a bright, cheerful scene, and the sleeping Slowpoke fits right in.\n\nThe card text is surprisingly well matched to the picture. The Pokédex line says that although Slowpoke knows how to fish, no other intelligent behavior has been detected in it. Here, it seems to have skipped even the fishing part. And its first attack is Afternoon Nap, which lets you search your deck for a Psychic Energy card and attach it to Slowpoke. The attack’s Japanese name, ひなたぼっこ, means sunbathing or basking in the sun, which suits the sunny pond. It’s rare for an attack to be named after exactly what the art shows.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-21T15:55:44.220Z",
@@ -922,6 +985,11 @@
         "Dream Sequence",
         "Moonlit Naps"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Umbreon is curled into a tight, round ball with its head tucked in, and its glowing yellow rings look like small lanterns in the dark. The holo foil scatters glittering specks across the background, so the whole scene feels like a sleeping Umbreon surrounded by stars. The card’s category line reads げっこうポケモン, “Moonlight Pokémon,” which fits a Pokémon that spends the night curled up in its own soft glow.\n\nIt’s also a trainer card with some history. Karen, an Elite Four member, owns an Umbreon in Pokémon Gold, Silver and Crystal. That makes this a quieter side of a famously cool, composed trainer’s partner, caught resting away from the battle. And this is a Japanese card that has not been officially released in English, so it’s a nice addition to the stack for anyone who likes the Japanese-only prints",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z"
@@ -945,6 +1013,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Aron is stretched out along a set of railroad tracks at dusk, and its one visible eye is just a flat, sleepy line. The sky behind it fades from purple to deep red over a quiet sea, with a few early stars and a distant tower on the horizon. The gravel and rails look like an odd bed for anyone else, but a steel-plated Pokémon seems perfectly comfortable on them. It’s a quiet, slightly absurd little scene, and Aron doesn’t appear worried about the next train.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-23T15:43:20.109Z",
@@ -971,6 +1040,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Dragonite is floating on its back high above a huge swirl of ocean and cloud, belly up, arms folded loosely and eyes shut with a small, peaceful smile. A green island sits far below, and little sparkles drift through the air around it. It looks like a Pokémon that has found the best spot in the sky, with nothing to do and nowhere to be, and is content to just drift.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:50.533Z",
@@ -998,6 +1068,7 @@
         "Food Coma",
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is flat on its belly on a dusty floor, completely out, with its face smooshed to the ground and a faint smile on its lips. The ground around it is a snack-and-litter aftermath: an empty soda bottle, a crushed can, a cup, scattered wrappers, a bit of discarded junk. It looks like Snorlax ate everything in reach, made a mess, and collapsed on the spot without bothering to clean up. This is probably the most committed sleeper in the whole stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -1024,6 +1095,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is relaxing in a hot spring with only its big face above the surface, and steam curls up around it from the warm water. Far off in the distance, snowy mountains fade into the haze. Its eyes are shut in two flat lines, its small fangs show, and its expression says it has no plans to leave. The scenery is cool and quiet, but Snorlax is clearly the one who found the warmest spot around.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
@@ -1051,6 +1123,7 @@
         "Face-Plant",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is flopped face-down in a woodland clearing, sunk into a bed of white flowers, with leaves drifting past and sunlight coming through the trees. Its eyes are closed, there’s a small satisfied smile on its face, and its big round body is draped over the grass like a giant, very soft boulder. It’s one of the most gently peaceful pieces of art in the stack.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-23T15:43:21.311Z",
@@ -1078,6 +1151,7 @@
         "Belly Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is sprawled across an open field of tall green grass. There’s no scenery to compete with it, no trees, flowers or water, just Snorlax and a lot of soft grass, which makes it the most stripped-down, purely lazy sleeper in sleeping Snorlax set. It looks like it dropped where it stood and fell asleep right there.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -1104,6 +1178,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is sprawled on the ground beneath a tree, arms and legs flung wide and mouth open mid-snore. The view looks down through leafy branches, so the leaves frame the scene and the branches throw dappled shadows across its big round belly. The green light and the cool shade make it look like the perfect spot for an afternoon sleep.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-21T15:55:49.497Z",
@@ -1131,6 +1206,7 @@
         "Nap Watch",
         "Town Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Snorlax is rolling through a sunlit town fast asleep, curled into a huge round ball with its eyes shut and a dust cloud trailing behind it. A crowd of startled townspeople is scattering out of the way, with one man mid-leap and a couple of others looking alarmed, while on the right a woman seems to be calmly holding up her phone to take a photo. This is a very different kind of nap from the rest of the Snorlax cards: it’s the only one causing a stampede. The painted, slightly storybook style makes it funnier, since everyone is panicking over an unstoppable sleeper.\n\nThe card is all about this scene. Toss and Turn can be used even while Snorlax is Asleep, and if it is, the attack does 90 more damage. That’s the sleep-rolling you see in the artwork, where being asleep is what makes it so dangerous.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-23T15:43:21.958Z",
@@ -1157,6 +1233,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "This Snorlax was drawn by a fan: Keita Takahashi’s entry won CoroCoro’s Pokémon illustration contest in 1998 and was printed as a real card. Snorlax has dozed off sitting in the middle of the road, eyes shut, exactly as its Pokédex entry warns it might, and its Guard power means nobody gets past. Its own attack even puts it back to sleep.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-11-02T20:45:00.000Z"
@@ -1183,6 +1260,7 @@
         "Drool & Snore",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "A soft night sky, a cozy patch of ground, and Snorlax sleeping through it all. A classic little bedtime scene.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
@@ -1211,6 +1289,7 @@
         "Propped Up",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Arms folded and eyes shut, Abra looks like it has slipped into a quiet, meditative snooze.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z"
@@ -1235,6 +1314,7 @@
         "Dream Sequence",
         "Treetop Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Abra has found a branch, tucked itself into the crook, and fallen asleep above the grassy field.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-23T18:00:00.000Z",
@@ -1260,6 +1340,7 @@
         "Dream Sequence",
         "Town Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "High above the busy streets, Abra has picked a sunny rooftop ledge and decided the view can wait until after a nap.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z",
@@ -1286,6 +1367,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Sabrina's Abra has tucked itself into a dreamy curl, giving this classic Gym card a soft, floaty nap feeling.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:52.079Z",
@@ -1310,6 +1392,7 @@
       "setReleaseDate": "1999/06/25",
       "notes": "Japanese Sabrina's Abra, LV.11. Abra is napping with Sabrina nearby.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Sabrina's Abra has curled up and fallen asleep, with its trainer's portrait keeping watch nearby.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-20T18:50:46.000Z"
@@ -1333,6 +1416,7 @@
       "moods": [
         "Group Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Two Swinub are tucked into the grass together, making this feel like a tiny, perfectly synchronized group nap.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:53.607Z",
@@ -1357,6 +1441,7 @@
       "setReleaseDate": "2008/11/05",
       "notes": "Swinub is curled up asleep in the grass.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Swinub has tucked itself into a small grassy hollow and is sleeping through the soft afternoon light.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T15:51:53.739Z",
@@ -1383,6 +1468,7 @@
       "moods": [
         "Autumn Leaves"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "The fallen leaves make a soft little blanket, and Swinub has clearly decided this is the place to sleep for a while.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-23T15:43:22.970Z",
@@ -1410,6 +1496,7 @@
         "Face-Plant",
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Piloswine has tucked in for a snowy nap, buried so deep in its own shaggy coat that the cold cannot reach it.",
       "createdAt": "2026-10-20T18:50:46.000Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
@@ -1436,6 +1523,10 @@
       "notes": "",
       "moods": [
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
       ],
       "whyItBelongs": "Out cold in the grass. The cheapest nap in the binder and a perfect first card.",
       "createdAt": "2026-07-08T12:26:28.292Z",
@@ -1468,6 +1559,9 @@
         "Pokémon Pillow",
         "Snow Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Group nap on an icy shoreline. A whole cluster of round, smiling Spheals dozing under the aurora makes this modern Illustration Rare an instant cozy favorite.",
       "tcgplayerProductId": 590063,
       "tcgplayerGroupId": 23651
@@ -1493,6 +1587,9 @@
       "updatedAt": "2026-10-16T15:21:25.057Z",
       "moods": [
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap on a giant floating lily pad. Floating serenely above pond ripples, this vibrant Illustration Rare is pure tranquil charm.",
       "tcgplayerProductId": 642556,
@@ -1522,6 +1619,9 @@
         "Flower Beds",
         "Moonlit Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Night is settling over a wildflower meadow, and even Solrock is starting to drift off. With its eyes peacefully shut and Volbeat and Illumise glowing nearby, Nobuhiro Imagawa turns sunset into bedtime — the sun-shaped Pokémon slowly falling asleep as the fireflies come out.",
       "tcgplayerProductId": 478032,
       "tcgplayerGroupId": 17689
@@ -1547,6 +1647,9 @@
       "updatedAt": "2026-10-16T15:21:28.978Z",
       "moods": [
         "Snow Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap tucked into mossy tree roots. Swinub snuggled deep in an autumn hollow brings irresistible storybook warmth at an approachable price.",
       "tcgplayerProductId": 623592,
@@ -1574,6 +1677,11 @@
       "moods": [
         "Nap Watch"
       ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
+      ],
       "whyItBelongs": "Lycanroc stands tall and alert against a blazing autumn sky. Tucked into the bottom corner, a Rockruff has curled up with its eyes shut, sleeping right under its watch.",
       "tcgplayerProductId": 623593,
       "tcgplayerGroupId": 24073
@@ -1598,6 +1706,9 @@
       "createdAt": "2026-05-07T17:59:16.767Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap inside a woven treetop nest. A rare tender moment for normally aggressive Spearow, peacefully curled up in its twigs and leaves.",
       "tcgplayerProductId": 654490,
       "tcgplayerGroupId": 24380
@@ -1625,6 +1736,9 @@
         "Belly Up",
         "Couch & Cushion"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Dog or fox? The debate continues, but flat on its back with all four paws in the air, Eevee is making a strong case for dog. It has fallen asleep on a round teal cushion, with a Pikachu plush for company.",
       "slug": "eevee-scarlet-and-violet-promos-173-150",
       "tcgplayerProductId": 610758,
@@ -1650,6 +1764,7 @@
       "createdAt": "2026-05-06T21:38:24.651Z",
       "updatedAt": "2026-10-22T19:58:25.200Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold on a sunlit slope. Geodude looking less like a rigid rock and more like a peaceful sleeping pup makes this budget vintage common a sleeper hit.",
       "slug": "geodude-dragon-55-97",
       "tcgplayerProductId": 85687,
@@ -1679,6 +1794,7 @@
         "Cameo Sleepers",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Two Jigglypuff have completely dozed off beside an enormous, happily awake Wigglytuff in a sunny meadow. Wigglytuff’s Pokédex lore repeatedly describes its fine, luxurious fur as irresistibly comfortable to cuddle, even noting that sleeping while holding one feels wonderful. Add an attack called Sleepy Ball, and Wigglytuff is basically functioning as the world’s fluffiest communal nap pillow.",
       "tcgplayerProductId": 189233,
       "tcgplayerGroupId": 2420
@@ -1705,6 +1821,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in open green pasture. Mitsuhiro Arita captures a content dairy cow dozing off after grazing for an effortless low-cost binder addition.",
       "tcgplayerProductId": 87464,
       "tcgplayerGroupId": 1380
@@ -1731,6 +1848,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap along a wooden pasture fence. Akira Komayama brings peaceful countryside energy and heavy eyelids to a calm pastoral binder slot.",
       "tcgplayerProductId": 87468,
       "tcgplayerGroupId": 1522
@@ -1757,6 +1875,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in sunny grass. Mina Nakai gives Miltank a sweet, curled-up doze that adds pastoral peace without breaking the budget.",
       "tcgplayerProductId": 149104,
       "tcgplayerGroupId": 2071
@@ -1785,6 +1904,7 @@
         "Propped Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap with baby tucked in mom's pouch. Mitsuhiro Arita’s heartwarming HGSS illustration turns protective mothering into an endearing family snooze.",
       "tcgplayerProductId": 86423,
       "tcgplayerGroupId": 1381
@@ -1811,6 +1931,7 @@
       "moods": [
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in the mossy shade. Classic Gloom drool and heavy-lidded slumber by Mitsuhiro Arita that belongs on every sleepy grassroots page.",
       "tcgplayerProductId": 85786,
       "tcgplayerGroupId": 1403
@@ -1837,6 +1958,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Blissey has dozed off against the base of a huge tree, eyes closed and wearing a tiny contented smile. It’s an unusually peaceful look for a Pokémon so associated with caring for everyone else. For once, Blissey is the one taking the break.",
       "tcgplayerProductId": 108593,
       "tcgplayerGroupId": 1451,
@@ -1865,6 +1987,7 @@
         "Dream Sequence",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "On this stadium, a sleeping Pokémon flips two coins to wake up instead of one, and the art makes that easy to believe: a dark forest at night, glowing mushrooms and fireflies drifting between the trees.",
       "tcgplayerProductId": 195264,
       "tcgplayerGroupId": 2464
@@ -1893,6 +2016,7 @@
         "Belly Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Food coma induced by a massive berry feast. Greedent passed out with crumbs on its belly in a total post-buffet stupor is peak relatable comedy.",
       "tcgplayerProductId": 284079,
       "tcgplayerGroupId": 3118
@@ -1919,6 +2043,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap drifting on open water. Squirtle floating effortlessly on its shell in calm blue ripples is one of sui's most peaceful pieces.",
       "tcgplayerProductId": 183793,
       "tcgplayerGroupId": 2377
@@ -1946,6 +2071,7 @@
         "Belly Up",
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap on an icy shelf. Resting its chin comfortably on the cold ice floe, this 151 Seel brings peak chill vibes to water-type collections.",
       "tcgplayerProductId": 516655,
       "tcgplayerGroupId": 23237
@@ -1974,6 +2100,7 @@
         "Sleepy Trainers",
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Somehow, Lillie is peacefully sleeping beside a Pokémon that weighs more than a ton. Nebby’s transformation into Cosmoem may be cosmic and mysterious, but this moment is wonderfully ordinary: two companions completely asleep next to each other.",
       "tcgplayerProductId": 250297,
       "tcgplayerGroupId": 2867
@@ -2001,6 +2128,7 @@
         "Propped Up",
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap on a snowy mountain peak. Delibird taking a well-earned breather on the ice with its present tail curled nearby.",
       "tcgplayerProductId": 130926,
       "tcgplayerGroupId": 1919
@@ -2025,6 +2153,7 @@
       "createdAt": "2026-05-06T21:33:00.652Z",
       "updatedAt": "2026-10-17T14:10:59.785Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold slumped against a boulder. After heavy digging all morning, this burly rabbit is completely knocked out in the shade.",
       "tcgplayerProductId": 149113,
       "tcgplayerGroupId": 2071
@@ -2051,6 +2180,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in a jagged rock pile. An electrified boulder catching shut-eye in its natural rocky hideaway without discharging a single spark.",
       "tcgplayerProductId": 183809,
       "tcgplayerGroupId": 2377
@@ -2078,6 +2208,7 @@
         "Belly Up",
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap on a plush floor pillow. Whimsicott sinking into soft bedding is pure cloud-soft comfort that softens any page.",
       "tcgplayerProductId": 117846,
       "tcgplayerGroupId": 1780
@@ -2104,6 +2235,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap among twilight clouds. A serene, mystical vintage grail that brings majestic grace and nostalgia to any sleep collection.",
       "tcgplayerProductId": 86737,
       "tcgplayerGroupId": 1444
@@ -2130,6 +2262,7 @@
       "moods": [
         "Couch & Cushion"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap wrapped in its own tail scarf. Sui delivers unmatched plush softness with Cinccino tucked safely into a warm pillow.",
       "tcgplayerProductId": 208467,
       "tcgplayerGroupId": 2585
@@ -2156,6 +2289,7 @@
       "moods": [
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap bundled tight in a leafy blanket. Swadloon is the patron saint of staying under the covers on a cold rainy morning.",
       "tcgplayerProductId": 89669,
       "tcgplayerGroupId": 1409
@@ -2185,6 +2319,7 @@
         "Flower Beds",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap with baby Teddiursa. A fierce forest bear transformed into a giant, warm mattress for its sleeping cub.",
       "tcgplayerProductId": 90257,
       "tcgplayerGroupId": 1465
@@ -2211,6 +2346,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap on a sunny sandbar. Slowpoke living up to its name in Aya Kusube's beloved textured e-Series style.",
       "tcgplayerProductId": 89325,
       "tcgplayerGroupId": 1397
@@ -2237,6 +2373,11 @@
       "moods": [
         "Belly Up",
         "Drool & Snore"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Big, fierce and snoring at the ceiling. Incineroar has flopped onto its back on the rug, mouth wide open and a sleep bubble ballooning out, while Corsola and Luvdisc look on from the fish tank behind it.",
       "tcgplayerProductId": 451663,
@@ -2267,6 +2408,10 @@
         "Pokémon Pillow",
         "Couch & Cushion"
       ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
+      ],
       "whyItBelongs": "Two sleepy Growlithe have piled together into a nest of soft pink blankets, one already fast asleep while the other lets out what looks like an enormous yawn with a paw draped over its companion. Sanosuke Sakuma turns puppy nap time into pure Radiant Collection sweetness — and an attack literally called Rest makes the sleepy theme impossible to miss.",
       "tcgplayerProductId": 85963,
       "tcgplayerGroupId": 1465
@@ -2293,6 +2438,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cottonee has nestled itself into a riot of poppy-like flowers, eyes closed and almost disappearing among the petals. With an attack literally called Cotton Bed, the little cotton puff seems to have found the softest flower bed imaginable — and the poppy-like blooms add an extra sleepy touch.",
       "tcgplayerProductId": 101477,
       "tcgplayerGroupId": 1576
@@ -2317,6 +2463,7 @@
       "createdAt": "2026-05-06T21:06:11.549Z",
       "updatedAt": "2026-10-16T15:21:34.675Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap tucked into an eggshell diaper. Even scavengers look innocent when they retreat into their shell nest for the night.",
       "tcgplayerProductId": 117814,
       "tcgplayerGroupId": 1780
@@ -2343,6 +2490,7 @@
       "moods": [
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap balancing on a branch. A tiny round bird catching shut-eye in Sanosuke Sakuma's delightful storybook style.",
       "tcgplayerProductId": 87688,
       "tcgplayerGroupId": 1409
@@ -2369,6 +2517,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Sleeping like it means it. Togetic lies tucked between two pink blossoms at the foot of a tree, wings folded, in forest light so soft it almost glows.",
       "tcgplayerProductId": 189235,
       "tcgplayerGroupId": 2420
@@ -2397,6 +2546,9 @@
         "Pokémon Pillow",
         "Beach Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together.",
       "tcgplayerProductId": 632994,
       "tcgplayerGroupId": 24269
@@ -2421,6 +2573,9 @@
       "createdAt": "2026-05-06T21:03:46.121Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap under garden tomato vines. Shuckle resting peacefully in the vegetable soil while quietly fermenting berry juice.",
       "tcgplayerProductId": 654475,
       "tcgplayerGroupId": 24380
@@ -2447,6 +2602,7 @@
       "moods": [
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Tepig has completely crashed on the bed, face-down against a pillow with its Poké Ball left nearby. Mina Nakai’s soft, rumpled bedding and wonderfully ungraceful sleeping pose make this feel less like a carefully planned nap and more like a tiny Fire-type who simply ran out of energy.",
       "tcgplayerProductId": 201209,
       "tcgplayerGroupId": 2534
@@ -2472,6 +2628,9 @@
       "updatedAt": "2026-10-17T14:11:17.814Z",
       "moods": [
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Group nap in a hollow log nursery. The entire tandem mouse family snuggled together under giant forest mushrooms is maximum adorability.",
       "tcgplayerProductId": 497629,
@@ -2499,6 +2658,9 @@
       "moods": [
         "Nap Watch",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Accidental nap on a scenic bike trail. Cyclizar taking five leaning against the fence surrounded by packed touring panniers.",
       "tcgplayerProductId": 523896,
@@ -2528,6 +2690,11 @@
         "Face-Plant",
         "Town Naps"
       ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
+      ],
       "whyItBelongs": "Group nap in a city alleyway. A pack of tough dark-type pups collapsed into a warm, tangled cuddle puddle on the pavement.",
       "tcgplayerProductId": 509951,
       "tcgplayerGroupId": 23228
@@ -2552,6 +2719,9 @@
       "createdAt": "2026-05-06T21:02:19.897Z",
       "updatedAt": "2026-10-15T15:36:07.170Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap on a patterned tatami mat. Tetsu Kayama's pointillist artwork turns Dottler into an exquisite geometric centerpiece.",
       "tcgplayerProductId": 523865,
       "tcgplayerGroupId": 23286
@@ -2578,6 +2748,9 @@
       "moods": [
         "Sleepy Trainers",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Peak summer siesta energy. Sina is asleep in a hammock while Oranguru lounges on a pile of pillows nearby, fan in hand, surrounded by berries and cold drinks. Akira Komayama’s breezy afternoon scene captures that deliciously drowsy moment when doing absolutely nothing has turned into a nap.",
       "tcgplayerProductId": 264219,
@@ -2607,6 +2780,9 @@
         "Pokémon Pillow",
         "Treetop Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "In the middle of a berry tree buzzing with activity, one Starly has somehow decided it’s nap time. While the rest of the flock eats, flies, and chatters around it, this little bird sits peacefully asleep on the branch, completely unbothered by the commotion. Saino Misaki turns a busy feeding frenzy into a perfect tiny stolen nap.",
       "tcgplayerProductId": 490079,
       "tcgplayerGroupId": 22873
@@ -2634,6 +2810,9 @@
         "Dream Sequence",
         "Belly Up"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Dragonite can circle the globe in about sixteen hours. On this card it has given up on the trip entirely: it drifts belly up over misty mountain peaks, wings slack, eyes shut and smiling in its sleep, while a flock of Spearow carries on without it. Of all the sleepy cards, this is the one collectors know on sight.",
       "tcgplayerProductId": 246758,
       "tcgplayerGroupId": 2848
@@ -2659,6 +2838,12 @@
       "updatedAt": "2026-11-03T22:11:25.000Z",
       "moods": [
         "Study Break"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "If this office looks familiar, it’s Emma’s, from the Looker Bureau in Pokémon X and Y and again in Legends: Z-A. Her Espurr, Mimi, has curled up on the green cushion behind the stacked books and the brass lamp, asleep in a patch of sunlight.",
       "tcgplayerProductId": 684418,
@@ -2687,6 +2872,7 @@
         "Belly Up",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap soaking in the sun. Classic e-Series vintage charm showing Bulbasaur recharging flat on its belly in the meadow.",
       "tcgplayerProductId": 84026,
       "tcgplayerGroupId": 1375
@@ -2712,6 +2898,9 @@
       "updatedAt": "2026-10-19T17:27:41.999Z",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Out cold at the roots of a giant forest tree. The fiercest dragon peacefully dozing makes this UPC promo an essential sleep showstopper.",
       "tcgplayerProductId": 285384,
@@ -2740,6 +2929,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in an open green pasture. Sui captures Gloom in peak peaceful drool mode under the warm afternoon sun.",
       "tcgplayerProductId": 201133,
       "tcgplayerGroupId": 2534
@@ -2765,6 +2955,9 @@
       "updatedAt": "2026-10-19T17:27:44.919Z",
       "moods": [
         "Treetop Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap nestled in tropical blooms. Hoshino KURO frames the sound asleep water monkey with radiant, lush jungle foliage.",
       "tcgplayerProductId": 642554,
@@ -2794,6 +2987,9 @@
         "Pokémon Pillow",
         "Flower Beds"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Leaf plus nanny, and this card earns the name. Leavanny stands over a whole nursery with its eyes closed and a smile: two Sewaddle have dozed off in their leaf hoods, a third is still wide awake, and Swadloon at the front looks thoroughly unimpressed.",
       "tcgplayerProductId": 642204,
       "tcgplayerGroupId": 24326
@@ -2818,6 +3014,9 @@
       "createdAt": "2026-05-06T01:53:25.387Z",
       "updatedAt": "2026-10-24T09:00:00.000Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Out cold floating in a mud puddle. Miki Tanaka's felt-model craft turns a muddy swamp doze into pure storybook folk art.",
       "tcgplayerProductId": 497624,
       "tcgplayerGroupId": 23120
@@ -2842,6 +3041,12 @@
       "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [
         "Sunbeam Naps"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Umbreon found a sunlit patch of forest and curled up for a cozy nap, with one eye still peeking at the world. Those golden rays and soft greenery make this an outdoor snooze with just a little watchfulness left."
     },
@@ -2869,6 +3074,7 @@
         "Cameo Sleepers",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Its flavor text is all about walking over snow, but there isn’t a flake in sight: just a green meadow, soft blue hills and four Swinub asleep on and around Light Piloswine, one on its head and three tucked against its shaggy sides.",
       "tcgplayerProductId": 86747,
       "tcgplayerGroupId": 1444
@@ -2897,6 +3103,7 @@
         "Belly Up",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap nestled in a lush bed of pink flowers. Illustrated by Atsuko Nishida with lingering stardust sparkles, Clefairy lies flat on its back, sinking weightlessly into an ocean of petals. Canonical Pokédex lore reveals that Clefairy dance all night absorbing lunar energy until dawn brings total exhaustion, while its \"Lunar Power\" ability hints it just finished energizing Erika's greenhouse plants before conking out. A vintage Gym-era masterpiece that blends cosmic moon lore with pure post-ritual slumber.",
       "tcgplayerProductId": 85289,
       "tcgplayerGroupId": 1440
@@ -2925,6 +3132,9 @@
         "Face-Plant",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Joltik is wide awake on Yamper’s head, while the big dog has nodded off below. The real sleepy cameo is the one you might miss at first glance.",
       "tcgplayerProductId": 523877,
       "tcgplayerGroupId": 23286
@@ -2951,6 +3161,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "A Fire-type, asleep on a pile of firewood, and nobody seems worried but us. Cyndaquil has flopped over the logs in front of a brick hearth with its flames tucked away, and the grainy, hand-drawn texture makes the whole room feel warm anyway.",
       "tcgplayerProductId": 107137,
       "tcgplayerGroupId": 1661
@@ -2978,6 +3189,7 @@
         "Group Naps",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap in the fresh meadow. A half-dozen little eggs sharing a collective snooze in a bright, grassy lawn.",
       "tcgplayerProductId": 610356,
       "tcgplayerGroupId": 23821
@@ -3006,6 +3218,9 @@
         "Sleepy Trainers",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Erika has dozed off against her Vileplume, and her longtime partner seems to have drifted off right alongside her. It’s especially fitting for a Gym Leader who has been caught snoozing in the games since Kanto: surrounded by flowers and leaning into one of her signature Pokémon, Erika has apparently found yet another place to fall asleep.",
       "tcgplayerProductId": 201331,
       "tcgplayerGroupId": 2534
@@ -3032,6 +3247,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap under olive leaves. A perpetually anxious little olive looking unusually at peace while nodding off in the shade.",
       "tcgplayerProductId": 509754,
       "tcgplayerGroupId": 23228
@@ -3058,6 +3274,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold on the lakebed. Looking completely limp on the sand, this Feebas proves that beauty sleep has to start somewhere.",
       "tcgplayerProductId": 451674,
       "tcgplayerGroupId": 3170
@@ -3085,6 +3302,7 @@
         "Flower Beds",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in the afternoon park. Chansey taking a gentle seated break while keeping its lucky egg safe and sound.",
       "tcgplayerProductId": 276965,
       "tcgplayerGroupId": 3064
@@ -3110,6 +3328,9 @@
       "updatedAt": "2026-10-15T15:36:47.071Z",
       "moods": [
         "Cameo Sleepers"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Chansey bustles through the bright Pokemon Center while Snorlax has simply nodded off on the tiled floor. The room carries on around it, making that unbothered floor nap the perfect cozy sleeper cameo.",
       "tcgplayerProductId": 550231,
@@ -3137,6 +3358,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap on a sunny volcanic knoll. A slow, docile Numel snoozing comfortably in the warmth of the afternoon sun.",
       "tcgplayerProductId": 276947,
       "tcgplayerGroupId": 3064
@@ -3164,6 +3386,7 @@
         "Group Naps",
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold on the forest floor. Takao Unno captures Slakoth doing what it was born to do: absolutely nothing at all.",
       "tcgplayerProductId": 89296,
       "tcgplayerGroupId": 1404
@@ -3191,6 +3414,7 @@
         "Belly Up",
         "Treetop Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in the woodland brush. The epitome of slacker energy, comfortably parked in the mossy shade between yawns.",
       "tcgplayerProductId": 195168,
       "tcgplayerGroupId": 2464
@@ -3217,6 +3441,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap between daily yawns. Twenty hours of sleep a day captured in serene green woodland tones by Shigenori Negishi.",
       "tcgplayerProductId": 497578,
       "tcgplayerGroupId": 23120
@@ -3243,6 +3468,9 @@
       "moods": [
         "Belly Up",
         "Drool & Snore"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap suspended from a mossy limb. This breathtaking Illustration Rare elevates sloth life into storybook fine art.",
       "tcgplayerProductId": 590057,
@@ -3271,6 +3499,7 @@
         "Dream Sequence",
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in a sparkling wonderland. Mizue paints a cloud-soft balloon Pokémon drifting into slumber amidst glowing pastel lights.",
       "tcgplayerProductId": 117841,
       "tcgplayerGroupId": 1780
@@ -3297,6 +3526,7 @@
       "moods": [
         "Sunbeam Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap clutching its bone tight. Aya Kusube gives the tragic lonely Pokémon a peaceful, heartwarming respite in the grass.",
       "tcgplayerProductId": 84531,
       "tcgplayerGroupId": 1419
@@ -3324,6 +3554,7 @@
         "Face-Plant",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold draped over a garden ledge. Tomokazu Komiya's delightfully offbeat perspective makes this limp sprout unforgettable.",
       "tcgplayerProductId": 83807,
       "tcgplayerGroupId": 1419
@@ -3351,6 +3582,7 @@
         "Belly Up",
         "Town Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in a flower patch. The dream eater itself taking a deep nap in classic vintage e-Series style by Hisao Nakamura.",
       "tcgplayerProductId": 84971,
       "tcgplayerGroupId": 1397
@@ -3377,6 +3609,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap drifting on tropical waves. Miki Tanaka's felt-stitched Corsola bobbing blissfully on the sea surface.",
       "tcgplayerProductId": 84438,
       "tcgplayerGroupId": 1375
@@ -3401,6 +3634,7 @@
       "createdAt": "2026-05-05T21:21:24.402Z",
       "updatedAt": "2026-10-15T15:37:27.833Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap nestled in a hollow tree trunk. Curled into a neat ball with its six tails, this Neo Destiny common is vintage comfort defined.",
       "tcgplayerProductId": 90433,
       "tcgplayerGroupId": 1444
@@ -3427,6 +3661,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in the fresh green lawn. Miki Tanaka renders this baby elephant as a soft clay model dozing in total contentment.",
       "tcgplayerProductId": 87997,
       "tcgplayerGroupId": 1444
@@ -3453,6 +3688,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap by the forest pond. A tranquil little elephant doze illustrated by Hisao Nakamura that rounds out any Johto binder page.",
       "tcgplayerProductId": 88001,
       "tcgplayerGroupId": 1379
@@ -3481,6 +3717,7 @@
         "Propped Up",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in a psychic trance. Ken Sugimori's definitive classic art of Abra telepathically snoozing for eighteen hours a day.",
       "tcgplayerProductId": 88865,
       "tcgplayerGroupId": 1440
@@ -3507,6 +3744,7 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in the sunny grass. Mitsuhiro Arita gives the original teleporter a gorgeous, peaceful nap in 151 at pocket-change pricing.",
       "tcgplayerProductId": 516268,
       "tcgplayerGroupId": 23237
@@ -3534,6 +3772,12 @@
         "Cameo Sleepers",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Zeraora is crackling with lightning, and a Pachirisu has curled up on top of its head and fallen asleep anyway. Being an Electric type probably helps.",
       "tcgplayerProductId": 477062,
       "tcgplayerGroupId": 17689
@@ -3560,6 +3804,7 @@
       "moods": [
         "Face-Plant"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap nestled in its own fluffy wool. Midori Harada paints the dreamiest sheep in Pokémon, sleeping with its iconic Fluffy Pillow ability.",
       "tcgplayerProductId": 178884,
       "tcgplayerGroupId": 2328
@@ -3587,6 +3832,7 @@
         "Belly Up",
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Dedenne has turned an open dresser drawer into its own tiny bed, curled up fast asleep among the soft clothes inside. kanahei’s round pastel style makes the whole scene ridiculously cozy: the kind of secret little nap spot only an eight-inch Pokémon could get away with claiming.",
       "tcgplayerProductId": 113752,
       "tcgplayerGroupId": 1729
@@ -3613,6 +3859,7 @@
       "moods": [
         "Handmade"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap perched on a wooden fence. Yuka Morii’s real-world clay photography captures a tiny mouse nodding off in the open air.",
       "tcgplayerProductId": 226485,
       "tcgplayerGroupId": 2701
@@ -3640,6 +3887,7 @@
         "Food Coma",
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Food coma flat on its back under an apple tree. Oswaldo KATO captures Snorlax completely dead to the world, surrounded by half-eaten apples with bite marks.",
       "tcgplayerProductId": 253301,
       "tcgplayerGroupId": 2906
@@ -3664,6 +3912,7 @@
       "createdAt": "2026-05-05T01:03:39.881Z",
       "updatedAt": "2026-11-03T22:11:25.000Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Sunlight, soft grass and a few sparkles drifting past. Snorlax has rolled onto its side in the middle of it all, eyes shut, a paw tucked up by its face.",
       "tcgplayerProductId": 226587,
       "tcgplayerGroupId": 2701
@@ -3691,6 +3940,7 @@
         "Belly Up",
         "Town Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Whose front walk is this, and how are they getting out? Snorlax is sprawled on its back across the path to the front door, eyes closed, exactly where the games love to put it.",
       "tcgplayerProductId": 276974,
       "tcgplayerGroupId": 3064
@@ -3717,6 +3967,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in a field of yellow flowers. Pure pastoral bliss for the original heavy sleeper resting its heavy chin on its arm.",
       "tcgplayerProductId": 284068,
       "tcgplayerGroupId": 3118
@@ -3745,6 +3996,12 @@
         "Flower Beds",
         "Handmade"
       ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
+      ],
       "whyItBelongs": "Cozy nap on a flowery hill. Handcrafted in amigurumi yarn by Asako Ito, Snorlax lets out a big sleepy yawn amidst tiny pastel felt flowers.",
       "tcgplayerProductId": 478136,
       "tcgplayerGroupId": 17688
@@ -3771,6 +4028,7 @@
       "moods": [
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold drooling on a garden path. Anesaki Dynamic gives Gloom an unapologetically messy outdoor nap complete with drool puddles.",
       "tcgplayerProductId": 189045,
       "tcgplayerGroupId": 2420
@@ -3797,6 +4055,9 @@
       "moods": [
         "Sleepy Trainers",
         "Pokémon Pillow"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Completely tuckered out, Poppy has fallen fast asleep against her enormous Copperajah, using the Steel-type giant like the world’s coziest living pillow. Her tiny curled-up pose against Copperajah’s massive frame makes the size contrast ridiculously sweet — one of Paldea’s smallest Elite Four members tucked safely into a very big nap spot.",
       "tcgplayerProductId": 509987,
@@ -3825,6 +4086,9 @@
         "Sleepy Trainers",
         "Study Break"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Research won. Jacq has fallen completely asleep at his desk, glasses still on, surrounded by books, loose papers, and the remnants of a long study session. Oswaldo KATO’s warm daylight and wonderfully cluttered workspace make this feel like the inevitable ending to an afternoon spent getting a little too absorbed in Pokémon biology.",
       "tcgplayerProductId": 490289,
       "tcgplayerGroupId": 22873
@@ -3851,6 +4115,9 @@
       "moods": [
         "Sleepy Trainers",
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Group nap wrapped in warm, dreamy light. Bianca has dozed off on the couch with her signature Musharna snoozing alongside her, turning an ordinary afternoon crash into a beautifully soft little moment of companionship.",
       "tcgplayerProductId": 542930,
@@ -3879,6 +4146,9 @@
         "Group Naps",
         "Treetop Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Group nap for the bird mafia. Even the boss of the Murkrow flock needs a power nap in the ancient branches.",
       "tcgplayerProductId": 263881,
       "tcgplayerGroupId": 2948
@@ -3903,6 +4173,9 @@
       "createdAt": "2026-05-05T01:00:28.720Z",
       "updatedAt": "2026-10-22T19:36:42.825Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap inside a jagged mountain cave. A rare gentle moment for the dragon type, curled up safe from the stormy world.",
       "tcgplayerProductId": 560388,
       "tcgplayerGroupId": 23529
@@ -3930,6 +4203,9 @@
         "Face-Plant",
         "Flower Beds"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Sawsbuck has stretched out in a grassy meadow and fallen completely asleep, its leafy antlers blending right into the surrounding greenery. The whole scene feels wonderfully still and summery. Less “found a shady nap spot” and more “became part of the landscape and powered down.”",
       "tcgplayerProductId": 642207,
       "tcgplayerGroupId": 24326
@@ -3953,6 +4229,9 @@
       "moods": [
         "Nap Watch",
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Deerling has tucked its hooves underneath itself and settled onto the riverbed, eyes closed with a perfectly content little smile. Whether it’s actually dozing or simply enjoying the cool water is ambiguous, but it absolutely has the posture of someone who has no plans to move anytime soon.",
       "createdAt": "2026-09-26T17:01:02.000Z",
@@ -3982,6 +4261,9 @@
         "Autumn Leaves",
         "Town Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "One Cubone appears to have nodded off beside another on a quiet stone bridge at dusk, head lowered and eye closed beneath the glowing street lamps. Cubone’s story has always been shaped by loss: it wears its late mother’s skull, and its Pokédex lore says that memories of her can make it cry in its dreams. That makes this small moment feel unusually powerful, a Pokémon so often defined by loneliness is shown here simply sitting beside someone else, safe enough to rest.",
       "createdAt": "2026-09-26T17:10:00.000Z",
       "updatedAt": "2026-09-26T17:10:00.000Z"
@@ -4007,6 +4289,9 @@
       "updatedAt": "2026-11-02T22:54:39.000Z",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Two Togedemaru, one nap. The one by the old tree has dozed off with its paws tucked under its chin, while its friend peeks over the grass, wide-eyed, as if waiting for permission to join in.",
       "tcgplayerProductId": 662233,
@@ -4036,6 +4321,9 @@
         "Face-Plant",
         "Town Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Questionably sleeping in a fever dream. Tomokazu Komiya’s psychedelic carnival is pure hallucinatory sleepwalk energy.",
       "tcgplayerProductId": 490070,
       "tcgplayerGroupId": 22873
@@ -4064,6 +4352,9 @@
         "Couch & Cushion",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Larvesta has flopped down on a floor cushion in a quiet, empty room, eyes shut and fuzzy face pressed into the fabric. A slant of afternoon sun from the window falls right across the cushion and the wooden floorboards, and Whisker’s soft, grainy light makes it feel like the lazy middle of a warm day: a little Fire-type napping exactly where the sunbeam lands.",
       "tcgplayerProductId": 589982,
       "tcgplayerGroupId": 23651
@@ -4088,6 +4379,12 @@
       "createdAt": "2026-05-05T00:58:01.876Z",
       "updatedAt": "2026-10-16T15:21:54.631Z",
       "moods": [],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Dynamax or not, Espeon is still a cat. Kouki Saitou shows it draped lazily across a rooftop, eyes peacefully closed while Wingull circle through the bright sky nearby. The enormous scale makes the scene wonderfully absurd: one building has apparently become Espeon’s personal sun-warmed nap spot.",
       "tcgplayerProductId": 253265,
       "tcgplayerGroupId": 2906
@@ -4116,6 +4413,9 @@
         "Belly Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Food coma literally wherever. Passed out in a legendary post-buffet stupor next to towering stacks of empty dishes while a sweating Pignite watches from behind a tree. The undisputed king of chaos naps and a modern alternate-art grail.",
       "tcgplayerProductId": 234060,
       "tcgplayerGroupId": 2765
@@ -4141,6 +4441,9 @@
       "updatedAt": "2026-10-22T19:36:42.825Z",
       "moods": [
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap tucked behind garden stones. A mischievous trickster dropping its illusions for a sweet, vulnerable slumber.",
       "tcgplayerProductId": 560386,
@@ -4169,6 +4472,12 @@
         "Face-Plant",
         "Study Break"
       ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Cozy nap on the cat condo penthouse. Litten claiming the highest perch for uninterrupted slumber is pure cat logic.",
       "tcgplayerProductId": 542888,
       "tcgplayerGroupId": 23381
@@ -4193,6 +4502,9 @@
       "createdAt": "2026-05-05T00:54:50.453Z",
       "updatedAt": "2026-10-15T15:37:37.737Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Furret is awake… technically. One glossy eye remains open while the other is squeezed shut, a paw resting against its cheek in a very familiar just-woke-up-or-might-fall-back-asleep pose. REND’s warm golden glow completes the picture: maximum cozy, minimum urgency.",
       "tcgplayerProductId": 623595,
       "tcgplayerGroupId": 24073
@@ -4220,6 +4532,11 @@
         "Hug Buddy",
         "Couch & Cushion"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Cozy nap on a plush bed. Shibuzoh’s round storybook style shows Meowth taking full advantage of 'Caturday' by the bedside lamp.",
       "tcgplayerProductId": 189247,
       "tcgplayerGroupId": 2420
@@ -4245,6 +4562,12 @@
       "updatedAt": "2026-10-16T15:21:56.682Z",
       "moods": [
         "Study Break"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Meowth looks caught in that groggy in-between state, rubbing at its face with one paw while Giovanni watches from the armchair with very little sympathy. The card’s own Pokédex text says Meowth sleeps through the daytime and patrols at night, so this may be less “caught napping” and more “rudely interrupted during normal business hours.”",
       "tcgplayerProductId": 633003,
@@ -4272,6 +4595,9 @@
       "moods": [
         "Nap Watch"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Who needs a tent when your dragon is asleep? Ace Trainer Dara sits tucked in the curl of Druddigon’s body, reading a map in the shade of its wing, while Druddigon dozes with its head down beside her, cliffs and rock spires rising behind them. The card’s own flavor text calls it vicious and cunning. You’d never guess.",
       "tcgplayerProductId": 452023,
       "tcgplayerGroupId": 17674
@@ -4298,6 +4624,9 @@
       "moods": [
         "Propped Up"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap nestled into ancient forest roots. Hyogonosuke turns the wooden Pokéball Pokémon into a blissful woodland seed.",
       "tcgplayerProductId": 478017,
       "tcgplayerGroupId": 17689
@@ -4323,6 +4652,9 @@
       "updatedAt": "2026-11-02T22:54:39.000Z",
       "moods": [
         "Face-Plant"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "The Winged King, said to have split the land with its bare fists, is taking a nap. Koraidon has draped itself over a rocky ledge above a jungle waterfall, chin on its claws and tail hanging off the edge.",
       "tcgplayerProductId": 490721,
@@ -4352,6 +4684,9 @@
         "Food Coma",
         "Belly Up"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Food coma on the sunlit kitchen tile. Narumi Sato paints the little gourmet pig fast asleep next to its food bowl after sniffing out and devouring every treat in the house.",
       "tcgplayerProductId": 509957,
       "tcgplayerGroupId": 23228
@@ -4380,6 +4715,9 @@
         "Flower Beds",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap curled into an orange puff. REND captures Pawmi deep in slumber on the sunlit floorboards among warm wooden toys.",
       "tcgplayerProductId": 534739,
       "tcgplayerGroupId": 23353
@@ -4406,6 +4744,9 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Pawmot has claimed the haystack for an afternoon nap, stretched out with its eyes closed and a wonderfully content little smile. Pawmo keeps watch nearby while Pawmi bounds around below, making Kouki Saitou’s sunny farm scene feel like one member of the family has decided playtime can continue without them.",
       "tcgplayerProductId": 490069,
       "tcgplayerGroupId": 22873
@@ -4431,6 +4772,9 @@
       "updatedAt": "2026-10-22T19:36:42.825Z",
       "moods": [
         "Dream Sequence"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap drifting through twilight lake skies. A legendary guardian of emotion enjoying serene, dreamlike rest above Lake Verity.",
       "tcgplayerProductId": 590003,
@@ -4459,6 +4803,11 @@
         "Belly Up",
         "Nap Watch"
       ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
+      ],
       "whyItBelongs": "Muddy paw prints on the floorboards, a cloth in Professor Kukui’s hand, and the culprit belly up on the rug, eyes squeezed shut and tongue out. Rockruff has decided the cleanup can happen without it.",
       "tcgplayerProductId": 452021,
       "tcgplayerGroupId": 17674
@@ -4484,6 +4833,9 @@
       "updatedAt": "2026-10-16T15:22:00.984Z",
       "moods": [
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap sprawled on the living room rug. Teeziro crafts a warm architectural interior where a little squirrel sleeps like royalty.",
       "tcgplayerProductId": 490080,
@@ -4513,6 +4865,9 @@
         "Sleepy Trainers",
         "Hug Buddy"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Adventure can wait. Akari has curled up beneath a tree for a well-earned nap with Pikachu tucked into her arms, and somehow Pikachu has managed to wriggle half-free without waking either of them. Atsushi Furusawa turns a quiet break in Hisui into an incredibly sweet little snapshot of how comfortable these two are together.",
       "tcgplayerProductId": 284258,
       "tcgplayerGroupId": 3172
@@ -4540,6 +4895,9 @@
         "Group Naps",
         "Water Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Group nap in a tangle of pink feathers. Shibuzoh delivers hilarious coordinated flamingo resting in a tropical wetland.",
       "tcgplayerProductId": 497630,
       "tcgplayerGroupId": 23120
@@ -4565,6 +4923,9 @@
       "updatedAt": "2026-10-21T15:56:43.728Z",
       "moods": [
         "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Oshawott has curled up in a striped hammock above sparkling tropical water, paws tucked in and completely surrendered to an afternoon nap. It’s an especially charming contrast for a Pokémon whose Pokédex entry describes it as ready to retaliate immediately with its scalchop when attacked. Here, Oshawott is gloriously off duty; surrounded by flowers, warm sunlight, and shimmering water, the picture of a perfect island nap.",
       "tcgplayerProductId": 642217,
@@ -4593,6 +4954,9 @@
         "Belly Up",
         "Bedtime"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap curled on bedroom floorboards. Toshinao Aoki's clean storybook lines make this sleepy Raichu one of the most beloved modern SAR cards.",
       "tcgplayerProductId": 497614,
       "tcgplayerGroupId": 23120
@@ -4619,6 +4983,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap curled in the grass. A simple, charming modern common of Raichu enjoying quiet downtime in the afternoon sun.",
       "tcgplayerProductId": 542796,
       "tcgplayerGroupId": 23381
@@ -4644,6 +5009,9 @@
       "updatedAt": "2026-10-15T15:37:44.929Z",
       "moods": [
         "Dream Sequence"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap emitting dream mist. Mizue paints the quintessential dream Pokémon wrapped in pastel smoke against a starry backdrop.",
       "tcgplayerProductId": 642571,
@@ -4672,6 +5040,9 @@
         "Nap Watch",
         "Belly Up"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Snorlax has simply fallen asleep wherever it pleased, sprawled beside a quiet pond while the park carries on around it. A Pidgey has turned its enormous belly into a perch and a Diglett pops up from the path nearby, neither doing anything to disturb the nap. GOSSAN turns Snorlax’s legendary ability to sleep through absolutely everything into its own tiny ecosystem.",
       "tcgplayerProductId": 517175,
       "tcgplayerGroupId": 22872,
@@ -4697,6 +5068,9 @@
       "createdAt": "2026-05-04T23:43:44.428Z",
       "updatedAt": "2026-10-16T15:22:03.694Z",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap bathed in morning light. Yoriyuki Ikegami’s painterly masterpiece captures Bulbasaur basking in serene leafy bliss.",
       "tcgplayerProductId": 516997,
       "tcgplayerGroupId": 23237
@@ -4723,6 +5097,9 @@
       "moods": [
         "Sunbeam Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap in an indoor greenhouse. Bulbasaur curled up amidst potted houseplants brings lush conservatory vibes indoors.",
       "tcgplayerProductId": 567418,
       "tcgplayerGroupId": 23537
@@ -4748,6 +5125,12 @@
       "updatedAt": "2026-10-15T15:37:47.412Z",
       "moods": [
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Cozy nap on a flower trellis. Kouki Saitou’s lush purple wisteria canopy cradles the little grass cat in heavenly tranquility.",
       "tcgplayerProductId": 497599,
@@ -4776,6 +5159,12 @@
         "Hug Buddy",
         "Flower Beds"
       ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Cozy nap in the treetop canopy. Ryota Murayama paints the mythical ancestor curled into an innocent ball above a bustling forest.",
       "tcgplayerProductId": 478027,
       "tcgplayerGroupId": 17689
@@ -4802,6 +5191,9 @@
       "moods": [
         "Face-Plant",
         "Study Break"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap deep in its burrow. Kurata So captures Dunsparce snoozing safely in its subterranean earthen haven.",
       "tcgplayerProductId": 478041,
@@ -4830,6 +5222,7 @@
         "Hug Buddy",
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold hugging its wooden log. Born asleep and living in permanent slumber, Komala is the purest sleep icon in the franchise.",
       "tcgplayerProductId": 131032,
       "tcgplayerGroupId": 1919
@@ -4857,6 +5250,7 @@
         "Face-Plant",
         "Hug Buddy"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold in felt and clay. Miki Tanaka’s tactile style gives the perpetually comatose koala a delightfully sleepy meadow portrait.",
       "tcgplayerProductId": 195215,
       "tcgplayerGroupId": 2464
@@ -4885,6 +5279,7 @@
         "Belly Up",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "seoTitle": "Sleeping Snorlax & Eevee Card – Wizards Promos 49 | Sleepy Pokemon",
       "whyItBelongs": "Out cold with comic-strip Z's. A holy-grail vintage promo that defined what it means to be the Sleeping Pokémon.",
       "tcgplayerProductId": 89385,
@@ -4914,6 +5309,7 @@
         "Belly Up",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in a Gracidea flowerbed. Kanako Eo wraps the mythical hedgehog in brilliant storybook blossoms.",
       "tcgplayerProductId": 121947,
       "tcgplayerGroupId": 1451,
@@ -4941,6 +5337,7 @@
         "Belly Up",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap in a clay cradle. An ultra-rare Japanese promotional e-reader card depicting baby Togepi in sound, innocent sleep."
     },
     {
@@ -4962,6 +5359,7 @@
       "createdAt": "2026-09-16T01:07:10.520Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap coiled into a perfect cinnamon swirl. Whitney's beloved partner curled into total clay contentment in this Japanese VS exclusive.",
       "slug": "whitney-s-furret-pokemon-vs-018-141"
     },
@@ -4987,6 +5385,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap under twilight skies. Even the stinky skunk enjoys sweet dreams when resting quietly on an open grassy hill.",
       "tcgplayerProductId": 693549,
       "tcgplayerGroupId": 24655
@@ -5013,6 +5412,9 @@
       "moods": [
         "Treetop Naps"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Cozy nap perched on a branch. A perfectly spherical Rowlet dozing peacefully in the sunny canopy by ryoma uratsuka.",
       "tcgplayerProductId": 684368,
       "tcgplayerGroupId": 24587
@@ -5037,6 +5439,11 @@
       "createdAt": "2026-09-16T01:07:10.520Z",
       "updatedAt": "2026-09-16T01:07:10.520Z",
       "moods": [],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Cozy nap curled inside a porcelain bathroom sink. If it fits, it sits: peak domestic cat behavior captured on a Pokémon card.",
       "tcgplayerProductId": 675977,
       "tcgplayerGroupId": 24541
@@ -5064,6 +5471,7 @@
         "Drool & Snore",
         "Treetop Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold drooling on a mossy branch. Kyoko Umemoto’s rich e-Series color palette makes Gloom’s jungle nap pop with vintage personality.",
       "tcgplayerProductId": 85780,
       "tcgplayerGroupId": 1397
@@ -5090,6 +5498,7 @@
       "moods": [
         "Group Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap hidden under garden leaves. Aspara captures the cracked little egg crew resting together in the rich garden dirt.",
       "tcgplayerProductId": 654343,
       "tcgplayerGroupId": 24380
@@ -5117,6 +5526,7 @@
         "Hug Buddy",
         "Couch & Cushion"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold beside an equally exhausted Larry. The ultimate corporate burnout pairing: a comatose koala and Pokémon’s weary salaryman.",
       "tcgplayerProductId": 675987,
       "tcgplayerGroupId": 24541
@@ -5145,6 +5555,7 @@
         "Drool & Snore",
         "Treetop Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold on a tropical beach. Nagimiso’s breezy Alolan art showcases Komala doing what it does best: sleeping without a care.",
       "slug": "komala-sun-and-moon-black-star-promos-sm41",
       "tcgplayerProductId": 139101,
@@ -5172,6 +5583,7 @@
       "moods": [
         "Hug Buddy"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold clinging to a mossy tree trunk. Hyogonosuke’s crisp graphic shapes frame the perpetually sleeping koala in vibrant green beauty.",
       "tcgplayerProductId": 284077,
       "tcgplayerGroupId": 3118
@@ -5199,6 +5611,7 @@
         "Hug Buddy",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Out cold beside the river path. Natsumi Yoshida’s charming linework gives Komala another delightfully cozy, unbothered nap.",
       "tcgplayerProductId": 623556,
       "tcgplayerGroupId": 24073
@@ -5226,6 +5639,7 @@
         "Group Naps",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap in sweet pastel fields. Nelnal’s energetic pop-art style turns the six snoozing eggs into vibrant visual candy.",
       "tcgplayerProductId": 716435,
       "tcgplayerGroupId": 24722
@@ -5252,6 +5666,12 @@
       "moods": [
         "Belly Up",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ],
       "whyItBelongs": "Cozy nap handcrafted in yarn. Asako Ito’s crocheted Pikachu passed out on a felt hill is pure comforting nostalgia.",
       "tcgplayerProductId": 716310,
@@ -5281,6 +5701,7 @@
         "Belly Up",
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap after soaking in tropical vibes. OOYAMA’s delightfully goofy, round Pikachu has flopped onto its back in the warm sand, cheeks flushed and eyes shut, while a little sailboat drifts by. Look closely by the palm tree: a Weedle is peeking out at the sleeper. Even its attack, Tropical Vibes, puts it to sleep.",
       "tcgplayerProductId": 712947,
       "tcgplayerGroupId": 24722
@@ -5308,6 +5729,11 @@
         "Bedtime",
         "Moonlit Naps"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Cozy nap glowing under the moonlight. Iori Suzuki crafts a peaceful, atmospheric moonlit rest for the dark evolution.",
       "tcgplayerProductId": 696679,
       "tcgplayerGroupId": 24722
@@ -5334,6 +5760,11 @@
       "moods": [
         "Face-Plant",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Cozy nap curled on a sunny brick wall. MINAMINAMI Take paints classic cat behavior as Meowth basks atop a warm fence ledge.",
       "tcgplayerProductId": 714356,
@@ -5364,6 +5795,7 @@
         "Flower Beds",
         "Autumn Leaves"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Food coma among wild forest berries and mushrooms. Aya Kusube’s richly textured fairytale style shows Snorlax completely knocked out digesting a woodland feast.",
       "tcgplayerProductId": 716508,
       "tcgplayerGroupId": 24722
@@ -5393,6 +5825,9 @@
       "moods": [
         "Cameo Sleepers",
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Cozy nap gliding across a sunny lagoon. Lapras drifting with calm, closed eyes in paradise alongside Psyduck and friends.",
       "tcgplayerProductId": 696683,
@@ -5424,6 +5859,12 @@
         "Group Naps",
         "Town Naps"
       ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Group nap draped over apartment railings. OKUBO's intricate architectural illustration shows Meowth and friends dangling in liquid cat sleep across urban balconies.",
       "tcgplayerProductId": 714358,
       "tcgplayerGroupId": 24722
@@ -5448,6 +5889,7 @@
         "Cameo Sleepers",
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Group nap tucked into a pastel canopy bed. Pikachu and Eevee fast asleep under a floral quilt while Munna watches over their dreams make this budget common an absolute masterpiece of cozy cameos.",
       "createdAt": "2026-09-20T00:00:00.000Z",
       "updatedAt": "2026-10-15T15:38:46.981Z",
@@ -5476,6 +5918,12 @@
         "Face-Plant",
         "Handmade"
       ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
+      ],
       "whyItBelongs": "Out cold on the ground. Dunsparce is completely stretched out and asleep, making this a quietly convincing addition to the sleepy stack.",
       "createdAt": "2026-09-20T15:55:21.016Z",
       "updatedAt": "2026-09-20T15:55:21.016Z",
@@ -5499,6 +5947,9 @@
       "setReleaseDate": "2022/11/11",
       "notes": "Suggested by the Sleepy Pokemon community. Two baby Stunky are tucked into the cave behind Skuntank.",
       "moods": [],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "While Skuntank stands guard in front of its burrow, peering deep into the dark hollow tree reveals the real magic: two tiny baby Stunky curled up fast asleep together. It’s one of the greatest 'blink-and-you’ll-miss-it' sleeping cameos in the modern TCG; turning an imposing Ultra Rare into a tender family nap.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:51:58.425Z",
@@ -5527,6 +5978,9 @@
         "Hug Buddy",
         "Couch & Cushion"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "In a room packed with energetic, scampering Eevees tumbling over tables and knocking over books, one little guy in the bottom-right corner has opted out of the chaos entirely. Curled up into a tiny ball on a plush cushion with eyes tightly shut, this Eevee represents peak unbothered comfort.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-10-18T14:34:46.873Z",
@@ -5553,6 +6007,9 @@
       "moods": [
         "Cameo Sleepers",
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Munna floats through a dreamy pink twilight under a crescent moon, radiating sweet dreams with its 'Rest' attack. Down in the foreground, two little Pidoves are cuddled together on the ledge, sound asleep with eyes softly shut. A quiet, poetic Unova bedtime scene.",
       "createdAt": "2026-09-21T00:00:00.000Z",
@@ -5581,6 +6038,7 @@
         "Propped Up",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Accidental nap propped against a fallen log in a moonlit glade. Look closely at the tree trunk behind it to spot the splintered impact craters Makuhita punched into the bark during slap-push drills. True to its Pokédex lore of relentlessly slamming into giant trees to toughen its body, this round sumo trainee completely knocked itself out upright under the full moon. Kurata So’s luminous palette and Makuhita’s soft snoring expression turn an intense workout recovery into pure cozy binder magic.",
       "createdAt": "2026-09-21T00:00:00.000Z",
       "updatedAt": "2026-10-19T17:29:23.655Z",
@@ -5607,6 +6065,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Cozy nap drifting in a sunlit creek. After using \"Rollout\" to tumble like a bouncy jelly cushion through the wildflowers, Solosis plopped right by the brook to snooze peacefully inside its protective membrane while a delicate rainbow shimmers in the ripples below. Despite flavor text warning it can blast attackers away with psychic power, this tiny cell would clearly rather nap in the sunshine; giving LINNE’s pastel storybook art peak cozy-binder charm.",
       "createdAt": "2026-09-22T00:00:00.000Z",
       "updatedAt": "2026-11-03T20:27:36.000Z",
@@ -5633,6 +6092,9 @@
       "moods": [
         "Cameo Sleepers"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Psyduck has curled up for a peaceful nap beside the water while Pikachu stands amused nearby. With Dragonite flying overhead and Jigglypuff peeking across the meadow, the scene feels like a gentle pause in the middle of a larger adventure. Pikachu may be the star of the card, but the deeply snoozing Psyduck earns it a place in the sleepy collection.",
       "createdAt": "2026-09-23T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:54:59.748Z"
@@ -5658,6 +6120,11 @@
       "moods": [
         "Town Naps"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Caught mid yawn, Umbreon sprawls across the green rooftop tiles while the city carries on below. Its loose, stretched out pose and drooping eye make this feel like a quiet afternoon break that could turn into a nap at any moment. Arita gives the 2002 Japanese McDonald's promo a lovely sleepy story: even Umbreon needs a rooftop perch to yawn and unwind!",
       "createdAt": "2026-10-04T16:56:57.000Z",
       "updatedAt": "2026-10-04T16:56:57.000Z"
@@ -5682,6 +6149,12 @@
       "moods": [
         "Dream Sequence",
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ],
       "whyItBelongs": "Mew isn’t quite asleep; it hovers with heavy lidded eyes in a sunlit forest glade. Its loosely looping tail, the blossom covered branches, and the golden light make the moment feel suspended between waking and dreaming. As an iconic 30th Celebration centerpiece, it brings a sleepy binder something special: not a nap caught in progress, but that weightless drift just before sleep.",
       "createdAt": "2026-10-04T16:56:57.000Z",
@@ -5710,6 +6183,7 @@
         "Dream Sequence",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna is tucked into its own dream mist, with eyes closed and body curled into a peaceful ball. Maiko Fujiwara's soft, hazy scene makes this a lovely early-era dream nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:53.284Z",
@@ -5737,6 +6211,7 @@
         "Dream Sequence",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna sleeps in a floating, starry dream world, its pink dream mist looping around its curled body. The luminous underwater colors make this one feel like a whole dream captured on a card.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-20T00:00:00.000Z",
@@ -5763,6 +6238,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna floats peacefully through a rosy, pastel sky, eyes shut and dream mist streaming behind it. MAHOU's soft colors turn the scene into a gentle little bedtime reverie.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:53.444Z",
@@ -5787,6 +6263,7 @@
       "setReleaseDate": "2014/11/05",
       "notes": "A sleeping Musharna floats over a reflective stream in a quiet, green landscape.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna rests above a sunlit stream, its dream mist drifting lazily through the trees. The water and greenery make this Phantom Forces card feel like an unhurried afternoon nap outdoors.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:53.562Z",
@@ -5813,6 +6290,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna has tucked itself into a snug ball beneath its looping dream mist, surrounded by a few tiny flowers. Misa Tsutsui gives this meadow nap a wonderfully quiet, sheltered feeling.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:55.926Z",
@@ -5839,6 +6317,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna's eyes are closed as it curls into a flower-strewn nest, its dream mist forming a soft frame around it. Masakazu Fukuda's sparkling details make the scene feel like a dream that wandered into a garden.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:56.030Z",
@@ -5866,6 +6345,7 @@
         "Dream Sequence",
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna floats with its eyes closed above a crystalline landscape, its dream mist sparkling in the night. Kagemaru Himeno's icy setting gives this nap an especially surreal, otherworldly mood.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:56.142Z",
@@ -5893,6 +6373,7 @@
         "Dream Sequence",
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Musharna floats weightlessly through a starry purple sky, eyes closed while its dream mist glows like a small nebula. Satoshi Shirai makes this sleepy card feel like bedtime reached all the way into space.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:56.258Z",
@@ -5918,6 +6399,9 @@
       "notes": "Sandaconda V has curled up beside a radiator in a warmly lit room.",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
       ],
       "whyItBelongs": "Sandaconda has claimed the warmest spot in the room, curled beside a radiator while its trainer relaxes nearby. Narumi Sato's homely scene makes a powerful V card feel wonderfully domestic and drowsy.",
       "createdAt": "2026-10-20T00:00:00.000Z",
@@ -5945,6 +6429,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Barboach drifts through still water with its eyes shut, looking completely unbothered by the ripples around it. Tomokazu Komiya's soft underwater scene makes this feel like a peaceful aquatic snooze.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:56.482Z",
@@ -5969,6 +6454,7 @@
       "setReleaseDate": "2022/11/11",
       "notes": "Stonjourner settles low among sandstone stacks in the warm evening light.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Stonjourner is not unmistakably asleep, but its low, settled pose among the quiet stone stacks has the stillness of a creature winding down at sunset. Hataya's warm desert scene earns it a gentle, question-mark place in the sleepy stack.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:56.603Z",
@@ -5995,6 +6481,7 @@
       "moods": [
         "Belly Up"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Wooper has nodded off in the middle of an everyday indoor scene, its little arms slack and eyes peacefully shut. Atsuko Nishida's bright, lived-in setting gives this vintage e-Card a sweet, familiar nap-time feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:05.813Z",
@@ -6021,6 +6508,7 @@
       "moods": [
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Chansey has settled into the sandy shade beneath a broad tree, eyes shut while the shoreline glimmers behind it. Miki Tanaka's quiet coastal setting makes this a lovely, old-school outdoor nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:57.017Z",
@@ -6047,6 +6535,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl is tucked into its shell with its eyes closed, surrounded by bubbles and the cool blue of the sea. The dark shell reads like a snug little bedroom under the waves.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:57.119Z",
@@ -6073,6 +6562,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl rests with its eyes closed in the center of its shell, nestled between its soft blue pearls. The close-up makes the sturdy shell feel like a tiny, protective bed.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:28.432Z",
@@ -6099,6 +6589,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl's eyes are closed as it rests in its shell, with its pearls gathered close like pillows. Sachiko Adachi's warm colors make this Legend Maker print feel especially snug.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:57.364Z",
@@ -6126,6 +6617,7 @@
         "Dream Sequence",
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl snoozes in its shell while vivid, swirling colors ripple through the water around it. Mitsuhiro Arita gives this simple nap a wonderfully imaginative, dreamlike setting.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:56:57.474Z",
@@ -6152,6 +6644,7 @@
       "moods": [
         "Water Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl is tucked away in its shell with its eyes closed, resting on the ocean floor. The surrounding green-blue water gives this Hidden Legends card a calm, sheltered feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:29.180Z",
@@ -6179,6 +6672,7 @@
         "Water Naps",
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl has closed its eyes and settled into its shell, pearls tucked close as it sleeps below the surface. Ken Sugimori's underwater scene is quiet and uncluttered, just right for a gentle nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:07.747Z",
@@ -6206,6 +6700,7 @@
         "Nap Watch",
         "Treetop Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "The foreground Hoothoot is wide awake, but its companion behind it has fallen asleep on the branch. Pani Kobayashi turns this into a sweet little shared moment between a lookout and a napper.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:00.650Z",
@@ -6235,6 +6730,7 @@
         "Pokémon Pillow",
         "Snow Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Where do you nap in a snowfield? If you’re a Natu, inside Bouffalant’s afro. One has already burrowed in and fallen asleep; the other is peeking out, still awake, with snow all around them.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-11-03T21:42:30.000Z",
@@ -6259,6 +6755,7 @@
       "setReleaseDate": "2015/11/04",
       "notes": "Swablu has tucked its head into its cottony wings for a nap among the clouds.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Swablu has made a pillow of its own fluffy wings and drifted off above a bright garden. Mizue fills the scene with bubbles, blossoms, and soft light, making it feel weightless and calm.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:30.995Z",
@@ -6285,6 +6782,7 @@
       "moods": [
         "Group Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Several Spheal have hauled out together, with the sleepy group gathered around the same sun-warmed rock. Sumiyoshi Kizuki's playful scene has the easy, companionable feel of a group nap after a swim.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:08.149Z",
@@ -6312,6 +6810,9 @@
         "Nap Watch",
         "Hug Buddy"
       ],
+      "searchKeywords": [
+        "full art"
+      ],
       "whyItBelongs": "Jigglypuff looks delighted to be awake, but Lopunny has already settled into a contented doze in its arms. Shibuzoh's warm, flower-filled illustration makes this Tag Team card feel like a gentle cuddle that turned into a nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:31.623Z",
@@ -6338,6 +6839,7 @@
       "moods": [
         "Cameo Sleepers"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Picked for battle? Sentret would rather not. It’s curled up asleep in the middle circle, eyes shut, while Hoppip sweats, Hoothoot beams and Mareep peeks up from the bottom edge.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-11-03T21:25:22.000Z",
@@ -6364,6 +6866,7 @@
       "moods": [
         "Moonlit Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Phanpy has curled up in the grass as the sun drops low, ears and trunk resting loosely against the ground. Tomokazu Komiya's dramatic evening colors turn this small nap into a peaceful end-of-day scene.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:32.121Z",
@@ -6388,6 +6891,11 @@
       "setReleaseDate": "2019/05/03",
       "notes": "Espurr has nodded off in the grass beneath a shady tree.",
       "moods": [],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Espurr is stretched out in the grass beneath a broad tree, eyes closed and mouth open in a tiny sleepy yawn. HYOGONOSUKE's sun-dappled scene makes this feel like a warm afternoon nap interrupted only by the light.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.841Z",
@@ -6412,6 +6920,7 @@
       "setReleaseDate": "2003/01/15",
       "notes": "Smeargle has fallen asleep beside its painting beneath a shady tree.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Smeargle has dozed off beside its paint-covered easel, tail curled around the scene as a shady tree keeps watch. Miki Tanaka's sunny little clearing feels like the perfect place to rest after a long painting session.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:03.973Z",
@@ -6439,6 +6948,7 @@
         "Nap Watch",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Two Raticate have curled up together in the grass, both with eyes closed as the warm light filters around them. Kagemaru Himeno makes this feel like a quiet family nap tucked away from the world.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-20T00:00:00.000Z",
@@ -6465,6 +6975,7 @@
       "moods": [
         "Nap Watch"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "The foreground Seel looks ready for anything, but its companion behind it has already fallen asleep on a sunny rock. Yukiko Baba's playful coastal scene gives the nap a relaxed, social feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:32.875Z",
@@ -6491,6 +7002,7 @@
       "moods": [
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Shuckle has tucked its head and limbs inside its shell and fallen asleep in the sun. Sumiyoshi Kizuki's warm, tactile illustration makes this tiny shell-bound nap feel safe and undisturbed.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:33.023Z",
@@ -6517,6 +7029,7 @@
       "moods": [
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Ponyta sleeps among the flowers with its fiery mane casting a warm glow over the grass. Ayako Ozaki's gentle scene makes this a lovely modern take on a classic, peaceful nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:04.446Z",
@@ -6544,6 +7057,7 @@
         "Water Naps",
         "Beach Naps"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Clamperl is tucked into its shell, eyes closed while the reef blooms with coral around it. Miki Tanaka's bright underwater colors make this modern print feel like a tiny safe bedroom beneath the waves.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:08.905Z",
@@ -6568,6 +7082,10 @@
       "notes": "This Illustration Contest promo catches Arcanine in an enormous, eyes-closed yawn.",
       "moods": [
         "Nap Watch"
+      ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
       ],
       "whyItBelongs": "Arcanine is not fully asleep, but its long, eyes-closed yawn and sprawling sunlit pose make it look moments away from a nap. REND's Illustration Contest scene captures that satisfying, sleepy stretch before settling down.",
       "createdAt": "2026-10-20T00:00:00.000Z",
@@ -6598,6 +7116,11 @@
         "Couch & Cushion",
         "Sunbeam Naps"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Meowstic is tucked into a restful pose in a sun-warmed room, making this a calm indoor nap. The stillness of the illustration gives the card its gentle, sleepy feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:05.826Z",
@@ -6625,6 +7148,7 @@
         "Belly Up",
         "Flower Beds"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Slowpoke's relaxed, eyes-closed pose and gentle floral setting make this a quiet, unhurried nap. Saya Tsuruta's soft illustration feels like a small pause in the middle of a sleepy afternoon.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:35.325Z",
@@ -6651,6 +7175,7 @@
       "moods": [
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Gloom's drooping posture and sleepy expression give this vintage Neo Genesis card a distinctly drowsy presence. It is more on the verge of a nap than fully asleep, but the languid pose fits the collection naturally.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:06.584Z",
@@ -6678,6 +7203,7 @@
         "Propped Up",
         "Drool & Snore"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Gloom's languid expression among the flowers gives this 151 illustration a quietly sleepy mood. It feels like the slow, comfortable stretch of a warm afternoon just before a nap.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:06.692Z",
@@ -6704,6 +7230,7 @@
       "moods": [
         "Bedtime"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Swinub looks comfortably settled among the berries, with the soft pose and warm colors giving the scene a snug, post-snack feel. It is a charming little nap tucked into the middle of an everyday moment.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-23T15:44:09.324Z",
@@ -6728,6 +7255,7 @@
       "setReleaseDate": "2003/05/12",
       "notes": "Swinub from Skyridge 108/144 curls up for a quiet rest in its natural surroundings.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "This Skyridge Swinub has the compact, tucked-in posture of a creature fully settled for a nap. Its quiet natural setting makes a lovely vintage companion to the other sleepy Swinub prints.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",
@@ -6755,6 +7283,7 @@
         "Snow Naps",
         "Autumn Leaves"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Swinub's rounded, tucked-in shape looks right at home in the quiet snowy setting. The scene has that muffled stillness of a winter nap, making this an easy fit for the collection.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:36.618Z",
@@ -6779,6 +7308,7 @@
       "setReleaseDate": "2008/08/20",
       "notes": "Swinub from Legends Awakened 123/146 is curled into a small, restful pose.",
       "moods": [],
+      "searchKeywords": [],
       "whyItBelongs": "Swinub's small curled-up form reads as a peaceful rest, adding another distinct vintage print to the collection. Sumiyoshi Kizuki's illustration gives the nap a gentle, storybook quality.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:36.783Z",
@@ -6805,6 +7335,7 @@
       "moods": [
         "Dream Sequence"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "Uxie's closed-eyed, floating pose and luminous background make the card feel like a dream in progress. The gentle, otherworldly atmosphere brings a little cosmic calm to the collection.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-21T15:57:07.635Z",
@@ -6830,6 +7361,10 @@
       "notes": "Rockruff from Cosmic Eclipse 123/236 lounges on a pastel bed, looking just shy of waking.",
       "moods": [
         "Bedtime"
+      ],
+      "searchKeywords": [
+        "dog",
+        "puppy"
       ],
       "whyItBelongs": "Rockruff has claimed a soft bed and is lounging with the relaxed, heavy-lidded look of a pup resisting wake-up time. The pastel bedroom scene makes this one of the collection's coziest indoor rests.",
       "createdAt": "2026-10-20T00:00:00.000Z",
@@ -6858,6 +7393,11 @@
         "Hug Buddy",
         "Couch & Cushion"
       ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
+      ],
       "whyItBelongs": "Luxio has drifted off beside a soft toy, turning a normally energetic Pokémon into a very convincing bedtime companion. The plush-filled setting gives this Crown Zenith card a warm, tucked-in feel.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T15:53:38.140Z",
@@ -6885,6 +7425,7 @@
         "Nap Watch",
         "Pokémon Pillow"
       ],
+      "searchKeywords": [],
       "whyItBelongs": "The two Bulbasaur make this card feel like a companionable shared rest, with a quiet grassy setting and gentle, contented energy. It brings a sweet early-era group nap into the collection.",
       "createdAt": "2026-10-20T00:00:00.000Z",
       "updatedAt": "2026-10-22T19:59:05.759Z",

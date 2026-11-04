@@ -22,7 +22,8 @@
       "moods": [
         "Group Naps",
         "Pokémon Pillow"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "me30-027",
@@ -46,6 +47,12 @@
       "moods": [
         "Belly Up",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -71,7 +78,8 @@
         "Nap Watch",
         "Belly Up",
         "Beach Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "me30-091",
@@ -95,6 +103,11 @@
       "moods": [
         "Bedtime",
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -119,6 +132,11 @@
       "moods": [
         "Face-Plant",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -145,7 +163,8 @@
         "Belly Up",
         "Flower Beds",
         "Autumn Leaves"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "me55-131",
@@ -169,6 +188,9 @@
       "moods": [
         "Cameo Sleepers",
         "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -193,6 +215,12 @@
       "moods": [
         "Group Naps",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ]
     },
     {
@@ -217,6 +245,12 @@
       "moods": [
         "Dream Sequence",
         "Flower Beds"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten"
       ]
     }
   ]

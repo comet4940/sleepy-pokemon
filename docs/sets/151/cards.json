@@ -22,7 +22,8 @@
       "moods": [
         "Propped Up",
         "Drool & Snore"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv3pt5-63",
@@ -45,7 +46,8 @@
       "slug": "abra-151-63-165",
       "moods": [
         "Propped Up"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv3pt5-86",
@@ -69,7 +71,8 @@
       "moods": [
         "Belly Up",
         "Snow Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv3pt5-143",
@@ -93,7 +96,8 @@
       "moods": [
         "Propped Up",
         "Sunbeam Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv3pt5-166",
@@ -114,7 +118,10 @@
       "createdAt": "2026-05-04T23:43:44.428Z",
       "updatedAt": "2026-10-16T15:22:03.694Z",
       "slug": "bulbasaur-151-166-165",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art"
+      ]
     }
   ]
 }

@@ -22,6 +22,9 @@
       "moods": [
         "Dream Sequence",
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -46,6 +49,9 @@
       "moods": [
         "Cameo Sleepers",
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -71,6 +77,9 @@
         "Group Naps",
         "Sleepy Trainers",
         "Hug Buddy"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -96,6 +105,9 @@
         "Food Coma",
         "Belly Up",
         "Drool & Snore"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -120,7 +132,8 @@
       "moods": [
         "Belly Up",
         "Bedtime"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "swsh12pt5-109",
@@ -145,6 +158,12 @@
         "Belly Up",
         "Flower Beds",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -169,6 +188,12 @@
       "moods": [
         "Belly Up",
         "Handmade"
+      ],
+      "searchKeywords": [
+        "crochet",
+        "yarn",
+        "amigurumi",
+        "knitted"
       ]
     },
     {
@@ -190,7 +215,10 @@
       "createdAt": "2026-05-04T23:43:44.428Z",
       "updatedAt": "2026-10-16T15:22:03.694Z",
       "slug": "bulbasaur-151-166-165",
-      "moods": []
+      "moods": [],
+      "searchKeywords": [
+        "full art"
+      ]
     },
     {
       "apiId": "sv8-204",
@@ -213,6 +241,9 @@
       "slug": "mesprit-surging-sparks-204-191",
       "moods": [
         "Dream Sequence"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -237,6 +268,9 @@
       "moods": [
         "Belly Up",
         "Bedtime"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -262,6 +296,9 @@
         "Dream Sequence",
         "Face-Plant",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -285,6 +322,9 @@
       "slug": "oshawott-white-flare-105-86",
       "moods": [
         "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -310,7 +350,8 @@
         "Cameo Sleepers",
         "Belly Up",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv6pt5-75",
@@ -333,6 +374,9 @@
       "slug": "zorua-shrouded-fable-75-64",
       "moods": [
         "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -358,6 +402,9 @@
         "Pokémon Pillow",
         "Flower Beds",
         "Sunbeam Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -383,6 +430,9 @@
         "Face-Plant",
         "Couch & Cushion",
         "Sunbeam Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]

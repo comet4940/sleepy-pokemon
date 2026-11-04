@@ -24,7 +24,8 @@
         "Propped Up",
         "Beach Naps",
         "Moonlit Naps"
-      ]
+      ],
+      "searchKeywords": []
     },
     {
       "apiId": "sv1-209",
@@ -47,6 +48,9 @@
       "slug": "pawmot-scarlet-and-violet-209-198",
       "moods": [
         "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -72,6 +76,9 @@
         "Dream Sequence",
         "Face-Plant",
         "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -97,6 +104,9 @@
         "Nap Watch",
         "Pokémon Pillow",
         "Treetop Naps"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -120,6 +130,9 @@
       "slug": "skwovet-scarlet-and-violet-222-198",
       "moods": [
         "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     },
     {
@@ -144,6 +157,9 @@
       "moods": [
         "Sleepy Trainers",
         "Study Break"
+      ],
+      "searchKeywords": [
+        "full art"
       ]
     }
   ]
