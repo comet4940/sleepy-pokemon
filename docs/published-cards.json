@@ -1,6 +1,100 @@
 {
   "cards": [
     {
+      "apiId": "xy2-80",
+      "tcgdexId": "",
+      "name": "Snorlax",
+      "pokemon": "Snorlax",
+      "setName": "Flashfire",
+      "setSeries": "XY",
+      "setId": "xy2",
+      "number": "80/106",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "Mitsuhiro Arita",
+      "imageSmall": "https://images.pokemontcg.io/xy2/80.png",
+      "imageLarge": "https://images.pokemontcg.io/xy2/80_hires.png",
+      "setReleaseDate": "2014/05/07",
+      "whyItBelongs": "Two years before Generations reprinted it, this is where Mitsuhiro Arita’s Snorlax first flopped down in the grass: on its back, eyes shut, mouth hanging open, with nothing else in the field to distract from the nap.",
+      "createdAt": "2026-11-04T00:15:28.000Z",
+      "updatedAt": "2026-11-04T00:15:28.000Z",
+      "slug": "snorlax-flashfire-80-106",
+      "moods": [
+        "Belly Up",
+        "Drool & Snore"
+      ]
+    },
+    {
+      "apiId": "sv3pt5-143",
+      "tcgdexId": "",
+      "name": "Snorlax",
+      "pokemon": "Snorlax",
+      "setName": "151",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3pt5",
+      "number": "143/165",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "HYOGONOSUKE",
+      "imageSmall": "https://images.pokemontcg.io/sv3pt5/143.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3pt5/143_hires.png",
+      "setReleaseDate": "2023/09/22",
+      "whyItBelongs": "Dappled shade, tall grass and a scatter of little white flowers. Snorlax has settled back against a tree trunk in the middle of it all, eyes shut, both feet sticking straight out.",
+      "createdAt": "2026-11-04T00:15:28.000Z",
+      "updatedAt": "2026-11-04T00:15:28.000Z",
+      "slug": "snorlax-151-143-165",
+      "moods": [
+        "Propped Up",
+        "Sunbeam Naps"
+      ]
+    },
+    {
+      "apiId": "sv6-136",
+      "tcgdexId": "",
+      "name": "Snorlax",
+      "pokemon": "Snorlax",
+      "setName": "Twilight Masquerade",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv6",
+      "number": "136/167",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Souichirou Gunjima",
+      "imageSmall": "https://images.pokemontcg.io/sv6/136.png",
+      "imageLarge": "https://images.pokemontcg.io/sv6/136_hires.png",
+      "setReleaseDate": "2024/05/24",
+      "whyItBelongs": "Its flavor text says eating things off the ground doesn’t bother Snorlax at all. Neither, apparently, does sleeping on it: Snorlax has plopped down on the pavement in front of a big red-and-white building, eyes shut, mouth wide open, one paw resting on its belly.",
+      "createdAt": "2026-11-04T00:15:28.000Z",
+      "updatedAt": "2026-11-04T00:15:28.000Z",
+      "slug": "snorlax-twilight-masquerade-136-167",
+      "moods": [
+        "Town Naps"
+      ]
+    },
+    {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Snorlax",
+      "pokemon": "Snorlax",
+      "setName": "Perfect Order",
+      "setSeries": "Mega Evolution",
+      "setId": "me3",
+      "number": "063/088",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Toshinao Aoki",
+      "imageSmall": "https://images.scrydex.com/pokemon/me3-63/small",
+      "imageLarge": "https://images.scrydex.com/pokemon/me3-63/large",
+      "setReleaseDate": "2026/03/27",
+      "whyItBelongs": "Who’s looking up at Snorlax from its feet? Whoever it is, Snorlax hasn’t noticed: it’s flat on its back under the branches, eyes shut, with nothing above it but leaves and blue sky.",
+      "createdAt": "2026-11-04T00:15:28.000Z",
+      "updatedAt": "2026-11-04T00:15:28.000Z",
+      "slug": "snorlax-perfect-order-063-088",
+      "moods": [
+        "Belly Up"
+      ]
+    },
+    {
       "apiId": "zsv10pt5-97",
       "tcgdexId": "",
       "name": "Darumaka",
