@@ -12,6 +12,7 @@ import {
   escapeAttribute,
   escapeHtml,
   escapeRegExp,
+  CARD_PAGES_UPDATED,
   getCardLastmod,
   getNewestDate,
   PUBLISHED_CARDS_PATH,
@@ -136,7 +137,7 @@ async function writeSitemap(cardList, guideList, hubs) {
     ...guideList.map((guide) => sitemapUrl(`${SITE_URL}/guides/${guide.slug}/`, getNewestDate([guide.updatedAt, lastmodOf(guideCards(guide))]), "monthly", "0.9")),
     sitemapUrl(`${SITE_URL}/sets/`, directoryLastmod(hubs.map((hub) => hub.cards)), "monthly", "0.8"),
     ...hubs.map((hub) => sitemapUrl(`${SITE_URL}/sets/${hub.slug}/`, lastmodOf(hub.cards), "weekly", "0.8")),
-    ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getCardLastmod(card, exportedAt), "weekly", "0.8")),
+    ...cardList.map((card) => sitemapUrl(`${SITE_URL}/cards/${card.slug}/`, getNewestDate([getCardLastmod(card, exportedAt), CARD_PAGES_UPDATED]), "weekly", "0.8")),
   ].join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

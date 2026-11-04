@@ -93,6 +93,8 @@ Gallery set names drop the part the number already shows ("Lost Origin TG05/TG30
 
 The meta description is the card and its set, then the opening of `whyItBelongs`: whole sentences until it reaches about 100 characters and has mentioned the nap (or reaches about 150), trimmed at a word break with "…" past 160 characters. A better note makes a better search snippet.
 
+A card's sitemap date comes from its own `createdAt`/`updatedAt`, so a change that rewrites every card page at once (the title pattern, the description rule, the page layout) also bumps `CARD_PAGES_UPDATED` in `scripts/build-helpers.mjs` to that day. Don't bump each card's `updatedAt` for it: the card data didn't change.
+
 ## Writing "Why it belongs"
 
 `whyItBelongs` is the curator's note on a card page and in the lightbox. Each one should read like it was written for that card, not filled into a template.
