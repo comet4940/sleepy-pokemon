@@ -1033,9 +1033,15 @@ function getCardTextWithoutKeywords(card) {
 // keeping them would find nothing, so "pokemon go" still means Pokémon GO.
 const SEARCH_FILLER_WORDS = new Set(["card", "cards", "pokemon", "sleepy", "sleeping", "tcg"]);
 
+// The singulars a plural search word could stand for: "dogs" → "dog", "foxes" → "foxe", "fox".
+function singularForms(term) {
+  if (term.length <= 3 || !term.endsWith("s")) return [];
+  return term.endsWith("es") && term.length > 4 ? [term.slice(0, -1), term.slice(0, -2)] : [term.slice(0, -1)];
+}
+
 // A search word matches if it appears in the card's text; a plural also matches its singular ("dogs" finds "dog").
 function textHasTerm(text, term) {
-  return text.includes(term) || (term.length > 3 && term.endsWith("s") && text.includes(term.slice(0, -1)));
+  return text.includes(term) || singularForms(term).some((singular) => text.includes(singular));
 }
 
 // The search as a matcher: every word must appear on the card, ignoring case and accents. A word or phrase that is
@@ -1048,9 +1054,9 @@ function getSearchMatcher(query, { withKeywords = true } = {}) {
   const keywords = getSearchKeywordSet();
   const build = (terms) => {
     const tests = groupKeywordPhrases(terms, keywords).map((unit) => {
-      const keyword = keywords.has(unit) ? unit : (unit.length > 3 && unit.endsWith("s") && keywords.has(unit.slice(0, -1)) ? unit.slice(0, -1) : null);
+      const keyword = keywords.has(unit) ? unit : (singularForms(unit).find((singular) => keywords.has(singular)) ?? null);
       if (!keyword) return (card) => textHasTerm(withKeywords ? getCardSearchText(card) : getCardTextWithoutKeywords(card), unit);
-      const wholeWord = new RegExp(`(^|[^a-z0-9])${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}s?([^a-z0-9]|$)`);
+      const wholeWord = new RegExp(`(^|[^a-z0-9])${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(e?s)?([^a-z0-9]|$)`);
       return (card) => (withKeywords && card.searchKeywords?.includes(keyword)) || wholeWord.test(getCardTextWithoutKeywords(card));
     });
     return (card) => tests.every((test) => test(card));
@@ -1071,7 +1077,7 @@ function getSearchKeywordSet() {
 
 // ["full", "art", "pikachu"] → ["full art", "pikachu"] when "full art" is a keyword ("alt arts" → "alt art" too).
 function groupKeywordPhrases(terms, keywords) {
-  const asKeyword = (phrase) => (keywords.has(phrase) ? phrase : (phrase.endsWith("s") && keywords.has(phrase.slice(0, -1)) ? phrase.slice(0, -1) : null));
+  const asKeyword = (phrase) => (keywords.has(phrase) ? phrase : (singularForms(phrase).find((singular) => keywords.has(singular)) ?? null));
   const units = [];
   for (let index = 0; index < terms.length;) {
     let length = Math.min(4, terms.length - index);

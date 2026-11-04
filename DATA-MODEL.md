@@ -193,9 +193,10 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 | `crochet`, `yarn`, `amigurumi`, `knitted` | Yarn-made art (Asako Ito) | Art |
 | `cat`, `kitty`, `kitten` | Cat Pokémon: Meowth, Skitty, Espurr, Meowstic, Glameow, Litten, Incineroar, Sprigatito, Luxio, Zeraora, Espeon, Umbreon, Mew (as in the Sleepy Cat guide) | Pokémon |
 | `dog`, `puppy` | Dog Pokémon: Growlithe, Arcanine, Rockruff, Lycanroc, Houndour | Pokémon |
+| `fox` | Fox Pokémon: Eevee (closer to a fox, never a dog), Vulpix, Zorua | Pokémon |
 
 - **Art keywords** depend on the card: decide each one when adding it.
-- **Pokémon keywords** (`dog`, `cat`) go on every card of that Pokémon. The validator fails if one card of a tagged Pokémon is missing them.
+- **Pokémon keywords** (`dog`, `cat`, `fox`) go on every card of that Pokémon. The validator fails if one card of a tagged Pokémon is missing them.
 - **Add a new keyword** when a real search comes up empty and some cards should match it; add it to this table.
 - **A keyword matches whole words only.** "cat" finds the cards tagged cat and notes with the word "cat", not Raticate; "full art" finds the tagged cards, not every note that happens to contain "full" and "art". Words that aren't keywords still match anywhere, as before.
 

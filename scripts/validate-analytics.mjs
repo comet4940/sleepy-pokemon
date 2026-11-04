@@ -285,10 +285,10 @@ function checkSearchKeywords(card, label) {
   if (new Set(card.searchKeywords).size !== card.searchKeywords.length) errors.push(`${label} lists a searchKeyword twice`);
 }
 
-// Keywords about the Pokémon, not the art: every card of that Pokémon should have them, so a new Growlithe without
+// Keywords about the Pokémon (dog, cat, fox), not the art: every card of that Pokémon should have them, so a new Growlithe without
 // "dog" doesn't silently drop out of a dog search. Art keywords (full art, crochet) are per card and not checked.
 function checkPokemonKeywords() {
-  for (const keyword of ["dog", "cat"]) {
+  for (const keyword of ["dog", "cat", "fox"]) {
     const tagged = new Set(sourceCards.filter((card) => card.searchKeywords?.includes(keyword)).map((card) => card.pokemon));
     for (const card of sourceCards) {
       if (tagged.has(card.pokemon) && !card.searchKeywords?.includes(keyword)) {
@@ -961,14 +961,14 @@ function checkSearchKeywordMatching(appSource) {
         card("Sprigatito", "Paldea Evolved", "Curled up asleep.", ["full art", "cat"]),
         card("Swinub", "Skyridge", "The full moon makes art of the snow.", []),
         card("Chansey", "Pokémon GO", "Asleep in a bed.", []),
-        card("Golett", "Test Set", "Golden hour nap.", []),
+        card("Golett", "Test Set", "Golden hour nap.", ["fox"]),
         card("Raticate", "Skyridge", "A cat nap in the barn.", []),
         card("Eevee", "Test Set", "A full art feel, asleep in the grass.", []),
       ].map((entry) => ({ ...entry })))}.map(normalizeCard);
     `);
     const names = (search) => app.run(`filterCards({ ...state.filters, search: ${JSON.stringify(search)} }).map((card) => card.name)`).join(", ");
     for (const [search, expected] of [
-      ["dog", "Growlithe"], ["dogs", "Growlithe"], ["puppy", "Growlithe"],
+      ["dog", "Growlithe"], ["dogs", "Growlithe"], ["puppy", "Growlithe"], ["foxes", "Golett"],
       ["crochet cards", "Snorlax"], ["sleepy dogs", "Growlithe"],
       ["full moon", "Swinub"],
       ["pokemon go", "Chansey"],
