@@ -17,7 +17,7 @@ export function renderSiteHeader(basePath = "") {
             <path d="M19 39l3 3 3-3M62 25l3 3 3-3" fill="none" stroke="var(--pink)" stroke-width="2.5" stroke-linecap="round" />
           </svg>
           <div>
-            <h1>Sleepy Pokemon</h1>
+            <p class="brand-title">Sleepy Pokemon</p>
             <p class="brand-byline">A collection by Comet&nbsp;&amp;&nbsp;Linkcat</p>
           </div>
         </a>
