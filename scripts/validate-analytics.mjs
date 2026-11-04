@@ -897,6 +897,14 @@ function checkDidYouMean(appSource) {
     if (missing.primary !== "Suggest a sleepy card" || !missing.suggest || missing.didYouMean || missing.clear !== null || !missing.title.includes("dartrix")) fail(`a search with no match and no typo should offer "Suggest a sleepy card"; got ${JSON.stringify(missing)}`);
     const filtered = view("meowth", "snow-naps");
     if (filtered.title !== "No cards match these filters." || filtered.clear !== "Clear filters" || filtered.primary !== null) fail(`a real search emptied by filters should offer "Clear filters"; got ${JSON.stringify(filtered)}`);
+    // A typo whose fix the filters hide (Joltik isn't a Snow Nap) is still a typo, not a missing card.
+    const hidden = view("joltin", "snow-naps");
+    if (hidden.primary !== "Search Joltik in all cards" || hidden.title.includes("yet") || hidden.clear !== null) fail(`a typo whose fix the filters hide should offer "Search Joltik in all cards"; got ${JSON.stringify(hidden)}`);
+    app.run(`handleEmptyStateClick({ preventDefault() {}, target: { closest: (selector) => (selector.includes("did-you-mean") ? elements.emptyStatePrimary : null) } })`);
+    if (app.run("state.filters.search") !== "Joltik" || app.run("state.filters.mood") !== "all") fail("Search Joltik in all cards should search Joltik and drop the filters");
+    const unhid = events.filter((event) => event.name === "search_results_viewed").at(-1);
+    if (unhid?.params.interaction_source !== "did_you_mean" || unhid?.params.result_count !== 1) fail(`Search … in all cards should send search_results_viewed (did_you_mean, 1 result), got ${JSON.stringify(unhid?.params)}`);
+    view("meowth", "snow-naps");
     app.run(`clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch })`);
     if (app.run("state.filters.search") !== "meowth" || app.run("state.filters.mood") !== "all") fail("Clear filters in the empty state should keep the search and drop the filters");
     view("mewoth");

@@ -1605,6 +1605,7 @@ const DID_YOU_MEAN_MIN_SCORE = { name: 0.62, other: 0.75 };
 // The empty state for a search or filters that found nothing. It says what happened and offers one main action:
 //   a likely typo        "No sleepy cards for “mewoth”."   [Search Meowth instead]   Not a typo? Suggest the card…
 //   nothing in the stack "No sleepy cards for “dartrix” yet."   [Suggest a sleepy card]  (form opens with “dartrix”)
+//   a typo, but the filters hide the fix (joltin + Snow Naps)   [Search Joltik in all cards]  (drops the filters)
 //   filters did it       "No cards match these filters."   [Clear filters]  (keeps the search)
 // The summary line above already shows the search and a "Show all", so neither is repeated here, and the separate
 // "Not seeing your snoozer?" prompt stays hidden while there's nothing to show.
@@ -1629,12 +1630,17 @@ function renderEmptySearchState(resultCount) {
     if (elements.clearCollectionButton) elements.clearCollectionButton.hidden = true;
     const suggestion = findSearchSuggestion(query);
     if (suggestion) {
+      // The fix may exist only outside the filters (Joltik isn't a Snow Nap): then the button searches all cards,
+      // rather than calling the card missing.
+      const fitsFilters = filterCards({ ...state.filters, search: suggestion }).length > 0;
       title.textContent = `No sleepy cards for “${query}”.`;
       text.hidden = true;
       primary.href = `?q=${encodeURIComponent(suggestion)}`;
       delete primary.dataset.emptySuggest;
       primary.dataset.didYouMean = suggestion;
-      primary.textContent = `Search ${suggestion} instead`;
+      if (fitsFilters) delete primary.dataset.clearsFilters;
+      else primary.dataset.clearsFilters = "";
+      primary.textContent = fitsFilters ? `Search ${suggestion} instead` : `Search ${suggestion} in all cards`;
       primary.hidden = false;
       secondary.innerHTML = `Not a typo? <a href="#suggest-card" data-empty-suggest>Suggest the card you’re looking for</a>`;
       secondary.hidden = false;
@@ -1690,11 +1696,16 @@ function handleEmptyStateClick(event) {
   event.preventDefault();
   const query = link.dataset.didYouMean;
   state.filters.search = query;
-  state.showAllCards = true;
-  if (elements.searchFilter) elements.searchFilter.value = query;
-  if (elements.headerSearchInput) elements.headerSearchInput.value = query;
-  markHistoryStep();
-  render();
+  if ("clearsFilters" in link.dataset) {
+    // The suggestion only has cards outside the current filters: drop them, keep the corrected search.
+    clearFilters("did_you_mean", { keepSearch: true });
+  } else {
+    state.showAllCards = true;
+    if (elements.searchFilter) elements.searchFilter.value = query;
+    if (elements.headerSearchInput) elements.headerSearchInput.value = query;
+    markHistoryStep();
+    render();
+  }
   trackEvent("search_results_viewed", {
     interaction_source: "did_you_mean",
     query_length: query.length,
@@ -1703,7 +1714,7 @@ function handleEmptyStateClick(event) {
 }
 
 // The suggested search, or null. Words the catalog already contains stay as typed; each unknown word is swapped
-// for its best match. The suggestion is only offered if it finds cards under the current filters.
+// for its best match. The suggestion is only offered if it finds cards (filters aside; the empty state handles those).
 function findSearchSuggestion(query) {
   const terms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
   if (!terms.length || catalogMatchesSearch(query)) return null;
@@ -1735,7 +1746,7 @@ function findSearchSuggestion(query) {
   }
   if (!changed) return null;
   const suggestion = words.join(" ");
-  return filterCards({ ...state.filters, search: suggestion }).length ? suggestion : null;
+  return catalogMatchesSearch(suggestion) ? suggestion : null;
 }
 
 // The words a search could have meant, from card names, Pokemon, sets, artists and moods (not the notes).
