@@ -1,0 +1,419 @@
+{
+  "cards": [
+    {
+      "apiId": "swsh7-192",
+      "tcgdexId": "",
+      "name": "Dragonite V",
+      "pokemon": "Dragonite",
+      "setName": "Evolving Skies",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh7",
+      "number": "192/203",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "Atsushi Furusawa",
+      "imageSmall": "https://images.pokemontcg.io/swsh7/192.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh7/192_hires.png",
+      "setReleaseDate": "2021/08/27",
+      "whyItBelongs": "Dragonite can circle the globe in about sixteen hours. On this card it has given up on the trip entirely: it drifts belly up over misty mountain peaks, wings slack, eyes shut and smiling in its sleep, while a flock of Spearow carries on without it. Of all the sleepy cards, this is the one collectors know on sight.",
+      "createdAt": "2026-05-06T03:02:55.825Z",
+      "updatedAt": "2026-11-03T22:11:25.000Z",
+      "slug": "dragonite-v-evolving-skies-192-203",
+      "moods": [
+        "Dream Sequence",
+        "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art",
+        "alt art"
+      ]
+    },
+    {
+      "apiId": "swsh5-155",
+      "tcgdexId": "",
+      "name": "Tyranitar V",
+      "pokemon": "Tyranitar",
+      "setName": "Battle Styles",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh5",
+      "number": "155/163",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "HYOGONOSUKE",
+      "imageSmall": "https://images.pokemontcg.io/swsh5/155.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh5/155_hires.png",
+      "setReleaseDate": "2021/03/19",
+      "whyItBelongs": "Food coma literally wherever. Passed out in a legendary post-buffet stupor next to towering stacks of empty dishes while a sweating Pignite watches from behind a tree. The undisputed king of chaos naps and a modern alternate-art grail.",
+      "createdAt": "2026-05-05T00:57:22.016Z",
+      "updatedAt": "2026-10-22T19:51:58.425Z",
+      "slug": "tyranitar-v-battle-styles-155-163",
+      "moods": [
+        "Food Coma",
+        "Belly Up",
+        "Drool & Snore"
+      ],
+      "searchKeywords": [
+        "full art",
+        "alt art"
+      ]
+    },
+    {
+      "apiId": "swsh12-181",
+      "tcgdexId": "swsh12-181",
+      "name": "Skuntank V",
+      "pokemon": "Skuntank",
+      "setName": "Silver Tempest",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12",
+      "number": "181/195",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "Jiro Sasumo",
+      "imageSmall": "https://images.pokemontcg.io/swsh12/181.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12/181_hires.png",
+      "setReleaseDate": "2022/11/11",
+      "whyItBelongs": "While Skuntank stands guard in front of its burrow, peering deep into the dark hollow tree reveals the real magic: two tiny baby Stunky curled up fast asleep together. It’s one of the greatest 'blink-and-you’ll-miss-it' sleeping cameos in the modern TCG; turning an imposing Ultra Rare into a tender family nap.",
+      "createdAt": "2026-09-21T00:00:00.000Z",
+      "updatedAt": "2026-10-22T19:51:58.425Z",
+      "slug": "skuntank-v-silver-tempest-181-195",
+      "moods": [],
+      "searchKeywords": [
+        "full art",
+        "alt art"
+      ]
+    },
+    {
+      "apiId": "swsh8-257",
+      "tcgdexId": "",
+      "name": "Greedent V",
+      "pokemon": "Greedent",
+      "setName": "Fusion Strike",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh8",
+      "number": "257/264",
+      "rarity": "Ultra Rare",
+      "language": "English",
+      "artist": "Saya Tsuruta",
+      "imageSmall": "https://images.pokemontcg.io/swsh8/257.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh8/257_hires.png",
+      "setReleaseDate": "2021/11/12",
+      "whyItBelongs": "Greedent V is sitting in a heap of berries, and the Skwovet along the log are mid-snack, cheeks full and grinning. But one tiny Skwovet has already hit the wall, eyes shut and perfectly content after eating its fill. It’s the classic post-feast slump, and the rest of the crowd will be joining it soon.",
+      "createdAt": "2026-10-27T22:43:34.000Z",
+      "updatedAt": "2026-10-27T22:43:34.000Z",
+      "slug": "greedent-v-fusion-strike-257-264",
+      "moods": [
+        "Nap Watch",
+        "Cameo Sleepers",
+        "Food Coma"
+      ],
+      "searchKeywords": [
+        "full art",
+        "alt art"
+      ]
+    },
+    {
+      "apiId": "swsh8-270",
+      "tcgdexId": "",
+      "name": "Espeon VMAX",
+      "pokemon": "Espeon",
+      "setName": "Fusion Strike",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh8",
+      "number": "270/264",
+      "rarity": "Rare Rainbow",
+      "language": "English",
+      "artist": "Kouki Saitou",
+      "imageSmall": "https://images.pokemontcg.io/swsh8/270.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh8/270_hires.png",
+      "setReleaseDate": "2021/11/12",
+      "whyItBelongs": "Dynamax or not, Espeon is still a cat. Kouki Saitou shows it draped lazily across a rooftop, eyes peacefully closed while Wingull circle through the bright sky nearby. The enormous scale makes the scene wonderfully absurd: one building has apparently become Espeon’s personal sun-warmed nap spot.",
+      "createdAt": "2026-05-05T00:58:01.876Z",
+      "updatedAt": "2026-10-16T15:21:54.631Z",
+      "slug": "espeon-vmax-fusion-strike-270-264",
+      "moods": [],
+      "searchKeywords": [
+        "full art",
+        "alt art",
+        "cat",
+        "kitty",
+        "kitten"
+      ]
+    },
+    {
+      "apiId": "swsh12tg-TG09",
+      "tcgdexId": "",
+      "name": "Druddigon",
+      "pokemon": "Druddigon",
+      "setName": "Silver Tempest Trainer Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12tg",
+      "number": "TG09/TG30",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Teeziro",
+      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG09.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG09_hires.png",
+      "setReleaseDate": "2022/11/11",
+      "whyItBelongs": "Who needs a tent when your dragon is asleep? Ace Trainer Dara sits tucked in the curl of Druddigon’s body, reading a map in the shade of its wing, while Druddigon dozes with its head down beside her, cliffs and rock spires rising behind them. The card’s own flavor text calls it vicious and cunning. You’d never guess.",
+      "createdAt": "2026-05-05T00:53:44.741Z",
+      "updatedAt": "2026-11-03T19:41:50.000Z",
+      "slug": "druddigon-silver-tempest-trainer-gallery-tg09-tg30",
+      "moods": [
+        "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "swsh12tg-TG07",
+      "tcgdexId": "",
+      "name": "Rockruff",
+      "pokemon": "Rockruff",
+      "setName": "Silver Tempest Trainer Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12tg",
+      "number": "TG07/TG30",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Hideki Ishikawa",
+      "imageSmall": "https://images.pokemontcg.io/swsh12tg/TG07.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12tg/TG07_hires.png",
+      "setReleaseDate": "2022/11/11",
+      "whyItBelongs": "Muddy paw prints on the floorboards, a cloth in Professor Kukui’s hand, and the culprit belly up on the rug, eyes squeezed shut and tongue out. Rockruff has decided the cleanup can happen without it.",
+      "createdAt": "2026-05-05T00:51:50.624Z",
+      "updatedAt": "2026-11-03T19:34:42.000Z",
+      "slug": "rockruff-silver-tempest-trainer-gallery-tg07-tg30",
+      "moods": [
+        "Belly Up",
+        "Nap Watch"
+      ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
+      ]
+    },
+    {
+      "apiId": "swsh12pt5gg-GG15",
+      "tcgdexId": "",
+      "name": "Solrock",
+      "pokemon": "Solrock",
+      "setName": "Crown Zenith Galarian Gallery",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh12pt5gg",
+      "number": "GG15/GG70",
+      "rarity": "Trainer Gallery Rare Holo",
+      "language": "English",
+      "artist": "Nobuhiro Imagawa",
+      "imageSmall": "https://images.pokemontcg.io/swsh12pt5gg/GG15.png",
+      "imageLarge": "https://images.pokemontcg.io/swsh12pt5gg/GG15_hires.png",
+      "setReleaseDate": "2023/01/20",
+      "whyItBelongs": "Night is settling over a wildflower meadow, and even Solrock is starting to drift off. With its eyes peacefully shut and Volbeat and Illumise glowing nearby, Nobuhiro Imagawa turns sunset into bedtime — the sun-shaped Pokémon slowly falling asleep as the fireflies come out.",
+      "createdAt": "2026-05-07T18:00:40.191Z",
+      "updatedAt": "2026-10-16T15:21:25.452Z",
+      "slug": "solrock-crown-zenith-galarian-gallery-gg15-gg70",
+      "moods": [
+        "Nap Watch",
+        "Flower Beds",
+        "Moonlit Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv1-250",
+      "tcgdexId": "",
+      "name": "Jacq",
+      "pokemon": "Jacq",
+      "setName": "Scarlet & Violet",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv1",
+      "number": "250/198",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Oswaldo KATO",
+      "imageSmall": "https://images.pokemontcg.io/sv1/250.png",
+      "imageLarge": "https://images.pokemontcg.io/sv1/250_hires.png",
+      "setReleaseDate": "2023/03/31",
+      "whyItBelongs": "Research won. Jacq has fallen completely asleep at his desk, glasses still on, surrounded by books, loose papers, and the remnants of a long study session. Oswaldo KATO’s warm daylight and wonderfully cluttered workspace make this feel like the inevitable ending to an afternoon spent getting a little too absorbed in Pokémon biology.",
+      "createdAt": "2026-05-05T01:02:29.947Z",
+      "updatedAt": "2026-10-16T15:21:51.311Z",
+      "slug": "jacq-scarlet-and-violet-250-198",
+      "moods": [
+        "Sleepy Trainers",
+        "Study Break"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv5-209",
+      "tcgdexId": "",
+      "name": "Bianca's Devotion",
+      "pokemon": "Bianca",
+      "setName": "Temporal Forces",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv5",
+      "number": "209/162",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Cona Nitanda",
+      "imageSmall": "https://images.pokemontcg.io/sv5/209.png",
+      "imageLarge": "https://images.pokemontcg.io/sv5/209_hires.png",
+      "setReleaseDate": "2024/03/22",
+      "whyItBelongs": "Group nap wrapped in warm, dreamy light. Bianca has dozed off on the couch with her signature Musharna snoozing alongside her, turning an ordinary afternoon crash into a beautifully soft little moment of companionship.",
+      "createdAt": "2026-05-05T01:02:17.565Z",
+      "updatedAt": "2026-10-15T15:37:35.626Z",
+      "slug": "bianca-s-devotion-temporal-forces-209-162",
+      "moods": [
+        "Sleepy Trainers",
+        "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv10-194",
+      "tcgdexId": "",
+      "name": "Misty's Lapras",
+      "pokemon": "Lapras",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "194/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Orca",
+      "imageSmall": "https://images.pokemontcg.io/sv10/194.png",
+      "imageLarge": "https://images.pokemontcg.io/sv10/194_hires.png",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together.",
+      "createdAt": "2026-05-06T21:03:55.441Z",
+      "updatedAt": "2026-10-24T09:00:00.000Z",
+      "slug": "misty-s-lapras-destined-rivals-194-182",
+      "moods": [
+        "Sleepy Trainers",
+        "Pokémon Pillow",
+        "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "zsv10pt5-148",
+      "tcgdexId": "",
+      "name": "Pidove",
+      "pokemon": "Pidove",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "148/086",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/148.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/148_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "One Pidove is wide awake, staring straight up at you. Every other Pidove has flopped over and gone to sleep on the cobblestones, like pigeons dozing on a city square. The card says they sometimes fail to understand complicated commands; apparently “stay awake” counts.",
+      "createdAt": "2026-11-03T20:14:09.000Z",
+      "updatedAt": "2026-11-03T20:39:04.000Z",
+      "slug": "pidove-black-bolt-148-086",
+      "moods": [
+        "Group Naps",
+        "Nap Watch",
+        "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv8-199",
+      "tcgdexId": "",
+      "name": "Spheal",
+      "pokemon": "Spheal",
+      "setName": "Surging Sparks",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv8",
+      "number": "199/191",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "miki kudo",
+      "imageSmall": "https://images.pokemontcg.io/sv8/199.png",
+      "imageLarge": "https://images.pokemontcg.io/sv8/199_hires.png",
+      "setReleaseDate": "2024/11/08",
+      "whyItBelongs": "Group nap on an icy shoreline. A whole cluster of round, smiling Spheals dozing under the aurora makes this modern Illustration Rare an instant cozy favorite.",
+      "createdAt": "2026-05-07T18:02:02.196Z",
+      "updatedAt": "2026-10-22T19:36:42.825Z",
+      "slug": "spheal-surging-sparks-199-191",
+      "moods": [
+        "Group Naps",
+        "Belly Up",
+        "Pokémon Pillow",
+        "Snow Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "zsv10pt5-97",
+      "tcgdexId": "",
+      "name": "Darumaka",
+      "pokemon": "Darumaka",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "097/086",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Tomowaka",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/97.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/97_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "Darumaka’s own flavor text says that when the fire inside it dies down, it falls asleep. Here the fire is clearly out: it sits bolt upright on a tasseled floor cushion, eyes shut, with a Qualot Berry, a Payapa Berry, a bonsai pine and a few blue wildflowers keeping it company.",
+      "createdAt": "2026-11-03T23:23:30.000Z",
+      "updatedAt": "2026-11-03T23:29:23.000Z",
+      "slug": "darumaka-black-bolt-097-086",
+      "moods": [
+        "Couch & Cushion"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "",
+      "tcgdexId": "",
+      "name": "Cubone",
+      "pokemon": "Cubone",
+      "setName": "Gem Pack Vol. 3",
+      "setSeries": "Scarlet & Violet",
+      "setId": "CBB3C",
+      "number": "04 07/07",
+      "rarity": "Triple Rare",
+      "language": "Simplified Chinese",
+      "artist": "Katsunori Sato",
+      "imageSmall": "https://img.simplifiedtcg.com/cards/zh/15336.webp",
+      "imageLarge": "https://img.simplifiedtcg.com/cards/zh/15336.webp",
+      "setReleaseDate": "2025/09/26",
+      "whyItBelongs": "One Cubone appears to have nodded off beside another on a quiet stone bridge at dusk, head lowered and eye closed beneath the glowing street lamps. Cubone’s story has always been shaped by loss: it wears its late mother’s skull, and its Pokédex lore says that memories of her can make it cry in its dreams. That makes this small moment feel unusually powerful, a Pokémon so often defined by loneliness is shown here simply sitting beside someone else, safe enough to rest.",
+      "createdAt": "2026-09-26T17:10:00.000Z",
+      "updatedAt": "2026-09-26T17:10:00.000Z",
+      "slug": "cubone-gem-pack-vol-3-04-07-07",
+      "moods": [
+        "Pokémon Pillow",
+        "Autumn Leaves",
+        "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    }
+  ]
+}
