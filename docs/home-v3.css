@@ -22,7 +22,7 @@ body::before { display: none; }
 a { color: inherit; }
 .app-shell { width: 100%; padding: 0; }
 
-.hero-copy h2, .section-heading h2, .library-header .eyebrow, .starter-banner h2, .seo-card-index h2 { font-family: var(--display); letter-spacing: 0; }
+.hero-copy h1, .section-heading h2, .library-header .eyebrow, .starter-banner h2, .seo-card-index h2 { font-family: var(--display); letter-spacing: 0; }
 
 /* Wider screens: the menu's links sit in the header and ☰ is hidden (site-header.js; phones below). */
 
@@ -31,8 +31,8 @@ a { color: inherit; }
 .hero-copy { align-self: center; max-width: 560px; }
 .eyebrow { letter-spacing: .13em; }
 .moon-mark { font-size: 1.7rem; line-height: .7; letter-spacing: 0; }
-.hero-copy h2 { margin: 0; color: var(--cream); font-size: 5.8rem; font-weight: 500; line-height: .84; }
-.hero-copy h2 em { color: var(--pink); font-style: normal; }
+.hero-copy h1 { margin: 0; color: var(--cream); font-size: 5.8rem; font-weight: 500; line-height: .84; }
+.hero-copy h1 em { color: var(--pink); font-style: normal; }
 .hero-title-word { position: relative; display: inline-block; }
 .hero-moon-mark { position: relative; top: -.85em; display: inline-block; margin-left: .08em; color: var(--mint); font-size: .28em; line-height: 1; transform: scaleX(-1) rotate(-8deg); }
 .hero-trail { width: min(320px, 80%); height: 24px; margin: 24px 0 18px; fill: none; stroke: var(--pink); stroke-width: 2.5; stroke-linecap: round; }
@@ -226,7 +226,7 @@ a { color: inherit; }
      with Browse, Guides, About and Suggest. */
 
   .sleepy-hero { grid-template-columns: 1fr; min-height: 0; padding: 40px 24px 34px; }
-  .hero-copy h2 { font-size: 4rem; }
+  .hero-copy h1 { font-size: 4rem; }
   .hero-card-stage { min-height: 470px; margin-top: 10px; }
   .hero-card { width: min(86vw, 380px); }
   .hero-card-back { right: 6%; left: 8%; }
@@ -261,7 +261,7 @@ a { color: inherit; }
 }
 
 @media (min-width: 801px) and (max-width: 1100px) {
-  .hero-copy h2 { font-size: 4.8rem; }
+  .hero-copy h1 { font-size: 4.8rem; }
   .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
