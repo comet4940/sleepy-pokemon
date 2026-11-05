@@ -17,6 +17,7 @@ const browserCards = assignSlugs(sourceCards).map(toPublicCard);
 const browserCardJson = new Map(browserCards.map((card) => [getCardIdentity(card), JSON.stringify(card)]));
 // The binder (docs/binder.js) saves cards by slug, so every card display carries data-card-slug.
 const slugByIdentity = new Map(assignSlugs(sourceCards).map((card) => [getCardIdentity(card), card.slug]));
+const cardBySlug = new Map(assignSlugs(sourceCards).map((card) => [card.slug, card]));
 const currentSlugs = new Set(slugByIdentity.values());
 // Elements that show a card and so carry its data-card-slug (see checkCardSlugs).
 const CARD_DISPLAY_CLASSES = ["card-tile", "hero-card", "about-favorite", "about-chase-art", "card-page-detail"];
@@ -119,6 +120,7 @@ for (const path of htmlFiles) {
     }
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
+  if (pageType === "card") checkRelatedCards(html, label, path);
   // Contact Comet (#209): the About page has the form, posting to a real Formspree form, and loads contact.js.
   if (pageType === "about") {
     if (!/<form[^>]*id="contactForm"[^>]*data-email-endpoint="https:\/\/formspree\.io\/f\/[A-Za-z0-9]+"/.test(html)) errors.push(`${label}: the Contact Comet form is missing or has no Formspree endpoint`);
@@ -273,6 +275,26 @@ function checkCardMoods() {
     for (const image of new Set([card.imageSmall, card.imageLarge])) {
       if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
     }
+  }
+}
+
+// Card pages' "More sleepy {Pokémon}" and "More from {set}" rows (#249): links to real card pages, never the card
+// itself, tracked as card_page_related, and outside the <article> the collection's lightbox copies.
+function checkRelatedCards(html, label, path) {
+  const section = html.match(/<section class="card-related"[\s\S]*?<\/section>/)?.[0];
+  const ownSlug = path.split("/").at(-2);
+  const card = cardBySlug.get(ownSlug);
+  if (!card) return;
+  const siblings = [...cardBySlug.values()].filter((other) => other.slug !== ownSlug && (other.pokemon === card.pokemon || other.setName === card.setName));
+  if (siblings.length && !section) errors.push(`${label}: has other ${card.pokemon} or ${card.setName} cards but no related-cards section`);
+  if (!section) return;
+  if (html.indexOf(section) < html.indexOf("</article>")) errors.push(`${label}: related cards are inside the article, so the lightbox would show them`);
+  for (const [, target] of section.matchAll(/href="\.\.\/\.\.\/cards\/([^/"]+)\/"/g)) {
+    if (target === ownSlug) errors.push(`${label}: related cards link to the card itself`);
+    if (!cardBySlug.has(target)) errors.push(`${label}: related card links to a card page that doesn't exist: ${target}`);
+  }
+  for (const link of section.match(/<a [^>]*>/g) || []) {
+    if (!link.includes('data-analytics-source="card_page_related"')) errors.push(`${label}: a related-cards link isn't tracked as card_page_related`);
   }
 }
 

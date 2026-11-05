@@ -37,6 +37,13 @@ const { cards: cardsWithSlugs } = await loadCardData();
 const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
 const setHubByName = new Map(getSetHubs(cardsWithSlugs, await loadSetDefs()).map((hub) => [hub.name, hub]));
+// Card page related rows (#249, renderRelatedCards): up to this many cards per row.
+const RELATED_LIMIT = 6;
+// Pokémon with a guide of their own: their row links to it instead of a collection search.
+const POKEMON_GUIDES = { Snorlax: "sleepy-snorlax-cards", Pikachu: "sleepiest-pikachu-cards" };
+const cardsByPokemon = groupBy(cardsWithSlugs, (card) => card.pokemon);
+const cardsBySet = groupBy(cardsWithSlugs, (card) => card.setName);
+const guideBySlug = new Map(guideDefinitions.map((guide) => [guide.slug, guide]));
 const sortedCards = [...cardsWithSlugs].sort((a, b) => {
   return String(a.pokemon || "").localeCompare(String(b.pokemon || ""))
     || String(a.name || "").localeCompare(String(b.name || ""))
@@ -240,6 +247,7 @@ ${renderMoods(card)}
             </div>
           </div>
         </article>
+${renderRelatedCards(card)}
       </main>
 ${renderSiteFooter()}
     </div>
@@ -286,6 +294,70 @@ function renderFieldNotes(card, memberships) {
     lines.push(`<p>It's one of ${hub.cards.length} sleepy cards from <a href="../../sets/${escapeAttribute(hub.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page" data-analytics-destination="set_page">${escapeHtml(hub.name)}</a>.</p>`);
   }
   return `            <div class="detail-guide-links"><p class="detail-guide-kicker">In the field notes</p>${lines.join("")}</div>\n`;
+}
+
+// "More sleepy {Pokémon}" and "More from {set}" (#249): plain links to sibling card pages, so Google can reach every
+// card page from others and visitors get a next click. They sit below the article, so the collection's lightbox
+// (which copies the article) doesn't show them. Each row shows up to RELATED_LIMIT cards, then a link to see the rest.
+
+function renderRelatedCards(card) {
+  const samePokemon = (cardsByPokemon.get(card.pokemon) || [])
+    .filter((other) => other.slug !== card.slug)
+    .sort((a, b) => String(b.setReleaseDate || "").localeCompare(String(a.setReleaseDate || "")) || a.name.localeCompare(b.name));
+  const shownPokemon = samePokemon.slice(0, RELATED_LIMIT);
+  const shown = new Set(shownPokemon.map((other) => other.slug));
+  const sameSet = (cardsBySet.get(card.setName) || [])
+    .filter((other) => other.slug !== card.slug && !shown.has(other.slug))
+    .sort((a, b) => String(a.number).localeCompare(String(b.number), "en", { numeric: true }));
+  const rows = [];
+  if (shownPokemon.length) {
+    const guide = guideBySlug.get(POKEMON_GUIDES[card.pokemon]);
+    const more = guide
+      ? `<a class="related-more" href="../../guides/${escapeAttribute(guide.slug)}/" data-analytics-event="guide_opened" data-analytics-source="card_page_related" data-analytics-guide-slug="${escapeAttribute(guide.slug)}" data-analytics-guide-title="${escapeAttribute(guide.title)}">${escapeHtml(guide.title)} <span aria-hidden="true">→</span></a>`
+      : samePokemon.length > RELATED_LIMIT
+        ? `<a class="related-more" href="../../collection/?q=${encodeURIComponent(card.pokemon)}" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="collection">See them all <span aria-hidden="true">→</span></a>`
+        : "";
+    rows.push(renderRelatedRow(`More sleepy ${card.pokemon}`, "related-pokemon", shownPokemon, (other) => other.setName, more));
+  }
+  if (sameSet.length) {
+    const hub = setHubByName.get(card.setName);
+    const shownSet = sameSet.slice(0, RELATED_LIMIT);
+    const more = hub
+      ? `<a class="related-more" href="../../sets/${escapeAttribute(hub.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="set_page">All ${hub.cards.length} from ${escapeHtml(hub.name)} <span aria-hidden="true">→</span></a>`
+      : sameSet.length > RELATED_LIMIT
+        ? `<a class="related-more" href="../../collection/?set=${escapeAttribute(slugify(card.setName))}" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="collection">See them all <span aria-hidden="true">→</span></a>`
+        : "";
+    rows.push(renderRelatedRow(`More from ${card.setName}`, "related-set", shownSet, (other) => other.number, more));
+  }
+  if (!rows.length) return "";
+  return `        <section class="card-related" aria-label="More sleepy cards">
+${rows.join("\n")}
+        </section>`;
+}
+
+function renderRelatedRow(heading, id, cardList, metaOf, more) {
+  const items = cardList.map((other) => `            <li><a class="related-card" href="../../cards/${escapeAttribute(other.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="card_page">
+              ${other.imageSmall ? `<img src="${escapeAttribute(other.imageSmall)}" alt="" loading="lazy" decoding="async" />` : `<span class="related-card-fallback" aria-hidden="true"></span>`}
+              <span class="related-card-name">${escapeHtml(other.name)}</span>
+              <span class="related-card-meta">${escapeHtml(metaOf(other) || "")}</span>
+            </a></li>`).join("\n");
+  return `          <div class="related-row" aria-labelledby="${id}">
+            <div class="related-row-head"><h2 id="${id}">${escapeHtml(heading)}</h2>${more}</div>
+            <ul class="related-cards">
+${items}
+            </ul>
+          </div>`;
+}
+
+function groupBy(list, keyOf) {
+  const groups = new Map();
+  for (const item of list) {
+    const key = keyOf(item);
+    if (!key) continue;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  }
+  return groups;
 }
 
 function metaItem(label, value, href = "") {
