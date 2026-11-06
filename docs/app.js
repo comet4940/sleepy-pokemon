@@ -1,23 +1,26 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 // Rarity filter buckets: each card keeps its exact rarity, the drawer groups related ones.
+// In order of use (#153, Oct 22 – Nov 4): the drawer lists them this way, most-picked first.
 const RARITY_GROUPS = [
-  { id: "common", label: "Common", rarities: ["Common"] },
-  { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
-  { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
   { id: "illustration-rare", label: "Illustration Rare", rarities: ["Illustration Rare", "Special Illustration Rare", "Art Rare"] },
   { id: "ultra-secret", label: "Ultra & Secret", rarities: ["Ultra Rare", "Rare Ultra", "Secret Rare", "Rare Rainbow", "Triple Rare", "Rare Holo VMAX", "Pikachu Rare"] },
-  { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
   { id: "promo", label: "Promo", rarities: ["Promo"] },
+  { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
+  { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
+  { id: "common", label: "Common", rarities: ["Common"] },
+  { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
 ];
 // Old ?rarity= values that are now part of a group, so links shared before the change still work.
 const RARITY_ALIASES = { "rare-ultra": "ultra-secret" };
+// Under $5 is by far the most used; $50 was picked once in two weeks (#153), so the drawer stops offering it.
 const PRICE_OPTIONS = [
   { value: "5", label: "Under $5" },
   { value: "10", label: "Under $10" },
   { value: "25", label: "Under $25" },
-  { value: "50", label: "Under $50" },
 ];
+// Price values the drawer no longer offers but shared ?maxPrice= links may still carry.
+const LEGACY_PRICE_VALUES = ["50"];
 // Long option lists start short on phones and desktop alike; "Show all" expands them.
 const DRAWER_PREVIEW_LIMITS = { mood: 8, set: 12 };
 const SORT_OPTIONS = [
@@ -821,10 +824,16 @@ function getRarityGroup(rarity) {
     || { id: slugify(rarity || "unknown"), label: rarity || "Unknown", rarities: [rarity] };
 }
 
+// Matches filter-drawer.css, where the drawer becomes a side panel.
+const DESKTOP_DRAWER = window.matchMedia?.("(min-width: 801px)") ?? { matches: false, addEventListener() {} };
+DESKTOP_DRAWER.addEventListener?.("change", () => renderDrawerShowButton());
+
 function renderDrawerShowButton() {
   if (!elements.drawerShowButton) return;
   const count = getFilteredCards().length;
-  elements.drawerShowButton.textContent = count ? `Show ${count} ${count === 1 ? "sleeper" : "sleepers"} →` : "No matches · Reset filters";
+  // Desktop shows the drawer as a side panel and filters apply as they're picked, so the button just closes it (#232).
+  const label = DESKTOP_DRAWER.matches ? "Done" : `Show ${count} ${count === 1 ? "sleeper" : "sleepers"} →`;
+  elements.drawerShowButton.textContent = count ? label : "No matches · Reset filters";
   elements.drawerShowButton.classList.toggle("is-empty", !count);
 }
 
@@ -2265,7 +2274,7 @@ function readUrlFilters() {
   const artist = slugify(params.get("artist"));
   if (artist && getArtistName(artist)) filters.artist = artist;
   const maxPrice = params.get("maxPrice");
-  if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
+  if (PRICE_OPTIONS.some((option) => option.value === maxPrice) || LEGACY_PRICE_VALUES.includes(maxPrice)) filters.maxPrice = maxPrice;
   const sort = params.get("sort");
   if (SORT_OPTIONS.some((option) => option.value === sort)) filters.sort = sort;
   // The header's Wishlist link opens ?wishlist=1; any value (or none, ?wishlist) counts.
