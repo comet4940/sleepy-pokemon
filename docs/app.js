@@ -742,6 +742,22 @@ function render() {
   renderCards();
 }
 
+// An active quick chip (a mood or "under $5") moves to the front of the row, next to the other active filters, so it's
+// in view on phones too; turned off, it goes back to its usual place. Focus stays on a chip that moved.
+function orderQuickChips() {
+  const anchor = document.querySelector("#activeAdvancedFilters");
+  if (!anchor) return;
+  if (!state.quickChipOrder) state.quickChipOrder = [elements.priceChip, ...elements.moodChips].filter(Boolean);
+  const chips = state.quickChipOrder;
+  const ordered = [...chips.filter((chip) => chip.classList.contains("is-active")), ...chips.filter((chip) => !chip.classList.contains("is-active"))];
+  let current = anchor.nextElementSibling;
+  if (ordered.every((chip) => { const same = chip === current; current = current?.nextElementSibling; return same; })) return;
+  const focused = document.activeElement;
+  anchor.after(...ordered);
+  if (chips.includes(focused)) focused.focus({ preventScroll: true });
+  elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
+}
+
 function renderFilters() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
@@ -751,6 +767,7 @@ function renderFilters() {
     chip.classList.toggle("is-active", isActive);
     chip.setAttribute("aria-pressed", String(isActive));
   });
+  orderQuickChips();
   // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
   const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
