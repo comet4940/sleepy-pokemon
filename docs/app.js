@@ -140,6 +140,9 @@ function cacheElements() {
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.sortIndicator = document.querySelector("#sortIndicator");
+  elements.sortIndicatorLabel = document.querySelector("#sortIndicatorLabel");
+  elements.drawerSortSection = document.querySelector("#drawerSortSection");
   elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
   elements.priceChip = document.querySelector(".mood-chip[data-max-price]");
@@ -265,6 +268,11 @@ function bindEvents() {
   bind(elements.suggestionDoneButton, "click", closeSuggestionDialog);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  // "Sorted: …" in the results line opens the drawer at its Sort section (filters_opened, sort_indicator).
+  bind(elements.sortIndicator, "click", () => {
+    openFiltersDialog({ source: "sort_indicator" });
+    elements.drawerSortSection?.scrollIntoView({ block: "start" });
+  });
   bind(elements.filtersDialog, "close", () => {
     elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
     if (state.modalFilterChanges === 0) {
@@ -421,7 +429,7 @@ function bind(element, eventName, handler) {
   element.addEventListener(eventName, handler);
 }
 
-function openFiltersDialog() {
+function openFiltersDialog({ source } = {}) {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
   state.drawerHistoryPushed = false;
@@ -430,7 +438,7 @@ function openFiltersDialog() {
   // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
   renderFilters();
   elements.filtersDialog.showModal();
-  trackEvent("filters_opened", { active_filter_count: countActiveFilters() });
+  trackEvent("filters_opened", { active_filter_count: countActiveFilters(), ...(source ? { interaction_source: source } : {}) });
   elements.filterDrawerTitle?.focus();
 }
 
@@ -746,6 +754,8 @@ function renderFilters() {
   // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
   const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
+  // The order isn't a filter (nothing to remove), but it should still be visible: "Sorted: Recently added ▾".
+  if (elements.sortIndicatorLabel) elements.sortIndicatorLabel.textContent = SORT_OPTIONS.find((option) => option.value === state.filters.sort)?.label || "Shuffle";
   ["mood", "rarity", "set", "language", "maxPrice", "sort"].forEach(renderDrawerOptions);
   renderDrawerShowButton();
 }

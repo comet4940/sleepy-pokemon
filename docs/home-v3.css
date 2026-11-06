@@ -99,8 +99,13 @@ a { color: inherit; }
 .collection-results-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0 18px; padding-top: 12px; border-top: 1px solid var(--hairline); }
 .collection-summary { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .collection-summary .clear-filters-link { flex: none; }
+/* "Sorted: …": shows the current order and opens the drawer at Sort. Quiet text, not a pink chip: a sort isn't removable. */
+.sort-indicator { flex: none; min-height: 44px; padding: 0 4px; border: 0; background: transparent; color: var(--muted-cream); font: inherit; font-size: .82rem; white-space: nowrap; cursor: pointer; }
+.sort-indicator strong { color: var(--cream); font-weight: 600; }
+.sort-indicator:hover strong, .sort-indicator:focus-visible strong { text-decoration: underline; text-underline-offset: 4px; }
+.collection-page-main .sort-indicator[hidden] { display: none !important; }
 .collection-results-bar .collection-meta { min-width: 0; overflow: hidden; color: var(--muted-cream); font-size: .95rem; text-overflow: ellipsis; white-space: nowrap; }
-@media (max-width: 760px) { .collection-results-bar .collection-meta { font-size: .84rem; } .collection-meta-names { display: none; } .collection-page-main #downloadChecklistButton { padding: 0 14px; } }
+@media (max-width: 760px) { .collection-summary { flex-wrap: wrap; column-gap: 8px; row-gap: 0; } .sort-indicator { flex-basis: 100%; min-height: 32px; text-align: left; } .collection-summary .clear-filters-link { min-height: 32px; } .collection-results-bar .collection-meta { font-size: .84rem; } .collection-meta-names { display: none; } .collection-page-main #downloadChecklistButton { padding: 0 14px; } }
 .collection-page-main #downloadChecklistButton::before { content: "↓"; content: "↓" / ""; margin-right: 6px; }
 .collection-search-row { display: grid; grid-template-columns: minmax(190px, .42fr) minmax(320px, 1fr); align-items: end; gap: 34px; }
 .collection-control-copy h2 { margin: 0; color: var(--cream); font-family: var(--display); font-size: 1.45rem; font-weight: 500; }
