@@ -30,7 +30,6 @@ const SORT_OPTIONS = [
   { value: "added", label: "Recently added" },
   { value: "price-low", label: "Price: low to high" },
   { value: "price-high", label: "Price: high to low" },
-  { value: "set", label: "Set A–Z" },
   { value: "pokemon", label: "Pokémon A–Z" },
 ];
 const CARD_RENDER_BATCH_SIZE = 24;
@@ -1337,9 +1336,6 @@ function compareCards(a, b) {
   }
   if (state.filters.sort === "pokemon") {
     return a.pokemon.localeCompare(b.pokemon) || a.name.localeCompare(b.name);
-  }
-  if (state.filters.sort === "set") {
-    return a.setName.localeCompare(b.setName) || compareDates(a.setReleaseDate, b.setReleaseDate);
   }
   if (state.filters.sort === "newest") {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
