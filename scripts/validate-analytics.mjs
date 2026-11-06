@@ -883,6 +883,10 @@ function loadApp(appSource, bodyDataset = {}) {
 // #154: a header search on the collection says how many filters it turned off, and a Reset with nothing on
 // sends no filters_cleared.
 function checkFilterClearTracking(appSource) {
+  // Show all, the empty state, No matches and Did you mean keep the sort (#278); only the drawer's Reset clears it.
+  for (const source of ["collection_clear_all", "collection_empty_state", "filter_drawer_no_matches", "did_you_mean"]) {
+    if (!new RegExp(`clearFilters\\("${source}",[^)]*keepSort: true`).test(appSource)) errors.push(`docs/app.js: clearFilters("${source}") should keep the sort (keepSort: true)`);
+  }
   const fail = (message) => errors.push(`docs/app.js (#154): ${message}`);
   try {
     const app = loadApp(appSource);
@@ -911,6 +915,13 @@ function checkFilterClearTracking(appSource) {
     app.run(`state.filters.mood = "belly-up"; clearFilters("collection_clear_all")`);
     const real = events.filter((event) => event.name === "filters_cleared").at(-1);
     if (clears() !== afterReset + 1 || real?.params.active_filter_count !== 1) fail(`clearing one filter should send filters_cleared with active_filter_count: 1, got ${JSON.stringify(real?.params)}`);
+    // The sort isn't a filter: Show all and the other clears keep it; only the drawer's Reset goes back to the default.
+    for (const [source, opts] of [["collection_clear_all", "{ keepSort: true }"], ["collection_empty_state", "{ keepSort: true }"]]) {
+      app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("${source}", ${opts})`);
+      if (app.run("state.filters.sort") !== "added" || app.run("state.filters.mood") !== "all") fail(`${source} should clear the filters but keep the sort`);
+    }
+    app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
+    if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
   } catch (error) {
     fail(`threw ${error.message}`);
   }

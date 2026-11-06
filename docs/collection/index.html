@@ -37,7 +37,7 @@
     </script>
     <script defer src="../analytics.js?v=5" data-page-type="collection"></script>
     <link rel="stylesheet" href="../styles.css?v=10" />
-    <link rel="stylesheet" href="../home-v3.css?v=36" />
+    <link rel="stylesheet" href="../home-v3.css?v=38" />
     <link rel="stylesheet" href="../card-detail-v3.css?v=19" />
     <link rel="stylesheet" href="../filter-drawer.css?v=1" />
     <link rel="stylesheet" href="../site-chrome.css?v=6" />
@@ -115,6 +115,7 @@
             <div class="collection-summary">
               <span class="collection-meta" id="collectionMeta">263 cards · zero alarm clocks</span>
               <button class="clear-filters-link" id="clearFiltersLink" type="button" hidden>Show all</button>
+              <button class="sort-indicator" id="sortIndicator" type="button" aria-haspopup="dialog">Sorted: <strong id="sortIndicatorLabel">Shuffle</strong> <span aria-hidden="true">▾</span></button>
             </div>
             <span class="sr-only" id="resultCount" aria-live="polite" aria-atomic="true">0 cards</span>
             <button class="button subtle" id="downloadChecklistButton" data-short-label="Checklist" type="button" disabled>Download checklist</button>
@@ -452,17 +453,17 @@
             <input class="drawer-set-search" id="drawerSetSearch" type="search" placeholder="Find a set" aria-label="Find a set" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
             <div class="drawer-options drawer-sets" data-filter-options="set"></div>
           </section>
-          <section class="drawer-section" aria-labelledby="drawerLanguageTitle">
-            <h3 id="drawerLanguageTitle">Language</h3>
-            <div class="drawer-options" data-filter-options="language"></div>
-          </section>
           <section class="drawer-section" aria-labelledby="drawerPriceTitle">
             <h3 id="drawerPriceTitle">Price</h3>
             <div class="drawer-options" data-filter-options="maxPrice"></div>
           </section>
-          <section class="drawer-section" aria-labelledby="drawerSortTitle">
+          <section class="drawer-section" id="drawerSortSection" aria-labelledby="drawerSortTitle">
             <h3 id="drawerSortTitle">Sort</h3>
             <div class="drawer-options" data-filter-options="sort"></div>
+          </section>
+          <section class="drawer-section" aria-labelledby="drawerLanguageTitle">
+            <h3 id="drawerLanguageTitle">Language</h3>
+            <div class="drawer-options" data-filter-options="language"></div>
           </section>
         </div>
         <div class="drawer-foot">
@@ -504,6 +505,6 @@
 
     <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
     <script src="../prices.js?v=2"></script>
-    <script src="../app.js?v=80"></script>
+    <script src="../app.js?v=84"></script>
   </body>
 </html>

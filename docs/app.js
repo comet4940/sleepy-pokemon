@@ -1,31 +1,35 @@
 const DEFAULT_LANGUAGE = "English";
 const PUBLIC_DEFAULT_SORT = "random";
 // Rarity filter buckets: each card keeps its exact rarity, the drawer groups related ones.
+// In order of use (#153, Oct 22 – Nov 4): the drawer lists them this way, most-picked first.
 const RARITY_GROUPS = [
-  { id: "common", label: "Common", rarities: ["Common"] },
-  { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
-  { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
   { id: "illustration-rare", label: "Illustration Rare", rarities: ["Illustration Rare", "Special Illustration Rare", "Art Rare"] },
   { id: "ultra-secret", label: "Ultra & Secret", rarities: ["Ultra Rare", "Rare Ultra", "Secret Rare", "Rare Rainbow", "Triple Rare", "Rare Holo VMAX", "Pikachu Rare"] },
-  { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
   { id: "promo", label: "Promo", rarities: ["Promo"] },
+  { id: "trainer-gallery", label: "Trainer Gallery", rarities: ["Trainer Gallery Rare Holo"] },
+  { id: "rare-holo", label: "Rare & Holo", rarities: ["Rare", "Rare Holo"] },
+  { id: "common", label: "Common", rarities: ["Common"] },
+  { id: "uncommon", label: "Uncommon", rarities: ["Uncommon"] },
 ];
 // Old ?rarity= values that are now part of a group, so links shared before the change still work.
 const RARITY_ALIASES = { "rare-ultra": "ultra-secret" };
+// Under $5 is by far the most used; $50 was picked once in two weeks (#153), so the drawer stops offering it.
 const PRICE_OPTIONS = [
   { value: "5", label: "Under $5" },
   { value: "10", label: "Under $10" },
   { value: "25", label: "Under $25" },
-  { value: "50", label: "Under $50" },
 ];
+// Price values the drawer no longer offers but shared ?maxPrice= links may still carry.
+const LEGACY_PRICE_VALUES = ["50"];
 // Long option lists start short on phones and desktop alike; "Show all" expands them.
 const DRAWER_PREVIEW_LIMITS = { mood: 8, set: 12 };
 const SORT_OPTIONS = [
   { value: "random", label: "Shuffle" },
   { value: "newest", label: "Newest sets" },
+  // When each card joined the collection (createdAt), newest first: the homepage's "Freshly tucked in", in full.
+  { value: "added", label: "Recently added" },
   { value: "price-low", label: "Price: low to high" },
   { value: "price-high", label: "Price: high to low" },
-  { value: "set", label: "Set A–Z" },
   { value: "pokemon", label: "Pokémon A–Z" },
 ];
 const CARD_RENDER_BATCH_SIZE = 24;
@@ -136,6 +140,9 @@ function cacheElements() {
   elements.searchSuggestionLink = document.querySelector("#searchSuggestionLink");
   elements.suggestionLinks = [...document.querySelectorAll("[data-suggestion-source]")];
   elements.openFiltersButton = document.querySelector("#openFiltersButton");
+  elements.sortIndicator = document.querySelector("#sortIndicator");
+  elements.sortIndicatorLabel = document.querySelector("#sortIndicatorLabel");
+  elements.drawerSortSection = document.querySelector("#drawerSortSection");
   elements.moodChipsTrack = document.querySelector("#moodChips");
   elements.moodChips = [...document.querySelectorAll(".mood-chip[data-mood]")];
   elements.priceChip = document.querySelector(".mood-chip[data-max-price]");
@@ -217,14 +224,14 @@ function bindEvents() {
   bind(elements.closeFiltersButton, "click", () => closeFiltersDialog("close_button"));
   bind(elements.drawerShowButton, "click", () => {
     if (getFilteredCards().length) closeFiltersDialog("show_results");
-    else clearFilters("filter_drawer_no_matches");
+    else clearFilters("filter_drawer_no_matches", { keepSort: true });
   });
   bind(elements.filtersDialog, "click", (event) => {
     if (event.target === elements.filtersDialog) closeFiltersDialog("backdrop");
   });
 
   bind(elements.clearFiltersButton, "click", () => clearFilters("filter_drawer_reset"));
-  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all"));
+  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all", { keepSort: true }));
   bind(elements.headerSearchInput, "input", handleHeaderSearchClear);
   bind(elements.headerSearchInput, "search", handleHeaderSearchClear);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
@@ -261,6 +268,11 @@ function bindEvents() {
   bind(elements.suggestionDoneButton, "click", closeSuggestionDialog);
   bind(elements.downloadChecklistButton, "click", downloadChecklist);
   bind(elements.openFiltersButton, "click", openFiltersDialog);
+  // "Sorted: …" in the results line opens the drawer at its Sort section (filters_opened, sort_indicator).
+  bind(elements.sortIndicator, "click", () => {
+    openFiltersDialog({ source: "sort_indicator" });
+    elements.drawerSortSection?.scrollIntoView({ block: "start" });
+  });
   bind(elements.filtersDialog, "close", () => {
     elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
     if (state.modalFilterChanges === 0) {
@@ -280,7 +292,7 @@ function bindEvents() {
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
-  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch }));
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch, keepSort: true }));
   bind(elements.emptyState, "click", handleEmptyStateClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
@@ -417,7 +429,7 @@ function bind(element, eventName, handler) {
   element.addEventListener(eventName, handler);
 }
 
-function openFiltersDialog() {
+function openFiltersDialog({ source } = {}) {
   if (!elements.filtersDialog) return;
   state.modalFilterChanges = 0;
   state.drawerHistoryPushed = false;
@@ -426,7 +438,7 @@ function openFiltersDialog() {
   // Chips, search and active-filter pills change filters while the drawer is closed, so redraw it from current state.
   renderFilters();
   elements.filtersDialog.showModal();
-  trackEvent("filters_opened", { active_filter_count: countActiveFilters() });
+  trackEvent("filters_opened", { active_filter_count: countActiveFilters(), ...(source ? { interaction_source: source } : {}) });
   elements.filterDrawerTitle?.focus();
 }
 
@@ -730,6 +742,22 @@ function render() {
   renderCards();
 }
 
+// An active quick chip (a mood or "under $5") moves to the front of the row, next to the other active filters, so it's
+// in view on phones too; turned off, it goes back to its usual place. Focus stays on a chip that moved.
+function orderQuickChips() {
+  const anchor = document.querySelector("#activeAdvancedFilters");
+  if (!anchor) return;
+  if (!state.quickChipOrder) state.quickChipOrder = [elements.priceChip, ...elements.moodChips].filter(Boolean);
+  const chips = state.quickChipOrder;
+  const ordered = [...chips.filter((chip) => chip.classList.contains("is-active")), ...chips.filter((chip) => !chip.classList.contains("is-active"))];
+  let current = anchor.nextElementSibling;
+  if (ordered.every((chip) => { const same = chip === current; current = current?.nextElementSibling; return same; })) return;
+  const focused = document.activeElement;
+  anchor.after(...ordered);
+  if (chips.includes(focused)) focused.focus({ preventScroll: true });
+  elements.moodChipsTrack?.scrollTo({ left: 0, behavior: "smooth" });
+}
+
 function renderFilters() {
   if (elements.searchFilter) elements.searchFilter.value = state.filters.search;
   if (elements.headerSearchInput) elements.headerSearchInput.value = state.filters.search;
@@ -739,9 +767,12 @@ function renderFilters() {
     chip.classList.toggle("is-active", isActive);
     chip.setAttribute("aria-pressed", String(isActive));
   });
+  orderQuickChips();
   // Counts every filter the drawer can set, moods included (the chip row's moods are drawer filters too).
   const drawerFilterCount = ["mood", "set", "rarity", "language"].filter((key) => state.filters[key] !== "all").length + (state.filters.maxPrice ? 1 : 0);
   if (elements.openFiltersButton) elements.openFiltersButton.textContent = drawerFilterCount ? `All filters · ${drawerFilterCount}` : "All filters";
+  // The order isn't a filter (nothing to remove), but it should still be visible: "Sorted: Recently added ▾".
+  if (elements.sortIndicatorLabel) elements.sortIndicatorLabel.textContent = SORT_OPTIONS.find((option) => option.value === state.filters.sort)?.label || "Shuffle";
   ["mood", "rarity", "set", "language", "maxPrice", "sort"].forEach(renderDrawerOptions);
   renderDrawerShowButton();
 }
@@ -821,10 +852,16 @@ function getRarityGroup(rarity) {
     || { id: slugify(rarity || "unknown"), label: rarity || "Unknown", rarities: [rarity] };
 }
 
+// Matches filter-drawer.css, where the drawer becomes a side panel.
+const DESKTOP_DRAWER = window.matchMedia?.("(min-width: 801px)") ?? { matches: false, addEventListener() {} };
+DESKTOP_DRAWER.addEventListener?.("change", () => renderDrawerShowButton());
+
 function renderDrawerShowButton() {
   if (!elements.drawerShowButton) return;
   const count = getFilteredCards().length;
-  elements.drawerShowButton.textContent = count ? `Show ${count} ${count === 1 ? "sleeper" : "sleepers"} →` : "No matches · Reset filters";
+  // Desktop shows the drawer as a side panel and filters apply as they're picked, so the button just closes it (#232).
+  const label = DESKTOP_DRAWER.matches ? "Done" : `Show ${count} ${count === 1 ? "sleeper" : "sleepers"} →`;
+  elements.drawerShowButton.textContent = count ? label : "No matches · Reset filters";
   elements.drawerShowButton.classList.toggle("is-empty", !count);
 }
 
@@ -1327,11 +1364,12 @@ function compareCards(a, b) {
   if (state.filters.sort === "pokemon") {
     return a.pokemon.localeCompare(b.pokemon) || a.name.localeCompare(b.name);
   }
-  if (state.filters.sort === "set") {
-    return a.setName.localeCompare(b.setName) || compareDates(a.setReleaseDate, b.setReleaseDate);
-  }
   if (state.filters.sort === "newest") {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
+  }
+  if (state.filters.sort === "added") {
+    // Same order as the homepage's "Freshly added" (getRecentlyAddedCards), before it spreads out repeat Pokémon.
+    return compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b));
   }
   return a.pokemon.localeCompare(b.pokemon) || a.setName.localeCompare(b.setName);
 }
@@ -1785,7 +1823,7 @@ function handleEmptyStateClick(event) {
   state.filters.search = query;
   if ("clearsFilters" in link.dataset) {
     // The suggestion only has cards outside the current filters: drop them, keep the corrected search.
-    clearFilters("did_you_mean", { keepSearch: true });
+    clearFilters("did_you_mean", { keepSearch: true, keepSort: true });
   } else {
     state.showAllCards = true;
     if (elements.searchFilter) elements.searchFilter.value = query;
@@ -2265,7 +2303,7 @@ function readUrlFilters() {
   const artist = slugify(params.get("artist"));
   if (artist && getArtistName(artist)) filters.artist = artist;
   const maxPrice = params.get("maxPrice");
-  if (PRICE_OPTIONS.some((option) => option.value === maxPrice)) filters.maxPrice = maxPrice;
+  if (PRICE_OPTIONS.some((option) => option.value === maxPrice) || LEGACY_PRICE_VALUES.includes(maxPrice)) filters.maxPrice = maxPrice;
   const sort = params.get("sort");
   if (SORT_OPTIONS.some((option) => option.value === sort)) filters.sort = sort;
   // The header's Wishlist link opens ?wishlist=1; any value (or none, ?wishlist) counts.
@@ -2450,7 +2488,11 @@ function escapeCsvCell(value) {
 
 // keepSearch: clear only the filters, keeping the search (the empty state's "Clear filters", when the filters
 // are what left nothing to show).
-function clearFilters(interactionSource, { keepSearch = false } = {}) {
+// The drawer's Reset clears everything, its Sort section included. Everything else that clears filters (Show all, the
+// empty state's Clear filters, the drawer's No matches · Reset filters, Did you mean) keeps the sort: it isn't a filter,
+// and the results line still shows it ("Sorted: …").
+function clearFilters(interactionSource, { keepSearch = false, keepSort = false } = {}) {
+  const sort = keepSort ? state.filters.sort : PUBLIC_DEFAULT_SORT;
   const search = keepSearch ? state.filters.search : "";
   const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0);
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
@@ -2464,7 +2506,7 @@ function clearFilters(interactionSource, { keepSearch = false } = {}) {
     language: "all",
     artist: "all",
     maxPrice: "",
-    sort: PUBLIC_DEFAULT_SORT,
+    sort,
     wishlist: false,
   };
   state.showAllCards = Boolean(search);
