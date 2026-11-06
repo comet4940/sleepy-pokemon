@@ -1,6 +1,31 @@
 {
   "cards": [
     {
+      "apiId": "zsv10pt5-36",
+      "tcgdexId": "",
+      "name": "Musharna",
+      "pokemon": "Musharna",
+      "setName": "Black Bolt",
+      "setSeries": "Scarlet & Violet",
+      "setId": "zsv10pt5",
+      "number": "036/086",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Eri Kamei",
+      "imageSmall": "https://images.pokemontcg.io/zsv10pt5/36.png",
+      "imageLarge": "https://images.pokemontcg.io/zsv10pt5/36_hires.png",
+      "setReleaseDate": "2025/07/18",
+      "whyItBelongs": "The full-art Musharna from Black Bolt gets the spotlight, but this one has the same contented dreamer for a fraction of the price: eyes shut, drifting across a starry night sky under a crescent moon, its dream mist trailing behind it like a scarf.",
+      "createdAt": "2026-11-06T16:29:28.000Z",
+      "updatedAt": "2026-11-06T16:29:28.000Z",
+      "slug": "musharna-black-bolt-036-086",
+      "moods": [
+        "Dream Sequence",
+        "Moonlit Naps"
+      ],
+      "searchKeywords": []
+    },
+    {
       "apiId": "sv3-13",
       "tcgdexId": "",
       "name": "Rowlet",
@@ -4535,9 +4560,9 @@
       "imageSmall": "https://images.pokemontcg.io/zsv10pt5/117.png",
       "imageLarge": "https://images.pokemontcg.io/zsv10pt5/117_hires.png",
       "setReleaseDate": "2025/07/18",
-      "whyItBelongs": "Cozy nap emitting dream mist. Mizue paints the quintessential dream Pokémon wrapped in pastel smoke against a starry backdrop.",
+      "whyItBelongs": "Fireflies drift through a glowing green forest while Musharna floats past, eyes shut, curled into a sleepy ball beneath loops of pink dream mist. Mizue turns the quintessential dream Pokémon into the quiet centre of a whole luminous world.",
       "createdAt": "2026-05-05T00:47:17.816Z",
-      "updatedAt": "2026-10-15T15:37:44.929Z",
+      "updatedAt": "2026-11-06T16:29:28.000Z",
       "slug": "musharna-black-bolt-117-86",
       "moods": [
         "Dream Sequence"
