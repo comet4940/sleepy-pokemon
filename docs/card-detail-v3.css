@@ -751,6 +751,11 @@ html:has(.card-detail-dialog[open]) {
   margin-top: clamp(28px, 5vw, 48px);
 }
 
+/* Four 220px cards and their gaps: the heading and its link line up with the cards below. */
+.related-row {
+  max-width: calc(4 * 220px + 3 * 14px);
+}
+
 .related-row-head {
   display: flex;
   flex-wrap: wrap;
@@ -779,7 +784,7 @@ html:has(.card-detail-dialog[open]) {
 
 .related-cards {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 220px));
   gap: 14px;
   margin: 0;
   padding: 0;
@@ -827,7 +832,7 @@ html:has(.card-detail-dialog[open]) {
 
 @media (max-width: 900px) {
   .related-cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

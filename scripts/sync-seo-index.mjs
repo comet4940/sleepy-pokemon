@@ -37,8 +37,9 @@ const { cards: cardsWithSlugs } = await loadCardData();
 const guideDefinitions = await loadGuideDefs();
 const guideMemberships = buildGuideMemberships(guideDefinitions);
 const setHubByName = new Map(getSetHubs(cardsWithSlugs, await loadSetDefs()).map((hub) => [hub.name, hub]));
-// Card page related rows (#249, renderRelatedCards): up to this many cards per row.
-const RELATED_LIMIT = 6;
+// Card page related rows (#249, renderRelatedCards): up to this many other cards per row. Four plus the card you're
+// on makes five, the size at which a set gets its own page, so every set with a page shows the same row.
+const RELATED_LIMIT = 4;
 // Pokémon with a guide of their own: their row links to it instead of a collection search.
 const POKEMON_GUIDES = { Snorlax: "sleepy-snorlax-cards", Pikachu: "sleepiest-pikachu-cards" };
 const cardsByPokemon = groupBy(cardsWithSlugs, (card) => card.pokemon);
@@ -323,7 +324,7 @@ function renderRelatedCards(card) {
     const hub = setHubByName.get(card.setName);
     const shownSet = sameSet.slice(0, RELATED_LIMIT);
     const more = hub
-      ? `<a class="related-more" href="../../sets/${escapeAttribute(hub.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="set_page">All ${hub.cards.length} from ${escapeHtml(hub.name)} <span aria-hidden="true">→</span></a>`
+      ? `<a class="related-more" href="../../sets/${escapeAttribute(hub.slug)}/" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="set_page">See all cards from ${escapeHtml(hub.name)} <span aria-hidden="true">→</span></a>`
       : sameSet.length > RELATED_LIMIT
         ? `<a class="related-more" href="../../collection/?set=${escapeAttribute(slugify(card.setName))}" data-analytics-event="navigation_clicked" data-analytics-source="card_page_related" data-analytics-destination="collection">See them all <span aria-hidden="true">→</span></a>`
         : "";
