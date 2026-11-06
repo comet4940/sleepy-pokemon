@@ -224,14 +224,14 @@ function bindEvents() {
   bind(elements.closeFiltersButton, "click", () => closeFiltersDialog("close_button"));
   bind(elements.drawerShowButton, "click", () => {
     if (getFilteredCards().length) closeFiltersDialog("show_results");
-    else clearFilters("filter_drawer_no_matches");
+    else clearFilters("filter_drawer_no_matches", { keepSort: true });
   });
   bind(elements.filtersDialog, "click", (event) => {
     if (event.target === elements.filtersDialog) closeFiltersDialog("backdrop");
   });
 
   bind(elements.clearFiltersButton, "click", () => clearFilters("filter_drawer_reset"));
-  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all"));
+  bind(elements.clearFiltersLink, "click", () => clearFilters("collection_clear_all", { keepSort: true }));
   bind(elements.headerSearchInput, "input", handleHeaderSearchClear);
   bind(elements.headerSearchInput, "search", handleHeaderSearchClear);
   bind(elements.headerSearchForm, "submit", handleHeaderSearchSubmit);
@@ -292,7 +292,7 @@ function bindEvents() {
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
-  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch }));
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch, keepSort: true }));
   bind(elements.emptyState, "click", handleEmptyStateClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
@@ -1823,7 +1823,7 @@ function handleEmptyStateClick(event) {
   state.filters.search = query;
   if ("clearsFilters" in link.dataset) {
     // The suggestion only has cards outside the current filters: drop them, keep the corrected search.
-    clearFilters("did_you_mean", { keepSearch: true });
+    clearFilters("did_you_mean", { keepSearch: true, keepSort: true });
   } else {
     state.showAllCards = true;
     if (elements.searchFilter) elements.searchFilter.value = query;
@@ -2488,7 +2488,11 @@ function escapeCsvCell(value) {
 
 // keepSearch: clear only the filters, keeping the search (the empty state's "Clear filters", when the filters
 // are what left nothing to show).
-function clearFilters(interactionSource, { keepSearch = false } = {}) {
+// The drawer's Reset clears everything, its Sort section included. Everything else that clears filters (Show all, the
+// empty state's Clear filters, the drawer's No matches · Reset filters, Did you mean) keeps the sort: it isn't a filter,
+// and the results line still shows it ("Sorted: …").
+function clearFilters(interactionSource, { keepSearch = false, keepSort = false } = {}) {
+  const sort = keepSort ? state.filters.sort : PUBLIC_DEFAULT_SORT;
   const search = keepSearch ? state.filters.search : "";
   const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0);
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
@@ -2502,7 +2506,7 @@ function clearFilters(interactionSource, { keepSearch = false } = {}) {
     language: "all",
     artist: "all",
     maxPrice: "",
-    sort: PUBLIC_DEFAULT_SORT,
+    sort,
     wishlist: false,
   };
   state.showAllCards = Boolean(search);
