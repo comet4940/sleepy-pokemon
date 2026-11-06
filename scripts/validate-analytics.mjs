@@ -385,6 +385,15 @@ async function checkSetIntros() {
   for (const name of Object.keys(setDefs.intros || {})) {
     if (!setNames.has(name)) errors.push(`docs/sets.json: intro for "${name}" matches no set in ${CARDS_PATH}`);
   }
+  // "heroes" picks a set page's three hero cards by card-page slug; each must be a card in that set.
+  for (const [name, slugs] of Object.entries(setDefs.heroes || {})) {
+    if (!setNames.has(name)) errors.push(`docs/sets.json: heroes for "${name}" match no set in ${CARDS_PATH}`);
+    if (!Array.isArray(slugs) || slugs.length !== 3) errors.push(`docs/sets.json: heroes for "${name}" must list exactly 3 card slugs`);
+    for (const slug of slugs || []) {
+      const card = cardBySlug.get(slug);
+      if (!card || card.setName !== name) errors.push(`docs/sets.json: hero "${slug}" for "${name}" isn't a card in that set`);
+    }
+  }
 }
 
 // DATA-MODEL.md is the source of truth for card fields: a card may only use documented fields,

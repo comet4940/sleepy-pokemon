@@ -1,6 +1,10 @@
 {
   "minCards": 5,
+  "heroes": {
+    "Obsidian Flames": ["poppy-obsidian-flames-227-197", "lechonk-obsidian-flames-209-197", "houndour-obsidian-flames-204-197"]
+  },
   "intros": {
+    "Obsidian Flames": "Obsidian Flames is all fire and Tera types, but five Pokémon slept right through it: Poppy curled up against her Copperajah, Lechonk out cold next to its empty food bowl, one Houndour snoozing under an umbrella while its pack raids an apple stash, a dozing Smoliv, and a Rowlet caught mid-yawn.",
     "151": "The original 151, all asleep again: Snorlax dozing against a tree in the shade, Abra, Gloom and Seel taking it easy, and Bulbasaur in the set's Illustration Rare.",
     "ME: 30th Celebration": "The newest set in the stack is already the biggest nap party: a crocheted Pikachu, a Pikachu flopped on a tropical beach, Meowth dripping off apartment railings, and a berry-stuffed Snorlax. Nine sleepers for one very sleepy anniversary.",
     "Unbroken Bonds": "Sun & Moon at its napping best: Snorlax wearing a Torchic hat under the trees, Gloom drooling on the garden path, and Meowth tucked into bed for Caturday.",

@@ -3,6 +3,31 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "sv3-13",
+      "tcgdexId": "",
+      "name": "Rowlet",
+      "pokemon": "Rowlet",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "13/197",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Tomokazu Komiya",
+      "imageSmall": "https://images.pokemontcg.io/sv3/13.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/13_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "notes": "Suggested by the curator (Nov 2026) as sleep-adjacent: a big yawn and stretch rather than a nap (rule 3). Details checked against pokemontcg.io (sv3-13) and the card image.",
+      "createdAt": "2026-11-06T06:19:36.000Z",
+      "updatedAt": "2026-11-06T06:19:36.000Z",
+      "moods": [],
+      "searchKeywords": [],
+      "whyItBelongs": "Not asleep yet, but it’s close: eyes squeezed shut, beak wide open in a huge yawn, one wing stretched over its head. Its own card says Rowlet likes to nap in its Trainer’s bag, so this one is probably heading there next.",
+      "tcgplayerProductId": 509692,
+      "tcgplayerGroupId": 23228,
+      "priceType": "Normal"
+    },
+    {
       "apiId": "xy2-80",
       "tcgdexId": "",
       "name": "Snorlax",
@@ -2688,10 +2713,9 @@
       "setReleaseDate": "2023/08/11",
       "notes": "Houndour from Obsidian Flames 204/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by KYUPIYAMA, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-06T21:02:31.983Z",
-      "updatedAt": "2026-10-16T15:21:39.197Z",
+      "updatedAt": "2026-11-06T07:15:36.000Z",
       "moods": [
-        "Group Naps",
-        "Face-Plant",
+        "Nap Watch",
         "Town Naps"
       ],
       "searchKeywords": [
@@ -2699,7 +2723,7 @@
         "dog",
         "puppy"
       ],
-      "whyItBelongs": "Group nap in a city alleyway. A pack of tough dark-type pups collapsed into a warm, tangled cuddle puddle on the pavement.",
+      "whyItBelongs": "Houndour hunt in packs, and this pack has found a stash of apples. All but one: tucked under an open umbrella in the corner, a Houndour has curled up on a cloth and fallen asleep, chin on its paws, while the others carry off the loot.",
       "tcgplayerProductId": 509951,
       "tcgplayerGroupId": 23228
     },
@@ -3249,12 +3273,12 @@
       "setReleaseDate": "2023/08/11",
       "notes": "Smoliv from Obsidian Flames 19/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As a common card, it is useful for collectors who want the sleepy theme to feel complete beyond only the expensive hits. The card is illustrated by Masako Tomii, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. Its low market price makes it one of the easiest sleepy Pokemon cards to add to a binder without stretching a collection budget. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T21:26:23.937Z",
-      "updatedAt": "2026-10-19T17:27:46.750Z",
+      "updatedAt": "2026-11-06T07:15:36.000Z",
       "moods": [
         "Flower Beds"
       ],
       "searchKeywords": [],
-      "whyItBelongs": "Cozy nap under olive leaves. A perpetually anxious little olive looking unusually at peace while nodding off in the shade.",
+      "whyItBelongs": "Smoliv can squirt bitter oil at anything that bothers it. Nobody is bothering it today: it’s dozing in a meadow of daisies and orange blooms, eyes shut and mouth in a sleepy little squiggle.",
       "tcgplayerProductId": 509754,
       "tcgplayerGroupId": 23228
     },
@@ -4691,15 +4715,14 @@
       "setReleaseDate": "2023/08/11",
       "notes": "Lechonk from Obsidian Flames 209/197 is included in this guide as a sleepy Pokemon card for collectors building a calm, cozy, or nap-themed binder. As an Illustration Rare, it has the kind of full-art presence that works especially well as a visual anchor in a themed binder layout. The card is illustrated by Narumi Sato, which is useful context for collectors who like arranging pages by artist as well as by Pokemon. It sits in a comfortable mid-budget range, making it a nice upgrade from bulk cards without feeling like a major chase. It fits especially well in a modern Scarlet & Violet-era binder page built around soft, restful, or cozy card art.",
       "createdAt": "2026-05-05T00:52:54.368Z",
-      "updatedAt": "2026-10-15T15:37:40.615Z",
+      "updatedAt": "2026-11-06T07:15:36.000Z",
       "moods": [
-        "Food Coma",
-        "Belly Up"
+        "Food Coma"
       ],
       "searchKeywords": [
         "full art"
       ],
-      "whyItBelongs": "Food coma on the sunlit kitchen tile. Narumi Sato paints the little gourmet pig fast asleep next to its food bowl after sniffing out and devouring every treat in the house.",
+      "whyItBelongs": "Berries dangling from above, a basket of fruit on the shelf, an empty bowl on the floor: Lechonk got to every snack it could reach. Now it’s flopped over on its side in a patch of sunlight, all four legs sticking out, eyes shut, done for the day.",
       "tcgplayerProductId": 509957,
       "tcgplayerGroupId": 23228
     },
