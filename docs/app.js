@@ -1341,7 +1341,8 @@ function compareCards(a, b) {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
   }
   if (state.filters.sort === "added") {
-    return compareDates(b.createdAt, a.createdAt) || a.name.localeCompare(b.name);
+    // Same order as the homepage's "Freshly added" (getRecentlyAddedCards), before it spreads out repeat Pokémon.
+    return compareDates(b.createdAt, a.createdAt) || getCardIdentity(a).localeCompare(getCardIdentity(b));
   }
   return a.pokemon.localeCompare(b.pokemon) || a.setName.localeCompare(b.setName);
 }
