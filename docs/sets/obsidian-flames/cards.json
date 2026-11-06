@@ -1,0 +1,134 @@
+{
+  "cards": [
+    {
+      "apiId": "sv3-13",
+      "tcgdexId": "",
+      "name": "Rowlet",
+      "pokemon": "Rowlet",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "13/197",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Tomokazu Komiya",
+      "imageSmall": "https://images.pokemontcg.io/sv3/13.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/13_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Not asleep yet, but it’s close: eyes squeezed shut, beak wide open in a huge yawn, one wing stretched over its head. Its own card says Rowlet likes to nap in its Trainer’s bag, so this one is probably heading there next.",
+      "createdAt": "2026-11-06T06:19:36.000Z",
+      "updatedAt": "2026-11-06T06:19:36.000Z",
+      "slug": "rowlet-obsidian-flames-13-197",
+      "moods": [],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv3-19",
+      "tcgdexId": "",
+      "name": "Smoliv",
+      "pokemon": "Smoliv",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "19/197",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Masako Tomii",
+      "imageSmall": "https://images.pokemontcg.io/sv3/19.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/19_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Cozy nap under olive leaves. A perpetually anxious little olive looking unusually at peace while nodding off in the shade.",
+      "createdAt": "2026-05-05T21:26:23.937Z",
+      "updatedAt": "2026-10-19T17:27:46.750Z",
+      "slug": "smoliv-obsidian-flames-19-197",
+      "moods": [
+        "Flower Beds"
+      ],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv3-204",
+      "tcgdexId": "",
+      "name": "Houndour",
+      "pokemon": "Houndour",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "204/197",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "KYUPIYAMA",
+      "imageSmall": "https://images.pokemontcg.io/sv3/204.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/204_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Group nap in a city alleyway. A pack of tough dark-type pups collapsed into a warm, tangled cuddle puddle on the pavement.",
+      "createdAt": "2026-05-06T21:02:31.983Z",
+      "updatedAt": "2026-10-16T15:21:39.197Z",
+      "slug": "houndour-obsidian-flames-204-197",
+      "moods": [
+        "Group Naps",
+        "Face-Plant",
+        "Town Naps"
+      ],
+      "searchKeywords": [
+        "full art",
+        "dog",
+        "puppy"
+      ]
+    },
+    {
+      "apiId": "sv3-209",
+      "tcgdexId": "",
+      "name": "Lechonk",
+      "pokemon": "Lechonk",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "209/197",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Narumi Sato",
+      "imageSmall": "https://images.pokemontcg.io/sv3/209.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/209_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Food coma on the sunlit kitchen tile. Narumi Sato paints the little gourmet pig fast asleep next to its food bowl after sniffing out and devouring every treat in the house.",
+      "createdAt": "2026-05-05T00:52:54.368Z",
+      "updatedAt": "2026-10-15T15:37:40.615Z",
+      "slug": "lechonk-obsidian-flames-209-197",
+      "moods": [
+        "Food Coma",
+        "Belly Up"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv3-227",
+      "tcgdexId": "",
+      "name": "Poppy",
+      "pokemon": "Poppy",
+      "setName": "Obsidian Flames",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv3",
+      "number": "227/197",
+      "rarity": "Special Illustration Rare",
+      "language": "English",
+      "artist": "Ryota Murayama",
+      "imageSmall": "https://images.pokemontcg.io/sv3/227.png",
+      "imageLarge": "https://images.pokemontcg.io/sv3/227_hires.png",
+      "setReleaseDate": "2023/08/11",
+      "whyItBelongs": "Completely tuckered out, Poppy has fallen fast asleep against her enormous Copperajah, using the Steel-type giant like the world’s coziest living pillow. Her tiny curled-up pose against Copperajah’s massive frame makes the size contrast ridiculously sweet — one of Paldea’s smallest Elite Four members tucked safely into a very big nap spot.",
+      "createdAt": "2026-05-05T01:02:45.008Z",
+      "updatedAt": "2026-10-17T14:11:28.821Z",
+      "slug": "poppy-obsidian-flames-227-197",
+      "moods": [
+        "Sleepy Trainers",
+        "Pokémon Pillow"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    }
+  ]
+}
