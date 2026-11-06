@@ -42,6 +42,12 @@ export function getSetHubs(cards, setDefs) {
         cards: [...setCards].sort((a, b) => String(a.number).localeCompare(String(b.number), "en", { numeric: true })),
       };
     })
+    .map((hub) => {
+      // The three cards in the hero fan and the sets list: docs/sets.json "heroes" picks them (centre card first),
+      // otherwise the first three by card number.
+      const picked = (setDefs.heroes?.[hub.name] || []).map((slug) => hub.cards.find((card) => card.slug === slug)).filter(Boolean);
+      return { ...hub, heroCards: picked.length ? picked : hub.cards.slice(0, 3) };
+    })
     .sort((a, b) => b.releaseDate.localeCompare(a.releaseDate) || a.name.localeCompare(b.name));
 }
 
@@ -109,7 +115,7 @@ function renderSetDirectoryItem(hub, index) {
   const link = navigationAttributes("sets_index", "set_page");
   return `          <article class="guide-directory-item">
             <a class="guide-directory-art" href="${escapeAttribute(hub.slug)}/" aria-label="See the sleepy cards in ${escapeAttribute(hub.name)}" ${link}>
-${hub.cards.slice(0, 3).map((card, cardIndex) => {
+${hub.heroCards.map((card, cardIndex) => {
   const image = card.imageSmall || card.imageLarge;
   return image ? `              <img src="${escapeAttribute(image)}" alt="" loading="${index === 0 && cardIndex === 0 ? "eager" : "lazy"}" />` : "";
 }).join("\n")}
@@ -178,7 +184,7 @@ ${renderHead({
             ${hub.intro ? `<p>${escapeHtml(hub.intro)}</p>` : ""}
           </div>
           <div class="guide-hero-stack" aria-hidden="true">
-${hub.cards.slice(0, 3).map((card, index) => {
+${hub.heroCards.map((card, index) => {
   const previewImage = card.imageSmall || card.imageLarge;
   return previewImage ? `            <img src="${escapeAttribute(previewImage)}" alt="" class="guide-stack-card guide-stack-card-${index + 1}" />` : "";
 }).join("\n")}

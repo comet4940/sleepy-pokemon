@@ -34,7 +34,7 @@ Unlike automated scrapers or speculative financial trackers, this project is bui
   - **Featured sleeper**: the homepage's featured card changes every Sunday night from the curator's batches in `docs/featured.json` (see DATA-MODEL.md); clicking it opens the card.
   - **Artist links**: the artist's name on a card page or in the lightbox opens the collection filtered to every sleepy card by that artist (`/collection/?artist=sui`), with an *Art by …* chip to clear it.
 - **Themed Collector Guides**: Editorial lists highlighting standout cards, cameos, and curated sub-themes (e.g. *Best Sleepy Pokemon Cards*, *The Sleepiest of Pikachus*, *Sleepy Cat Pokemon Cards*).
-- **Set Pages**: `/sets/<set>/` for every set with 5 or more sleepy cards (built automatically as sets reach the threshold), each with a curator intro and the cards with the first sentence of their notes. `/sets/` lists them all, and card pages and the lightbox link to a card's set page. The threshold and intros live in [`docs/sets.json`](docs/sets.json).
+- **Set Pages**: `/sets/<set>/` for every set with 5 or more sleepy cards (built automatically as sets reach the threshold), each with a curator intro and the cards with the first sentence of their notes. `/sets/` lists them all, and card pages and the lightbox link to a card's set page. The threshold and intros live in [`docs/sets.json`](docs/sets.json), and so do the optional `heroes`: the three cards shown in a set page's hero fan and the sets list, by card-page slug, center card first (otherwise the first three by card number).
 - **Standalone Card Detail Pages**: Over 150 crawlable, standalone pages (`/cards/<slug>/`) with high-resolution imagery, release information, current market prices, and JSON-LD structured data for search engines.
 - **Community Suggestions**: Integrated submission modal allowing visitors to suggest unlisted sleepy cards to the review queue.
 - **Responsive & Accessible**: Optimized for mobile Safari (iOS WebKit) and Chrome Mobile (Android Blink), with full orientation-change resilience and WCAG-compliant touch targets (≥ 44×44px).
@@ -72,7 +72,7 @@ sleepy-pokemon/
 │   ├── prices.js                # Fills prices into pages from prices.json
 │   ├── binder.js                # My Binder storage (cards a visitor has or wants, this browser only; #119)
 │   ├── guides.json              # Guide definitions & card slug references
-│   ├── sets.json                # Set page threshold (minCards) & curator intros by set name
+│   ├── sets.json                # Set page threshold (minCards), curator intros & optional hero cards by set name
 │   └── sitemap.xml              # Search engine sitemap
 ├── data/
 │   ├── cards.json               # Canonical card data (all fields incl. notes); not published
