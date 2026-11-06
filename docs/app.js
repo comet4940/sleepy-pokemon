@@ -26,6 +26,8 @@ const DRAWER_PREVIEW_LIMITS = { mood: 8, set: 12 };
 const SORT_OPTIONS = [
   { value: "random", label: "Shuffle" },
   { value: "newest", label: "Newest sets" },
+  // When each card joined the collection (createdAt), newest first: the homepage's "Freshly tucked in", in full.
+  { value: "added", label: "Recently added" },
   { value: "price-low", label: "Price: low to high" },
   { value: "price-high", label: "Price: high to low" },
   { value: "set", label: "Set A–Z" },
@@ -1341,6 +1343,9 @@ function compareCards(a, b) {
   }
   if (state.filters.sort === "newest") {
     return compareDates(b.setReleaseDate, a.setReleaseDate);
+  }
+  if (state.filters.sort === "added") {
+    return compareDates(b.createdAt, a.createdAt) || a.name.localeCompare(b.name);
   }
   return a.pokemon.localeCompare(b.pokemon) || a.setName.localeCompare(b.setName);
 }
