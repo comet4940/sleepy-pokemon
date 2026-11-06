@@ -18,7 +18,7 @@ export const CARD_SLUGS_PATH = "data/card-slugs.json";
 export const ASSET_VERSIONS = {
   "styles.css": 10,
   "site-chrome.css": 6,
-  "home-v3.css": 37,
+  "home-v3.css": 38,
   "filter-drawer.css": 1,
   "card-detail-v3.css": 19,
   "guides.css": 5,
