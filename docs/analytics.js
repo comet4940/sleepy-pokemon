@@ -41,6 +41,9 @@ const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
   window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments); };
   window.gtag("js", new Date());
   window.gtag("config", SLEEPY_ANALYTICS_ID, {
+    // The collection's title names the live card count for Google ("All 263 Sleeping Pokemon Cards: …"). GA4 would
+    // file every count as a new page title, so it gets the title without the number. Other pages are unchanged.
+    page_title: document.title.replace(/^All \d+ /, "All "),
     page_type: pageContext.pageType || "unknown",
     card_name: pageContext.cardName || undefined,
     card_pokemon: pageContext.cardPokemon || undefined,

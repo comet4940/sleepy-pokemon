@@ -23,7 +23,7 @@ export const ASSET_VERSIONS = {
   "card-detail-v3.css": 19,
   "guides.css": 5,
   "about.css": 6,
-  "analytics.js": 5,
+  "analytics.js": 6,
   "prices.js": 2,
   "app.js": 84,
   "binder.js": 1,

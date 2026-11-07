@@ -158,6 +158,8 @@ Common parameters:
 
 ## GA4 Setup
 
+**Page titles:** the collection's `<title>` includes the live card count ("All 263 Sleeping Pokemon Cards: Full List with Pictures") for search. From 2026-11-07, GA4 receives it without the number ("All Sleeping Pokemon Cards: Full List with Pictures", `page_title` in `analytics.js`), so it stays one row in *Page title and screen name*. Before that date it's split across "All 261…", "All 262…" and so on: for reports spanning that date, use *Page path* (`/collection/`) instead.
+
 Register these event-scoped custom dimensions when reusable GA4 reporting is needed:
 
 - `analytics_version`
