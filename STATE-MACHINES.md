@@ -319,17 +319,17 @@ All of these were reproduced in Chromium (Playwright) against the site served lo
 
 | ID | Severity | What breaks | Reproduction and observed result | Issue |
 |----|----------|-------------|----------------------------------|-------|
-| SM-1 | High | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. | — |
-| SM-2 | High | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. | — |
-| SM-3 | Medium | V2: a drawer visit loses its history step, so Back leaves the collection | From `/` go to `/collection/`, open All filters, tap Reset (nothing on), pick a mood, Show. `history.length` stays 3; Back goes to `/`, not the unfiltered collection. | — |
-| SM-6 | Medium | P1: the lightbox says "No current market price" for a priced card | Hold `prices.json`, open a card on a guide page, release: the row still reads "No current market price" while `card.price.market` is 478.56. | — |
-| SM-7 | Medium | T1: the wishlist Undo disappears with the lightbox | Remove a wish in the lightbox ("Removed from your wishlist · Undo"), then close the lightbox: the toast is still "shown" but inside the closed dialog, so it's invisible and can't be tapped. | — |
-| SM-8 | Medium | E1: the wishlist view's empty state differs by path, and its button does the wrong thing | `?wishlist=1&mood=X` with one matching wish: un-wish it. Shows "No cards match" and "Show all sleepers" (which leaves the wishlist view). A reload shows "No cards match these filters." and "Clear filters". | — |
-| SM-4 | Low | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. | — |
-| SM-5 | Low | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). | — |
-| SM-9 | Low | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". | — |
-| SM-10 | Low | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. | — |
-| SM-11 | Low | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. | #263 |
+| SM-1 | High | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. | #281 |
+| SM-2 | High | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. | #281 |
+| SM-3 | Medium | V2: a drawer visit loses its history step, so Back leaves the collection | From `/` go to `/collection/`, open All filters, tap Reset (nothing on), pick a mood, Show. `history.length` stays 3; Back goes to `/`, not the unfiltered collection. | #282 |
+| SM-6 | Medium | P1: the lightbox says "No current market price" for a priced card | Hold `prices.json`, open a card on a guide page, release: the row still reads "No current market price" while `card.price.market` is 478.56. | #283 |
+| SM-7 | Medium | T1: the wishlist Undo disappears with the lightbox | Remove a wish in the lightbox ("Removed from your wishlist · Undo"), then close the lightbox: the toast is still "shown" but inside the closed dialog, so it's invisible and can't be tapped. | #284 |
+| SM-8 | Medium | E1: the wishlist view's empty state differs by path, and its button does the wrong thing | `?wishlist=1&mood=X` with one matching wish: un-wish it. Shows "No cards match" and "Show all sleepers" (which leaves the wishlist view). A reload shows "No cards match these filters." and "Clear filters". | #284 |
+| SM-4 | Low | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. | #282 |
+| SM-5 | Low | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). | #282 |
+| SM-9 | Low | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". | #284 |
+| SM-10 | Low | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. | #285 |
+| SM-11 | Low | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. | #263 (with #285) |
 
 ## Checked and fine
 
