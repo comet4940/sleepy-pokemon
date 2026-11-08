@@ -1,6 +1,31 @@
 {
   "cards": [
     {
+      "apiId": "bw5-91",
+      "tcgdexId": "",
+      "name": "Cheren",
+      "pokemon": "Tepig",
+      "setName": "Dark Explorers",
+      "setSeries": "Black & White",
+      "setId": "bw5",
+      "number": "91/108",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Kanako Eo",
+      "imageSmall": "https://images.pokemontcg.io/bw5/91.png",
+      "imageLarge": "https://images.pokemontcg.io/bw5/91_hires.png",
+      "setReleaseDate": "2012/05/09",
+      "whyItBelongs": "Cheren is leaning back against a tree, gazing off into the forest like he has a lot on his mind, but he isn’t going anywhere: Tepig has fallen fast asleep across his lap, eyes shut and snout tipped up to the sky. Daisies at the roots and a bridge in the distance make it one of the coziest Supporter cards around, and one of the cheapest sleepers in the stack.",
+      "createdAt": "2026-11-08T17:48:59.000Z",
+      "updatedAt": "2026-11-08T17:48:59.000Z",
+      "slug": "cheren-dark-explorers-91-108",
+      "moods": [
+        "Cameo Sleepers",
+        "Nap Watch"
+      ],
+      "searchKeywords": []
+    },
+    {
       "apiId": "zsv10pt5-36",
       "tcgdexId": "",
       "name": "Musharna",
