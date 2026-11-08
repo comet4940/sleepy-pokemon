@@ -105,7 +105,9 @@ A card's sitemap date comes from its own `createdAt`/`updatedAt`, so a change th
 
 **Mix up the shape.** One pattern repeated across the catalog makes every note read the same. Avoid these in particular:
 - the same opening words: over a hundred older notes start with "Cozy nap" or "Out cold";
-- the default formula "[Pokémon] has [settled/flopped/stretched out] on [place], eyes shut… [Artist]'s [style] makes/turns…".
+- the default formula "[Pokémon] has [settled/flopped/stretched out] on [place], eyes shut… [Artist]'s [style] makes/turns…";
+- a closing tagline that ranks the card or justifies its place: "one of the coziest Supporter cards around", "one of the cheapest sleepers in the stack", "earns it a spot in the stack". End on something in the art instead, or just stop;
+- guessing at thoughts or feelings the art doesn't show ("like he has a lot on his mind"). Describe the expression ("a very serious face"), not what's behind it.
 
 Rotate between these six patterns, and mix within a note when it helps:
 
