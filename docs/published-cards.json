@@ -1,6 +1,31 @@
 {
   "cards": [
     {
+      "apiId": "bw5-91",
+      "tcgdexId": "",
+      "name": "Cheren",
+      "pokemon": "Tepig",
+      "setName": "Dark Explorers",
+      "setSeries": "Black & White",
+      "setId": "bw5",
+      "number": "91/108",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "Kanako Eo",
+      "imageSmall": "https://images.scrydex.com/pokemon/bw5-91/small",
+      "imageLarge": "https://images.scrydex.com/pokemon/bw5-91/large",
+      "setReleaseDate": "2012/05/09",
+      "whyItBelongs": "What do you do when Tepig falls asleep on you? If you’re Cheren, you stay put. He leans back against a tree at the edge of a pine forest while Tepig dozes across his lap, eyes shut, snout tipped up, daisies growing at the roots beside them.",
+      "createdAt": "2026-11-08T17:48:59.000Z",
+      "updatedAt": "2026-11-08T17:48:59.000Z",
+      "slug": "cheren-dark-explorers-91-108",
+      "moods": [
+        "Cameo Sleepers",
+        "Nap Watch"
+      ],
+      "searchKeywords": []
+    },
+    {
       "apiId": "zsv10pt5-36",
       "tcgdexId": "",
       "name": "Musharna",
