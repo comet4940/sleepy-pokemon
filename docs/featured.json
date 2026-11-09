@@ -1,5 +1,5 @@
 {
-  "showing": "mew-crown-zenith-galarian-gallery-gg10-gg70",
+  "showing": "munna-black-bolt-116-086",
   "current": {
     "startsOn": "2026-10-25",
     "cards": [
@@ -26,6 +26,10 @@
     {
       "week": "2026-11-01",
       "card": "mew-crown-zenith-galarian-gallery-gg10-gg70"
+    },
+    {
+      "week": "2026-11-08",
+      "card": "munna-black-bolt-116-086"
     }
   ]
 }
