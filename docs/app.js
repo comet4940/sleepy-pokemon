@@ -293,7 +293,10 @@ function bindEvents() {
   });
   bind(elements.surpriseButton, "click", showRandomSleeper);
   bindWishlist();
-  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch, keepSort: true }));
+  bind(elements.clearCollectionButton, "click", () => clearFilters("collection_empty_state", { keepSearch: state.emptyStateKeepsSearch, keepWishlist: state.emptyStateKeepsWishlist, keepSort: true }));
+  // A toast shown inside a dialog (the page behind is inert) would vanish with it, Undo included: when the dialog
+  // closes, the toast goes back to the page for the rest of its time (SM-7).
+  [elements.cardDetailDialog, elements.suggestionDialog, elements.filtersDialog].forEach((dialog) => bind(dialog, "close", () => returnToastToPage(dialog)));
   bind(elements.emptyState, "click", handleEmptyStateClick);
   bind(elements.cardGrid, "click", handleCardGridClick);
   bind(elements.latestGrid, "click", handleCardGridClick);
@@ -336,6 +339,12 @@ function handleCardDetailHistoryNavigation() {
   }
   if (elements.filtersDialog?.open) closeFiltersDialog("browser_forward");
   openCardDetail(card, "browser_forward", { fromHistory: true, deck: window.history.state.cardDeck });
+}
+
+// A closing dialog takes a toast shown inside it along, so the toast goes back to the page (SM-7). It keeps its timer
+// and its action (Undo), which are on the element.
+function returnToastToPage(dialog) {
+  if (elements.toast && elements.toast.parentElement === dialog) document.body.append(elements.toast);
 }
 
 function trackSuggestionOpened(interactionSource, params = {}) {
@@ -978,13 +987,7 @@ function renderCards() {
     elements.cardGrid.innerHTML = "";
     return;
   }
-  elements.emptyState.classList.toggle("hidden", cards.length > 0);
-  describeEmptyState();
-  renderEmptySearchState(cards.length);
-  if (elements.searchSuggestionPrompt) {
-    // With nothing to show, the empty state offers the suggestion itself (renderEmptySearchState).
-    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim() || cards.length === 0;
-  }
+  renderEmptyState(cards.length);
   elements.cardGrid.innerHTML = "";
 
   if (!cards.length) return;
@@ -1000,6 +1003,18 @@ function renderCards() {
   };
 
   renderBatch(0);
+}
+
+// The empty state and the "Not seeing your snoozer?" prompt, for this many results. Every way the grid can end up
+// empty draws it here, so the same filters always show the same empty state (SM-8).
+function renderEmptyState(resultCount) {
+  elements.emptyState.classList.toggle("hidden", resultCount > 0);
+  describeEmptyState();
+  renderEmptySearchState(resultCount);
+  if (elements.searchSuggestionPrompt) {
+    // With nothing to show, the empty state offers the suggestion itself (renderEmptySearchState).
+    elements.searchSuggestionPrompt.hidden = !state.filters.search.trim() || resultCount === 0;
+  }
 }
 
 // Everything about the collection's results except the grid itself: the count line, heading, download button and
@@ -1051,8 +1066,7 @@ function removeWishlistTile(slug) {
       });
     }
     const remaining = getFilteredCards().length;
-    elements.emptyState.classList.toggle("hidden", remaining > 0);
-    describeEmptyState();
+    renderEmptyState(remaining);
     if (hadFocus && !remaining) elements.emptyState?.querySelector("button, a")?.focus({ preventScroll: true });
   };
   if (reduceMotion || typeof tile.animate !== "function") return finish();
@@ -1192,6 +1206,11 @@ function filterCards(filters) {
       if (filters.wishlist && !isWished(card.slug)) return false;
       return true;
     });
+}
+
+// Filters other than the search and the wishlist view: the ones the drawer, chips and artist links set.
+function hasDrawerFilters() {
+  return ["mood", "set", "rarity", "language", "artist"].some((key) => state.filters[key] !== "all") || Boolean(state.filters.maxPrice);
 }
 
 function hasActiveFilters() {
@@ -1623,10 +1642,14 @@ function toggleWish(button) {
   } else {
     burstWish(button);
     dismissWishlistHint("first_wish", button);
-    // The browser won't let the site save (private modes, full or blocked storage): binder.js keeps the wishlist
-    // for this visit only, so never say it's saved (review on #200).
-    if (!store.isPersistent()) {
+    // The browser won't let the site save (private modes, full or blocked storage), so never say it's saved (review
+    // on #200). binder.js keeps the wishlist for this visit (this tab's pages), or, if even that is refused, until
+    // the page is left; then the toast has no wishlist link, since the next page couldn't show it (SM-9).
+    const savedFor = store.savedFor?.() || (store.isPersistent() ? "device" : "visit");
+    if (savedFor === "visit") {
       showToast("Added to your wishlist for this visit only. Your browser isn't letting this site save it.", { duration: 6500, link });
+    } else if (savedFor === "page") {
+      showToast("Added to your wishlist until you leave this page. Your browser isn't letting this site save it.", { duration: 6500 });
     } else if (!store.hintSeen(WISHLIST_HINTS.firstWish)) {
       store.markHintSeen(WISHLIST_HINTS.firstWish);
       showToast("Added to your wishlist ★ It's saved on this device.", { duration: 6500, link });
@@ -1772,6 +1795,7 @@ function renderEmptySearchState(resultCount) {
   primary.hidden = true;
   secondary.hidden = true;
   state.emptyStateKeepsSearch = false;
+  state.emptyStateKeepsWishlist = false;
   const text = emptyState.querySelector("p");
   text.hidden = false;
   text.classList?.remove("empty-state-did-you-mean");
@@ -1820,6 +1844,9 @@ function renderEmptySearchState(resultCount) {
   title.textContent = "No cards match these filters.";
   text.hidden = true;
   state.emptyStateKeepsSearch = Boolean(query);
+  // In the wishlist view, "Clear filters" clears the other filters and stays on the wishlist, as long as there are
+  // other filters to clear. When only the search or the wishlist itself leaves nothing, it shows all cards.
+  state.emptyStateKeepsWishlist = state.filters.wishlist && hasDrawerFilters();
   if (elements.clearCollectionButton) {
     elements.clearCollectionButton.textContent = "Clear filters";
     elements.clearCollectionButton.hidden = false;
@@ -2532,10 +2559,11 @@ function escapeCsvCell(value) {
 // The drawer's Reset clears everything, its Sort section included. Everything else that clears filters (Show all, the
 // empty state's Clear filters, the drawer's No matches · Reset filters, Did you mean) keeps the sort: it isn't a filter,
 // and the results line still shows it ("Sorted: …").
-function clearFilters(interactionSource, { keepSearch = false, keepSort = false } = {}) {
+function clearFilters(interactionSource, { keepSearch = false, keepSort = false, keepWishlist = false } = {}) {
   const sort = keepSort ? state.filters.sort : PUBLIC_DEFAULT_SORT;
   const search = keepSearch ? state.filters.search : "";
-  const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0);
+  const wishlist = keepWishlist && state.filters.wishlist;
+  const activeFilterCount = countActiveFilters() - (keepSearch && search ? 1 : 0) - (wishlist ? 1 : 0);
   if (elements.filtersDialog?.open && activeFilterCount > 0) {
     state.modalFilterChanges += 1;
   }
@@ -2548,7 +2576,7 @@ function clearFilters(interactionSource, { keepSearch = false, keepSort = false 
     artist: "all",
     maxPrice: "",
     sort,
-    wishlist: false,
+    wishlist,
   };
   state.showAllCards = Boolean(search);
   if (elements.drawerSetSearch) elements.drawerSetSearch.value = "";

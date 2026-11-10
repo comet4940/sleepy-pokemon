@@ -67,7 +67,7 @@ Code references name the function in `docs/` rather than a line number, since li
 | Late | settled | OnTime | `applyPrices`, then `render()`: grid, counts and price filters |
 
 **Invariants**
-- **P1.** Once prices are known, every price shown matches `card.price`, including the price row in an open lightbox. **Broken: SM-6.**
+- **P1.** Once prices are known, every price shown matches `card.price`, including the price row in an open lightbox. Not always (SM-6, won't fix): a card opened on a guide or set page before `prices.json` arrives shows "No current market price" until it's reopened or stepped away from. It's rare (about 7 KB compressed; none of 21 guide and set card opens Oct 31 to Nov 10 came within 3 s of the page loading) and never shows a wrong number.
 - **P2.** A card with no price never reads as $0. Sorting puts it last, and price filters exclude it.
 - **P3.** A late redraw does not move the visitor's scroll position. Checked: it holds (6 s delay, scrolled to 6000 px, same first visible card).
 
@@ -173,7 +173,7 @@ Opening the lightbox pushes a history entry `{cardDetail, cardDeck}` whose URL i
 | `Details` | The card page's details (cached per URL), with the price row filled from `card.price`. |
 | `LoadError` | The placeholder plus "Couldn't load this card's details" and a link. The failed fetch leaves the cache, so the next open retries. |
 
-The transitions are guarded by `cardDetailToken`: only the latest `showCardDetail` may write. Checked: stepping quickly never shows an older card's details. The price row is written once, when the details land, and is never refreshed (see SM-6).
+The transitions are guarded by `cardDetailToken`: only the latest `showCardDetail` may write. Checked: stepping quickly never shows an older card's details. The price row is written once, when the details land, and is never refreshed (SM-6, won't fix: see P1).
 
 ## 7. Swipe gesture
 
@@ -239,7 +239,8 @@ Checked: this form has an in-flight guard and doesn't show a stale thank-you aft
 | State | Meaning |
 |-------|---------|
 | `Persistent` | Every read is fresh from `localStorage`, so another tab's save is never overwritten. |
-| `MemoryOnly` | The first failed write sets `persistent = false`. The binder lives in `memoryCopy` for the rest of the page's life, and `unavailable` is announced. |
+| `VisitOnly` | The first failed write sets `persistent = false`, announces `unavailable` and saves the binder to the tab's `sessionStorage` (`sleepy_binder_v1_visit`), starting from what was saved before. Later pages in the tab find that copy and start here. `savedFor()` is `"visit"`. |
+| `PageOnly` | `sessionStorage` is refused too: the binder lives in `memoryCopy` until the page is left. `savedFor()` is `"page"`. |
 
 Each card slug is in exactly one of: `none`, `wished` or `owned`.
 
@@ -254,7 +255,7 @@ Each card slug is in exactly one of: `none`, `wished` or `owned`.
 **Invariants**
 - **W1.** A card is never both owned and wished, enforced by `add` and by `cleanBinder` on every read.
 - **W2.** Malformed or unknown entries are kept, never dropped. Unreadable JSON is set aside once.
-- **W3.** What the UI promises about saving matches what happens. In `MemoryOnly` the UI says "for this visit only", but `memoryCopy` is lost on the next page load: the very next page, including the toast's own "wishlist" link, shows an empty wishlist. **Broken: SM-9.**
+- **W3.** What the UI promises about saving matches what happens: "saved on this device" in `Persistent`, "for this visit only" (with a link to the wishlist) in `VisitOnly`, "until you leave this page" (no link) in `PageOnly`. Holds since SM-9 was fixed; `checkBinder` and `checkWishlistUnsaved` test it.
 - Not a reachable bug: two tabs writing in the same millisecond could lose one update (read-modify-write without a lock). A person can't do this.
 
 ## 11. Wishlist UI
@@ -269,7 +270,7 @@ The hint strip goes `Unseen → Shown → Dismissed` (Got it, or the first wish)
 | Fading | finished, no redraw meanwhile | Removed: tiles slide up, counts updated, empty state toggled |
 | Fading | a full render meanwhile (Undo, another tab) | Superseded (does nothing) |
 
-The empty state after a removal is set by `describeEmptyState` only, not by `renderEmptySearchState`. So it can differ from what a fresh render of the same filters shows. **SM-8.**
+When a removal empties the grid, the empty state is drawn by `renderEmptyState`, the same function `renderCards` uses, so it matches a fresh page (fixed SM-8).
 
 **The toast** is `Hidden` or `Shown(host, action?)`. `showToast` moves the toast into the open dialog, if any, because the page behind a modal is inert.
 
@@ -277,11 +278,11 @@ The empty state after a removal is set by `describeEmptyState` only, not by `ren
 |------|-------|----|
 | Hidden / Shown | `showToast` | Shown(host = open dialog, else body) |
 | Shown | timeout (3.2 s, or 6 s with an action) | Hidden |
-| Shown(host = lightbox) | the lightbox closes | **Shown, but inside a closed dialog: invisible, and Undo is unreachable** (**SM-7**) |
+| Shown(host = a dialog) | that dialog closes | Shown(host = body): `returnToastToPage` moves it back, keeping its timer and its Undo (fixed SM-7) |
 
 **Invariants**
-- **T1.** While a toast is shown, it is visible and its action can be tapped. **Broken: SM-7.**
-- **E1.** The same filters and catalog give the same empty state whichever path led there. **Broken: SM-8.**
+- **T1.** While a toast is shown, it is visible and its action can be tapped. Holds since SM-7 was fixed; `checkWishlistStates` tests it.
+- **E1.** The same filters and catalog give the same empty state whichever path led there. Holds since SM-8 was fixed; tested by `checkWishlistStates`.
 
 ## 12. Collection empty state
 
@@ -291,10 +292,10 @@ This is derived on each render, in this order:
 2. The wishlist view with no wishes: "No wishes yet" and "Browse all N sleepers".
 3. A search that matches nothing in the catalog, with a suggestion: "Did you mean X?" (marked "outside these filters" when the filters hide it).
 4. The same, with no suggestion: "No sleepy cards for "q" yet" and "Suggest a sleepy card".
-5. The filters left nothing: "No cards match these filters." and "Clear filters" (keeps the search).
+5. The filters left nothing: "No cards match these filters." and "Clear filters". It keeps the search, and in the wishlist view it keeps the wishlist too, when there are other filters (mood, set, rarity, language, artist, price) to clear. Otherwise it shows all cards, since keeping everything would change nothing.
 6. Results: hidden.
 
-`removeWishlistTile` skips steps 3 to 5 and shows the HTML default, "No cards match" with "Show all sleepers". That button clears the wishlist view too (SM-8).
+Every path draws this through `renderEmptyState` (`renderCards`, and `removeWishlistTile` when it empties the grid).
 
 ## 13. Phone header menu
 
@@ -322,14 +323,14 @@ All of these were reproduced in Chromium (Playwright) against the site served lo
 | ID | Severity | What breaks | Reproduction and observed result | Issue |
 |----|----------|-------------|----------------------------------|-------|
 | SM-3 | Medium (**fixed**) | V2: a drawer visit loses its history step, so Back leaves the collection | From `/` go to `/collection/`, open All filters, tap Reset (nothing on), pick a mood, Show. `history.length` stays 3; Back goes to `/`, not the unfiltered collection. Fixed: the drawer marks its entry only once one was really added. | #282 |
-| SM-6 | Medium | P1: the lightbox says "No current market price" for a priced card | Hold `prices.json`, open a card on a guide page, release: the row still reads "No current market price" while `card.price.market` is 478.56. | #283 |
-| SM-7 | Medium | T1: the wishlist Undo disappears with the lightbox | Remove a wish in the lightbox ("Removed from your wishlist · Undo"), then close the lightbox: the toast is still "shown" but inside the closed dialog, so it's invisible and can't be tapped. | #284 |
-| SM-8 | Medium | E1: the wishlist view's empty state differs by path, and its button does the wrong thing | `?wishlist=1&mood=X` with one matching wish: un-wish it. Shows "No cards match" and "Show all sleepers" (which leaves the wishlist view). A reload shows "No cards match these filters." and "Clear filters". | #284 |
+| SM-6 | Won't fix | P1: the lightbox says "No current market price" for a priced card | Hold `prices.json`, open a card on a guide page, release: the row still reads "No current market price" while `card.price.market` is 478.56. Rare and harmless: see P1. Closed as not planned. | #283 |
+| SM-7 | Medium (**fixed**) | T1: the wishlist Undo disappears with the lightbox | Remove a wish in the lightbox ("Removed from your wishlist · Undo"), then close the lightbox: the toast is still "shown" but inside the closed dialog, so it's invisible and can't be tapped. Fixed: a closing dialog returns its toast to the page. | #284 |
+| SM-8 | Medium (**fixed**) | E1: the wishlist view's empty state differs by path, and its button does the wrong thing | `?wishlist=1&mood=X` with one matching wish: un-wish it. Shows "No cards match" and "Show all sleepers" (which leaves the wishlist view). A reload shows "No cards match these filters." and "Clear filters". Its "Clear filters" also left the wishlist view on a fresh page (all 264 cards). Fixed: one empty-state path, and Clear filters stays on the wishlist when there are other filters to clear. | #284 |
 | SM-4 | Low (**fixed**) | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. The Suggest form stacked the same way. Fixed: Forward closes the drawer first; with the Suggest form open, Forward is undone. | #282 |
 | SM-5 | Won't fix | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). Reproduced only by a script (30 ms, then 70 ms): not reachable by a person, and impossible with reduced motion. | #282 |
 | SM-1 | Low (**fixed**) | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. Not seen in real data: 8 sends Oct 31 to Nov 10, none within 30 s of the same person's previous one. Fixed by the "Sending…" state. | #281 |
 | SM-2 | Low (**fixed**) | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. Needs a close within the second or so a send takes, now while the button says "Sending…". Fixed: the form is left alone and a toast says it was sent. | #281 |
-| SM-9 | Low | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". | #284 |
+| SM-9 | Low (**fixed**) | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". Fixed: the wishlist falls back to the tab's sessionStorage, so it lasts the visit; with that refused too, the copy says "until you leave this page", with no link. | #284 |
 | SM-10 | Low | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. | #285 |
 | SM-11 | Low | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. | #263 (with #285) |
 
