@@ -701,6 +701,12 @@ async function sendSuggestion() {
     return;
   }
   trackEvent("suggestion_submitted", submissionParams);
+  // Closed while it was sending: the form has already been reset for next time, so the thank-you mustn't appear in it
+  // (the next Suggest would open on it, SM-2). Say it was sent instead, since they never saw it go.
+  if (submissionSessionId !== suggestionFormSessionId) {
+    showToast("Thanks! Your suggestion was sent.");
+    return;
+  }
   showSuggestionSuccess();
 }
 

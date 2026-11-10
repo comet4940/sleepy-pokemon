@@ -199,7 +199,7 @@ The parts that run concurrently are guarded by counters: `suggestionLookupReques
 | `Results` / `NoResults` / `LookupError` | The lookup's outcome (on error, typed details are still sent). |
 | `Resolving` | A result was tapped and its details are loading (`suggestionSelectionPromise`). |
 | `Selected` | `#suggestionCard` is filled and the chip is shown. |
-| `Submitting` | `suggestionSending` (`handleSuggestionSubmit`): the button is disabled and reads "Sending…" from the click until the send ends, however it ends. The session still isn't checked after the POST (SM-2). |
+| `Submitting` | `suggestionSending` (`handleSuggestionSubmit`): the button is disabled and reads "Sending…" from the click until the send ends, however it ends. After the POST, a send whose form was closed in the meantime doesn't touch the form (fixed SM-2). |
 | `Success` | `is-success`: the fields are hidden and the thank-you is shown. |
 
 | From | Event | To | Effects |
@@ -213,11 +213,11 @@ The parts that run concurrently are guarded by counters: `suggestionLookupReques
 | Submitting | error | Editing | toast, `suggestion_submit_failed`, the button is back to "Send suggestion" |
 | Submitting | no card yet, or the dialog closed while waiting for a selection | Editing / Closed | nothing sent, the button is back |
 | any open | ×, backdrop, Escape, Done | Closed | form reset, all ids bumped |
-| Submitting | close, then the POST resolves | **Closed, with `is-success` set** | the next open shows the thank-you, not the form: **SM-2** |
+| Submitting | close, then the POST resolves | Closed | `suggestion_submitted`, and a toast "Thanks! Your suggestion was sent."; the form stays reset, so the next open starts at `Editing` (fixed SM-2) |
 
 **Invariants**
 - **S1.** A form session sends at most one POST. Holds since SM-1 was fixed; `checkSuggestionSending` in `scripts/validate-analytics.mjs` tests it.
-- **S2.** The thank-you shows only in the session that sent it. A newly opened form always starts at `Editing`. **Broken: SM-2.**
+- **S2.** The thank-you shows only in the session that sent it. A newly opened form always starts at `Editing`. Holds since SM-2 was fixed; also tested by `checkSuggestionSending`.
 - **S3.** A late lookup or selection never overwrites a newer one. Checked: it holds.
 
 ## 9. Contact Comet form
@@ -231,7 +231,7 @@ The parts that run concurrently are guarded by counters: `suggestionLookupReques
 | Sending | 2xx / error | Success / Error |
 | any | close | Closed; unsent text kept, a sent form reset |
 
-Checked: this form has the in-flight guard (the Suggest form now has the same, fixing SM-1) and the close-time reset that the Suggest form still lacks. It's the model for fixing SM-2.
+Checked: this form has an in-flight guard and doesn't show a stale thank-you after a close mid-send. The Suggest form now does both too (SM-1, SM-2).
 
 ## 10. Binder storage and card lists
 
@@ -327,7 +327,7 @@ All of these were reproduced in Chromium (Playwright) against the site served lo
 | SM-4 | Low | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. | #282 |
 | SM-5 | Low | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). | #282 |
 | SM-1 | Low (**fixed**) | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. Not seen in real data: 8 sends Oct 31 to Nov 10, none within 30 s of the same person's previous one. Fixed by the "Sending…" state. | #281 |
-| SM-2 | Low | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. Needs a close within the second or so a send takes, now while the button says "Sending…". | #281 |
+| SM-2 | Low (**fixed**) | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. Needs a close within the second or so a send takes, now while the button says "Sending…". Fixed: the form is left alone and a toast says it was sent. | #281 |
 | SM-9 | Low | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". | #284 |
 | SM-10 | Low | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. | #285 |
 | SM-11 | Low | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. | #263 (with #285) |

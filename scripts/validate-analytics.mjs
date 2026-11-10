@@ -929,7 +929,8 @@ function checkFilterClearTracking(appSource) {
 }
 
 // #281: while a suggestion is sending, its button says "Sending…" and is disabled, a second click or Enter sends
-// nothing more, and the button comes back however the send ends (sent, failed, or stopped before sending).
+// nothing more, and the button comes back however the send ends (sent, failed, or stopped before sending). Closing the
+// form while it sends never leaves the thank-you in it for next time (SM-2): a toast says it was sent instead.
 async function checkSuggestionSending(appSource) {
   const fail = (message) => errors.push(`docs/app.js (#281): ${message}`);
   const setup = (respond) => {
@@ -939,6 +940,7 @@ async function checkSuggestionSending(appSource) {
     const answers = [];
     app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
     app.context.FormData = class {};
+    app.context.window.clearTimeout = () => {};
     app.context.fetch = (url) => {
       posts.push(url);
       return new Promise((resolve, reject) => { answers.push(() => (respond === "ok" ? resolve({ ok: true }) : reject(new Error("offline")))); });
@@ -947,7 +949,8 @@ async function checkSuggestionSending(appSource) {
     const button = { disabled: false, querySelector: (selector) => (selector === ".suggestion-submit-label" ? label : null) };
     const classes = new Set();
     app.context.__fake = {
-      suggestionForm: { dataset: { emailEndpoint: "https://formspree.io/f/test1234" }, classList: { add: (name) => classes.add(name), remove: (name) => classes.delete(name) } },
+      suggestionForm: { dataset: { emailEndpoint: "https://formspree.io/f/test1234" }, classList: { add: (name) => classes.add(name), remove: (name) => classes.delete(name) }, reset() {} },
+      suggestionResults: { innerHTML: "" },
       suggestionCardSearch: { value: "Cheren Dark Explorers 91", focus() {} },
       suggestionCard: { value: "" },
       suggestionSelected: { hidden: true },
@@ -958,9 +961,11 @@ async function checkSuggestionSending(appSource) {
       suggestionDoneButton: { focus() {} },
       suggestionSubmitButton: button,
     };
-    app.run("Object.assign(elements, globalThis.__fake); showToast = () => {}");
+    const toasts = [];
+    app.context.__toasts = toasts;
+    app.run("Object.assign(elements, globalThis.__fake); showToast = (message) => globalThis.__toasts.push(message)");
     const submit = () => app.context.handleSuggestionSubmit({ preventDefault() {} });
-    return { app, events, posts, button, label, classes, submit, answer: () => answers.splice(0).forEach((reply) => reply()) };
+    return { app, events, posts, button, label, classes, toasts, submit, answer: () => answers.splice(0).forEach((reply) => reply()) };
   };
   const tick = () => new Promise((resolve) => setImmediate(resolve));
   try {
@@ -981,6 +986,17 @@ async function checkSuggestionSending(appSource) {
     failed.answer();
     await attempt;
     if (failed.button.disabled || failed.label.textContent !== "Send suggestion") fail("after a failed send, the button should be back to \"Send suggestion\" so it can be tried again");
+    // Closed (×, Escape, backdrop) while it sends, then Formspree answers.
+    const closed = setup("ok");
+    const closing = closed.submit();
+    await tick();
+    closed.app.context.resetSuggestionForm();
+    closed.answer();
+    await closing;
+    if (closed.classes.has("is-success")) fail("closing the form while it sends leaves the thank-you in it, so the next Suggest opens on it");
+    if (!closed.toasts.some((message) => /sent/i.test(message))) fail("a suggestion sent after its form was closed should say so in a toast");
+    if (closed.events.filter((event) => event.name === "suggestion_submitted").length !== 1) fail("a suggestion sent after its form was closed should still send suggestion_submitted once");
+    if (closed.button.disabled) fail("after a send that finished with the form closed, the button should be back for the next one");
     const empty = setup("ok");
     empty.app.context.__fake.suggestionCardSearch.value = "";
     await empty.submit();
