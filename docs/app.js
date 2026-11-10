@@ -315,18 +315,27 @@ function bindEvents() {
   bind(elements.cardDetailDialog, "close", () => {
     if (window.history.state?.cardDetail) window.history.back();
   });
-  // Back closes the lightbox; Forward onto its entry reopens the card it showed.
-  window.addEventListener("popstate", () => {
-    const cardId = window.history.state?.cardDetail;
-    if (elements.cardDetailDialog?.open && !cardId) elements.cardDetailDialog.close();
-    if (!elements.cardDetailDialog?.open && cardId) {
-      const card = findCardByIdentity(cardId);
-      if (card) openCardDetail(card, "browser_forward", { fromHistory: true, deck: window.history.state.cardDeck });
-    }
-  });
+  window.addEventListener("popstate", handleCardDetailHistoryNavigation);
   bind(elements.cardDetailDialog, "click", (event) => {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
+}
+
+// Back closes the lightbox; Forward onto its entry reopens the card it showed. Only one dialog is ever open (SM-4): an
+// open filter drawer closes first (filters apply as they're picked, so nothing is lost); an open Suggest form is kept,
+// with whatever was typed in it, and the Forward is undone instead.
+function handleCardDetailHistoryNavigation() {
+  const cardId = window.history.state?.cardDetail;
+  if (elements.cardDetailDialog?.open && !cardId) elements.cardDetailDialog.close();
+  if (elements.cardDetailDialog?.open || !cardId) return;
+  const card = findCardByIdentity(cardId);
+  if (!card) return;
+  if (elements.suggestionDialog?.open) {
+    window.history.back();
+    return;
+  }
+  if (elements.filtersDialog?.open) closeFiltersDialog("browser_forward");
+  openCardDetail(card, "browser_forward", { fromHistory: true, deck: window.history.state.cardDeck });
 }
 
 function trackSuggestionOpened(interactionSource, params = {}) {
@@ -2307,14 +2316,15 @@ function syncFilterUrl() {
   state.historyMode = "replace";
   if (url.href === window.location.href) return;
   window.history[push ? "pushState" : "replaceState"](null, "", url);
+  // A drawer visit's later changes replace this entry. Only once an entry was really added: a first change that left
+  // the URL as it was (Reset with nothing on) adds none, and the next one must still add one (SM-3).
+  if (push && elements.filtersDialog?.open) state.drawerHistoryPushed = true;
 }
 
 // User changes add one history entry; a whole drawer visit counts as one step, so Back returns to the view before it.
+// In the drawer, the first change that alters the URL adds the entry (syncFilterUrl marks it); later ones replace it.
 function markHistoryStep() {
-  if (elements.filtersDialog?.open) {
-    if (state.drawerHistoryPushed) return;
-    state.drawerHistoryPushed = true;
-  }
+  if (elements.filtersDialog?.open && state.drawerHistoryPushed) return;
   state.historyMode = "push";
 }
 

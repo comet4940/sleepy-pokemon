@@ -76,7 +76,7 @@ Filter `interaction_source` values say where the change was made:
 | `sort_changed` | `filter_drawer` |
 | `filters_cleared` | `filter_drawer_reset` (drawer Reset), `filter_drawer_no_matches` (the drawer's "No matches · Reset filters" button), `collection_clear_all` (Show all, beside the result count), `collection_empty_state` (the empty results button), `did_you_mean` (the empty state's "Search {suggestion} in all cards", when the corrected search only finds cards outside the filters; the search is kept and replaced by the suggestion) |
 
-`close_method` says how the drawer was closed: `show_results` (the "Show N sleepers" button), `close_button` (×), `backdrop`, `escape`, or `browser_back` (the browser's Back button while the drawer is open).
+`close_method` says how the drawer was closed: `show_results` (the "Show N sleepers" button), `close_button` (×), `backdrop`, `escape`, `browser_back` (the browser's Back button while the drawer is open) or `browser_forward` (the browser's Forward button onto a card's lightbox while the drawer is open, which closes the drawer first; since 2026-11-10, #282).
 
 Search text is intentionally excluded. `query_length` is the only query-level parameter. A header search that navigates to the collection produces `search_submitted` on the source page and `search_results_viewed` on the destination page.
 
