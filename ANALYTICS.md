@@ -66,7 +66,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `filter_facet_<facet>` | Direct facet event (`mood`, `set`, `rarity`, `language`, `artist`, `maxPrice`, `wishlist`; `pokemon` was retired with the filter drawer). Same data as `filter_changed`, kept for per-filter history from before `filter_name` was registered | `filter_action`, `filter_value`, `result_count`, `interaction_source` |
 | `filter_chip_removed` | An active filter pill is dismissed directly from the collection filter row | `filter_name`, `result_count` |
 | `sort_changed` | Collection order changes in the filter drawer. `filter_value` is the sort: `random` (Shuffle), `newest` (Newest sets), `added` (Recently added, from 2026-11-06), `price-low`, `price-high`, `pokemon`; `set` (Set A–Z) was removed on 2026-11-06 after 1 pick in the #153 review, and old `?sort=set` links fall back to the default order | `filter_name`, `filter_value`, `filter_action`, `result_count`, `interaction_source` |
-| `filters_cleared` | All active collection filters are cleared. Sent only when at least one filter (search and the wishlist view included) was on; a Reset with nothing on, or with only the sort changed, sends nothing | `interaction_source`, `active_filter_count` (always 1 or more), `result_count` |
+| `filters_cleared` | All active collection filters are cleared. Sent only when at least one filter (search and the wishlist view included) was on; a Reset with nothing on, or with only the sort changed, sends nothing | `interaction_source`, `active_filter_count` (always 1 or more), `result_count` (the cards showing after the clear; before 2026-11-10 it was always the catalog size, #263) |
 
 Filter `interaction_source` values say where the change was made:
 

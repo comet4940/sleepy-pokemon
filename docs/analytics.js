@@ -25,8 +25,13 @@ const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
 
   const productionHosts = new Set(["sleepypokemon.com", "www.sleepypokemon.com"]);
   const debugRequested = urlParams.has("analytics_debug");
-  if (debugRequested) window.sessionStorage.setItem("sleepy_analytics_debug", "1");
-  const debugMode = debugRequested || window.sessionStorage.getItem("sleepy_analytics_debug") === "1";
+  // Guarded like the opt-out above: a browser that blocks storage throws here, and that must not stop analytics (SM-10).
+  let debugStored = false;
+  try {
+    if (debugRequested) window.sessionStorage.setItem("sleepy_analytics_debug", "1");
+    debugStored = window.sessionStorage.getItem("sleepy_analytics_debug") === "1";
+  } catch (_) {}
+  const debugMode = debugRequested || debugStored;
   if (!SLEEPY_ANALYTICS_ID || window.location.protocol === "file:" || (!productionHosts.has(window.location.hostname) && !debugMode)) return;
 
   const script = document.currentScript;
