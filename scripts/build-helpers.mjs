@@ -25,9 +25,9 @@ export const ASSET_VERSIONS = {
   "about.css": 6,
   "analytics.js": 6,
   "prices.js": 2,
-  "app.js": 86,
-  "binder.js": 1,
-  "card-page.js": 6,
+  "app.js": 87,
+  "binder.js": 2,
+  "card-page.js": 7,
   "contact.js": 1,
   "site-header.js": 2,
   // Icons: bump when the artwork changes, so browsers stop showing a cached old icon.

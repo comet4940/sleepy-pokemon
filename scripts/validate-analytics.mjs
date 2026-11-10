@@ -197,6 +197,7 @@ checkFilterClearTracking(appSource);
 checkDidYouMean(appSource);
 await checkSuggestionSending(appSource);
 checkCollectionHistory(appSource);
+checkWishlistStates(appSource);
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -733,14 +734,18 @@ async function checkContactForm(source) {
   }
 }
 
-// Review on #200: when the browser won't save (private modes, full or blocked storage), binder.js keeps wishes for
-// this visit only, so neither the collection nor a card page may say a wish was "saved on this device".
+// Review on #200: when the browser won't save (private modes, full or blocked storage), neither the collection nor a
+// card page may say a wish was "saved on this device". SM-9 (#284): with sessionStorage the wishlist lasts the visit
+// (this tab's pages), so they say "this visit only" and the toast links to the wishlist; without it, it lasts until
+// the page is left, so they say that, with no link to a wishlist the next page couldn't show.
 function checkWishlistUnsaved(appSource, cardPageSource, binderSource) {
   const blockedStorage = { getItem: () => null, setItem: () => { throw new Error("QuotaExceededError"); } };
-  const fakeWindow = () => {
+  const workingStorage = () => { const items = new Map(); return { getItem: (key) => (items.has(key) ? items.get(key) : null), setItem: (key, value) => items.set(key, String(value)) }; };
+  const fakeWindow = (withSession) => {
     const listeners = new Map();
     return {
       localStorage: blockedStorage,
+      sessionStorage: withSession ? workingStorage() : { getItem() { throw new Error("SecurityError"); }, setItem() { throw new Error("SecurityError"); } },
       addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
       removeEventListener() {},
       dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
@@ -748,44 +753,50 @@ function checkWishlistUnsaved(appSource, cardPageSource, binderSource) {
     };
   };
   const FakeEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
-  try {
-    const app = loadApp(appSource);
-    Object.assign(app.context.window, fakeWindow());
-    app.context.CustomEvent = FakeEvent;
-    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
-    const toasts = [];
-    app.context.__toasts = toasts;
-    app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options })");
-    const card = app.context.normalizeCard(browserCards[0]);
-    app.context.toggleWish({ dataset: { wishSlug: slugByIdentity.get(getCardIdentity(browserCards[0])), wishName: card.name } });
-    const message = toasts.at(-1)?.message || "";
-    if (/saved on this device/i.test(message) || !/this visit only/i.test(message)) errors.push(`docs/app.js (wishlist): when the browser can't save, a wish must say it's for this visit only, showed ${JSON.stringify(message)}`);
-  } catch (error) {
-    errors.push(`docs/app.js (wishlist, storage blocked): threw ${error.message}`);
-  }
-  try {
-    const classList = (initial = []) => {
-      const names = new Set(initial);
-      return { add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
-    };
-    const status = { textContent: "", classList: classList(["sr-only"]) };
-    let click = null;
-    const button = {
-      dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
-      classList: classList(),
-      parentElement: { querySelector: () => status },
-      closest: () => ({ classList: classList() }),
-      setAttribute() {},
-      querySelector: () => ({ textContent: "" }),
-      addEventListener: (type, fn) => { if (type === "click") click = fn; },
-    };
-    const context = vm.createContext({ window: fakeWindow(), document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: FakeEvent });
-    vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
-    vm.runInContext(cardPageSource, context, { filename: "docs/card-page.js" });
-    click();
-    if (/saved on this device/i.test(status.textContent) || !/this visit only/i.test(status.textContent) || !status.classList.contains("detail-wish-note")) errors.push(`docs/card-page.js: when the browser can't save, a wish must say it's for this visit only, shows ${JSON.stringify(status.textContent)}`);
-  } catch (error) {
-    errors.push(`docs/card-page.js (storage blocked): threw ${error.message}`);
+  for (const withSession of [true, false]) {
+    const expected = withSession ? /this visit only/i : /until you leave this page/i;
+    const mode = withSession ? "with sessionStorage" : "without sessionStorage";
+    try {
+      const app = loadApp(appSource);
+      Object.assign(app.context.window, fakeWindow(withSession));
+      app.context.CustomEvent = FakeEvent;
+      vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+      const toasts = [];
+      app.context.__toasts = toasts;
+      app.run("showToast = (message, options) => globalThis.__toasts.push({ message, options }); wishlistToastLink = () => ({ text: 'wishlist', href: 'https://www.sleepypokemon.com/collection/?wishlist=1' })");
+      const card = app.context.normalizeCard(browserCards[0]);
+      app.context.toggleWish({ dataset: { wishSlug: slugByIdentity.get(getCardIdentity(browserCards[0])), wishName: card.name } });
+      const toast = toasts.at(-1) || {};
+      const message = toast.message || "";
+      if (/saved on this device/i.test(message) || !expected.test(message)) errors.push(`docs/app.js (wishlist, ${mode}): when the browser can't save, a wish must say ${expected.source.replace(/\\/g, "")}, showed ${JSON.stringify(message)}`);
+      if (withSession !== Boolean(toast.options?.link)) errors.push(`docs/app.js (wishlist, ${mode}): the toast should ${withSession ? "" : "not "}link to the wishlist`);
+    } catch (error) {
+      errors.push(`docs/app.js (wishlist, storage blocked, ${mode}): threw ${error.message}`);
+    }
+    try {
+      const classList = (initial = []) => {
+        const names = new Set(initial);
+        return { add: (name) => names.add(name), remove: (name) => names.delete(name), contains: (name) => names.has(name), toggle: (name, on) => (on ? names.add(name) : names.delete(name)) };
+      };
+      const status = { textContent: "", classList: classList(["sr-only"]) };
+      let click = null;
+      const button = {
+        dataset: { wishSlug: "test-card-slug", wishName: "Test Card" },
+        classList: classList(),
+        parentElement: { querySelector: () => status },
+        closest: () => ({ classList: classList() }),
+        setAttribute() {},
+        querySelector: () => ({ textContent: "" }),
+        addEventListener: (type, fn) => { if (type === "click") click = fn; },
+      };
+      const context = vm.createContext({ window: fakeWindow(withSession), document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: FakeEvent });
+      vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
+      vm.runInContext(cardPageSource, context, { filename: "docs/card-page.js" });
+      click();
+      if (/saved on this device/i.test(status.textContent) || !expected.test(status.textContent) || !status.classList.contains("detail-wish-note")) errors.push(`docs/card-page.js (${mode}): when the browser can't save, a wish must say ${expected.source.replace(/\\/g, "")}, shows ${JSON.stringify(status.textContent)}`);
+    } catch (error) {
+      errors.push(`docs/card-page.js (storage blocked, ${mode}): threw ${error.message}`);
+    }
   }
 }
 
@@ -793,14 +804,19 @@ function checkWishlistUnsaved(appSource, cardPageSource, binderSource) {
 // what a visitor saved, and must never break the page.
 function checkBinder(binderSource) {
   const fail = (message) => errors.push(`docs/binder.js: ${message}`);
-  const load = ({ store = new Map(), broken = false } = {}) => {
+  const load = ({ store = new Map(), broken = false, fullLocal = false, session = null } = {}) => {
     const listeners = new Map();
     const localStorage = {
       getItem: (key) => { if (broken) throw new Error("blocked"); return store.has(key) ? store.get(key) : null; },
-      setItem: (key, value) => { if (broken) throw new Error("blocked"); store.set(key, String(value)); },
+      setItem: (key, value) => { if (broken || fullLocal) throw new Error("blocked"); store.set(key, String(value)); },
+    };
+    const sessionStorage = session && {
+      getItem: (key) => (session.has(key) ? session.get(key) : null),
+      setItem: (key, value) => session.set(key, String(value)),
     };
     const window = {
       localStorage,
+      ...(sessionStorage ? { sessionStorage } : {}),
       addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
       removeEventListener: (type, fn) => listeners.set(type, (listeners.get(type) || []).filter((item) => item !== fn)),
       dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
@@ -843,6 +859,21 @@ function checkBinder(binderSource) {
     binder.add("owned", "eevee-d");
     if (!binder.has("owned", "eevee-d")) fail("doesn't keep working for the visit when the browser can't save");
     if (binder.isPersistent()) fail("doesn't report that the browser couldn't save");
+    if (binder.savedFor() !== "page") fail(`with no storage at all, savedFor() should be "page", got ${binder.savedFor()}`);
+    // localStorage full, sessionStorage fine (SM-9): the wishes, older ones included, carry over to the next page in the tab.
+    {
+      const local = new Map([["sleepy_binder_v1", JSON.stringify({ version: 1, owned: {}, wished: { "older-wish": "2026-11-01" }, hints: {} })]]);
+      const session = new Map();
+      const loadPage = () => load({ store: local, fullLocal: true, session });
+      const first = loadPage().binder;
+      first.add("wished", "pikachu-a");
+      if (first.savedFor() !== "visit") fail(`with localStorage full but sessionStorage working, savedFor() should be "visit", got ${first.savedFor()}`);
+      const next = loadPage().binder;
+      if (!next.has("wished", "pikachu-a") || !next.has("wished", "older-wish")) fail("a wish made when localStorage was full is lost on the next page of the visit");
+      if (next.savedFor() !== "visit" || next.isPersistent()) fail("the next page of that visit should still say the wishlist is for this visit only");
+      next.remove("wished", "older-wish");
+      if (loadPage().binder.has("wished", "older-wish")) fail("a change on a later page of the visit isn't kept for the pages after it");
+    }
     // Hints are seen once.
     ({ binder } = load());
     binder.markHintSeen("collection_strip");
@@ -924,6 +955,61 @@ function checkFilterClearTracking(appSource) {
     }
     app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #284: the wishlist's states. A toast shown in a dialog goes back to the page when the dialog closes, so Undo can still
+// be tapped (SM-7). A grid emptied by removing a wish shows the same empty state as a fresh page (SM-8), and in the
+// wishlist view its "Clear filters" clears the other filters but stays on the wishlist, when there are any to clear.
+function checkWishlistStates(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#284): ${message}`);
+  try {
+    // SM-7
+    const toastApp = loadApp(appSource);
+    toastApp.context.__appended = [];
+    toastApp.run(`
+      const lightbox = { name: "lightbox" }, drawer = { name: "drawer" };
+      document.body.append = (node) => { node.parentElement = document.body; globalThis.__appended.push(node); };
+      elements.toast = { parentElement: lightbox };
+      returnToastToPage(drawer);
+      globalThis.__afterOther = elements.toast.parentElement === lightbox;
+      returnToastToPage(lightbox);
+    `);
+    if (!toastApp.context.__afterOther) fail("closing a different dialog shouldn't move the toast");
+    if (toastApp.context.__appended.length !== 1 || toastApp.run("elements.toast.parentElement !== document.body")) fail("closing the lightbox should put its toast (and its Undo) back on the page");
+    if (!/bind\(dialog, "close", \(\) => returnToastToPage\(dialog\)\)/.test(appSource)) fail("the lightbox, Suggest form and filter drawer should each return their toast on close");
+
+    // SM-8: one empty-state path.
+    const removal = appSource.match(/function removeWishlistTile[\s\S]*?\n}\n/)?.[0] || "";
+    const cards = appSource.match(/function renderCards[\s\S]*?\n}\n/)?.[0] || "";
+    if (!removal.includes("renderEmptyState(") || !cards.includes("renderEmptyState(")) fail("removing a wishlist tile should draw the empty state with renderEmptyState, like renderCards");
+
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const card = (name) => ({ name, pokemon: name, setName: "Test Set", setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs: "Asleep.", moods: ["Belly Up"] });
+    app.run(`
+      render = () => {}; markHistoryStep = () => {};
+      state.cards = ${JSON.stringify([card("Meowth"), card("Snorlax")])};
+      const node = () => ({ hidden: false, innerHTML: "", href: "", dataset: {}, classList: { add() {}, remove() {} }, set textContent(value) { this.innerHTML = value; }, get textContent() { return this.innerHTML.replace(/<[^>]*>/g, ""); } });
+      Object.assign(elements, {
+        emptyState: { classList: { contains: () => false }, querySelector: (selector) => (selector === "h3" ? node() : node()) },
+        emptyStatePrimary: node(), emptyStateSecondary: node(), clearCollectionButton: node(), searchSuggestionPrompt: node(),
+        moodChips: [],
+      });
+    `);
+    const keeps = (filters) => app.run(`Object.assign(state.filters, { search: "", mood: "all", wishlist: false }, ${JSON.stringify(filters)}); renderEmptySearchState(0); state.emptyStateKeepsWishlist`);
+    if (keeps({ wishlist: true, mood: "snow-naps" }) !== true) fail("in the wishlist view with a mood on, the empty state's Clear filters should keep the wishlist view");
+    if (keeps({ wishlist: true, search: "meowth" }) !== false) fail("in the wishlist view with only a search, Clear filters has nothing else to clear, so it should show all cards");
+    if (keeps({ mood: "snow-naps" }) !== false) fail("outside the wishlist view, Clear filters has no wishlist to keep");
+    app.run(`state.filters = { ...state.filters, search: "", mood: "snow-naps", wishlist: true, sort: "added" }; clearFilters("collection_empty_state", { keepWishlist: true, keepSort: true })`);
+    if (!app.run("state.filters.wishlist") || app.run("state.filters.mood") !== "all" || app.run("state.filters.sort") !== "added") fail("Clear filters with keepWishlist should clear the mood but stay on the wishlist (and keep the sort)");
+    const cleared = events.filter((event) => event.name === "filters_cleared").at(-1);
+    if (cleared?.params.active_filter_count !== 1) fail(`clearing one filter while keeping the wishlist should report active_filter_count: 1, got ${JSON.stringify(cleared?.params)}`);
+    app.run(`state.filters = { ...state.filters, mood: "snow-naps", wishlist: true }; clearFilters("collection_clear_all", { keepSort: true })`);
+    if (app.run("state.filters.wishlist")) fail("Show all (no keepWishlist) should still leave the wishlist view");
   } catch (error) {
     fail(`threw ${error.message}`);
   }

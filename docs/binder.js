@@ -10,6 +10,7 @@
 //   sleepy_binder_v1 = { "version": 1, "owned": { "<slug>": "YYYY-MM-DD" }, "wished": { ... }, "hints": { "<name>": "YYYY-MM-DD" } }
 //
 // Slugs that aren't in the catalog are kept, not dropped. A card is never both owned and wished.
+// If localStorage won't save, the same shape is kept for the visit in sessionStorage under sleepy_binder_v1_visit.
 (() => {
   const STORAGE_KEY = "sleepy_binder_v1";
   // Saved data that can't be read is kept here once, instead of being thrown away by the next save.
@@ -17,8 +18,12 @@
   const LISTS = ["owned", "wished"];
   const CHANGE_EVENT = "sleepy-binder-change";
 
-  // Used for the rest of the visit when the browser won't store anything (private modes, full or blocked storage).
+  // When the browser won't save to localStorage (full, or blocked), the binder is kept for the visit instead: in the
+  // tab's sessionStorage, which outlasts the page, so the next page (the wishlist link included) still has it. If that
+  // is refused too, it lives in memory until the page is left. savedFor() says which (SM-9).
+  const VISIT_KEY = "sleepy_binder_v1_visit";
   let memoryCopy = null;
+  let visitCopy = false;
   let persistent = true;
 
   const today = () => new Date().toISOString().slice(0, 10);
@@ -49,9 +54,36 @@
     }
   }
 
+  function sessionStore() {
+    try {
+      return window.sessionStorage || null;
+    } catch {
+      return null;
+    }
+  }
+
+  // A visit copy saved by an earlier page in this tab means localStorage already refused: keep using it.
+  function readVisitCopy() {
+    try {
+      const text = sessionStore()?.getItem(VISIT_KEY);
+      return text ? JSON.parse(text) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  {
+    const saved = readVisitCopy();
+    if (saved) {
+      persistent = false;
+      visitCopy = true;
+    }
+  }
+
   // Always reads fresh, so a save in another tab is never overwritten.
   function readBinder() {
     if (memoryCopy) return cleanBinder(memoryCopy);
+    if (visitCopy) return cleanBinder(readVisitCopy());
     const store = storage();
     let text = null;
     try {
@@ -81,7 +113,23 @@
         return;
       } catch {
         persistent = false;
+        // The visit copy starts from what's saved now, so the wishes saved before this failure come along.
+        try {
+          sessionStore().setItem(VISIT_KEY, JSON.stringify(binder));
+          visitCopy = true;
+        } catch {
+          visitCopy = false;
+        }
         announce({ type: "unavailable" });
+        if (visitCopy) return;
+      }
+    }
+    if (visitCopy) {
+      try {
+        sessionStore().setItem(VISIT_KEY, JSON.stringify(binder));
+        return;
+      } catch {
+        visitCopy = false;
       }
     }
     memoryCopy = binder;
@@ -173,9 +221,15 @@
       });
     },
 
-    // False once the browser has refused to save: the binder then lasts for this visit only.
+    // False once the browser has refused to save: the binder then lasts for this visit, or only this page (savedFor).
     isPersistent() {
       return persistent;
+    },
+
+    // How long the binder lasts: "device" (saved), "visit" (this tab, across its pages) or "page" (until it's left).
+    savedFor() {
+      if (persistent) return "device";
+      return visitCopy ? "visit" : "page";
     },
 
     // Calls fn(detail) on every change, here or in another tab. Returns a function that stops listening.
