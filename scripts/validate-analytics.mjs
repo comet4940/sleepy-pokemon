@@ -196,6 +196,7 @@ checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 checkFilterClearTracking(appSource);
 checkDidYouMean(appSource);
 await checkSuggestionSending(appSource);
+checkCollectionHistory(appSource);
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -923,6 +924,79 @@ function checkFilterClearTracking(appSource) {
     }
     app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #282: Back and Forward on the collection. A drawer visit adds exactly one history entry when it changes the URL, even
+// when its first tap changed nothing (SM-3), and Forward onto a lightbox entry never opens a second dialog (SM-4).
+function checkCollectionHistory(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#282): ${message}`);
+  const setup = () => {
+    const app = loadApp(appSource);
+    const entries = [{ state: null, url: "https://www.sleepypokemon.com/collection/" }];
+    let index = 0;
+    const counts = { push: 0, replace: 0, back: 0 };
+    const location = { get href() { return entries[index].url; } };
+    app.context.window.location = location;
+    app.context.window.history = {
+      get state() { return entries[index].state; },
+      get length() { return entries.length; },
+      pushState(state, _title, url) { entries.splice(index + 1, Infinity, { state, url: String(url) }); index += 1; counts.push += 1; },
+      replaceState(state, _title, url) { entries[index] = { state, url: url === undefined ? entries[index].url : String(url) }; counts.replace += 1; },
+      back() { counts.back += 1; },
+    };
+    app.run(`
+      render = () => syncFilterUrl();
+      state.cards = [];
+      Object.assign(elements, { cardGrid: {}, moodChips: [] });
+    `);
+    return { app, entries, counts, url: () => entries[index].url };
+  };
+  try {
+    // SM-3: Reset with nothing on, then a mood, then a rarity: one new entry, and Back finds the unfiltered collection.
+    const reset = setup();
+    reset.app.run(`elements.filtersDialog = { open: true }; state.drawerHistoryPushed = false`);
+    reset.app.run(`clearFilters("filter_drawer_reset")`);
+    reset.app.run(`setFilterValue("mood", "belly-up")`);
+    reset.app.run(`setFilterValue("rarity", "promo")`);
+    if (reset.counts.push !== 1) fail(`a drawer visit that starts with Reset (nothing on) and then changes two filters should add one history entry, added ${reset.counts.push}`);
+    if (reset.entries[0].url !== "https://www.sleepypokemon.com/collection/") fail(`Back from that drawer visit should return to the unfiltered collection, but its entry became ${reset.entries[0].url}`);
+    if (!/mood=belly-up/.test(reset.url()) || !/rarity=promo/.test(reset.url())) fail(`the drawer visit's entry should carry both filters, got ${reset.url()}`);
+    // The same visit without Reset first: still one entry.
+    const plain = setup();
+    plain.app.run(`elements.filtersDialog = { open: true }; state.drawerHistoryPushed = false`);
+    plain.app.run(`setFilterValue("mood", "belly-up"); setFilterValue("rarity", "promo")`);
+    if (plain.counts.push !== 1) fail(`a drawer visit with two changes should add one history entry, added ${plain.counts.push}`);
+    // Outside the drawer every change is its own step.
+    const chips = setup();
+    chips.app.run(`elements.filtersDialog = { open: false }`);
+    chips.app.run(`state.filters.mood = "belly-up"; markHistoryStep(); render(); state.filters.mood = "all"; markHistoryStep(); render()`);
+    if (chips.counts.push !== 2) fail(`two chip taps outside the drawer should add two history entries, added ${chips.counts.push}`);
+
+    // SM-4: Forward onto a lightbox entry with the drawer open closes the drawer first, as browser_forward.
+    const forward = (openDialog) => {
+      const run = setup();
+      run.entries[0].state = { cardDetail: "card-x", cardDeck: ["card-x"] };
+      run.app.context.__opened = [];
+      run.app.run(`
+        state.cards = [{ catalogIdentity: "card-x" }];
+        elements.cardDetailDialog = { open: false };
+        elements.filtersDialog = { open: ${openDialog === "drawer"}, close() { this.open = false; } };
+        elements.suggestionDialog = { open: ${openDialog === "suggest"}, close() { this.open = false; } };
+        openCardDetail = (card, source) => { globalThis.__opened.push({ source, drawerOpen: elements.filtersDialog.open, suggestOpen: elements.suggestionDialog.open }); };
+        handleCardDetailHistoryNavigation();
+      `);
+      return { opened: run.app.context.__opened, counts: run.counts, app: run.app };
+    };
+    const overDrawer = forward("drawer");
+    if (overDrawer.opened.length !== 1 || overDrawer.opened[0].drawerOpen) fail(`Forward onto a card with the filter drawer open should close the drawer, then reopen the card; got ${JSON.stringify(overDrawer.opened)}`);
+    if (overDrawer.app.run("state.drawerCloseMethod") !== "browser_forward") fail(`that drawer close should be tracked as close_method: browser_forward, got ${overDrawer.app.run("state.drawerCloseMethod")}`);
+    const overSuggest = forward("suggest");
+    if (overSuggest.opened.length || overSuggest.counts.back !== 1 || !overSuggest.app.run("elements.suggestionDialog.open")) fail(`Forward onto a card with the Suggest form open should keep the form (and what was typed) and undo the Forward, got opened ${overSuggest.opened.length}, back ${overSuggest.counts.back}`);
+    const alone = forward("none");
+    if (alone.opened.length !== 1 || alone.opened[0].source !== "browser_forward") fail("Forward onto a card with no dialog open should still reopen it");
   } catch (error) {
     fail(`threw ${error.message}`);
   }

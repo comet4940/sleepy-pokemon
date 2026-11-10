@@ -76,17 +76,17 @@ Code references name the function in `docs/` rather than a line number, since li
 The view is `state.filters` = `{search, mood, set, rarity, language, artist, maxPrice, sort, wishlist}`. The URL mirrors it (`getFilterUrlParams`). Two variables decide whether a change adds a history entry or replaces the current one:
 
 - `state.historyMode`: `"replace"` or `"push"`. `markHistoryStep()` arms `push`, and the next `syncFilterUrl()` consumes it.
-- `state.drawerHistoryPushed`: one drawer visit should add at most one entry.
+- `state.drawerHistoryPushed`: whether this drawer visit has already added its entry. `syncFilterUrl` sets it when it really pushes; opening the drawer clears it.
 
 The first table is the history-mode latch:
 
 | From | Event | To | Effects |
 |------|-------|----|---------|
 | replace | `markHistoryStep()` outside the drawer | push | |
-| replace | `markHistoryStep()` in the drawer, first time | push | `drawerHistoryPushed = true` |
-| replace | `markHistoryStep()` in the drawer, again | replace | the change replaces the entry pushed earlier in this visit |
-| push | `syncFilterUrl()`, URL changed | replace | `pushState` |
-| push | `syncFilterUrl()`, URL unchanged | replace | nothing is pushed. In the drawer, `drawerHistoryPushed` stays `true` anyway: **SM-3** |
+| replace | `markHistoryStep()` in the drawer, no entry added yet | push | |
+| replace | `markHistoryStep()` in the drawer, entry already added | replace | the change replaces the entry pushed earlier in this visit |
+| push | `syncFilterUrl()`, URL changed | replace | `pushState`; in the drawer, `drawerHistoryPushed = true` |
+| push | `syncFilterUrl()`, URL unchanged | replace | nothing is pushed, and in the drawer `drawerHistoryPushed` stays `false`, so the next change still adds the entry (fixed SM-3) |
 | any | `syncFilterUrl()` while a lightbox entry is current | unchanged | the URL is left alone (it's the card page's) |
 
 The second table lists what changes the view:
@@ -110,7 +110,7 @@ The second table lists what changes the view:
 
 **Invariants**
 - **V1.** When no lightbox entry is current, the URL's filter parameters equal `getFilterUrlParams(state.filters)`.
-- **V2.** Each user step adds one history entry. A whole drawer visit adds at most one, and exactly one if it changed the URL, so Back returns to the view before it. **Broken: SM-3.**
+- **V2.** Each user step adds one history entry. A whole drawer visit adds at most one, and exactly one if it changed the URL, so Back returns to the view before it. Holds since SM-3 was fixed; `checkCollectionHistory` in `scripts/validate-analytics.mjs` tests it.
 - **V3.** The sort is not a filter. Every clear keeps it except the drawer's Reset.
 - **V4.** The quick chips' `is-active` class always equals `state.filters`. The mood chip handler reads the class, so this matters. Checked: every path that changes mood calls `render()`, which sets the classes.
 - Dead state: `state.showAllCards` is written in 14 places and never read.
@@ -128,10 +128,10 @@ The second table lists what changes the view:
 | Open | option, Reset, No matches | Open | `modalFilterChanges++`, a history step (see 3) |
 | Open | ×, backdrop, Show N / Done, Escape | Closed | `filters_modal_applied` if changed, else `filters_modal_bounced` |
 | Open | Back (`popstate` to a filter entry) | Closed | `close_method: browser_back` |
-| Open | Forward onto a lightbox entry | **Open, with the lightbox stacked on top** | **SM-4** |
+| Open | Forward onto a lightbox entry | Closed | `close_method: browser_forward`, then the lightbox reopens (fixed SM-4) |
 
 **Invariants**
-- **M1.** At most one modal dialog is open at a time. **Broken: SM-4.**
+- **M1.** At most one modal dialog is open at a time. Holds since SM-4 was fixed (see the lightbox's Forward rows in section 5); tested by `checkCollectionHistory`.
 - **M2.** Each drawer visit sends exactly one of `filters_modal_applied` or `filters_modal_bounced`.
 
 ## 5. Card lightbox and its history entry
@@ -148,7 +148,8 @@ Opening the lightbox pushes a history entry `{cardDetail, cardDeck}` whose URL i
 | From | Event | To | Effects |
 |------|-------|----|---------|
 | Closed | tile, guide card, hero, Surprise me | Open | `card_opened`, `showModal`, `pushState` |
-| Closed | Forward onto a lightbox entry | Open | reopened from the entry (`browser_forward`), no push |
+| Closed | Forward onto a lightbox entry | Open | reopened from the entry (`browser_forward`), no push. An open filter drawer closes first (`close_method: browser_forward`) |
+| Closed | Forward onto a lightbox entry, Suggest form open | Closed | the Forward is undone (`history.back()`), so the form and what was typed in it stay (fixed SM-4) |
 | Open | arrow, key, swipe with a neighbour | Stepping | |
 | Stepping | slide-out done, still open | Open(next) | `replaceState`, `card_navigated` |
 | Stepping | slide-out done, closed meanwhile | Closed | stops, no event |
@@ -156,11 +157,11 @@ Opening the lightbox pushes a history entry `{cardDetail, cardDeck}` whose URL i
 | Open / Stepping | ×, backdrop, Escape | Closing | dialog `close`, then `history.back()` |
 | Closing | `popstate` lands | Closed | |
 | Open | Back | Closed | the `popstate` handler closes the dialog |
-| Closing (≤ 160 ms into a step) | another card opens | **Open with the old step still running** | **SM-5** |
+| Closing (≤ 160 ms into a step) | another card opens | Open with the old step still running | SM-5: not reachable by a person, won't fix |
 
 **Invariants**
 - **L1.** The dialog is open exactly when the current entry carries `cardDetail` (apart from `Closing`, which is brief).
-- **L2.** The card shown = `cardDeck[cardDeckIndex]` = `history.state.cardDetail`, and `0 ≤ cardDeckIndex < cardDeck.length`. **Broken: SM-5.**
+- **L2.** The card shown = `cardDeck[cardDeckIndex]` = `history.state.cardDetail`, and `0 ≤ cardDeckIndex < cardDeck.length`. Only a script can break it (SM-5, won't fix): it needs a step, a close and a reopen inside one 160 ms slide-out, and with reduced motion there is no slide-out at all. Revisit if the slide gets longer.
 - **L3.** `cardNavigating` is `true` only while a step animates.
 - `restoreCardDetailFromHistory` handles loading a page whose current entry is a lightbox entry. That entry's URL is the card page, so a reload or a cache-less Back loads the card page itself, not the collection. The path is effectively unreachable today but harmless.
 
@@ -320,12 +321,12 @@ All of these were reproduced in Chromium (Playwright) against the site served lo
 
 | ID | Severity | What breaks | Reproduction and observed result | Issue |
 |----|----------|-------------|----------------------------------|-------|
-| SM-3 | Medium | V2: a drawer visit loses its history step, so Back leaves the collection | From `/` go to `/collection/`, open All filters, tap Reset (nothing on), pick a mood, Show. `history.length` stays 3; Back goes to `/`, not the unfiltered collection. | #282 |
+| SM-3 | Medium (**fixed**) | V2: a drawer visit loses its history step, so Back leaves the collection | From `/` go to `/collection/`, open All filters, tap Reset (nothing on), pick a mood, Show. `history.length` stays 3; Back goes to `/`, not the unfiltered collection. Fixed: the drawer marks its entry only once one was really added. | #282 |
 | SM-6 | Medium | P1: the lightbox says "No current market price" for a priced card | Hold `prices.json`, open a card on a guide page, release: the row still reads "No current market price" while `card.price.market` is 478.56. | #283 |
 | SM-7 | Medium | T1: the wishlist Undo disappears with the lightbox | Remove a wish in the lightbox ("Removed from your wishlist · Undo"), then close the lightbox: the toast is still "shown" but inside the closed dialog, so it's invisible and can't be tapped. | #284 |
 | SM-8 | Medium | E1: the wishlist view's empty state differs by path, and its button does the wrong thing | `?wishlist=1&mood=X` with one matching wish: un-wish it. Shows "No cards match" and "Show all sleepers" (which leaves the wishlist view). A reload shows "No cards match these filters." and "Clear filters". | #284 |
-| SM-4 | Low | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. | #282 |
-| SM-5 | Low | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). | #282 |
+| SM-4 | Low (**fixed**) | M1: two modals stacked | Open a card, close it, open All filters, press Forward: drawer and lightbox both `open`. The Suggest form stacked the same way. Fixed: Forward closes the drawer first; with the Suggest form open, Forward is undone. | #282 |
+| SM-5 | Won't fix | L2: the lightbox shows the wrong card and "2 of 1" | Step to the next card, close within 160 ms, open another card: it shows the previous deck's card, the position reads "2 of 1", and the history entry names the wrong card. Needs fast hands (key repeat, then Escape, then Enter). Reproduced only by a script (30 ms, then 70 ms): not reachable by a person, and impossible with reduced motion. | #282 |
 | SM-1 | Low (**fixed**) | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. Not seen in real data: 8 sends Oct 31 to Nov 10, none within 30 s of the same person's previous one. Fixed by the "Sending…" state. | #281 |
 | SM-2 | Low (**fixed**) | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. Needs a close within the second or so a send takes, now while the button says "Sending…". Fixed: the form is left alone and a toast says it was sent. | #281 |
 | SM-9 | Low | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". | #284 |
