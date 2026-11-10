@@ -2591,7 +2591,8 @@ function clearFilters(interactionSource, { keepSearch = false, keepSort = false,
   trackEvent("filters_cleared", {
     interaction_source: interactionSource,
     active_filter_count: activeFilterCount,
-    result_count: state.cards.length,
+    // The cards showing after the clear (#263): the kept search's results, or the whole catalog after a full clear.
+    result_count: getFilteredCards().length,
   });
 }
 

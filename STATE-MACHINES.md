@@ -308,11 +308,10 @@ Every path draws this through `renderEmptyState` (`renderCards`, and `removeWish
 | `OptedOut` | `?optout=1` or the stored flag. Nothing is defined, so every `track` is a no-op. |
 | `Off` | Not a production host and not debug: same as `OptedOut`. |
 | `Live` / `Debug` | `window.sleepyAnalytics.track` is defined and gtag loads. |
-| `Crashed` | **Not intended.** Reading `sessionStorage` throws (storage blocked), the IIFE aborts with an uncaught error, and the visitor is never measured. **SM-10.** |
 
 **Invariants**
-- **A1.** A storage error never stops analytics from starting. `localStorage` reads are guarded; `sessionStorage` reads are not. **Broken: SM-10.**
-- **A2.** An event's `result_count` describes what the visitor sees after the action. `filters_cleared` sends the catalog size. **Broken: SM-11 (#263).**
+- **A1.** A storage error never stops analytics from starting: the `localStorage` and `sessionStorage` reads are all guarded. Holds since SM-10 was fixed; `checkAnalyticsState` in `scripts/validate-analytics.mjs` tests it. (Until then, reading `sessionStorage` with storage blocked threw, and those visitors were never measured.)
+- **A2.** An event's `result_count` describes what the visitor sees after the action. Holds for `filters_cleared` since SM-11 was fixed (before 2026-11-10 it always sent the catalog size); tested by `checkAnalyticsState`.
 
 ---
 
@@ -331,8 +330,8 @@ All of these were reproduced in Chromium (Playwright) against the site served lo
 | SM-1 | Low (**fixed**) | S1: one suggestion is POSTed to Formspree several times | Fill the Suggest form, click Send 2 times and press Enter, with Formspree answering in 800 ms: **3 POSTs**, so 3 emails and 3 `suggestion_submitted`. Not seen in real data: 8 sends Oct 31 to Nov 10, none within 30 s of the same person's previous one. Fixed by the "Sending…" state. | #281 |
 | SM-2 | Low (**fixed**) | S2: the next Suggest form opens on the old thank-you | Send, press Escape before Formspree answers, then open the form again: `is-success` is set, the thank-you shows and the fields are hidden. Needs a close within the second or so a send takes, now while the button says "Sending…". Fixed: the form is left alone and a toast says it was sent. | #281 |
 | SM-9 | Low (**fixed**) | W3: a "for this visit only" wishlist is gone on the next page | With `localStorage.setItem` throwing: wish a card, then follow the toast's "wishlist" link: "Your wishlist is empty". Fixed: the wishlist falls back to the tab's sessionStorage, so it lasts the visit; with that refused too, the copy says "until you leave this page", with no link. | #284 |
-| SM-10 | Low | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. | #285 |
-| SM-11 | Low | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. | #263 (with #285) |
+| SM-10 | Low (**fixed**) | A1: analytics never starts for visitors with storage blocked | Make `sessionStorage` throw: `window.sleepyAnalytics` is undefined and the console shows an uncaught `SecurityError`. Fixed: the `sessionStorage` reads are guarded like the `localStorage` ones. | #285 |
+| SM-11 | Low (**fixed**) | A2: `filters_cleared.result_count` is the catalog size | `?q=pikachu&mood=belly-up`, then Did you mean or Clear filters with the search kept: sends 263 while 9 cards show. Fixed: it sends the cards showing (9). | #263 (with #285) |
 
 ## Checked and fine
 

@@ -198,6 +198,7 @@ checkDidYouMean(appSource);
 await checkSuggestionSending(appSource);
 checkCollectionHistory(appSource);
 checkWishlistStates(appSource);
+checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -957,6 +958,58 @@ function checkFilterClearTracking(appSource) {
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
   } catch (error) {
     fail(`threw ${error.message}`);
+  }
+}
+
+// #285: analytics.js starts even when the browser blocks storage (SM-10), and #263: filters_cleared reports the cards
+// showing after the clear, not the whole catalog (SM-11).
+function checkAnalyticsState(appSource, analyticsSource) {
+  const fail = (message) => errors.push(`analytics (#285): ${message}`);
+  for (const [label, debug] of [["a normal visit", ""], ["an ?analytics_debug visit", "?analytics_debug=1"]]) {
+    try {
+      const blocked = () => { throw new Error("SecurityError"); };
+      const window = {
+        location: { search: debug, protocol: "https:", hostname: "www.sleepypokemon.com", href: `https://www.sleepypokemon.com/collection/${debug}` },
+        localStorage: { getItem: blocked, setItem: blocked, removeItem: blocked },
+      };
+      Object.defineProperty(window, "sessionStorage", { get: blocked });
+      const context = vm.createContext({
+        window, console: { info() {} }, URLSearchParams, Date,
+        document: {
+          currentScript: { dataset: { pageType: "collection" } },
+          body: { dataset: {} },
+          title: "All 264 Sleeping Pokemon Cards",
+          head: { append() {} },
+          createElement: () => ({}),
+          addEventListener() {},
+        },
+      });
+      vm.runInContext(analyticsSource, context, { filename: "docs/analytics.js" });
+      if (typeof context.window.sleepyAnalytics?.track !== "function") fail(`with storage blocked, ${label} should still start analytics`);
+    } catch (error) {
+      fail(`with storage blocked, ${label} throws ${error.message} and analytics never starts`);
+    }
+  }
+  try {
+    const app = loadApp(appSource);
+    const events = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    const card = (name, moods) => ({ name, pokemon: name, setName: "Test Set", setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist: "Test Artist", whyItBelongs: "Asleep.", moods });
+    app.run(`
+      render = () => {}; markHistoryStep = () => {};
+      state.cards = ${JSON.stringify([card("Meowth", ["Belly Up"]), card("Snorlax", ["Belly Up"]), card("Eevee", ["Snow Naps"])])}.map(normalizeCard);
+      Object.assign(elements, { moodChips: [] });
+    `);
+    const cleared = (setup, call) => {
+      app.run(`state.filters = { ...state.filters, search: "", mood: "all", wishlist: false, ...${JSON.stringify(setup)} }; ${call}`);
+      return events.filter((event) => event.name === "filters_cleared").at(-1)?.params;
+    };
+    const keptSearch = cleared({ search: "meowth", mood: "snow-naps" }, `clearFilters("did_you_mean", { keepSearch: true, keepSort: true })`);
+    if (keptSearch?.result_count !== 1) errors.push(`docs/app.js (#263): clearing the filters but keeping the search "meowth" should report result_count: 1 (the cards showing), got ${JSON.stringify(keptSearch)}`);
+    const full = cleared({ mood: "snow-naps" }, `clearFilters("collection_clear_all", { keepSort: true })`);
+    if (full?.result_count !== 3) errors.push(`docs/app.js (#263): a full clear should report the whole catalog (3), got ${JSON.stringify(full)}`);
+  } catch (error) {
+    errors.push(`docs/app.js (#263): threw ${error.message}`);
   }
 }
 
