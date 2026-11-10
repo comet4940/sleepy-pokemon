@@ -182,6 +182,7 @@ function cacheElements() {
   elements.suggestionNotes = document.querySelector("#suggestionNotes");
   elements.suggestionEmail = document.querySelector("#suggestionEmail");
   elements.suggestionSuccess = document.querySelector("#suggestionSuccess");
+  elements.suggestionSubmitButton = document.querySelector("#suggestionForm [type=submit]");
   elements.suggestionDoneButton = document.querySelector("#suggestionDoneButton");
   elements.guideCardList = document.querySelector(".guide-card-list");
   elements.aboutMain = document.querySelector(".about-main");
@@ -477,6 +478,8 @@ let suggestionLookupRequestId = 0;
 let suggestionSelectionRequestId = 0;
 let suggestionSelectionPromise = null;
 let suggestionFormSessionId = 0;
+// True while a suggestion is being sent: the button says "Sending…" and a second click or Enter is ignored (#281).
+let suggestionSending = false;
 const suggestionCardDetailsCache = new Map();
 
 function handleSuggestionSearch() {
@@ -632,8 +635,30 @@ async function resolveSuggestionCardSelection(card, selectionRequestId) {
   }));
 }
 
+// One send at a time. The button shows "Sending…" from the click until Formspree answers (or the form stops early),
+// so a slow connection doesn't look like nothing happened, and a second click or Enter can't send it twice (#281).
 async function handleSuggestionSubmit(event) {
   event.preventDefault();
+  if (suggestionSending) return;
+  suggestionSending = true;
+  setSuggestionSending(true);
+  try {
+    await sendSuggestion();
+  } finally {
+    suggestionSending = false;
+    setSuggestionSending(false);
+  }
+}
+
+function setSuggestionSending(sending) {
+  const button = elements.suggestionSubmitButton;
+  if (!button) return;
+  button.disabled = sending;
+  const label = button.querySelector?.(".suggestion-submit-label");
+  if (label) label.textContent = sending ? "Sending…" : "Send suggestion";
+}
+
+async function sendSuggestion() {
   const submissionSessionId = suggestionFormSessionId;
   while (suggestionSelectionPromise) {
     const pendingSelection = suggestionSelectionPromise;
@@ -676,6 +701,12 @@ async function handleSuggestionSubmit(event) {
     return;
   }
   trackEvent("suggestion_submitted", submissionParams);
+  // Closed while it was sending: the form has already been reset for next time, so the thank-you mustn't appear in it
+  // (the next Suggest would open on it, SM-2). Say it was sent instead, since they never saw it go.
+  if (submissionSessionId !== suggestionFormSessionId) {
+    showToast("Thanks! Your suggestion was sent.");
+    return;
+  }
   showSuggestionSuccess();
 }
 

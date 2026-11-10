@@ -195,6 +195,7 @@ checkCardPageWish(cardPageSource, binderSource);
 checkWishlistUnsaved(appSource, cardPageSource, binderSource);
 checkFilterClearTracking(appSource);
 checkDidYouMean(appSource);
+await checkSuggestionSending(appSource);
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -922,6 +923,84 @@ function checkFilterClearTracking(appSource) {
     }
     app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #281: while a suggestion is sending, its button says "Sending…" and is disabled, a second click or Enter sends
+// nothing more, and the button comes back however the send ends (sent, failed, or stopped before sending). Closing the
+// form while it sends never leaves the thank-you in it for next time (SM-2): a toast says it was sent instead.
+async function checkSuggestionSending(appSource) {
+  const fail = (message) => errors.push(`docs/app.js (#281): ${message}`);
+  const setup = (respond) => {
+    const app = loadApp(appSource);
+    const events = [];
+    const posts = [];
+    const answers = [];
+    app.context.window.sleepyAnalytics = { track: (name, params) => events.push({ name, params }) };
+    app.context.FormData = class {};
+    app.context.window.clearTimeout = () => {};
+    app.context.fetch = (url) => {
+      posts.push(url);
+      return new Promise((resolve, reject) => { answers.push(() => (respond === "ok" ? resolve({ ok: true }) : reject(new Error("offline")))); });
+    };
+    const label = { textContent: "Send suggestion" };
+    const button = { disabled: false, querySelector: (selector) => (selector === ".suggestion-submit-label" ? label : null) };
+    const classes = new Set();
+    app.context.__fake = {
+      suggestionForm: { dataset: { emailEndpoint: "https://formspree.io/f/test1234" }, classList: { add: (name) => classes.add(name), remove: (name) => classes.delete(name) }, reset() {} },
+      suggestionResults: { innerHTML: "" },
+      suggestionCardSearch: { value: "Cheren Dark Explorers 91", focus() {} },
+      suggestionCard: { value: "" },
+      suggestionSelected: { hidden: true },
+      suggestionNotes: { value: "" },
+      suggestionEmail: { value: "" },
+      suggestionSearchStatus: { textContent: "" },
+      suggestionSuccess: { hidden: true },
+      suggestionDoneButton: { focus() {} },
+      suggestionSubmitButton: button,
+    };
+    const toasts = [];
+    app.context.__toasts = toasts;
+    app.run("Object.assign(elements, globalThis.__fake); showToast = (message) => globalThis.__toasts.push(message)");
+    const submit = () => app.context.handleSuggestionSubmit({ preventDefault() {} });
+    return { app, events, posts, button, label, classes, toasts, submit, answer: () => answers.splice(0).forEach((reply) => reply()) };
+  };
+  const tick = () => new Promise((resolve) => setImmediate(resolve));
+  try {
+    const sent = setup("ok");
+    const first = sent.submit();
+    await tick();
+    if (!sent.button.disabled || sent.label.textContent !== "Sending…") fail(`while sending, the button should be disabled and say "Sending…", got disabled: ${sent.button.disabled}, ${JSON.stringify(sent.label.textContent)}`);
+    const again = [sent.submit(), sent.submit()];
+    await tick();
+    if (sent.posts.length !== 1) fail(`clicking Send again while it's sending should send nothing more, sent ${sent.posts.length} times`);
+    sent.answer();
+    await Promise.all([first, ...again]);
+    if (sent.button.disabled || sent.label.textContent !== "Send suggestion") fail("after sending, the button should be back to \"Send suggestion\"");
+    if (sent.events.filter((event) => event.name === "suggestion_submitted").length !== 1 || !sent.classes.has("is-success")) fail("a sent suggestion should show the thank-you and send suggestion_submitted once");
+    const failed = setup("network");
+    const attempt = failed.submit();
+    await tick();
+    failed.answer();
+    await attempt;
+    if (failed.button.disabled || failed.label.textContent !== "Send suggestion") fail("after a failed send, the button should be back to \"Send suggestion\" so it can be tried again");
+    // Closed (×, Escape, backdrop) while it sends, then Formspree answers.
+    const closed = setup("ok");
+    const closing = closed.submit();
+    await tick();
+    closed.app.context.resetSuggestionForm();
+    closed.answer();
+    await closing;
+    if (closed.classes.has("is-success")) fail("closing the form while it sends leaves the thank-you in it, so the next Suggest opens on it");
+    if (!closed.toasts.some((message) => /sent/i.test(message))) fail("a suggestion sent after its form was closed should say so in a toast");
+    if (closed.events.filter((event) => event.name === "suggestion_submitted").length !== 1) fail("a suggestion sent after its form was closed should still send suggestion_submitted once");
+    if (closed.button.disabled) fail("after a send that finished with the form closed, the button should be back for the next one");
+    const empty = setup("ok");
+    empty.app.context.__fake.suggestionCardSearch.value = "";
+    await empty.submit();
+    if (empty.posts.length || empty.button.disabled || empty.label.textContent !== "Send suggestion") fail("a form with no card should send nothing and leave the button as it was");
   } catch (error) {
     fail(`threw ${error.message}`);
   }
