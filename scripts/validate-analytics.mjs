@@ -3,6 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
+import { cardImagePaths, pickImageSource } from "./card-images.mjs";
 import { MOODS } from "./moods.mjs";
 import { ASSET_VERSIONS, CARDS_PATH, CARD_SLUGS_PATH, PUBLIC_CARD_FIELDS, PUBLISHED_CARDS_PATH, assignSlugs, loadPublishedSlugs, publicCardsJson, slugify, toPublicCard } from "./build-helpers.mjs";
 
@@ -206,6 +207,7 @@ await checkSuggestionSending(appSource);
 checkCollectionHistory(appSource);
 checkWishlistStates(appSource);
 checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
+checkImageSource();
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -981,6 +983,20 @@ function checkFilterClearTracking(appSource) {
   } catch (error) {
     fail(`threw ${error.message}`);
   }
+}
+
+// #157 review: scripts/card-images.mjs copies a card again from its imageOrigin, never from its own WebP (re-encoding
+// that loses quality each time), so a card whose files went missing can be rebuilt.
+function checkImageSource() {
+  const fail = (message) => errors.push(`scripts/card-images.mjs: ${message}`);
+  const slug = "snorlax-unbroken-bonds-158-214";
+  const own = cardImagePaths(slug);
+  const origin = "https://images.pokemontcg.io/sm10/158_hires.png";
+  const pick = (card, options) => { try { return pickImageSource(card, slug, options); } catch (error) { return `error: ${error.message}`; } };
+  if (pick({ imageLarge: own.large, imageOrigin: origin }) !== origin) fail("a card showing its own copies (a missing file, or --redo) should be copied again from its imageOrigin");
+  if (!pick({ imageLarge: own.large }).startsWith("error:")) fail("a card showing its own copies with no imageOrigin should stop with an error, not re-encode its own WebP");
+  if (pick({ imageLarge: "https://example.com/new-card.png", imageOrigin: origin }) !== "https://example.com/new-card.png") fail("a new image URL in imageLarge should be what's copied");
+  if (pick({ imageLarge: own.large, imageOrigin: origin }, { from: "https://example.com/better-scan.png" }) !== "https://example.com/better-scan.png") fail("--from should override imageOrigin");
 }
 
 // #285: analytics.js starts even when the browser blocks storage (SM-10), and #263: filters_cleared reports the cards

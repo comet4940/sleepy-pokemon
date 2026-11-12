@@ -11,6 +11,7 @@
 //   node scripts/card-images.mjs --check          list those cards, change nothing
 //   node scripts/card-images.mjs --redo <slug>…   copy a card again from its imageOrigin, or from a URL given as
 //                                                 --from <url> (one slug), e.g. for a better scan
+// A card whose files have gone missing is copied again from its imageOrigin too.
 //
 // The WebP encoding uses Python 3 with Pillow (pip install Pillow). Nothing on the site needs it: pages only load
 // the files.
@@ -54,6 +55,16 @@ async function download(url) {
   throw lastError;
 }
 
+// Where a card's copy is made from. A card that already shows its own copies is copied again from imageOrigin (a
+// missing file, or --redo), never from its own WebP: re-encoding that would lose quality each time. A card whose
+// imageLarge is anything else (a new card's image URL) is copied from that. --from overrides both.
+export function pickImageSource(card, slug, { from = "" } = {}) {
+  if (from) return from;
+  if (card.imageLarge !== cardImagePaths(slug).large) return card.imageLarge;
+  if (card.imageOrigin) return card.imageOrigin;
+  throw new Error(`has no imageOrigin to copy from; give one: --redo ${slug} --from <image URL>`);
+}
+
 function needsCopy(card) {
   const paths = cardImagePaths(card.slug);
   return card.imageLarge !== paths.large || card.imageSmall !== paths.small
@@ -83,7 +94,15 @@ async function main() {
     return;
   }
   if (check) {
-    for (const { card, slug } of todo) console.log(`${slug}  ←  ${card.imageLarge}`);
+    for (const { card, slug } of todo) {
+      let source;
+      try {
+        source = pickImageSource(card, slug, { from });
+      } catch (error) {
+        source = `(can't copy: ${error.message})`;
+      }
+      console.log(`${slug}  ←  ${source}`);
+    }
     console.log(`\n${todo.length} card(s) to copy. Run without --check to copy them.`);
     return;
   }
@@ -97,11 +116,14 @@ async function main() {
   const failed = [];
   try {
     for (const [index, { card, slug }] of todo.entries()) {
-      const source = from || (redo.includes(slug) ? card.imageOrigin || card.imageLarge : card.imageLarge);
       const paths = cardImagePaths(slug);
       try {
+        const source = pickImageSource(card, slug, { from });
         if (!source) throw new Error("no image to copy from (set imageLarge to the image's URL)");
         const local = source.startsWith("/") && !source.startsWith("//");
+        // A copy made from an older file in the repo needs that file's permanent GitHub URL as its imageOrigin
+        // (see DATA-MODEL.md), so the card can always be copied again.
+        if (local && !card.imageOrigin) throw new Error(`would be copied from ${source}, a file in the repo: first set imageOrigin to its raw.githubusercontent.com URL at a commit that has it`);
         const bytes = local ? readFileSync(join("docs", source)) : await download(source);
         const input = join(work, "source");
         writeFileSync(input, bytes);
@@ -111,7 +133,6 @@ async function main() {
         const size = execFileSync("python3", ["-c", ENCODE, input, large, small, L.width, L.quality, S.width, S.quality].map(String), { encoding: "utf8" }).trim();
         card.imageLarge = paths.large;
         card.imageSmall = paths.small;
-        // A copy made from another of our own files (the older local scans) has no outside origin to record.
         if (!local) card.imageOrigin = source;
         const kb = (path) => Math.round(readFileSync(path).length / 1024);
         console.log(`[${index + 1}/${todo.length}] ${slug}: ${size} → ${kb(large)} KB + ${kb(small)} KB`);

@@ -41,7 +41,7 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `artist` | Yes | Illustrator from the card's "Illus." line | `Tomokazu Komiya` |
 | `imageSmall` | Yes | Grid image: the site's own copy, `/assets/cards/<slug>-small.webp` (up to 367px wide). Set by `scripts/card-images.mjs` | `/assets/cards/snorlax-unbroken-bonds-158-214-small.webp` |
 | `imageLarge` | Yes | Detail-view image: the site's own copy, `/assets/cards/<slug>.webp` (up to 734px wide). For a new card, put the URL of the best image here, and `scripts/card-images.mjs` copies it and replaces it | `/assets/cards/snorlax-unbroken-bonds-158-214.webp` |
-| `imageOrigin` | No | Where the copy was made from, set by `scripts/card-images.mjs`. `--redo` copies it again from here. Absent for images first stored as files in the repo | `https://images.pokemontcg.io/sm10/158_hires.png` |
+| `imageOrigin` | Yes | Where the copy was made from, set by `scripts/card-images.mjs`, so a card can always be copied again: `--redo`, or a missing file, copies from here. For images first stored as files in the repo, it's that file's `raw.githubusercontent.com` URL at a commit that has it | `https://images.pokemontcg.io/sm10/158_hires.png` |
 | `imageSource` | No | Credit for an image taken from a site that isn't a card API | `PriceCharting`, `Scrydex`, `PokeBoon` |
 | `imageSourceUrl` | No | Page the image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
