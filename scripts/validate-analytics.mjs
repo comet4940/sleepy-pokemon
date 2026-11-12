@@ -1014,6 +1014,7 @@ function checkSwipeHint(appSource, binderSource) {
     app.run(`
       document.createElement = () => ({ setAttribute() {}, remove() { this.removed = true; } });
       elements.cardDetailDialog = { querySelector: () => ({ append: (node) => globalThis.__shown.push(node) }) };
+      elements.detailScroll = { animate() { globalThis.__nudge = { cancelled: false, cancel() { this.cancelled = true; }, finished: new Promise(() => {}) }; return globalThis.__nudge; } };
     `);
     const open = (deckSize = 3) => app.run(`state.cardDeck = ${JSON.stringify(Array.from({ length: deckSize }, (_, i) => `card-${i}`))}; maybeShowSwipeHint()`);
     return { app, events, shown, open, named: (name) => events.filter((event) => event.name === name) };
@@ -1049,6 +1050,28 @@ function checkSwipeHint(appSource, binderSource) {
     showing.open(); showing.open();
     showing.app.run(`noteSwiped()`);
     if (showing.named("swipe_hint_dismissed")[0]?.params.dismiss_method !== "swiped") fail("swiping while the hint shows should dismiss it as swiped");
+
+    // Review on #293: the nudge animates the element a swipe drags, so a touch must cancel it before a drag starts.
+    const nudged = setup();
+    nudged.open(); nudged.open();
+    if (!nudged.app.context.__nudge) fail("the hint should nudge the details once (without reduced motion)");
+    nudged.app.run("cancelSwipeNudge()");
+    if (!nudged.app.context.__nudge?.cancelled) fail("cancelSwipeNudge should cancel a running nudge");
+    const pointerdown = appSource.match(/area\.addEventListener\("pointerdown", \(event\) => \{[\s\S]*?\n {2}\}\);/)?.[0] || "";
+    if (!pointerdown.includes("cancelSwipeNudge()")) fail("a touch on the details (bindCardSwipe's pointerdown) should cancel the nudge, so a swipe during it isn't masked");
+
+    // Review on #293: tapping the backdrop or × closes the lightbox, so it dismisses the hint as closed, not tapped.
+    for (const [label, target, expected] of [
+      ["the backdrop", "elements.cardDetailDialog", "closed"],
+      ["×", "{ closest: (selector) => (selector === '.detail-close' ? {} : null) }", "closed"],
+      ["the details", "{ closest: () => null }", "tapped"],
+    ]) {
+      const tap = setup();
+      tap.open(); tap.open();
+      tap.app.run(`handleSwipeHintTap({ target: ${target} })`);
+      const method = tap.named("swipe_hint_dismissed")[0]?.params.dismiss_method;
+      if (method !== expected) fail(`tapping ${label} should dismiss the hint as ${expected}, got ${method}`);
+    }
   } catch (error) {
     fail(`threw ${error.message}`);
   }

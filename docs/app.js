@@ -323,7 +323,7 @@ function bindEvents() {
     if (event.target === elements.cardDetailDialog) closeCardDetail();
   });
   // The swipe hint (#280) goes away on any tap in the lightbox (the tap still does what it does), or when it closes.
-  elements.cardDetailDialog?.addEventListener("click", (event) => dismissSwipeHint(event.target.closest?.(".detail-close") ? "closed" : "tapped"), true);
+  elements.cardDetailDialog?.addEventListener("click", handleSwipeHintTap, true);
   bind(elements.cardDetailDialog, "close", () => dismissSwipeHint("closed"));
 }
 
@@ -2078,6 +2078,8 @@ function openCardDetail(card, interactionSource = "unknown", { fromHistory = fal
 const SWIPE_HINTS = { firstOpen: "lightbox_first_open", seen: "swipe_hint" };
 const SWIPE_HINT_MS = 6000;
 let swipeHint = null;
+// The nudge animates the same element a swipe drags; a running animation would hide the drag, so a touch cancels it.
+let swipeNudge = null;
 
 function isTouchScreen() {
   return Boolean(window.matchMedia?.("(hover: none) and (pointer: coarse)").matches);
@@ -2103,8 +2105,24 @@ function maybeShowSwipeHint() {
   // One nudge: the details lean the way a swipe would take them, and come back.
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   if (!reduceMotion && typeof elements.detailScroll?.animate === "function") {
-    elements.detailScroll.animate([{ transform: "none" }, { transform: "translateX(-28px)" }, { transform: "none" }], { duration: 700, delay: 400, easing: "ease-in-out" });
+    swipeNudge = elements.detailScroll.animate([{ transform: "none" }, { transform: "translateX(-28px)" }, { transform: "none" }], { duration: 700, delay: 400, easing: "ease-in-out" });
+    swipeNudge.finished?.then(() => { swipeNudge = null; }, () => {});
   }
+}
+
+// A finger on the details stops the nudge, so a swipe started during it moves the details from where they are.
+function cancelSwipeNudge() {
+  if (!swipeNudge) return;
+  swipeNudge.cancel();
+  swipeNudge = null;
+}
+
+// Any tap in the lightbox puts the hint away (the tap still does what it does). Tapping × or the backdrop closes the
+// lightbox, so it counts as closed: this runs first (capture), before the lightbox's own handlers close it.
+function handleSwipeHintTap(event) {
+  if (!swipeHint) return;
+  const closes = event.target === elements.cardDetailDialog || Boolean(event.target.closest?.(".detail-close"));
+  dismissSwipeHint(closes ? "closed" : "tapped");
 }
 
 // Someone who swipes knows: the hint never shows for them, and goes away if it's showing.
@@ -2117,6 +2135,7 @@ function noteSwiped() {
 function dismissSwipeHint(method) {
   if (!swipeHint) return;
   window.clearTimeout(swipeHint.timer);
+  cancelSwipeNudge();
   swipeHint.element.remove();
   swipeHint = null;
   trackEvent("swipe_hint_dismissed", { interaction_source: "card_modal", dismiss_method: method });
@@ -2231,6 +2250,7 @@ function bindCardSwipe() {
   let swipe = null;
   area.addEventListener("pointerdown", (event) => {
     swipe = null;
+    cancelSwipeNudge();
     if (event.pointerType !== "touch" || state.cardDeck.length < 2 || state.cardNavigating) return;
     if (event.clientX < EDGE || event.clientX > window.innerWidth - EDGE) return;
     swipe = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp, dx: 0, sideways: false };
