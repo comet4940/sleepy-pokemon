@@ -47,7 +47,12 @@
       "moods": [
         "Belly Up"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "ecard2-74",

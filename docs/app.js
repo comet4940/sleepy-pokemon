@@ -1123,9 +1123,13 @@ function getCardTextWithoutKeywords(card) {
   return text;
 }
 
-// Words that describe what everyone here is looking at ("crochet cards", "sleepy dogs"). They only drop out when
-// keeping them would find nothing, so "pokemon go" still means Pokémon GO.
-const SEARCH_FILLER_WORDS = new Set(["card", "cards", "pokemon", "sleepy", "sleeping", "tcg"]);
+// "pokemon" describes what everyone here is looking at, but it's also part of names: it only drops out when keeping
+// it would find nothing, so "pokemon go" still means Pokémon GO.
+const SEARCH_FILLER_WORDS = new Set(["pokemon"]);
+// Words true of every card here, so they never narrow a search (#266): "sleepy umbreon" finds every Umbreon, not
+// just the one whose note says "sleepy"; "eating card" finds every eating card, not the one whose note says "card";
+// and "sleeping" alone shows the whole collection.
+const SEARCH_EVERY_CARD_WORDS = new Set(["sleepy", "sleeping", "asleep", "sleep", "card", "cards", "tcg"]);
 
 // The singulars a plural search word could stand for: "dogs" → "dog", "foxes" → "foxe", "fox",
 // "puppies" → "puppie", "puppi", "puppy".
@@ -1147,7 +1151,7 @@ function textHasTerm(text, term) {
 // part of a longer word: "cat" finds the cat cards, not Raticate. Other words match anywhere, as before. Filler
 // words are dropped if the search finds nothing with them.
 function getSearchMatcher(query, { withKeywords = true } = {}) {
-  const allTerms = normalizeSearchText(query).split(/\s+/).filter(Boolean);
+  const allTerms = normalizeSearchText(query).split(/\s+/).filter((term) => term && !SEARCH_EVERY_CARD_WORDS.has(term));
   if (!allTerms.length) return null;
   const keywords = getSearchKeywordSet();
   const build = (terms) => {
@@ -1923,6 +1927,9 @@ function findSearchSuggestion(query) {
     }
     const letters = term.replace(/[^a-z0-9]/g, "");
     if (letters.length < 3) return null;
+    // A real Pokémon we don't have (Lugia, Baltoy) or a collector's word (shiny) isn't a typo: offer no "correction"
+    // (Luxio, Bolt, Shin), so the empty state says it isn't here yet and offers the suggestion form (#266).
+    if (isKnownSearchWord(letters)) return null;
     // The score decides what counts as a match; among matches, the closest spelling wins (fewest edits), then the
     // higher score, then the more common word. Otherwise sound-alike bonuses can beat a one-letter typo:
     // "joltin" scores higher against Jolteon (2 edits) than Joltik (1 edit).
@@ -1942,6 +1949,14 @@ function findSearchSuggestion(query) {
   if (!changed) return null;
   const suggestion = words.join(" ");
   return catalogMatchesSearch(suggestion) ? suggestion : null;
+}
+
+// Collector words that aren't on any card here but aren't typos either.
+const SEARCH_COLLECTOR_WORDS = new Set(["shiny", "shinies", "holo", "holographic", "foil", "reverse", "graded", "psa", "cgc", "bgs"]);
+
+// docs/pokemon-names.js (scripts/pokemon-names.mjs) lists every Pokémon name's words; the collection page loads it.
+function isKnownSearchWord(letters) {
+  return SEARCH_COLLECTOR_WORDS.has(letters) || Boolean(window.sleepyPokemonNames?.has(letters));
 }
 
 // The words a search could have meant, from card names, Pokemon, sets, artists and moods (not the notes).

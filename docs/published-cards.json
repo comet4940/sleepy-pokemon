@@ -193,7 +193,13 @@
         "Couch & Cushion"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house",
+        "food",
+        "eating"
       ]
     },
     {
@@ -349,7 +355,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -376,7 +386,12 @@
         "Couch & Cushion",
         "Nap Watch"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sv7-172",
@@ -403,7 +418,9 @@
         "Study Break"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -528,7 +545,9 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -633,7 +652,13 @@
       ],
       "searchKeywords": [
         "dog",
-        "puppy"
+        "puppy",
+        "indoor",
+        "inside",
+        "home",
+        "house",
+        "food",
+        "eating"
       ]
     },
     {
@@ -742,7 +767,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -1654,7 +1683,11 @@
       ],
       "searchKeywords": [
         "full art",
-        "fox"
+        "fox",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -1900,7 +1933,10 @@
         "Belly Up",
         "Drool & Snore"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "sm9-22",
@@ -1975,7 +2011,12 @@
         "Sleepy Trainers",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sm2-26",
@@ -2071,7 +2112,12 @@
         "Belly Up",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "neo4-22",
@@ -2222,7 +2268,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -2423,7 +2473,12 @@
       "moods": [
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sv2-226",
@@ -2504,7 +2559,9 @@
       "searchKeywords": [
         "full art",
         "dog",
-        "puppy"
+        "puppy",
+        "food",
+        "eating"
       ]
     },
     {
@@ -2555,7 +2612,9 @@
         "Town Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -2583,7 +2642,9 @@
         "Treetop Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -2640,7 +2701,11 @@
         "full art",
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -2928,7 +2993,12 @@
       "moods": [
         "Face-Plant"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sv8pt5-1",
@@ -3079,7 +3149,9 @@
         "Cameo Sleepers"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -3529,7 +3601,12 @@
         "Belly Up",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "swsh4-77",
@@ -3578,7 +3655,10 @@
         "Food Coma",
         "Belly Up"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "swsh4-131",
@@ -3757,7 +3837,9 @@
         "Study Break"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -3784,7 +3866,11 @@
         "Couch & Cushion"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4000,7 +4086,9 @@
         "Sunbeam Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -4057,7 +4145,9 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -4114,7 +4204,11 @@
         "full art",
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4167,7 +4261,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4196,7 +4294,9 @@
         "full art",
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -4300,7 +4400,13 @@
         "Food Coma"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house",
+        "food",
+        "eating"
       ]
     },
     {
@@ -4409,7 +4515,11 @@
       "searchKeywords": [
         "full art",
         "dog",
-        "puppy"
+        "puppy",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4435,7 +4545,11 @@
         "Couch & Cushion"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4543,7 +4657,11 @@
         "Bedtime"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4670,7 +4788,11 @@
         "Sunbeam Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4756,7 +4878,11 @@
         "Study Break"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -4980,7 +5106,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -5055,7 +5185,10 @@
         "Hug Buddy",
         "Couch & Cushion"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside"
+      ]
     },
     {
       "apiId": "smp-SM41",
@@ -5296,7 +5429,10 @@
         "Flower Beds",
         "Autumn Leaves"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "me55-131",
@@ -5378,7 +5514,12 @@
         "Cameo Sleepers",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sv09-120",
@@ -5461,7 +5602,11 @@
       ],
       "searchKeywords": [
         "full art",
-        "fox"
+        "fox",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -5842,7 +5987,11 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -5913,7 +6062,12 @@
       "moods": [
         "Belly Up"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "ex6-19",
@@ -6482,7 +6636,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -6700,7 +6858,11 @@
       ],
       "searchKeywords": [
         "dog",
-        "puppy"
+        "puppy",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {

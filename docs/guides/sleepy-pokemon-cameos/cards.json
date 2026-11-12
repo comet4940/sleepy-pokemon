@@ -50,7 +50,12 @@
         "Cameo Sleepers",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "me55-131",
@@ -267,7 +272,9 @@
         "Cameo Sleepers"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -347,7 +354,9 @@
         "Study Break"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     },
     {
@@ -401,7 +410,11 @@
       "searchKeywords": [
         "cat",
         "kitty",
-        "kitten"
+        "kitten",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -428,7 +441,12 @@
         "Couch & Cushion",
         "Nap Watch"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "swsh8-257",
@@ -456,7 +474,9 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "food",
+        "eating"
       ]
     },
     {

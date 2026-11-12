@@ -187,13 +187,16 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 
 ## Search keywords
 
-`searchKeywords` let a search find a card by words that aren't on it (#223). Most cards have none. Search also matches plurals ("dogs" finds "dog", "foxes" finds "fox", "puppies" finds "puppy") and ignores "card", "cards", "pokemon", "sleepy", "sleeping" and "tcg" when keeping them would find nothing ("crochet cards").
+`searchKeywords` let a search find a card by words that aren't on it (#223). Most cards have none. Search also matches plurals ("dogs" finds "dog", "foxes" finds "fox", "puppies" finds "puppy"), always ignores "sleepy", "sleeping", "asleep", "sleep", "card", "cards" and "tcg" (true of every card: "sleepy umbreon" finds every Umbreon and "eating card" every eating card, #266), and ignores "pokemon" when keeping it would find nothing ("pokemon go" still means Pokémon GO). "Did you mean" never corrects a real Pokémon we don't have (Lugia, Baltoy) or a collector's word (shiny): those get "No sleepy cards for … yet" and the suggestion form. The Pokémon names come from `docs/pokemon-names.js`; run `node scripts/pokemon-names.mjs` when new Pokémon are released.
 
 | Keyword | Which cards | Kind |
 | --- | --- | --- |
 | `full art` | Full art cards: art across the whole card, not in a frame. None before 2011. Usually Illustration Rare, Special Illustration Rare, Ultra Rare (2011 on), Trainer Gallery, Galarian Gallery, Rare Ultra and Rare Rainbow; check promos and non-English cards by eye | Art |
 | `alt art` | Traditional alternate arts from Sword & Shield and Sun & Moon: full-art V, VMAX and GX cards with a scene-style illustration (Dragonite V 192/203, Espeon VMAX 270/264, which some databases list as Rainbow Rare). Not Illustration Rares or Special Illustration Rares, which are their own category. Every alt art also has `full art` | Art |
 | `crochet`, `yarn`, `amigurumi`, `knitted` | Yarn-made art (Asako Ito) | Art |
+| `indoor`, `inside` | The scene is indoors: a room, a desk, an office, a Pokémon Center (#266). Not a cave, a tent's outside, or cushions with no room in sight | Art |
+| `home`, `house` | Indoors at home: bedrooms, living rooms, kitchens, a bathroom sink, a fireplace. Every card with these also has `indoor` and `inside`; offices, academies and the Pokémon Center don't get them | Art |
+| `food`, `eating` | Food is in the scene: a meal, snacks, berries or fruit being eaten or just eaten (#266). Not food mentioned only in the flavor text | Art |
 | `cat`, `kitty`, `kitten` | Cat Pokémon: Meowth, Skitty, Espurr, Meowstic, Glameow, Litten, Incineroar, Sprigatito, Luxio, Zeraora, Espeon, Umbreon, Mew (as in the Sleepy Cat guide) | Pokémon |
 | `dog`, `puppy` | Dog Pokémon: Growlithe, Arcanine, Rockruff, Lycanroc, Houndour | Pokémon |
 | `fox` | Fox Pokémon: Eevee (closer to a fox, never a dog), Vulpix, Zorua | Pokémon |

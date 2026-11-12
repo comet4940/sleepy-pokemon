@@ -51,7 +51,9 @@
         "Town Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -132,7 +134,12 @@
         "Sleepy Trainers",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sm11-207",
@@ -181,7 +188,12 @@
       "moods": [
         "Face-Plant"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sm10-137",
@@ -255,7 +267,12 @@
       "moods": [
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "hgss4-36",
