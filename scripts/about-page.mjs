@@ -2,7 +2,7 @@ import { renderSiteHeader } from "./site-header.mjs";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, renderSiteFooter } from "./site-footer.mjs";
 import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
-import { SITE_URL, assetUrl, escapeAttribute, escapeHtml, renderHead } from "./build-helpers.mjs";
+import { SITE_URL, absoluteUrl, assetUrl, escapeAttribute, escapeHtml, renderHead } from "./build-helpers.mjs";
 
 // "Contact Comet" (#209): its own Formspree form, separate from Suggest a card's, so the two inboxes stay apart.
 export const CONTACT_ENDPOINT = "https://formspree.io/f/mgaappeg";
@@ -31,7 +31,7 @@ export function renderAboutPage(cardBySlug) {
   const title = "About Sleepy Pokemon";
   const description = "Meet Comet and Linkcat, the mother-son collectors behind Sleepy Pokemon, and see how one napping Sprigatito became a hand-curated collection.";
   const canonicalUrl = `${SITE_URL}/about/`;
-  const image = card(ORIGIN_CARDS[0]).imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`;
+  const image = absoluteUrl(card(ORIGIN_CARDS[0]).imageLarge || `${SITE_URL}/assets/sleepy-pokemon.png`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",

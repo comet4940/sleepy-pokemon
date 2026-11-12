@@ -7,6 +7,7 @@ import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
 import {
   SITE_URL,
+  absoluteUrl,
   assetUrl,
   dataAttributes,
   escapeAttribute,
@@ -135,7 +136,7 @@ function renderSetPage(hub) {
   const highlights = third ? `${first}, ${second} and ${third}` : [first, second].filter(Boolean).join(" and ");
   const description = `${hub.cards.length} sleepy Pokemon cards from ${hub.name}${hub.year ? ` (${hub.year})` : ""}, including ${highlights}, each with a note on why it belongs in a sleepy binder.`;
   const canonicalUrl = `${SITE_URL}/sets/${hub.slug}/`;
-  const image = hub.cards[0]?.imageLarge || hub.cards[0]?.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
+  const image = absoluteUrl(hub.cards[0]?.imageLarge || hub.cards[0]?.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",

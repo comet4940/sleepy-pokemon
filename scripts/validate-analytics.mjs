@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import vm from "node:vm";
@@ -20,6 +20,9 @@ const slugByIdentity = new Map(assignSlugs(sourceCards).map((card) => [getCardId
 const cardBySlug = new Map(assignSlugs(sourceCards).map((card) => [card.slug, card]));
 const currentSlugs = new Set(slugByIdentity.values());
 // Elements that show a card and so carry its data-card-slug (see checkCardSlugs).
+// Generous limits for a card's two WebP files (KB); typical is about 175 and 50.
+const CARD_IMAGE_LIMITS = { large: 450, small: 130 };
+const usedCardImages = new Set();
 const CARD_DISPLAY_CLASSES = ["card-tile", "hero-card", "about-favorite", "about-chase-art", "card-page-detail"];
 await checkPublishedSlugs();
 await checkPublishedCopy();
@@ -118,6 +121,10 @@ for (const path of htmlFiles) {
     if (/class="footer-coffee"/.test(footer)) {
       errors.push(`${label}: legacy footer coffee link remains`);
     }
+  }
+  // Social previews need a full URL (#157): card images are site paths now.
+  for (const [, tag, url] of html.matchAll(/<meta (?:property|name)="(og:image|twitter:image)" content="([^"]*)"/g)) {
+    if (!url.startsWith("https://")) errors.push(`${label}: ${tag} should be a full https URL, got ${url}`);
   }
   if (pageType === "card" && !/data-card-number=/.test(html)) errors.push(`${label}: card analytics metadata is incomplete`);
   if (pageType === "card") checkRelatedCards(html, label, path);
@@ -276,9 +283,19 @@ function checkCardMoods() {
     if (card.tcgplayerProductId && !card.priceType) errors.push(`${label} has a TCGplayer product but no priceType (printing) to price`);
     const stale = retired.filter((field) => field in card);
     if (stale.length) errors.push(`${label} still has retired fields: ${stale.join(", ")}`);
-    for (const image of new Set([card.imageSmall, card.imageLarge])) {
-      if (String(image || "").startsWith("/") && !existsSync(join(DOCS_DIR, image))) errors.push(`${label} points to a missing image: ${image}`);
+    // #157: every card shows the site's own copies (scripts/card-images.mjs), never another site's image.
+    const slug = slugByIdentity.get(getCardIdentity(card));
+    const own = { large: `/assets/cards/${slug}.webp`, small: `/assets/cards/${slug}-small.webp` };
+    if (card.imageLarge !== own.large || card.imageSmall !== own.small) {
+      errors.push(`${label}: its images should be the site's own copies (${own.large}, ${own.small}), got ${card.imageLarge} and ${card.imageSmall}. Run node scripts/card-images.mjs`);
     }
+    for (const [size, path, limit] of [["large", own.large, CARD_IMAGE_LIMITS.large], ["small", own.small, CARD_IMAGE_LIMITS.small]]) {
+      const file = join(DOCS_DIR, path);
+      if (!existsSync(file)) errors.push(`${label}: its ${size} image ${path} is missing. Run node scripts/card-images.mjs`);
+      else if (statSync(file).size > limit * 1024) errors.push(`${label}: its ${size} image is ${Math.round(statSync(file).size / 1024)} KB, over the ${limit} KB limit`);
+    }
+    if ("imageOrigin" in card && !/^https:\/\//.test(card.imageOrigin)) errors.push(`${label}: imageOrigin should be the https URL the copy was made from`);
+    usedCardImages.add(own.large.split("/").pop()).add(own.small.split("/").pop());
   }
 }
 
@@ -416,6 +433,11 @@ async function checkCardFields() {
     if (undocumented.length) errors.push(`${label} has fields not documented in DATA-MODEL.md: ${undocumented.join(", ")}`);
     const missing = [...fields].filter(([field, required]) => required && (card[field] === undefined || card[field] === null || card[field] === ""));
     if (missing.length) errors.push(`${label} is missing required fields: ${missing.map(([field]) => field).join(", ")}`);
+  }
+  // Runs after checkCardMoods, which records the images every card uses.
+  // Files in docs/assets/cards/ that no card uses: a renamed card's old copy, or a stray download.
+  for (const file of await readdir(join(DOCS_DIR, "assets", "cards"))) {
+    if (!usedCardImages.has(file)) errors.push(`docs/assets/cards/${file}: no card uses this image; remove it`);
   }
 }
 

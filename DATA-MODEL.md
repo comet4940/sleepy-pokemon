@@ -39,10 +39,11 @@ The file is written with 2-space indentation, unescaped Unicode and a trailing n
 | `rarity` | Yes | Rarity as printed. The filter drawer groups rarities (`RARITY_GROUPS` in `docs/app.js`); add new rarities to the right group (the validator fails on a rarity outside every group, which would otherwise get a pill of its own) | `Illustration Rare` |
 | `language` | Yes | Card language | `English`, `Japanese`, `Simplified Chinese` |
 | `artist` | Yes | Illustrator from the card's "Illus." line | `Tomokazu Komiya` |
-| `imageSmall` | Yes | Grid image. A full URL for hosted images, or a site path (`/assets/cards/...`) for local files | `https://images.scrydex.com/pokemon/sm10-158/small` |
-| `imageLarge` | Yes | Detail-view image. May be the same as `imageSmall` | `https://images.scrydex.com/pokemon/sm10-158/large` |
-| `imageSource` | No | Credit for images hosted by a site that isn't a card API | `PriceCharting`, `Scrydex`, `PokeBoon` |
-| `imageSourceUrl` | No | Page the hosted image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
+| `imageSmall` | Yes | Grid image: the site's own copy, `/assets/cards/<slug>-small.webp` (up to 367px wide). Set by `scripts/card-images.mjs` | `/assets/cards/snorlax-unbroken-bonds-158-214-small.webp` |
+| `imageLarge` | Yes | Detail-view image: the site's own copy, `/assets/cards/<slug>.webp` (up to 734px wide). For a new card, put the URL of the best image here, and `scripts/card-images.mjs` copies it and replaces it | `/assets/cards/snorlax-unbroken-bonds-158-214.webp` |
+| `imageOrigin` | No | Where the copy was made from, set by `scripts/card-images.mjs`. `--redo` copies it again from here. Absent for images first stored as files in the repo | `https://images.pokemontcg.io/sm10/158_hires.png` |
+| `imageSource` | No | Credit for an image taken from a site that isn't a card API | `PriceCharting`, `Scrydex`, `PokeBoon` |
+| `imageSourceUrl` | No | Page the image came from (pairs with `imageSource`) | `https://scrydex.com/pokemon/cards/...` |
 | `moods` | Yes | Hand-picked moods from the fixed list in `scripts/moods.mjs`. Use `[]` for none; no duplicates | `["Food Coma", "Face-Plant"]` |
 | `searchKeywords` | Yes | Hidden words the collection search finds the card by, for what people type that isn't in its name, set, artist, moods or note (see [Search keywords](#search-keywords)). Lowercase, no duplicates, `[]` for none. Published to browsers, so nothing private | `["full art"]`, `["dog", "puppy"]` |
 | `whyItBelongs` | Yes | The curator's short note on what's happening in the art. Shown as "Why it belongs" | `Dinner is still on the table, and Growlithe...` |
@@ -76,8 +77,7 @@ The validator rejects any card that still has these:
 - **One name per set.** A set has a single `setName` across all its cards: no colour or sheet suffixes like "(Blue)", and no two names for the same set. Duplicates show up as separate sets in the filter drawer.
 - **Price the most accessible printing.** The site is a master list, not one binder, so `priceType` is the printing a collector can most easily find: the regular print (`Normal` or `Holofoil`), `Unlimited` over `1st Edition`, never a reverse holo, stamped or pattern variant unless that variant is the card.
 - **Vending Machine cards use their Pokédex number.** They don't print a set number, so `number` is the Pokédex number as PriceCharting lists it (Snorlax `143`, Abra `63`, Growlithe `58`).
-- **pokemontcg.io is retired** (it moved to Scrydex in 2026). Its existing image links still work, so listed cards keep them, but don't use its API or image links for new cards.
-- **Images: hosted first.** Prefer a card API image (Scrydex: `https://images.scrydex.com/pokemon/<id>/small` and `/large`; or TCGdex) or another stable host with `imageSource` credit. Store a file in `docs/assets/cards/` only when there's no hosted image or the local scan is clearly better. Name local files after the card, e.g. `growlithe-vending-machine-series-3-58.jpg`.
+- **Images are our own copies** (#157). Every card shows two WebP files in `docs/assets/cards/`, named after its card page slug, made by `scripts/card-images.mjs` from the best image available. Pages never link to another site's images: pokemontcg.io has moved to Scrydex, and Scrydex asks sites to keep their own copies rather than build its image URLs. Good sources for a new card: TCGdex (free, no key, Japanese too), the card's Scrydex page, PriceCharting, or a photo. The validator fails on a card whose images aren't its own files, and on files no card uses.
 - **Prices come from the refresh**, into `docs/prices.json`. See [Prices](#prices).
 - **Moods are a fixed list.** Add a new mood to `scripts/moods.mjs` before using it. A mood is only tagged when it truly shows in the art.
 
@@ -206,15 +206,16 @@ The homepage's "Featured sleeper" changes every Sunday night (Pacific) from the 
 ## Adding a card
 
 1. **Check it isn't already listed**: search `data/cards.json` for the Pokémon, set and number.
-2. **Collect the details** from the card itself and a source like Scrydex, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, image.
+2. **Collect the details** from the card itself and a source like Scrydex, TCGdex or PriceCharting: name, set, number, rarity, language, artist, release date, and the URL of the best image (the largest clear scan).
 3. **Write the curation**: pick moods, write `whyItBelongs` (see [Writing "Why it belongs"](#writing-why-it-belongs)), and note the source in `notes` (e.g. "Community submission via the Suggest a card form.").
 4. **Add search keywords** from the [Search keywords](#search-keywords) table: `full art` if it is one (2011 or later only), `dog` or `cat` for those Pokémon, plus anything people would search for that isn't in the name or note. Usually `[]`.
-5. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now.
-6. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
-7. **Regenerate and check**:
+5. **Add the entry** at the top of `cards` in `data/cards.json`, with `createdAt` and `updatedAt` set to now, and the image URL in both `imageLarge` and `imageSmall`.
+6. **Copy the image**: `node scripts/card-images.mjs` downloads it, saves the two WebP files and points the card at them (it needs Python 3 with Pillow: `pip install Pillow`). Look at the large one before going on.
+7. **Price it.** Japanese and Chinese cards get a `Manual` price in `docs/prices.json` (see [Prices](#prices)). English cards are linked to TCGplayer: run `node scripts/match-tcgplayer.mjs`, check the match in its report (product, printing), then run it again with `--write`. If the card's set has a different name on TCGplayer, add it to `SET_ALIASES` in the script.
+8. **Regenerate and check**:
    ```bash
    node scripts/sync-seo-index.mjs
    node scripts/sync-guides.mjs
    node scripts/validate-analytics.mjs
    ```
-8. **Open a PR** with the regenerated pages; it goes live once merged. The next price refresh fills in the price.
+9. **Open a PR** with the regenerated pages and the new image files; it goes live once merged. The next price refresh fills in the price.
