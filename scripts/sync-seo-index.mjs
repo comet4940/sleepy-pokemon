@@ -3,6 +3,7 @@ import { renderSiteHeader } from "./site-header.mjs";
 import { renderSiteFooter, syncSiteFooter } from "./site-footer.mjs";
 import {
   SITE_URL,
+  absoluteUrl,
   buildImageAlt,
   escapeAttribute,
   escapeHtml,
@@ -182,7 +183,7 @@ function renderCardPage(card, memberships) {
     name: title,
     url: canonicalUrl,
     description,
-    image,
+    image: absoluteUrl(image),
     about: {
       "@type": "Thing",
       name: card.name || card.pokemon || "Pokemon card",

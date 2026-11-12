@@ -7,6 +7,7 @@ import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getSetHubs, loadSetDefs, writeSetPages } from "./set-pages.mjs";
 import {
   SITE_URL,
+  absoluteUrl,
   assetUrl,
   dataAttributes,
   escapeAttribute,
@@ -211,7 +212,7 @@ function renderGuidePage(guide) {
     name: title,
     url: canonicalUrl,
     description,
-    image,
+    image: absoluteUrl(image),
     mainEntity: guide.cards.map(({ card }) => ({
       "@type": "Thing",
       name: `${card.name} Sleepy Pokemon Card`,

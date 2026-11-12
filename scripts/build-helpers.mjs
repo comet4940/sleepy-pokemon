@@ -167,6 +167,12 @@ export function slugify(value) {
 
 // The shared <head> for generated pages. `root` is the relative path back to docs/ ("../" or "../../");
 // `socialTitle` is the shorter title for link previews when the tab title carries a site suffix.
+// A site path ("/assets/cards/…") as a full URL. Social previews (og:image, twitter:image) and structured data need
+// full URLs; card images are site paths since they moved into docs/assets/cards/ (#157).
+export function absoluteUrl(path) {
+  return String(path || "").startsWith("/") ? `${SITE_URL}${path}` : path;
+}
+
 export function renderHead({
   root,
   title,
@@ -203,12 +209,12 @@ export function renderHead({
     `<meta property="og:title" content="${escapeAttribute(socialTitle)}" />`,
     `<meta property="og:description" content="${escapeAttribute(description)}" />`,
     `<meta property="og:url" content="${escapeAttribute(canonicalUrl)}" />`,
-    `<meta property="og:image" content="${escapeAttribute(image)}" />`,
+    `<meta property="og:image" content="${escapeAttribute(absoluteUrl(image))}" />`,
     ...(twitter ? [
       `<meta name="twitter:card" content="summary_large_image" />`,
       `<meta name="twitter:title" content="${escapeAttribute(socialTitle)}" />`,
       `<meta name="twitter:description" content="${escapeAttribute(description)}" />`,
-      `<meta name="twitter:image" content="${escapeAttribute(image)}" />`,
+      `<meta name="twitter:image" content="${escapeAttribute(absoluteUrl(image))}" />`,
     ] : []),
     ...(jsonLd ? [`<script type="application/ld+json">${escapeScriptJson(JSON.stringify(jsonLd))}</script>`] : []),
     `<script defer src="${assetUrl(root, "analytics.js")}" data-page-type="${pageType}"${analyticsAttributes}></script>`,

@@ -7,6 +7,7 @@ import { renderCardDetailDialog } from "./card-detail-dialog.mjs";
 import { getCardIdentity } from "./card-identity.mjs";
 import {
   SITE_URL,
+  absoluteUrl,
   assetUrl,
   dataAttributes,
   escapeAttribute,
@@ -142,7 +143,7 @@ function renderSetPage(hub) {
     name: title,
     url: canonicalUrl,
     description,
-    image,
+    image: absoluteUrl(image),
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: hub.cards.length,
