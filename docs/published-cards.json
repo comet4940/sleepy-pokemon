@@ -420,9 +420,7 @@
       "searchKeywords": [
         "full art",
         "indoor",
-        "inside",
-        "food",
-        "eating"
+        "inside"
       ]
     },
     {
@@ -1080,10 +1078,7 @@
         "Food Coma",
         "Face-Plant"
       ],
-      "searchKeywords": [
-        "food",
-        "eating"
-      ]
+      "searchKeywords": []
     },
     {
       "apiId": "ecard3-100",
