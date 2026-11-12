@@ -175,7 +175,7 @@ function renderCardPage(card, memberships) {
   const pageHeading = `${card.name || card.pokemon || "Pokemon"} Sleepy Pokemon Card`;
   const imageAlt = buildImageAlt(card);
   const canonicalUrl = `${SITE_URL}/cards/${card.slug}/`;
-  const image = absoluteUrl(card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`);
+  const image = card.imageLarge || card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
   const release = formatDate(card.setReleaseDate) || "Unknown";
   const jsonLd = {
     "@context": "https://schema.org",
@@ -183,7 +183,7 @@ function renderCardPage(card, memberships) {
     name: title,
     url: canonicalUrl,
     description,
-    image,
+    image: absoluteUrl(image),
     about: {
       "@type": "Thing",
       name: card.name || card.pokemon || "Pokemon card",

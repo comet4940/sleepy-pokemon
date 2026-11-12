@@ -205,14 +205,14 @@ function renderGuidePage(guide) {
   const title = guide.title || "Sleepy Pokemon Card Guide";
   const description = guide.metaDescription || guide.description || "A curated Sleepy Pokemon card guide for collectors.";
   const canonicalUrl = `${SITE_URL}/guides/${guide.slug}/`;
-  const image = absoluteUrl(guide.cards[0]?.card.imageLarge || guide.cards[0]?.card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`);
+  const image = guide.cards[0]?.card.imageLarge || guide.cards[0]?.card.imageSmall || `${SITE_URL}/assets/sleepy-pokemon.png`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: title,
     url: canonicalUrl,
     description,
-    image,
+    image: absoluteUrl(image),
     mainEntity: guide.cards.map(({ card }) => ({
       "@type": "Thing",
       name: `${card.name} Sleepy Pokemon Card`,
