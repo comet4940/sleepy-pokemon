@@ -46,7 +46,12 @@
       "moods": [
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "sm12-123",
@@ -72,7 +77,11 @@
       ],
       "searchKeywords": [
         "dog",
-        "puppy"
+        "puppy",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {

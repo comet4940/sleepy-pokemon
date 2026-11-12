@@ -211,6 +211,7 @@ checkWishlistStates(appSource);
 checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
 checkImageSource();
 checkSwipeHint(appSource, binderSource);
+checkSearchWords(appSource, await readFile(join(DOCS_DIR, "pokemon-names.js"), "utf8"), await readFile(join(DOCS_DIR, "collection", "index.html"), "utf8"));
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -983,6 +984,42 @@ function checkFilterClearTracking(appSource) {
     }
     app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #266: "sleepy", "sleeping", "asleep" and "sleep" are true of every card, so they never narrow a search; and "Did you
+// mean" never "corrects" a real Pokémon we don't have, or a collector's word, into a word we do have.
+function checkSearchWords(appSource, namesSource, collectionHtml) {
+  const fail = (message) => errors.push(`docs/app.js (#266): ${message}`);
+  if (!collectionHtml.includes(`pokemon-names.js?v=${ASSET_VERSIONS["pokemon-names.js"]}`) || collectionHtml.indexOf("pokemon-names.js") > collectionHtml.indexOf("app.js?v=")) fail(`the collection must load pokemon-names.js?v=${ASSET_VERSIONS["pokemon-names.js"]} before app.js`);
+  if (!/window\.sleepyPokemonNames = new Set\(/.test(namesSource) || !namesSource.includes('"lugia"') || (namesSource.match(/","/g) || []).length < 1000) fail("docs/pokemon-names.js should list every Pokémon name's words (node scripts/pokemon-names.mjs)");
+  const card = (name, setName, whyItBelongs, artist = "Test Artist") => ({ name, pokemon: name, setName, setSeries: "Test", number: "1/1", rarity: "Common", language: "English", artist, whyItBelongs, moods: [], searchKeywords: [] });
+  const catalog = [
+    card("Umbreon", "Gem Pack", "A sleepy Umbreon by the moon."),
+    card("Umbreon", "Pokémon VS", "Curled up under the stars on this card."),
+    card("Umbreon", "Celebrations", "Dozing in the grass."),
+    card("Luxio", "Crown Zenith", "Asleep beside a plush."),
+    card("Darumaka", "Black Bolt", "Asleep on a cushion."),
+    card("Meowth", "Unbroken Bonds", "Asleep on a bed.", "Shin-ichi Yoshida"),
+  ];
+  try {
+    for (const withNames of [true, false]) {
+      const app = loadApp(appSource);
+      if (withNames) vm.runInContext(namesSource, app.context, { filename: "docs/pokemon-names.js" });
+      app.run(`state.cards = ${JSON.stringify(catalog)}.map(normalizeCard)`);
+      const count = (search) => app.run(`filterCards({ ...state.filters, search: ${JSON.stringify(search)} }).length`);
+      const suggest = (search) => app.run(`findSearchSuggestion(${JSON.stringify(search)})`);
+      for (const search of ["sleepy umbreon", "umbreon card", "umbreon cards"]) if (count(search) !== 3) fail(`"${search}" should find every Umbreon (3), found ${count(search)}`);
+      for (const word of ["sleeping", "sleepy", "asleep"]) if (count(word) !== catalog.length) fail(`"${word}" alone should show every card (${catalog.length}), found ${count(word)}`);
+      if (suggest("mewoth") !== "Meowth") fail(`"mewoth" should still suggest Meowth, got ${suggest("mewoth")}`);
+      if (!withNames) continue;
+      for (const [search, wrong] of [["lugia", "Luxio"], ["baltoy", "Bolt"], ["shiny", "Shin"], ["shiny umbreon", "Shin Umbreon"]]) {
+        const got = suggest(search);
+        if (got !== null) fail(`"${search}" (not in the collection) shouldn't be "corrected" (it was to ${JSON.stringify(got)}; the bug was ${wrong})`);
+      }
+    }
   } catch (error) {
     fail(`threw ${error.message}`);
   }

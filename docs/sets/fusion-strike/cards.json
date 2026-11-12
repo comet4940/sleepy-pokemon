@@ -72,7 +72,10 @@
         "Food Coma",
         "Belly Up"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "swsh8-252",
@@ -98,7 +101,11 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -127,7 +134,9 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "food",
+        "eating"
       ]
     },
     {

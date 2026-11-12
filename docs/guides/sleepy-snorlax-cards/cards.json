@@ -73,7 +73,10 @@
         "Food Coma",
         "Face-Plant"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "ecard3-100",
@@ -320,7 +323,10 @@
         "Food Coma",
         "Belly Up"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "pgo-55",
@@ -527,7 +533,10 @@
         "Flower Beds",
         "Autumn Leaves"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "food",
+        "eating"
+      ]
     },
     {
       "apiId": "sv6-187",
@@ -552,7 +561,9 @@
         "Cameo Sleepers"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     }
   ]

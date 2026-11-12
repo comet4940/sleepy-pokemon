@@ -109,7 +109,9 @@
       ],
       "searchKeywords": [
         "full art",
-        "alt art"
+        "alt art",
+        "food",
+        "eating"
       ]
     },
     {
@@ -135,7 +137,12 @@
         "Belly Up",
         "Bedtime"
       ],
-      "searchKeywords": []
+      "searchKeywords": [
+        "indoor",
+        "inside",
+        "home",
+        "house"
+      ]
     },
     {
       "apiId": "swsh12pt5-109",
@@ -272,7 +279,11 @@
         "Bedtime"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside",
+        "home",
+        "house"
       ]
     },
     {
@@ -435,7 +446,9 @@
         "Sunbeam Naps"
       ],
       "searchKeywords": [
-        "full art"
+        "full art",
+        "indoor",
+        "inside"
       ]
     }
   ]
