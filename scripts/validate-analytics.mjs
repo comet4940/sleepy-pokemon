@@ -67,6 +67,8 @@ const requiredAppEvents = [
   "wishlist_toggled",
   "wishlist_hint_shown",
   "wishlist_hint_dismissed",
+  "swipe_hint_shown",
+  "swipe_hint_dismissed",
 ];
 
 await checkChromeStyles();
@@ -208,6 +210,7 @@ checkCollectionHistory(appSource);
 checkWishlistStates(appSource);
 checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
 checkImageSource();
+checkSwipeHint(appSource, binderSource);
 checkSearchKeywordMatching(appSource);
 await checkContactForm(await readFile(join(DOCS_DIR, "contact.js"), "utf8"));
 // card-page.js repeats app.js's one-time hint names; they must stay the same or a first wish on a card page won't count.
@@ -980,6 +983,72 @@ function checkFilterClearTracking(appSource) {
     }
     app.run(`state.filters.sort = "added"; state.filters.mood = "belly-up"; clearFilters("filter_drawer_reset")`);
     if (app.run("state.filters.sort") !== app.run("PUBLIC_DEFAULT_SORT")) fail("the drawer's Reset should also reset the sort");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// #280: the one-time swipe hint. Only on touch screens, only for a card with others to step to, never on the first
+// card opened, once per device, never for someone who has swiped; it goes away when they swipe, tap or close.
+function checkSwipeHint(appSource, binderSource) {
+  const fail = (message) => errors.push(`docs/app.js (#280): ${message}`);
+  const setup = ({ touch = true } = {}) => {
+    const app = loadApp(appSource);
+    const events = [];
+    const store = new Map();
+    const listeners = new Map();
+    Object.assign(app.context.window, {
+      localStorage: { getItem: (key) => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+      addEventListener: (type, fn) => listeners.set(type, [...(listeners.get(type) || []), fn]),
+      removeEventListener() {},
+      dispatchEvent: (event) => (listeners.get(event.type) || []).forEach((fn) => fn(event)),
+      matchMedia: (query) => ({ matches: query.includes("pointer: coarse") ? touch : false }),
+      setTimeout: () => 1,
+      clearTimeout() {},
+      sleepyAnalytics: { track: (name, params) => events.push({ name, params }) },
+    });
+    app.context.CustomEvent = class { constructor(type, init) { this.type = type; this.detail = init?.detail; } };
+    vm.runInContext(binderSource, app.context, { filename: "docs/binder.js" });
+    const shown = [];
+    app.context.__shown = shown;
+    app.run(`
+      document.createElement = () => ({ setAttribute() {}, remove() { this.removed = true; } });
+      elements.cardDetailDialog = { querySelector: () => ({ append: (node) => globalThis.__shown.push(node) }) };
+    `);
+    const open = (deckSize = 3) => app.run(`state.cardDeck = ${JSON.stringify(Array.from({ length: deckSize }, (_, i) => `card-${i}`))}; maybeShowSwipeHint()`);
+    return { app, events, shown, open, named: (name) => events.filter((event) => event.name === name) };
+  };
+  try {
+    const first = setup();
+    first.open();
+    if (first.shown.length) fail("the hint shouldn't show on the first card someone opens");
+    first.open();
+    if (first.shown.length !== 1 || first.named("swipe_hint_shown").length !== 1) fail("the hint should show once, on the second card opened on a touch screen");
+    first.app.run(`dismissSwipeHint("tapped")`);
+    const dismissed = first.named("swipe_hint_dismissed")[0]?.params;
+    if (dismissed?.dismiss_method !== "tapped" || !first.shown[0]?.removed) fail(`a tap should remove the hint and send swipe_hint_dismissed with dismiss_method: tapped, got ${JSON.stringify(dismissed)}`);
+    first.open(); first.open();
+    if (first.shown.length !== 1) fail("once seen, the hint should never show again");
+    for (const key of Object.keys(dismissed || {})) if (!["interaction_source", "dismiss_method"].includes(key)) fail(`swipe_hint_dismissed must carry no card details, sends ${key}`);
+
+    const desktop = setup({ touch: false });
+    desktop.open(); desktop.open(); desktop.open();
+    if (desktop.shown.length) fail("the hint should never show without a touch screen");
+
+    const single = setup();
+    single.open(1); single.open(1); single.open(1);
+    if (single.shown.length) fail("the hint should never show for a card with no others to step to");
+
+    const swiper = setup();
+    swiper.open();
+    swiper.app.run(`noteSwiped()`);
+    swiper.open(); swiper.open();
+    if (swiper.shown.length) fail("someone who has swiped should never see the hint");
+
+    const showing = setup();
+    showing.open(); showing.open();
+    showing.app.run(`noteSwiped()`);
+    if (showing.named("swipe_hint_dismissed")[0]?.params.dismiss_method !== "swiped") fail("swiping while the hint shows should dismiss it as swiped");
   } catch (error) {
     fail(`threw ${error.message}`);
   }
