@@ -533,6 +533,41 @@ html:has(.card-detail-dialog[open]) {
   }
 }
 
+/* The one-time swipe hint on phones (#280, app.js maybeShowSwipeHint): a pill at the bottom of the card, styled like
+   the "4 of 48" counter. Taps go through it to the lightbox (any tap puts it away). */
+.swipe-hint {
+  position: absolute;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 5;
+  margin: 0;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 247, 232, .28);
+  border-radius: 999px;
+  background: rgba(17, 17, 26, .9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+  color: #fff7e8;
+  font: 600 .9rem/1.2 var(--detail-ui);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: swipe-hint-in 260ms ease-out both;
+}
+
+.swipe-hint span {
+  color: var(--detail-pink);
+  font-weight: 700;
+}
+
+@keyframes swipe-hint-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-hint { animation: none; }
+}
+
 .detail-position[hidden],
 .detail-nav[hidden] {
   display: none;
