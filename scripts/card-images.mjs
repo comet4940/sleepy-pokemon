@@ -38,18 +38,23 @@ for path, width, quality in ((large, int(lw), int(lq)), (small, int(sw), int(sq)
 print(f"{image.width}x{image.height}")
 `;
 
-async function download(url) {
+// Each attempt gets DOWNLOAD_TIMEOUT_MS for the whole download, body included, so a stalled image host fails that
+// attempt (and is retried) instead of holding up the run, which copies one card at a time.
+export const DOWNLOAD_TIMEOUT_MS = 30_000;
+
+export async function download(url, { timeoutMs = DOWNLOAD_TIMEOUT_MS, attempts = 3 } = {}) {
   let lastError;
-  for (let attempt = 1; attempt <= 3; attempt += 1) {
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      const response = await fetch(url, { headers: { "User-Agent": "sleepy-pokemon-card-images" } });
+      const signal = AbortSignal.timeout(timeoutMs);
+      const response = await fetch(url, { headers: { "User-Agent": "sleepy-pokemon-card-images" }, signal });
       if (!response.ok) throw new Error(`${url} returned ${response.status}`);
       const type = response.headers.get("content-type") || "";
       if (!type.startsWith("image/")) throw new Error(`${url} isn't an image (${type || "no content type"})`);
       return Buffer.from(await response.arrayBuffer());
     } catch (error) {
-      lastError = error;
-      await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+      lastError = error.name === "TimeoutError" ? new Error(`${url} didn't finish within ${timeoutMs / 1000} s`) : error;
+      if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
     }
   }
   throw lastError;
