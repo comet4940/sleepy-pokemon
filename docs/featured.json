@@ -1,5 +1,5 @@
 {
-  "showing": "munna-black-bolt-116-086",
+  "showing": "growlithe-vending-machine-series-3-58",
   "current": {
     "startsOn": "2026-10-25",
     "cards": [
@@ -30,6 +30,10 @@
     {
       "week": "2026-11-08",
       "card": "munna-black-bolt-116-086"
+    },
+    {
+      "week": "2026-11-15",
+      "card": "growlithe-vending-machine-series-3-58"
     }
   ]
 }
