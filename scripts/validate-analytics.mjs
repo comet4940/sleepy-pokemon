@@ -209,6 +209,7 @@ await checkSuggestionSending(appSource);
 checkCollectionHistory(appSource);
 checkWishlistStates(appSource);
 checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
+checkCardPageParams(analyticsSource);
 checkImageSource();
 checkSwipeHint(appSource, binderSource);
 checkSearchWords(appSource, await readFile(join(DOCS_DIR, "pokemon-names.js"), "utf8"), await readFile(join(DOCS_DIR, "collection", "index.html"), "utf8"));
@@ -1126,6 +1127,47 @@ function checkImageSource() {
   if (!pick({ imageLarge: own.large }).startsWith("error:")) fail("a card showing its own copies with no imageOrigin should stop with an error, not re-encode its own WebP");
   if (pick({ imageLarge: "https://example.com/new-card.png", imageOrigin: origin }) !== "https://example.com/new-card.png") fail("a new image URL in imageLarge should be what's copied");
   if (pick({ imageLarge: own.large, imageOrigin: origin }, { from: "https://example.com/better-scan.png" }) !== "https://example.com/better-scan.png") fail("--from should override imageOrigin");
+}
+
+// On a card page, analytics.js must keep the card to card_page_view. GA4 adds the config call's parameters to every
+// event on the page, so card parameters there reached wishlist_toggled from the card page's "Add to wishlist"
+// (seen in the BigQuery export on 2026-11-12) and would say which card was wished for.
+function checkCardPageParams(analyticsSource) {
+  const fail = (message) => errors.push(`docs/analytics.js (card page): ${message}`);
+  const cardParams = ["card_name", "card_pokemon", "card_set", "card_number", "card_rarity", "card_language"];
+  try {
+    const window = {
+      location: { search: "", protocol: "https:", hostname: "www.sleepypokemon.com", href: "https://www.sleepypokemon.com/cards/test-card/" },
+      localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+      sessionStorage: { getItem: () => null, setItem() {} },
+    };
+    const context = vm.createContext({
+      window, console: { info() {} }, URLSearchParams, Date, URL,
+      document: {
+        currentScript: { dataset: { pageType: "card", cardName: "Bulbasaur", cardPokemon: "Bulbasaur", cardSet: "151", cardNumber: "166/165", cardRarity: "Illustration Rare", cardLanguage: "English" } },
+        body: { dataset: {} },
+        title: "Bulbasaur 151 166/165",
+        head: { append() {} },
+        createElement: () => ({}),
+        addEventListener() {},
+      },
+    });
+    vm.runInContext(analyticsSource, context, { filename: "docs/analytics.js" });
+    context.window.sleepyAnalytics.track("wishlist_toggled", { action: "added", interaction_source: "card_page" });
+    const calls = [...context.window.dataLayer].map((args) => [...args]);
+    const config = calls.find(([command]) => command === "config")?.[2] || {};
+    const inConfig = cardParams.filter((key) => config[key] !== undefined);
+    if (inConfig.length) fail(`the GA4 config call sets ${inConfig.join(", ")}, so every event on a card page (wishlist_toggled too) says which card it is`);
+    const event = (name) => calls.find(([command, eventName]) => command === "event" && eventName === name)?.[2];
+    const pageView = event("card_page_view");
+    const missing = cardParams.filter((key) => !pageView?.[key]);
+    if (missing.length) fail(`card_page_view should still send ${missing.join(", ")}`);
+    const wish = event("wishlist_toggled") || {};
+    const leaked = cardParams.filter((key) => wish[key] !== undefined);
+    if (leaked.length) fail(`wishlist_toggled on a card page sends ${leaked.join(", ")}`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
 }
 
 // #285: analytics.js starts even when the browser blocks storage (SM-10), and #263: filters_cleared reports the cards

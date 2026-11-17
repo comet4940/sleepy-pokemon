@@ -162,6 +162,8 @@ Common parameters:
 
 **Page titles:** the collection's `<title>` includes the live card count ("All 263 Sleeping Pokemon Cards: Full List with Pictures") for search. From 2026-11-07, GA4 receives it without the number ("All Sleeping Pokemon Cards: Full List with Pictures", `page_title` in `analytics.js`), so it stays one row in *Page title and screen name*. Before that date it's split across "All 261…", "All 262…" and so on: for reports spanning that date, use *Page path* (`/collection/`) instead.
 
+**Card parameters on card pages:** only `card_page_view` (and events that send them themselves) carry card parameters. Until `analytics.js` v8 (2026-11-17), the GA4 config call set them for the whole card page, so every event there carried them, including `wishlist_toggled` from the page's *Add to wishlist* button, which must never say which card it was (one such event, on 2026-11-12). For reports spanning that date, don't break card-page events other than `card_page_view` down by card; use *Page path* (`/cards/<slug>/`) instead. `checkCardPageParams` in `scripts/validate-analytics.mjs` tests this.
+
 Register these event-scoped custom dimensions when reusable GA4 reporting is needed:
 
 - `analytics_version`
