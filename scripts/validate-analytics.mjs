@@ -5,6 +5,7 @@ import vm from "node:vm";
 import { getCardIdentity } from "./card-identity.mjs";
 import { cardImagePaths, pickImageSource } from "./card-images.mjs";
 import { MOODS } from "./moods.mjs";
+import { countMostWished, monthQuery } from "./most-wished.mjs";
 import { ASSET_VERSIONS, CARDS_PATH, CARD_SLUGS_PATH, PUBLIC_CARD_FIELDS, PUBLISHED_CARDS_PATH, assignSlugs, loadPublishedSlugs, publicCardsJson, slugify, toPublicCard } from "./build-helpers.mjs";
 
 const ROOT = process.cwd();
@@ -209,6 +210,8 @@ await checkSuggestionSending(appSource);
 checkCollectionHistory(appSource);
 checkWishlistStates(appSource);
 checkAnalyticsState(appSource, await readFile(join(DOCS_DIR, "analytics.js"), "utf8"));
+checkCardPageParams(analyticsSource);
+checkMostWished();
 checkImageSource();
 checkSwipeHint(appSource, binderSource);
 checkSearchWords(appSource, await readFile(join(DOCS_DIR, "pokemon-names.js"), "utf8"), await readFile(join(DOCS_DIR, "collection", "index.html"), "utf8"));
@@ -570,6 +573,9 @@ function checkWishlistStar(appSource, binderSource) {
     const slug = slugByIdentity.get(getCardIdentity(browserCards[0]));
     if (!/class="wish-toggle"[^>]*aria-pressed="false"/.test(app.context.renderCard(card))) fail("a tile doesn't draw an unpressed star");
     if (/<article[^>]*role="button"/.test(app.context.renderCard(card))) fail("the tile is a button again, so the star would be a button inside a button");
+    // wishlist_toggled names the card it was for (the most-wished count), found by slug among the page's cards.
+    app.context.__wishCard = { ...card, slug };
+    app.run("state.cards = [globalThis.__wishCard]");
     const button = { dataset: { wishSlug: slug, wishName: card.name } };
     app.context.toggleWish(button);
     if (!app.context.window.sleepyBinder.has("wished", slug)) fail("tapping the star doesn't save the card");
@@ -610,9 +616,10 @@ function checkWishlistStar(appSource, binderSource) {
     if (!/already have this card/.test(toasts.at(-1)?.message || "")) fail(`a refused add should say the card is already collected, showed ${JSON.stringify(toasts.at(-1)?.message)}`);
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
     if (wishEvents.length !== 6) fail(`expected 6 wishlist_toggled events, got ${wishEvents.length}`);
+    const wanted = { card_name: card.name, card_pokemon: card.pokemon, card_set: card.setName, card_number: card.number, card_rarity: card.rarity, card_language: card.language };
     for (const { params } of wishEvents) {
-      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
-      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+      const wrong = Object.keys(wanted).filter((key) => params[key] !== wanted[key]);
+      if (wrong.length) fail(`wishlist_toggled should say which card it was for (the most-wished count), but ${wrong.join(", ")} ${wrong.length === 1 ? "is" : "are"} missing or wrong`);
     }
   } catch (error) {
     fail(`threw ${error.message}`);
@@ -653,7 +660,10 @@ function checkCardPageWish(source, binderSource) {
       sleepyAnalytics: { track: (name, params) => events.push({ name, params }) },
       setTimeout() {},
     };
-    const context = vm.createContext({ window, document: { querySelectorAll: () => [button] }, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
+    // The card page's analytics.js tag carries the card's details; card-page.js sends them with wishlist_toggled.
+    const cardPageData = { card_name: "Test Card", card_pokemon: "Testmon", card_set: "Test Set", card_number: "1/1", card_rarity: "Common", card_language: "English" };
+    const cardScript = { dataset: { pageType: "card", cardName: "Test Card", cardPokemon: "Testmon", cardSet: "Test Set", cardNumber: "1/1", cardRarity: "Common", cardLanguage: "English" } };
+    const context = vm.createContext({ window, document: { querySelectorAll: () => [button], querySelector: (selector) => (selector === 'script[data-page-type="card"]' ? cardScript : null) }, Date, JSON, Object, Array, Error, CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init?.detail; } } });
     vm.runInContext(binderSource, context, { filename: "docs/binder.js" });
     vm.runInContext(source, context, { filename: "docs/card-page.js" });
     if (!click) return fail("doesn't listen for clicks on the wishlist button");
@@ -681,8 +691,8 @@ function checkCardPageWish(source, binderSource) {
     const wishEvents = events.filter((event) => event.name === "wishlist_toggled");
     if (wishEvents.length !== 2 || wishEvents.some(({ params }) => params.interaction_source !== "card_page")) fail("should send wishlist_toggled with interaction_source card_page for each click");
     for (const { params } of wishEvents) {
-      const extra = Object.keys(params).filter((key) => !["action", "interaction_source"].includes(key));
-      if (extra.length) fail(`wishlist_toggled must never say which card it was, but sends ${extra.join(", ")}`);
+      const wrong = Object.keys(cardPageData).filter((key) => params[key] !== cardPageData[key]);
+      if (wrong.length) fail(`wishlist_toggled should say which card it was for (the most-wished count), but ${wrong.join(", ")} ${wrong.length === 1 ? "is" : "are"} missing or wrong`);
     }
   } catch (error) {
     fail(`threw ${error.message}`);
@@ -1126,6 +1136,87 @@ function checkImageSource() {
   if (!pick({ imageLarge: own.large }).startsWith("error:")) fail("a card showing its own copies with no imageOrigin should stop with an error, not re-encode its own WebP");
   if (pick({ imageLarge: "https://example.com/new-card.png", imageOrigin: origin }) !== "https://example.com/new-card.png") fail("a new image URL in imageLarge should be what's copied");
   if (pick({ imageLarge: own.large, imageOrigin: origin }, { from: "https://example.com/better-scan.png" }) !== "https://example.com/better-scan.png") fail("--from should override imageOrigin");
+}
+
+// scripts/most-wished.mjs: each browser counts once per card, by its last add or remove in the month; events in one
+// GA4 batch share a timestamp and are ordered by batch_event_index; cards are found by their card parameters or, for
+// events from before those were sent, by the /cards/<slug>/ page they came from.
+function checkMostWished() {
+  const fail = (message) => errors.push(`scripts/most-wished.mjs: ${message}`);
+  try {
+    const cards = [
+      { slug: "bulbasaur-151", name: "Bulbasaur", pokemon: "Bulbasaur", setName: "151", number: "166/165", language: "English" },
+      { slug: "mew-gg10", name: "Mew", pokemon: "Mew", setName: "Crown Zenith Galarian Gallery", number: "GG10/GG70", language: "English" },
+      { slug: "zorua-75", name: "Zorua", pokemon: "Zorua", setName: "Shrouded Fable", number: "75/64", language: "English" },
+    ];
+    const mew = { card_name: "Mew", card_set: "Crown Zenith Galarian Gallery", card_number: "GG10/GG70", card_language: "English" };
+    const events = [
+      { browser: "a", ts: 1, seq: 1, action: "added", ...mew },
+      { browser: "a", ts: 2, seq: 1, action: "added", ...mew }, // twice from one browser counts once
+      { browser: "b", ts: 1, seq: 1, action: "added", ...mew },
+      { browser: "c", ts: 5, seq: 3, action: "removed", ...mew }, // listed first, but last in its batch: c doesn't count
+      { browser: "c", ts: 5, seq: 1, action: "added", ...mew },
+      { browser: "c", ts: 5, seq: 2, action: "added", ...mew },
+      { browser: "a", ts: 3, seq: 1, action: "added", card_name: "Bulbasaur", card_set: "151", card_number: "166/165", card_language: "English" },
+      { browser: "b", ts: 3, seq: 1, action: "added", page_location: "https://www.sleepypokemon.com/cards/zorua-75/" },
+      { browser: "b", ts: 4, seq: 1, action: "removed", page_location: "https://www.sleepypokemon.com/cards/zorua-75/" },
+      { browser: "d", ts: 1, seq: 1, action: "added", page_location: "https://www.sleepypokemon.com/collection/" },
+    ];
+    const result = countMostWished(events, cards);
+    const got = Object.fromEntries(result.cards.map((entry) => [entry.slug, entry.wishers]));
+    const want = { "mew-gg10": 2, "bulbasaur-151": 1 };
+    if (JSON.stringify(got) !== JSON.stringify(want)) fail(`counted ${JSON.stringify(got)}, expected ${JSON.stringify(want)} (one per browser, last action wins, batch order breaks ties, a removed card counts for nothing)`);
+    if (result.cards[0]?.rank !== 1 || result.cards[1]?.rank !== 2) fail("ranks should follow the counts");
+    if (result.wishingBrowsers !== 2) fail(`expected 2 wishing browsers, got ${result.wishingBrowsers}`);
+    if (result.unplacedEvents !== 1) fail(`an event from a page that isn't a card's, with no card parameters, should be counted as unplaced, got ${result.unplacedEvents}`);
+    const sql = monthQuery("2026-02");
+    if (!sql.includes("BETWEEN '20260201' AND '20260228'")) fail("the query should cover the whole month (February 2026 is the 1st to the 28th)");
+    if (!sql.includes("CAST(value.int_value AS STRING)")) fail("the query should read number-like values too: GA4 stores the set \"151\" as int_value");
+    if (!sql.includes("batch_event_index")) fail("the query should return batch_event_index, which orders events that share a timestamp");
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
+}
+
+// On a card page, analytics.js sends the card with card_page_view only. GA4 adds the config call's parameters to
+// every event on the page, so with card parameters there every card-page event (a header link, the menu) carried
+// the card, whether or not the event was about it (until analytics.js v8, 2026-11-17).
+function checkCardPageParams(analyticsSource) {
+  const fail = (message) => errors.push(`docs/analytics.js (card page): ${message}`);
+  const cardParams = ["card_name", "card_pokemon", "card_set", "card_number", "card_rarity", "card_language"];
+  try {
+    const window = {
+      location: { search: "", protocol: "https:", hostname: "www.sleepypokemon.com", href: "https://www.sleepypokemon.com/cards/test-card/" },
+      localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+      sessionStorage: { getItem: () => null, setItem() {} },
+    };
+    const context = vm.createContext({
+      window, console: { info() {} }, URLSearchParams, Date, URL,
+      document: {
+        currentScript: { dataset: { pageType: "card", cardName: "Bulbasaur", cardPokemon: "Bulbasaur", cardSet: "151", cardNumber: "166/165", cardRarity: "Illustration Rare", cardLanguage: "English" } },
+        body: { dataset: {} },
+        title: "Bulbasaur 151 166/165",
+        head: { append() {} },
+        createElement: () => ({}),
+        addEventListener() {},
+      },
+    });
+    vm.runInContext(analyticsSource, context, { filename: "docs/analytics.js" });
+    context.window.sleepyAnalytics.track("menu_opened", { interaction_source: "global_header" });
+    const calls = [...context.window.dataLayer].map((args) => [...args]);
+    const config = calls.find(([command]) => command === "config")?.[2] || {};
+    const inConfig = cardParams.filter((key) => config[key] !== undefined);
+    if (inConfig.length) fail(`the GA4 config call sets ${inConfig.join(", ")}, so every event on a card page carries the card`);
+    const event = (name) => calls.find(([command, eventName]) => command === "event" && eventName === name)?.[2];
+    const pageView = event("card_page_view");
+    const missing = cardParams.filter((key) => !pageView?.[key]);
+    if (missing.length) fail(`card_page_view should still send ${missing.join(", ")}`);
+    const menu = event("menu_opened") || {};
+    const extra = cardParams.filter((key) => menu[key] !== undefined);
+    if (extra.length) fail(`menu_opened on a card page sends ${extra.join(", ")}, which only card events should`);
+  } catch (error) {
+    fail(`threw ${error.message}`);
+  }
 }
 
 // #285: analytics.js starts even when the browser blocks storage (SM-10), and #263: filters_cleared reports the cards

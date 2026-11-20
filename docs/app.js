@@ -1664,9 +1664,11 @@ function toggleWish(button) {
       showToast(`Added to your wishlist · ${count} ${count === 1 ? "card" : "cards"}`, { link });
     }
   }
-  // Which card it was stays private: never send card details with wishlist events.
+  // Each add or remove says which card it was, so the most-wished cards can be counted (ANALYTICS.md). The wishlist
+  // as a whole is never sent.
   const source = button.classList?.contains("detail-wish") ? (button.closest("#cardDetailDialog") ? "card_modal" : "card_page") : "card_tile";
-  trackEvent("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: source });
+  const card = state.cards.find((item) => item.slug === slug);
+  trackEvent("wishlist_toggled", { ...(card ? getCardAnalyticsParams(card) : {}), action: wasWished ? "removed" : "added", interaction_source: source });
 }
 
 // "wishlist" in the wishlist toasts links to the wishlist view (the header's own link, so the path is right on every

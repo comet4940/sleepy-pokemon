@@ -105,8 +105,9 @@
           }
         }
       }
-      // Which card it was stays private: never send card details with wishlist events.
-      window.sleepyAnalytics?.track("wishlist_toggled", { action: wasWished ? "removed" : "added", interaction_source: "card_page" });
+      // Each add or remove says which card it was, so the most-wished cards can be counted (ANALYTICS.md). The card
+      // page's analytics.js tag carries this card's details, the same ones card_page_view sends.
+      window.sleepyAnalytics?.track("wishlist_toggled", { ...cardAnalyticsParams(), action: wasWished ? "removed" : "added", interaction_source: "card_page" });
     });
   });
 
@@ -114,4 +115,16 @@
   window.addEventListener("pageshow", sync);
   window.addEventListener("focus", sync);
   sync();
+
+  function cardAnalyticsParams() {
+    const data = document.querySelector('script[data-page-type="card"]')?.dataset || {};
+    return {
+      card_name: data.cardName,
+      card_pokemon: data.cardPokemon,
+      card_set: data.cardSet,
+      card_number: data.cardNumber,
+      card_rarity: data.cardRarity,
+      card_language: data.cardLanguage,
+    };
+  }
 })();
