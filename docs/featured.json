@@ -1,5 +1,5 @@
 {
-  "showing": "growlithe-vending-machine-series-3-58",
+  "showing": "snorlax-unbroken-bonds-158-214",
   "current": {
     "startsOn": "2026-10-25",
     "cards": [
@@ -34,6 +34,10 @@
     {
       "week": "2026-11-15",
       "card": "growlithe-vending-machine-series-3-58"
+    },
+    {
+      "week": "2026-11-22",
+      "card": "snorlax-unbroken-bonds-158-214"
     }
   ]
 }
