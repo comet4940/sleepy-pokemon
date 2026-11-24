@@ -14,9 +14,6 @@ permissions:
   contents: write
   issues: write
   pages: write
-  # deploy-pages lists this run's uploads to find the site. Granted explicitly after deploys failed with
-  # "Found 0 artifact(s)" from Nov 23 2026, though the upload had succeeded.
-  actions: read
   id-token: write
 
 concurrency:
@@ -25,9 +22,6 @@ concurrency:
 
 jobs:
   rotate-featured:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -80,6 +74,28 @@ jobs:
         with:
           path: "docs"
 
+  # Deploying is a job of its own, as in GitHub's Pages starter workflows: it starts once the build job has finished,
+  # by which time GitHub lists the upload. Deploying from the same job, a second after the upload, failed with "No
+  # artifacts named github-pages" on every deploy from Nov 23 2026 (actions/deploy-pages#451). One more try after a
+  # minute stays as a backstop. If a deploy still fails, use "Re-run failed jobs" (this job only, same upload), not
+  # "Re-run all jobs", which uploads a second copy and fails with "Multiple artifacts".
+  deploy:
+    needs: rotate-featured
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Wait before the second try
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (second try)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
