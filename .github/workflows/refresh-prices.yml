@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write
   pages: write
+  # deploy-pages lists this run's uploads to find the site. Granted explicitly after deploys failed with
+  # "Found 0 artifact(s)" from Nov 23 2026, though the upload had succeeded.
+  actions: read
   id-token: write
 
 concurrency:
