@@ -1,7 +1,8 @@
 {
   "minCards": 5,
   "heroes": {
-    "Obsidian Flames": ["poppy-obsidian-flames-227-197", "lechonk-obsidian-flames-209-197", "houndour-obsidian-flames-204-197"]
+    "Obsidian Flames": ["poppy-obsidian-flames-227-197", "lechonk-obsidian-flames-209-197", "houndour-obsidian-flames-204-197"],
+    "Destined Rivals": ["misty-s-lapras-destined-rivals-194-182", "clamperl-destined-rivals-195-182", "team-rocket-s-meowth-destined-rivals-203-182"]
   },
   "intros": {
     "Obsidian Flames": "Obsidian Flames is all fire and Tera types, but five Pokémon slept right through it: Poppy curled up against her Copperajah, Lechonk out cold next to its empty food bowl, one Houndour snoozing under an umbrella while its pack raids an apple stash, a dozing Smoliv, and a Rowlet caught mid-yawn.",
@@ -18,6 +19,7 @@
     "Crown Zenith Galarian Gallery": "Tiny naps hidden in big art: Pachirisu asleep on Zeraora's head, Mew curled up in the canopy, and Solrock drifting off as night falls over the meadow.",
     "Journey Together": "Naps after a long day out: a Rockruff curled up under Lycanroc's watch, Swinub tucked into tree roots, Komala by the river, and a Furret who is awake... technically.",
     "Cosmic Eclipse": "Bedtime, mostly: Tepig face down on a pillow, Rockruff resisting wake-up time, and Erika asleep against her Vileplume while it drifts off right along with her.",
-    "Fusion Strike": "Sleepers big and small: Snorlax in an apple-induced food coma, Espeon VMAX draped over a rooftop like the cat it is, and Sandaconda claiming the warm spot by the radiator."
+    "Fusion Strike": "Sleepers big and small: Snorlax in an apple-induced food coma, Espeon VMAX draped over a rooftop like the cat it is, and Sandaconda claiming the warm spot by the radiator.",
+    "Destined Rivals": "Destined Rivals is all about Trainers and their Pokémon, and plenty of them are off duty: Misty asleep against her Lapras at the water’s edge, Team Rocket’s Meowth still groggy while Giovanni looks on, Ponyta dozing among the flowers, and two Clamperl shut-eyed in their shells on the reef."
   }
 }

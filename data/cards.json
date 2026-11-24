@@ -3,6 +3,64 @@
   "exportedAt": "2026-10-22T17:19:29.763Z",
   "cards": [
     {
+      "apiId": "ex7-26",
+      "tcgdexId": "",
+      "name": "Quagsire",
+      "pokemon": "Quagsire",
+      "setName": "EX Team Rocket Returns",
+      "setSeries": "EX",
+      "setId": "ex7",
+      "number": "26/109",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "Miki Tanaka",
+      "imageSmall": "/assets/cards/quagsire-ex-team-rocket-returns-26-109-small.webp",
+      "imageLarge": "/assets/cards/quagsire-ex-team-rocket-returns-26-109.webp",
+      "setReleaseDate": "2004/11/03",
+      "notes": "Community suggestion (Nov 2026). Details checked against TCGdex and Scrydex (ex7-26) and the card image.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": [],
+      "whyItBelongs": "Arms and tail spread wide, eyes shut in two thin curves, Quagsire is drifting belly-down just above a reef of pink, orange and yellow coral, bubbles rising around it.",
+      "imageOrigin": "https://images.scrydex.com/pokemon/ex7-26/large",
+      "tcgplayerProductId": 88470,
+      "tcgplayerGroupId": 1428,
+      "priceType": "Normal"
+    },
+    {
+      "apiId": "sv10-195",
+      "tcgdexId": "",
+      "name": "Clamperl",
+      "pokemon": "Clamperl",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "195/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "/assets/cards/clamperl-destined-rivals-195-182-small.webp",
+      "imageLarge": "/assets/cards/clamperl-destined-rivals-195-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "notes": "Community suggestion (Nov 2026): the Illustration Rare; the Common Destined Rivals Clamperl (054/182) is already listed. Details checked against TCGdex and Scrydex (sv10-195) and the card image.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ],
+      "whyItBelongs": "According to its flavor text, Clamperl’s pearls can be worth more than ten times a Shellder’s. This one has dozed off anyway, eyes shut in its open shell with its blue pearls packed around it, while Mori Yuu’s hand-inked reef crowds in on every side.",
+      "imageOrigin": "https://images.scrydex.com/pokemon/sv10-195/large",
+      "tcgplayerProductId": 632995,
+      "tcgplayerGroupId": 24269,
+      "priceType": "Holofoil"
+    },
+    {
       "apiId": "bw5-91",
       "tcgdexId": "",
       "name": "Cheren",

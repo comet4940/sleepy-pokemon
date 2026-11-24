@@ -1,6 +1,56 @@
 {
   "cards": [
     {
+      "apiId": "ex7-26",
+      "tcgdexId": "",
+      "name": "Quagsire",
+      "pokemon": "Quagsire",
+      "setName": "EX Team Rocket Returns",
+      "setSeries": "EX",
+      "setId": "ex7",
+      "number": "26/109",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "Miki Tanaka",
+      "imageSmall": "/assets/cards/quagsire-ex-team-rocket-returns-26-109-small.webp",
+      "imageLarge": "/assets/cards/quagsire-ex-team-rocket-returns-26-109.webp",
+      "setReleaseDate": "2004/11/03",
+      "whyItBelongs": "Arms and tail spread wide, eyes shut in two thin curves, Quagsire is drifting belly-down just above a reef of pink, orange and yellow coral, bubbles rising around it.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "slug": "quagsire-ex-team-rocket-returns-26-109",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv10-195",
+      "tcgdexId": "",
+      "name": "Clamperl",
+      "pokemon": "Clamperl",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "195/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "/assets/cards/clamperl-destined-rivals-195-182-small.webp",
+      "imageLarge": "/assets/cards/clamperl-destined-rivals-195-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "According to its flavor text, Clamperl’s pearls can be worth more than ten times a Shellder’s. This one has dozed off anyway, eyes shut in its open shell with its blue pearls packed around it, while Mori Yuu’s hand-inked reef crowds in on every side.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "slug": "clamperl-destined-rivals-195-182",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
       "apiId": "bw5-91",
       "tcgdexId": "",
       "name": "Cheren",
