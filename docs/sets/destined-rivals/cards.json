@@ -1,0 +1,138 @@
+{
+  "cards": [
+    {
+      "apiId": "sv10-29",
+      "tcgdexId": "",
+      "name": "Ponyta",
+      "pokemon": "Ponyta",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "029/182",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Ayako Ozaki",
+      "imageSmall": "/assets/cards/ponyta-destined-rivals-029-182-small.webp",
+      "imageLarge": "/assets/cards/ponyta-destined-rivals-029-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Ponyta sleeps among the flowers with its fiery mane casting a warm glow over the grass. Ayako Ozaki's gentle scene makes this a lovely modern take on a classic, peaceful nap.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-21T15:57:04.446Z",
+      "slug": "ponyta-destined-rivals-029-182",
+      "moods": [
+        "Flower Beds"
+      ],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv10-54",
+      "tcgdexId": "",
+      "name": "Clamperl",
+      "pokemon": "Clamperl",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "054/182",
+      "rarity": "Common",
+      "language": "English",
+      "artist": "Miki Tanaka",
+      "imageSmall": "/assets/cards/clamperl-destined-rivals-054-182-small.webp",
+      "imageLarge": "/assets/cards/clamperl-destined-rivals-054-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Clamperl is tucked into its shell, eyes closed while the reef blooms with coral around it. Miki Tanaka's bright underwater colors make this modern print feel like a tiny safe bedroom beneath the waves.",
+      "createdAt": "2026-10-20T00:00:00.000Z",
+      "updatedAt": "2026-10-23T15:44:08.905Z",
+      "slug": "clamperl-destined-rivals-054-182",
+      "moods": [
+        "Water Naps",
+        "Beach Naps"
+      ],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv10-194",
+      "tcgdexId": "",
+      "name": "Misty's Lapras",
+      "pokemon": "Lapras",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "194/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Orca",
+      "imageSmall": "/assets/cards/misty-s-lapras-destined-rivals-194-182-small.webp",
+      "imageLarge": "/assets/cards/misty-s-lapras-destined-rivals-194-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Beach day turned nap time. Misty has fallen fast asleep against Lapras’s shell at the water’s edge, completely relaxed while her longtime partner keeps watch beside her. Orca’s bright tropical shoreline and the quiet closeness between the two make this feel less like a Trainer and her Pokémon and more like two old friends taking a peaceful break together.",
+      "createdAt": "2026-05-06T21:03:55.441Z",
+      "updatedAt": "2026-10-24T09:00:00.000Z",
+      "slug": "misty-s-lapras-destined-rivals-194-182",
+      "moods": [
+        "Sleepy Trainers",
+        "Pokémon Pillow",
+        "Beach Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv10-195",
+      "tcgdexId": "",
+      "name": "Clamperl",
+      "pokemon": "Clamperl",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "195/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "/assets/cards/clamperl-destined-rivals-195-182-small.webp",
+      "imageLarge": "/assets/cards/clamperl-destined-rivals-195-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Mori Yuu draws the reef as a spiralling tunnel of finely hatched coral, sea fans and kelp, with a sunlit opening in the upper left where a school of fish crosses the light. The spiral leads the eye down to a cozy alcove, where Clamperl has dozed off in its open shell, eyes shut, its blue pearls packed around it.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "slug": "clamperl-destined-rivals-195-182",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
+      "apiId": "sv10-203",
+      "tcgdexId": "",
+      "name": "Team Rocket's Meowth",
+      "pokemon": "Meowth",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "203/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Shimaris Yukichi",
+      "imageSmall": "/assets/cards/team-rocket-s-meowth-destined-rivals-203-182-small.webp",
+      "imageLarge": "/assets/cards/team-rocket-s-meowth-destined-rivals-203-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Meowth looks caught in that groggy in-between state, rubbing at its face with one paw while Giovanni watches from the armchair with very little sympathy. The card’s own Pokédex text says Meowth sleeps through the daytime and patrols at night, so this may be less “caught napping” and more “rudely interrupted during normal business hours.”",
+      "createdAt": "2026-05-05T00:53:53.770Z",
+      "updatedAt": "2026-10-16T15:21:56.682Z",
+      "slug": "team-rocket-s-meowth-destined-rivals-203-182",
+      "moods": [
+        "Study Break"
+      ],
+      "searchKeywords": [
+        "full art",
+        "cat",
+        "kitty",
+        "kitten",
+        "indoor",
+        "inside"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,56 @@
 {
   "cards": [
     {
+      "apiId": "ex7-26",
+      "tcgdexId": "",
+      "name": "Quagsire",
+      "pokemon": "Quagsire",
+      "setName": "EX Team Rocket Returns",
+      "setSeries": "EX",
+      "setId": "ex7",
+      "number": "26/109",
+      "rarity": "Rare",
+      "language": "English",
+      "artist": "Miki Tanaka",
+      "imageSmall": "/assets/cards/quagsire-ex-team-rocket-returns-26-109-small.webp",
+      "imageLarge": "/assets/cards/quagsire-ex-team-rocket-returns-26-109.webp",
+      "setReleaseDate": "2004/11/03",
+      "whyItBelongs": "Miki Tanaka catches Quagsire at its most unbothered: floating weightless on its side in mid-water, eyes closed in happy crescents above a small, content smile, its stubby arms, feet and paddle tail drifting lazily, as if the current were rocking it along over the pink, orange and yellow coral.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "slug": "quagsire-ex-team-rocket-returns-26-109",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": []
+    },
+    {
+      "apiId": "sv10-195",
+      "tcgdexId": "",
+      "name": "Clamperl",
+      "pokemon": "Clamperl",
+      "setName": "Destined Rivals",
+      "setSeries": "Scarlet & Violet",
+      "setId": "sv10",
+      "number": "195/182",
+      "rarity": "Illustration Rare",
+      "language": "English",
+      "artist": "Mori Yuu",
+      "imageSmall": "/assets/cards/clamperl-destined-rivals-195-182-small.webp",
+      "imageLarge": "/assets/cards/clamperl-destined-rivals-195-182.webp",
+      "setReleaseDate": "2025/05/30",
+      "whyItBelongs": "Mori Yuu draws the reef as a spiralling tunnel of finely hatched coral, sea fans and kelp, with a sunlit opening in the upper left where a school of fish crosses the light. The spiral leads the eye down to a cozy alcove, where Clamperl has dozed off in its open shell, eyes shut, its blue pearls packed around it.",
+      "createdAt": "2026-11-24T04:38:50.000Z",
+      "updatedAt": "2026-11-24T04:38:50.000Z",
+      "slug": "clamperl-destined-rivals-195-182",
+      "moods": [
+        "Water Naps"
+      ],
+      "searchKeywords": [
+        "full art"
+      ]
+    },
+    {
       "apiId": "bw5-91",
       "tcgdexId": "",
       "name": "Cheren",
