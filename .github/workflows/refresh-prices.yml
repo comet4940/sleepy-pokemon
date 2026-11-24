@@ -9,8 +9,7 @@ on:
 permissions:
   contents: write
   pages: write
-  # deploy-pages lists this run's uploads to find the site. Granted explicitly after deploys failed with
-  # "Found 0 artifact(s)" from Nov 23 2026, though the upload had succeeded.
+  # The deploy steps list this run's uploads to find the site (see "Wait for the upload to be listed").
   actions: read
   id-token: write
 
@@ -22,7 +21,7 @@ jobs:
   refresh-prices:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -58,8 +57,33 @@ jobs:
         with:
           path: "docs"
 
+      # deploy-pages can ask for the upload a moment before GitHub lists it, and then fails with "No artifacts named
+      # github-pages" (every deploy from Nov 23 2026; actions/deploy-pages#451). Wait until it's listed, then deploy,
+      # and try once more after a minute if that still fails. Never use "Re-run jobs" on a failed deploy: it uploads a
+      # second copy and fails with "Multiple artifacts"; start a new run instead.
+      - name: Wait for the upload to be listed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 36); do
+            count=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts?name=github-pages" --jq '.total_count' || echo 0)
+            if [ "${count:-0}" -ge 1 ]; then echo "Listed after about $(( (attempt - 1) * 5 )) s."; exit 0; fi
+            sleep 5
+          done
+          echo "::warning::The github-pages upload still isn't listed after 3 minutes; deploying anyway."
+
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Wait before the second try
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (second try)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
 
       # After committing whatever did refresh: a red run (and GitHub's email) when TCGCSV was unreachable
