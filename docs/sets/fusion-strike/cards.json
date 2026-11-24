@@ -1,6 +1,30 @@
 {
   "cards": [
     {
+      "apiId": "swsh8-10",
+      "tcgdexId": "",
+      "name": "Swadloon",
+      "pokemon": "Swadloon",
+      "setName": "Fusion Strike",
+      "setSeries": "Sword & Shield",
+      "setId": "swsh8",
+      "number": "010/264",
+      "rarity": "Uncommon",
+      "language": "English",
+      "artist": "0313",
+      "imageSmall": "/assets/cards/swadloon-fusion-strike-010-264-small.webp",
+      "imageLarge": "/assets/cards/swadloon-fusion-strike-010-264.webp",
+      "setReleaseDate": "2021/11/12",
+      "whyItBelongs": "Awake, Swadloon wears a permanent frown. Here it has nodded off upright in a park of birch trees and dandelions, eyes shut in two flat lines and mouth fallen open, its leaf cloak still wrapped snugly around it.",
+      "createdAt": "2026-11-24T05:30:00.000Z",
+      "updatedAt": "2026-11-24T05:30:00.000Z",
+      "slug": "swadloon-fusion-strike-010-264",
+      "moods": [
+        "Flower Beds"
+      ],
+      "searchKeywords": []
+    },
+    {
       "apiId": "swsh8-65",
       "tcgdexId": "",
       "name": "Clamperl",
