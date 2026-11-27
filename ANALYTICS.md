@@ -12,7 +12,7 @@ This is the source of truth for the redesigned site's Google Analytics 4 instrum
 1. Track completed user actions and useful outcomes, not every click or keystroke.
 2. Use `interaction_source` to distinguish where an action began.
 3. Never send search text, suggestion text, notes, email addresses, or other user-authored content.
-4. Never send which cards are on someone's wishlist: wishlist events carry only what happened, not the card.
+4. Never send someone's wishlist as a whole. Each `wishlist_toggled` says which card was added or removed, so the most-wished cards can be counted and shared (from 2026-11-17, `app.js` v91); the About page says so.
 5. Use stable identifiers such as guide slugs and card metadata when they help answer a product question.
 6. GA4 automatic events are context only. They do not replace the product events below.
 
@@ -40,7 +40,7 @@ Every product event includes `page_type` and `analytics_version` automatically.
 | `catalog_loaded` | A visible interactive catalog finishes loading | `catalog_surface`, `card_count` |
 | `card_opened` | A card opens in the detail lightbox, including About page cards (`interaction_source`: `about_favorite`, `about_origin`, `about_current_chase`, `about_current_chase_art`) set page cards (`set_page`), the homepage's weekly featured card (`homepage_featured`), Forward reopening a lightbox that Back closed (`browser_forward`), and a reload reopening the card that was open (`browser_restore`) | card parameters, `interaction_source` |
 | `card_navigated` | The lightbox steps to the previous or next card (`interaction_source`: `swipe` on touch screens, `arrow_button` or `keyboard` on desktop). It steps through the cards of the page it was opened from: the collection's filtered, sorted results, *Freshly added*, or a guide, set or About page's cards; it stops at either end. Stepping isn't counted as `card_opened`, so `card_opened` still means a visitor picked a card. While the lightbox is open the address bar shows the card's own page (`/cards/<slug>/`), so lightbox events after `card_opened` (which is sent from the page it was opened on) carry that card page as `page_location`; `page_type` stays the page the lightbox opened on. GA4's "Page changes based on browser history events" is off (see [Automatic GA4 Events](#automatic-ga4-events)), so stepping records no `page_view`: count cards seen in the lightbox with `card_opened` and `card_navigated` | card parameters, `interaction_source`, `direction` (`next` or `previous`) |
-| `wishlist_toggled` | A card is added to or removed from the wishlist (#119): the star on a card tile (collection, homepage *Freshly added*, guide and set cards), or the *Add to wishlist* button in the lightbox or on a card page (`docs/card-page.js`). The wishlist itself is saved in the visitor's browser by `docs/binder.js` | `action` (`added` or `removed`), `interaction_source` (`card_tile`, `card_modal` or `card_page`). **Never card parameters:** which cards someone wishes for stays private; the validator fails if any are added |
+| `wishlist_toggled` | A card is added to or removed from the wishlist (#119): the star on a card tile (collection, homepage *Freshly added*, guide and set cards), or the *Add to wishlist* button in the lightbox or on a card page (`docs/card-page.js`). The wishlist itself is saved in the visitor's browser by `docs/binder.js` | card parameters, `action` (`added` or `removed`), `interaction_source` (`card_tile`, `card_modal` or `card_page`). The card parameters feed the most-wished count (see [Most-wished cards](#most-wished-cards)); the validator fails if they're missing. Before 2026-11-17 the event carried no card parameters, though lightbox and card-page wishes still had the card's page in `page_location` |
 | `wishlist_hint_shown` | The one-time wishlist strip appears above the collection grid (first visit, until dismissed or the first wish; remembered in `binder.js`) | `interaction_source` (`collection_strip`) |
 | `wishlist_hint_dismissed` | That strip goes: *Got it*, or the visitor's first wish | `interaction_source` (`collection_strip`), `dismiss_method` (`got_it` or `first_wish`) |
 | `swipe_hint_shown` | The one-time swipe hint appears in the lightbox on a touch screen (#280): on the second card opened there, only if the visitor hasn't swiped yet and the card has others to step to; remembered in `binder.js` | `interaction_source` (`card_modal`) |
@@ -162,6 +162,8 @@ Common parameters:
 
 **Page titles:** the collection's `<title>` includes the live card count ("All 263 Sleeping Pokemon Cards: Full List with Pictures") for search. From 2026-11-07, GA4 receives it without the number ("All Sleeping Pokemon Cards: Full List with Pictures", `page_title` in `analytics.js`), so it stays one row in *Page title and screen name*. Before that date it's split across "All 261…", "All 262…" and so on: for reports spanning that date, use *Page path* (`/collection/`) instead.
 
+**Card parameters on card pages:** only `card_page_view` (and events that send them themselves) carry card parameters. Until `analytics.js` v8 (2026-11-17), the GA4 config call set them for the whole card page, so every event there carried them, whether or not it was about the card. For reports spanning that date, don't break card-page events other than `card_page_view` down by card; use *Page path* (`/cards/<slug>/`) instead. `checkCardPageParams` in `scripts/validate-analytics.mjs` tests this.
+
 Register these event-scoped custom dimensions when reusable GA4 reporting is needed:
 
 - `analytics_version`
@@ -239,12 +241,23 @@ Mark `suggestion_submitted`, `checklist_downloaded` and `filters_modal_applied` 
 | Do people come back to their wishlist? | `navigation_clicked` with `destination = wishlist` (the header entry), especially by returning users |
 | Does the swipe hint teach swiping? (#280) | Share of mobile users who open a card from a page with others to step to (collection, guides, sets, About, Freshly added) and ever send `card_navigated` with `interaction_source` `swipe`: 15% (30 of 199) from 2026-10-31 to 11-10, before the hint. Compare the same share for the two weeks after it ships, and `swipe_hint_dismissed` by `dismiss_method` (`swiped` = learned it on the spot) |
 | Does the wishlist onboarding work? | `wishlist_hint_dismissed` by `dismiss_method` (`first_wish` vs `got_it`), and adoption among users with `wishlist_hint_shown` |
+| Which cards do people wish for most? | See [Most-wished cards](#most-wished-cards): browsers whose last `wishlist_toggled` for a card in the month was `added`, from 2026-11-17 |
 | Where do people wish? | `wishlist_toggled` (`action = added`) by `interaction_source` (`card_tile`, `card_modal`, `card_page`) |
 | Is the wishlist healthy, and did it change anything else? | Removals ÷ adds (`wishlist_toggled` by `action`); overall `checklist_downloaded` and `card_opened`; `suggestion_opened` and `suggestion_submitted`, since *Suggest a card* moved to mint in the same release |
 
 Review a rolling 28-day window once the redesign has enough production traffic. Always segment primary journeys by device category and landing page.
 
 **Wishlist baseline:** the wishlist went live on 2026-11-02 (merge `0973367f`, #200). Compare the 28 days before with the 28 days after, segmented by device. `action`, `dismiss_method`, `checklist_scope` and `destination` were registered on 2026-11-02 (see "Registered in GA4"), so GA4 breaks wishlist events down only from then; for the first hours, use the BigQuery export, which has every parameter.
+
+## Most-wished cards
+
+`node scripts/most-wished.mjs --month 2026-12` ranks the cards people wished for in a month, from the BigQuery export (`sleep-pokemon-analytics.analytics_536644618`, through the `bq` CLI, signed in with access to that project). `--write` saves the month to `data/most-wished.json`, ready for a "most wished this month" list on the site; `--from <file>` reads the query's rows from a file instead.
+
+- **Counting:** each browser (`user_pseudo_id`) counts once for a card if its last `wishlist_toggled` for it in the month was `added`. One visitor adding 200 cards adds 1 to each, and adding then removing a card counts for nothing. Ties share a rank.
+- **Order:** GA4 sends events in batches that can share `event_timestamp`; `batch_event_index` orders them.
+- **Which card:** the card parameters, matched to `docs/published-cards.json`. GA4 stores number-like values as numbers (the set "151" is `int_value`), so the query reads every value type. Events from before 2026-11-17 have no card parameters; lightbox and card-page wishes are placed by their `/cards/<slug>/` `page_location`, tile-star wishes can't be. **November 2026 undercounts tile-star cards; December 2026 is the first full month.**
+- **Minimums:** browsers that block GA4 aren't counted, so these are lower bounds, like every GA4 count.
+- `checkMostWished` in `scripts/validate-analytics.mjs` tests the counting rules.
 
 ## Verification Checklist
 

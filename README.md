@@ -83,6 +83,7 @@ sleepy-pokemon/
 │   ├── refresh-prices.mjs       # Daily TCGplayer market prices from TCGCSV into docs/prices.json
 │   ├── match-tcgplayer.mjs      # Links cards to their TCGplayer product (run when adding a card)
 │   ├── tcgcsv.mjs               # Polite TCGCSV client shared by the two scripts above
+│   ├── most-wished.mjs          # Monthly most-wished cards from the GA4 BigQuery export
 │   ├── validate-analytics.mjs   # Verifies GA4 telemetry across all 156+ static pages
 │   ├── card-identity.mjs        # Shared card ID used by guide pages and validation
 │   ├── site-header.mjs          # Shared topbar header template
@@ -153,6 +154,13 @@ node scripts/refresh-prices.mjs --dry-run  # report only
 Curator (`Manual`) prices aren't refreshed. On the 1st of each month `manual-prices-reminder.yml` opens an issue listing them for a re-check:
 ```bash
 node scripts/manual-prices-report.mjs      # print this month's reminder
+```
+
+### 5. Most-Wished Cards
+Ranks the cards people put on their wishlists each month, from the GA4 BigQuery export (needs the `bq` CLI signed in with access to the analytics project). Each browser counts once per card. See "Most-wished cards" in [ANALYTICS.md](ANALYTICS.md).
+```bash
+node scripts/most-wished.mjs --month 2026-12          # print the ranking
+node scripts/most-wished.mjs --month 2026-12 --write  # also save it to data/most-wished.json
 ```
 
 ---

@@ -50,12 +50,8 @@ const SLEEPY_ANALYTICS_VERSION = "redesign_v1";
     // file every count as a new page title, so it gets the title without the number. Other pages are unchanged.
     page_title: document.title.replace(/^All \d+ /, "All "),
     page_type: pageContext.pageType || "unknown",
-    card_name: pageContext.cardName || undefined,
-    card_pokemon: pageContext.cardPokemon || undefined,
-    card_set: pageContext.cardSet || undefined,
-    card_number: pageContext.cardNumber || undefined,
-    card_rarity: pageContext.cardRarity || undefined,
-    card_language: pageContext.cardLanguage || undefined,
+    // No card parameters here: GA4 adds config parameters to every event on the page, so every card-page event would
+    // carry the card. Events about a card send it themselves (card_page_view in trackStaticPageView, wishlist_toggled).
     guide_slug: pageContext.guideSlug || undefined,
     debug_mode: debugMode || undefined,
   });
